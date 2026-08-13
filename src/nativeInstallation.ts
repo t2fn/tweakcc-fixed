@@ -1474,13 +1474,41 @@ function repackELFSection(
     const pageSize = elfBinary.pageSize();
     const newContentSize = BigInt(newSectionData.length);
     const alignedNewSize = alignBigInt(newContentSize, pageSize);
-    const newVaddr = alignBigInt(elfBinary.nextVirtualAddress(), pageSize);
-    const offsetInSegment = newVaddr - rwSegment.virtualAddress;
-    const newFileOffset = rwSegment.fileOffset + offsetInSegment;
+
+    // Anti-bloat: reuse the original .bun location if no allocated section follows it.
+    // Without this check LIEF's nextVirtualAddress() rounds up to a high boundary,
+    // leaving old sections + empty gaps as dead weight on every patch (the bug that
+    // turned a ~275 MB Bun binary into ~723 MB).
+    const SHF_ALLOC = 0x2n;
+    const allocSectionAtOrAfterBun = elfBinary
+      .sections()
+      .some(
+        s =>
+          s.name !== '.bun' &&
+          (BigInt(s.flags) & SHF_ALLOC) !== 0n &&
+          BigInt(s.virtualAddress) >= oldBunSectionVaddr
+      );
+
+    let newVaddr: bigint;
+    let newFileOffset: bigint;
+    if (allocSectionAtOrAfterBun) {
+      // Another allocated section sits at or after the old .bun vaddr — we must
+      // append after it to avoid clobbering live data.
+      newVaddr = alignBigInt(elfBinary.nextVirtualAddress(), pageSize);
+      const offsetInSegment = newVaddr - rwSegment.virtualAddress;
+      newFileOffset = rwSegment.fileOffset + offsetInSegment;
+    } else {
+      // No allocated section occupies the old .bun slot, so we can safely reuse it
+      // in-place and avoid growing the file.
+      newVaddr = oldBunSectionVaddr;
+      const offsetInSegment = newVaddr - rwSegment.virtualAddress;
+      newFileOffset = rwSegment.fileOffset + offsetInSegment;
+    }
+
     const oldRwFileEnd = rwSegment.fileOffset + rwSegment.fileSize;
     const extensionSize = newFileOffset + alignedNewSize - oldRwFileEnd;
 
-    if (extensionSize < 0n) {
+    if (extensionSize < 0n && allocSectionAtOrAfterBun) {
       throw new Error(
         'New .bun location overlaps existing writable ELF segment'
       );
