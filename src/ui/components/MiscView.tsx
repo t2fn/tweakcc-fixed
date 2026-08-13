@@ -95,6 +95,9 @@ export function MiscView({ onSubmit }: MiscViewProps) {
     autoModeClassifierModel: 'default' as AutoModeClassifierModel,
     suppressDeferredTools: false,
     claudemdContextOncePerConversation: true,
+    enableCtrlBackspace: true,
+    enableFileEditWhitespace: true,
+    enableAdditionalDirs: true,
   };
 
   const ensureMisc = () => {
@@ -648,6 +651,48 @@ export function MiscView({ onSubmit }: MiscViewProps) {
             ensureMisc();
             settings.misc!.enableRememberSkill =
               !settings.misc!.enableRememberSkill;
+          });
+        },
+      },
+      {
+        id: 'enableCtrlBackspace',
+        title: 'Enable Ctrl+Backspace word/line delete in editor',
+        description:
+          'Add Ctrl+Backspace (delete word backward) and Ctrl+Shift+Backspace (delete line backward) to the prompt editor input area.',
+        getValue: () => settings.misc?.enableCtrlBackspace ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.enableCtrlBackspace =
+              !settings.misc!.enableCtrlBackspace;
+          });
+        },
+      },
+      {
+        id: 'enableFileEditWhitespace',
+        title: 'Enable file edit whitespace normalization',
+        description:
+          'Handle tabs↔spaces mismatches when editing files - automatically normalize indentation.',
+        getValue: () => settings.misc?.enableFileEditWhitespace ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.enableFileEditWhitespace =
+              !settings.misc!.enableFileEditWhitespace;
+          });
+        },
+      },
+      {
+        id: 'enableAdditionalDirs',
+        title: 'Enable additional directories support',
+        description:
+          'Read CLAUDE_CODE_ADDITIONAL_DIRS env var and append paths to additionalDirectoriesForClaudeMd.',
+        getValue: () => settings.misc?.enableAdditionalDirs ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.enableAdditionalDirs =
+              !settings.misc!.enableAdditionalDirs;
           });
         },
       },

@@ -43,4 +43,8 @@ export default defineConfig([
       'no-useless-escape': 'off',
     },
   },
+  // Exclude minified helper files from linting - these are bundled test fixtures, not source code
+  {
+    ignores: ['src/patches/_wsh_minified.js'],
+  },
 ]);

@@ -133,6 +133,9 @@ export interface MiscConfig {
   fixSummarizeFromHere: boolean;
   fixRewindSummaryHeader: boolean;
   enableRememberSkill: boolean;
+  enableCtrlBackspace: boolean;
+  enableFileEditWhitespace: boolean;
+  enableAdditionalDirs: boolean;
   tokenCountRounding: number | null;
   autoAcceptPlanMode: boolean;
   allowBypassPermissionsInSudo: boolean | null;

@@ -75,6 +75,9 @@ import { writeInputPatternHighlighters } from './inputPatternHighlighters';
 import { writeConversationTitle } from './conversationTitle';
 import { writeVoiceMode } from './voiceMode';
 import { writeChannelsMode } from './channelsMode';
+import { writeCtrlBackspace } from './ctrlBackspace';
+import { writeFileEditWhitespace } from './fileEditWhitespace';
+import { writeAdditionalDirs } from './additionalDirs';
 import {
   writeSuppressDeferredTools,
   writeStripEmptySystemReminders,
@@ -300,6 +303,9 @@ const INVOCATIONS: Record<PatchId, (src: string) => string | null> = {
   'suppress-deferred-tools': c => writeSuppressDeferredTools(c),
   'claudemd-context-once-per-conversation': c =>
     writeClaudemdContextOncePerConversation(c),
+  'ctrl-backspace': c => writeCtrlBackspace(c),
+  'file-edit-whitespace': c => writeFileEditWhitespace(c),
+  'additional-dirs': c => writeAdditionalDirs(c),
 };
 
 /**
