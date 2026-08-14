@@ -1326,7 +1326,10 @@ export const applyCustomization = async (
     },
     'file-edit-whitespace': {
       fn: c => writeFileEditWhitespace(c),
-      condition: !!config.settings.misc?.enableFileEditWhitespace,
+      condition:
+        !!config.settings.misc?.enableFileEditWhitespace &&
+        (!ccInstInfo.version ||
+          compareVersions(ccInstInfo.version, '2.1.230') >= 0),
     },
     'additional-dirs': {
       fn: c => writeAdditionalDirs(c),
