@@ -13,23 +13,28 @@ describe('isClaudeModule', () => {
     'C:/tools/claude.exe',
     'src/entrypoints/cli.js',
     '/app/src/entrypoints/cli.js',
+    // Bun filesystem paths with full prefix (CC 2.1.229+)
     '/$bunfs/root/cli',
+    '/$bunfs/root/src/entrypoints/cli.js',
     'B:/~BUN/root/cli',
     'B:\\~BUN\\root\\cli',
+    // Simple CLI names (legacy)
     'cli',
-    // New patterns added for CC 2.1.231+ compatibility
     'cli.js',
+    '/cli',
+    '/cli.js',
     'C:/Claude/claude.exe',
   ])('recognizes %s as the Claude entrypoint', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(true);
   });
 
   it.each([
+    // Non-CLI modules that look similar but shouldn't match
     '/$bunfs/root/image-processor.js',
     '/$bunfs/root/not-cli',
     'B:/~BUN/root/cli.js', // Bun filesystem paths with .js extension don't match our patterns
     '/other/cli',
-    '/path/to/cli', // Paths with components before /cli are not matched (only exact 'cli' or 'cli.js')
+    '/path/to/clipboard-napi.js',
     'random-module-name',
   ])('rejects %s as a non-Claude module', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(false);

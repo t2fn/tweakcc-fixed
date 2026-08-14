@@ -243,15 +243,19 @@ export function isClaudeModule(moduleName: string): boolean {
     normalizedName === 'claude' ||
     normalizedName.endsWith('/claude.exe') ||
     normalizedName === 'claude.exe' ||
-    // Entry points with cli.js naming
+    // Entry points with src/entrypoints/cli.js naming (CC 2.1.226-2.1.228)
     normalizedName.endsWith('/src/entrypoints/cli.js') ||
     normalizedName === 'src/entrypoints/cli.js' ||
-    // Bun filesystem virtual paths (Unix and Windows) - exact matches only
+    // Bun filesystem virtual paths - full paths with $bunfs/root prefix (CC 2.1.229+)
+    normalizedName.endsWith('/$bunfs/root/cli') ||
     normalizedName === '/$bunfs/root/cli' ||
+    normalizedName.endsWith('/B:/~BUN/root/cli') ||
     normalizedName === 'B:/~BUN/root/cli' ||
-    // Simple CLI names without path components
+    // Simple CLI names without path components (legacy)
     normalizedName === 'cli' ||
-    normalizedName === 'cli.js'
+    normalizedName === 'cli.js' ||
+    normalizedName === '/cli' ||
+    normalizedName === '/cli.js'
   );
 }
 
