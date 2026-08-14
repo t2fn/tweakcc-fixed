@@ -92,6 +92,7 @@ export function MiscView({ onSubmit }: MiscViewProps) {
     maxEffortDefault: false,
     autonomousOperationAllModels: false,
     adhdOutputStyle: false,
+    outputStyleTurnReminder: false,
     autoModeClassifierModel: 'default' as AutoModeClassifierModel,
     suppressDeferredTools: false,
     claudemdContextOncePerConversation: true,
@@ -834,14 +835,28 @@ export function MiscView({ onSubmit }: MiscViewProps) {
       },
       {
         id: 'adhdOutputStyle',
-        title: 'ADHD-friendly output style',
+        title: 'ADHD-friendly output style (experimental)',
         description:
-          'Rewrites the always-on "# Communicating with the user" prompt for skim-first reading: answer in the first line, bold the key terms, three-sentence blocks, and a soft "usually under 120 words" anchor (soft, not a hard cap: Anthropic measured a 3% eval drop from hard caps and reverted them). Removes the three clauses that drive Claude-speak: the "load-bearing" update cue, the "readable matters more" ranking, and the "in prose, not headers and sections" rule. Also restates the shape rule in the per-turn CLAUDE.md reminder, where recency makes it stick, and drops that reminder\'s "may or may not be relevant" hedge.',
+          'EXPERIMENTAL, and it may not visibly change your output. Prompt wording is a weak and inconsistent lever: Claude can ignore it, the effect varies between one reply and the next, and on some tasks nothing measurable changes. Picked by blind ranking over roughly 900 generated replies, where it came last in 1 of 16 comparisons and the unmodified prompt came last in 10 - an average, not a promise about any single reply. Rewrites the always-on "# Communicating with the user" prompt for skim-first reading, with no word limit anywhere in it: answer in the first line; show the command, path or value rather than describing it; say each thing once; keep both sides of a count and every qualifier such as "in the browser only"; bold the key terms and keep paragraphs short. Removes the three clauses that drive Claude-speak: the "load-bearing" update cue, the "readable matters more" ranking, and the "in prose, not headers and sections" rule. Also restates the rules in the per-turn CLAUDE.md reminder, where recency makes them stick, and drops that reminder\'s "may or may not be relevant" hedge.',
         getValue: () => settings.misc?.adhdOutputStyle ?? false,
         toggle: () => {
           updateSettings(settings => {
             ensureMisc();
             settings.misc!.adhdOutputStyle = !settings.misc!.adhdOutputStyle;
+          });
+        },
+      },
+      {
+        id: 'outputStyleTurnReminder',
+        title: 'Per-turn reminder for custom output styles',
+        description:
+          'Claude Code reminds the model which output style is active once per turn, but only for its three built-in styles. The renderer looks the style up in the built-in table and returns nothing when it is missing, and custom styles are merged into a copy of that table rather than into the table itself. So a style you wrote yourself is injected into the system prompt once and never restated, while Proactive or Explanatory are restated every turn. This makes the reminder fire for custom styles too, using the name you configured. A style that defines its own turnReminder gets that text; otherwise it gets one short sentence pointing back at the style.',
+        getValue: () => settings.misc?.outputStyleTurnReminder ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.outputStyleTurnReminder =
+              !settings.misc!.outputStyleTurnReminder;
           });
         },
       },

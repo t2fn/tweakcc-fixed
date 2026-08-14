@@ -99,6 +99,7 @@ import { writeAllowCustomAgentModels } from './allowCustomAgentModels';
 import { writeMaxEffortDefault } from './maxEffortDefault';
 import { writeAutonomousOperationAllModels } from './autonomousOperationAllModels';
 import { writeAdhdOutputStyle } from './adhdOutputStyle';
+import { writeOutputStyleTurnReminder } from './outputStyleTurnReminder';
 import { writeAutoModeClassifierModel } from './autoModeClassifierModel';
 import { writeComplexityRouter } from './complexityRouter';
 import { writeFablePlan } from './fablePlan';
@@ -456,7 +457,15 @@ const PATCH_DEFINITIONS = [
     name: 'ADHD-friendly output style',
     group: PatchGroup.MISC_CONFIGURABLE,
     description:
-      'Rewrites the always-on "# Communicating with the user" prompt for skim-first reading: answer in the first line, bold the key terms, short blocks, and a soft "usually under 120 words" anchor. Removes the three clauses that drive Claude-speak: the "load-bearing" update cue (the prompt is where that tic comes from), the "readable matters more" ranking, and the "in prose, not headers and sections" ban on the structure skim-readers rely on. Also restates the shape rule in the per-turn CLAUDE.md reminder, where recency makes it stick, and drops that reminder\'s "may or may not be relevant" hedge which labelled your own CLAUDE.md as ignorable.',
+      'EXPERIMENTAL, and it may not visibly change your output. This rewrites prompt text, which is a weak and inconsistent lever: Claude can and does ignore it, the effect varies a lot between one reply and the next, and on some tasks it changes nothing measurable. It was chosen over the alternatives by blind ranking across roughly 900 generated replies, where it placed last in 1 of 16 comparisons and the unmodified prompt placed last in 10 - but that is an average over many replies, not a promise about any one of them. Rewrites the always-on "# Communicating with the user" prompt for skim-first reading. There is no word limit anywhere in it: length follows the substance, and the rules cut kinds of content instead, which is what testing showed actually works. Answer in the first line; show the command, path or value rather than describing it; say each thing once; keep both sides of a count and every qualifier; bold the key terms and keep paragraphs short. Removes the three clauses that drive Claude-speak: the "load-bearing" update cue (the prompt is where that tic comes from), the "readable matters more" ranking, and the "in prose, not headers and sections" ban on the structure skim-readers rely on. Also restates the rules in the per-turn CLAUDE.md reminder, where recency makes them stick, and drops that reminder\'s "may or may not be relevant" hedge which labelled your own CLAUDE.md as ignorable.',
+    modelFacing: true,
+  },
+  {
+    id: 'output-style-turn-reminder',
+    name: 'Per-turn reminder for custom output styles',
+    group: PatchGroup.MISC_CONFIGURABLE,
+    description:
+      "Claude Code reminds the model which output style is active once per turn, but only for its three built-in styles. The renderer looks the style up in the built-in table and returns nothing when it is missing, and custom styles are merged into a copy of that table rather than into the table itself. So a style you wrote yourself is injected into the system prompt once at the start of the session and never restated, while Proactive or Explanatory are restated on every turn. This makes the reminder fire for custom styles too, using the style name you configured. A style that defines its own turnReminder gets that text; otherwise it gets one short sentence pointing back at the style. The per-turn slot is the position Anthropic's own Opus 5 guidance points at for tone, where a short reminder late in a long prompt is their measured remedy.",
     modelFacing: true,
   },
   {
@@ -1209,6 +1218,10 @@ export const applyCustomization = async (
     'adhd-output-style': {
       fn: c => writeAdhdOutputStyle(c),
       condition: !!config.settings.misc?.adhdOutputStyle,
+    },
+    'output-style-turn-reminder': {
+      fn: c => writeOutputStyleTurnReminder(c),
+      condition: !!config.settings.misc?.outputStyleTurnReminder,
     },
     'auto-mode-classifier-model': {
       fn: c =>

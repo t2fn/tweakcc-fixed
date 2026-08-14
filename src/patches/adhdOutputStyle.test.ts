@@ -45,6 +45,29 @@ describe('writeAdhdOutputStyle', () => {
     expect(out).not.toContain('MUST land under 120 words');
   });
 
+  // Each of these earned its place in testing, and each has been dropped by a
+  // rewrite at least once. Assert them so a future edit has to be deliberate.
+  it('keeps the rules that measurably changed the output', () => {
+    const out = writeAdhdOutputStyle(FILE)!;
+    // Replacing description with the command or path was the largest single
+    // reduction on a "how do I fix this" task, 434 words down to 361.
+    expect(out).toContain('Show the thing rather than describing it');
+    // Targets the categories that padding actually fell into.
+    expect(out).toContain('Say each thing once');
+    expect(out).toContain('Do not defend a choice nobody questioned');
+    // Abstract fidelity wording did not hold; the named failures did.
+    expect(out).toContain('Keep both sides of a count');
+    expect(out).toContain('in the browser only');
+    expect(out).toContain('Do not add technical detail you were not given');
+    // Dropping this list let "genuinely" back in and pushed em dashes above
+    // the unpatched rate.
+    expect(out).toContain('genuinely');
+    expect(out).toContain('Never use em dashes');
+    // A heading over every single line was caused by an earlier, unconditional
+    // version of the skimmability rule.
+    expect(out).toContain('never above a single line');
+  });
+
   it('installs the full rules in the alternate text-output prompt', () => {
     const textOutput =
       "End-of-turn summary: one or two sentences. What changed and what's next. Nothing else.";
