@@ -161,32 +161,6 @@ const compileMatcher = (spec: PromptMatchSpec): CompiledPromptMatcher => {
   return { tokens, plan: buildAnchorPlan(tokens) };
 };
 
-const caseInsensitiveEqual = (
-  left: string | undefined,
-  right: string
-): boolean => {
-  if (left === undefined) return false;
-  if (left === right) return true;
-  const leftCode = left.charCodeAt(0);
-  const rightCode = right.charCodeAt(0);
-  if (leftCode < 0x80 && rightCode < 0x80) {
-    const fold = (code: number): number =>
-      code >= 65 && code <= 90 ? code + 32 : code;
-    return fold(leftCode) === fold(rightCode);
-  }
-  let matcher = nonAsciiCaseMatchers.get(right);
-  if (!matcher) {
-    matcher = new RegExp(
-      `^(?:${right.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})$`,
-      'i'
-    );
-    nonAsciiCaseMatchers.set(right, matcher);
-  }
-  return matcher.test(left);
-};
-
-const nonAsciiCaseMatchers = new Map<string, RegExp>();
-
 const isWord = (value: string | undefined): boolean => {
   if (value === '$' || value === '_') return true;
   if (value === undefined) return false;
@@ -228,7 +202,7 @@ const matchTokensAt = (
     }
     const token = tokens[tokenIndex];
     if (token.kind === 'literal') {
-      if (!caseInsensitiveEqual(sourceCharAt(content, position), token.value)) {
+      if (sourceCharAt(content, position) !== token.value) {
         if (!fail()) return null;
         continue;
       }
@@ -277,7 +251,7 @@ const matchTokensAt = (
       }
       if (
         sourceCharAt(content, position) === '\\' &&
-        caseInsensitiveEqual(sourceCharAt(content, position + 1), 'n')
+        sourceCharAt(content, position + 1) === 'n'
       ) {
         position += 2;
         tokenIndex++;
@@ -287,7 +261,7 @@ const matchTokensAt = (
       continue;
     }
     if (token.kind === 'non-ascii') {
-      if (caseInsensitiveEqual(sourceCharAt(content, position), token.value)) {
+      if (sourceCharAt(content, position) === token.value) {
         position++;
         tokenIndex++;
         continue;
@@ -296,7 +270,7 @@ const matchTokensAt = (
       const sourceU = sourceSlice(content, position, position + 6);
       if (
         sourceU[0] === '\\' &&
-        caseInsensitiveEqual(sourceU[1], 'u') &&
+        sourceU[1] === 'u' &&
         sourceU.slice(2).toLowerCase() === uForm
       ) {
         position += 6;
@@ -308,7 +282,7 @@ const matchTokensAt = (
         const sourceX = sourceSlice(content, position, position + 4);
         if (
           sourceX[0] === '\\' &&
-          caseInsensitiveEqual(sourceX[1], 'x') &&
+          sourceX[1] === 'x' &&
           sourceX.slice(2).toLowerCase() === xForm
         ) {
           position += 4;
@@ -387,9 +361,7 @@ const reverseTokenPositions = (
   end: number
 ): number[] => {
   if (token.kind === 'literal') {
-    return caseInsensitiveEqual(sourceCharAt(content, end - 1), token.value)
-      ? [end - 1]
-      : [];
+    return sourceCharAt(content, end - 1) === token.value ? [end - 1] : [];
   }
   if (token.kind === 'backslash') {
     const positions: number[] = [];
@@ -417,7 +389,7 @@ const reverseTokenPositions = (
     const positions: number[] = [];
     if (sourceCharAt(content, end - 1) === '\n') positions.push(end - 1);
     if (
-      caseInsensitiveEqual(sourceCharAt(content, end - 1), 'n') &&
+      sourceCharAt(content, end - 1) === 'n' &&
       sourceCharAt(content, end - 2) === '\\'
     ) {
       positions.push(end - 2);
@@ -426,14 +398,14 @@ const reverseTokenPositions = (
   }
   if (token.kind === 'non-ascii') {
     const positions: number[] = [];
-    if (caseInsensitiveEqual(sourceCharAt(content, end - 1), token.value)) {
+    if (sourceCharAt(content, end - 1) === token.value) {
       positions.push(end - 1);
     }
     const uForm = token.code.toString(16).padStart(4, '0');
     const sourceU = sourceSlice(content, end - 6, end);
     if (
       sourceU[0] === '\\' &&
-      caseInsensitiveEqual(sourceU[1], 'u') &&
+      sourceU[1] === 'u' &&
       sourceU.slice(2).toLowerCase() === uForm
     ) {
       positions.push(end - 6);
@@ -443,7 +415,7 @@ const reverseTokenPositions = (
       const sourceX = sourceSlice(content, end - 4, end);
       if (
         sourceX[0] === '\\' &&
-        caseInsensitiveEqual(sourceX[1], 'x') &&
+        sourceX[1] === 'x' &&
         sourceX.slice(2).toLowerCase() === xForm
       ) {
         positions.push(end - 4);
@@ -570,7 +542,7 @@ const batchOccurrences = (
   foldedContent: string,
   anchors: string[]
 ): Map<string, number[] | null> => {
-  const unique = [...new Set(anchors.map(anchor => anchor.toLowerCase()))];
+  const unique = [...new Set(anchors)];
   const found = new Map<string, number[] | null>(
     unique.map(anchor => [anchor, []])
   );
@@ -620,9 +592,21 @@ const batchOccurrences = (
   return found;
 };
 
-export const foldPromptMatchContent = (content: string): string => {
-  return content.replace(/[A-Z]/g, char => char.toLowerCase());
-};
+/**
+ * Identity. Kept so the callers that used to hand the matcher a case-folded
+ * copy keep compiling, and as the single place documenting why matching is
+ * CASE-SENSITIVE.
+ *
+ * The `i` flag was carried for "casing inconsistencies in unicode escape
+ * sequences" (`\u201C` vs `\u201c`). `escapeNonAsciiForRegex` already handles
+ * exactly that, expanding every hex letter into a `[cC]` class via `hexAlt`, so
+ * the flag bought nothing there and instead widened every prompt regex over its
+ * own PROSE. That manufactured wrong-site ambiguity: `(no output)` occurs 6
+ * times in cli.js — exactly its 6 catalogue entries — but 8 times
+ * case-insensitively, so the group read as ambiguous and the override was
+ * skipped entirely.
+ */
+export const foldPromptMatchContent = (content: string): string => content;
 
 export const findAllPromptPieceMatches = async (
   spec: PromptMatchSpec,
@@ -630,7 +614,7 @@ export const findAllPromptPieceMatches = async (
 ): Promise<RegExpExecArray[]> => {
   const matches = tokenMatches(compileMatcher(spec), content);
   if (matches) return matches;
-  return findAllMatchesWithStackFallback(spec.regex, 'sig', content);
+  return findAllMatchesWithStackFallback(spec.regex, 'sg', content);
 };
 
 export class PromptPieceMatcherCatalog {
@@ -648,7 +632,7 @@ export class PromptPieceMatcherCatalog {
       const matcher = compileMatcher(spec);
       this.compiled.set(spec.regex, matcher);
       if (!matcher.plan) continue;
-      const anchor = matcher.plan.anchor.toLowerCase();
+      const anchor = matcher.plan.anchor;
       const regexes = this.anchorRegexes.get(anchor);
       if (regexes) regexes.push(spec.regex);
       else {
@@ -669,7 +653,7 @@ export class PromptPieceMatcherCatalog {
   }
 
   delete(regex: string): void {
-    const anchor = this.compiled.get(regex)?.plan?.anchor.toLowerCase();
+    const anchor = this.compiled.get(regex)?.plan?.anchor;
     this.specs.delete(regex);
     this.compiled.delete(regex);
     if (!anchor) return;
@@ -723,7 +707,7 @@ export class PromptPieceMatcherCatalog {
     const spec = this.specs.get(regex);
     const matcher = this.compiled.get(regex);
     if (!spec || !matcher) return [];
-    const anchor = matcher.plan?.anchor.toLowerCase();
+    const anchor = matcher.plan?.anchor;
     const indexed = anchor
       ? tokenMatches(matcher, content, this.anchorOccurrences.get(anchor))
       : null;
@@ -731,7 +715,7 @@ export class PromptPieceMatcherCatalog {
       indexed ??
       (await findAllMatchesWithStackFallback(
         spec.regex,
-        'sig',
+        'sg',
         sourceString(content)
       ));
     return matches;
@@ -789,7 +773,7 @@ export class PromptPieceMatcherCatalog {
           matcher,
           content,
           matcher.plan
-            ? this.anchorOccurrences.get(matcher.plan.anchor.toLowerCase())
+            ? this.anchorOccurrences.get(matcher.plan.anchor)
             : undefined
         );
         if (matches) results.set(regex, matches);
@@ -799,7 +783,7 @@ export class PromptPieceMatcherCatalog {
       if (results.has(regex)) continue;
       results.set(
         regex,
-        await findAllMatchesWithStackFallback(spec.regex, 'sig', content)
+        await findAllMatchesWithStackFallback(spec.regex, 'sg', content)
       );
     }
     return results;

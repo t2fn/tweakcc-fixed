@@ -101,6 +101,7 @@ import { writeAutonomousOperationAllModels } from './autonomousOperationAllModel
 import { writeAdhdOutputStyle } from './adhdOutputStyle';
 import { writeAutoModeClassifierModel } from './autoModeClassifierModel';
 import { writeComplexityRouter } from './complexityRouter';
+import { writeFablePlan } from './fablePlan';
 import { writeVoiceMode } from './voiceMode';
 import { writeChannelsMode } from './channelsMode';
 import { writeCtrlBackspace } from './ctrlBackspace';
@@ -473,6 +474,14 @@ const PATCH_DEFINITIONS = [
     group: PatchGroup.FEATURES,
     description:
       'Auto-route reasoning effort (thinking depth) by task complexity: routine work runs at low effort, the top tier only for genuinely frontier problems. Rides on your current model - no model switch, no prompt-cache churn. A one-shot Haiku side-call routes each prompt using a rolling TL;DR summary of the session (so terse follow-ups that continue hard work stay elevated; persisted across resume, reseeded from the main model summary on compaction). While on it drives effort, overriding your saved effortLevel default; an in-session /effort or CLAUDE_CODE_EFFORT_LEVEL still wins. Off by default.',
+    modelFacing: true,
+  },
+  {
+    id: 'fable-plan',
+    name: 'Fable Plan mode',
+    group: PatchGroup.FEATURES,
+    description:
+      'Adds a "fableplan" entry to /model: Fable while planning, Opus while executing, each at its own reasoning effort (Fable xhigh, Opus medium by default). Mirrors the mechanism Claude Code already ships for opusplan, so it is a MODEL YOU SELECT — nothing changes for any other model, your selection stays "fableplan" throughout, and no model is ever switched underneath you mid-session. Also surfaces Claude Code\'s own "Yes, clear context (N% used)" option on the plan-approval dialog, which Claude Code defaults off: clearing hands only the plan to the executing model, where continuing re-sends the entire planning transcript to a different one. Off by default.',
     modelFacing: true,
   },
   {
@@ -1215,6 +1224,10 @@ export const applyCustomization = async (
     'complexity-router': {
       fn: c => writeComplexityRouter(c, config.settings.complexityRouter),
       condition: config.settings.complexityRouter.enabled,
+    },
+    'fable-plan': {
+      fn: c => writeFablePlan(c, config.settings.fablePlan),
+      condition: config.settings.fablePlan.enabled,
     },
     'allow-custom-agent-models': {
       fn: c => writeAllowCustomAgentModels(c),

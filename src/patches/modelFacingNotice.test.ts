@@ -15,6 +15,7 @@ const MODEL_FACING_IDS = [
   'adhd-output-style',
   'auto-mode-classifier-model',
   'complexity-router',
+  'fable-plan',
   'dream-mode',
   'lean-memory-types',
   'suppress-deferred-tools',

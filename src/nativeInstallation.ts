@@ -233,14 +233,18 @@ function parseStringPointer(buffer: Buffer, offset: number): StringPointer {
 /**
  * True if the module represents the native claude entrypoint.
  */
-function isClaudeModule(moduleName: string): boolean {
+export function isClaudeModule(moduleName: string): boolean {
+  const normalizedName = moduleName.replaceAll('\\', '/');
   return (
-    moduleName.endsWith('/claude') ||
-    moduleName === 'claude' ||
-    moduleName.endsWith('/claude.exe') ||
-    moduleName === 'claude.exe' ||
-    moduleName.endsWith('/src/entrypoints/cli.js') ||
-    moduleName === 'src/entrypoints/cli.js'
+    normalizedName.endsWith('/claude') ||
+    normalizedName === 'claude' ||
+    normalizedName.endsWith('/claude.exe') ||
+    normalizedName === 'claude.exe' ||
+    normalizedName.endsWith('/src/entrypoints/cli.js') ||
+    normalizedName === 'src/entrypoints/cli.js' ||
+    normalizedName === '/$bunfs/root/cli' ||
+    normalizedName === 'B:/~BUN/root/cli' ||
+    normalizedName === 'cli'
   );
 }
 
@@ -1405,6 +1409,74 @@ function alignBigInt(value: bigint, alignment: bigint): bigint {
   return ((value + alignment - 1n) / alignment) * alignment;
 }
 
+export interface BunSectionPlacement {
+  newVaddr: bigint;
+  newFileOffset: bigint;
+  alignedNewSize: bigint;
+  extensionSize: bigint;
+  /** Placed directly after the writable segment (gap-free) rather than at nextVirtualAddress. */
+  compact: boolean;
+}
+
+/**
+ * Where to place the rebuilt `.bun` section inside the writable PT_LOAD.
+ *
+ * A PT_LOAD maps a CONTIGUOUS file -> vaddr range, and the writable segment is
+ * extended to cover the new section — so every byte between the segment's
+ * current end and the new section's vaddr becomes a real zero byte in the file.
+ * LIEF's `nextVirtualAddress()` rounds up to a coarse boundary (the next 256 MB
+ * here), which on a ~275 MB Claude Code binary padded the output with roughly
+ * 427 MB of zeroes.
+ *
+ * When the writable segment is the TOPMOST LOAD segment the section can instead
+ * go immediately after it, page-aligned, with no gap at all. That is only safe
+ * when nothing is mapped above it — otherwise extending the segment would
+ * overlap a higher one — so anything else falls back to the original placement.
+ *
+ * `topmostLoadEnd` must be max(vaddr + memsz) across every LOAD segment, and
+ * `rwVirtualSize` must be the MEMORY size, so a BSS tail is not mistaken for
+ * file content.
+ *
+ * ELF-only, so it changes nothing on macOS. Kept as a pure function of its
+ * inputs precisely so the arithmetic is testable without a Linux binary.
+ * Ported from upstream b36a8ca (#915).
+ */
+export function computeBunSectionPlacement(params: {
+  rwVirtualAddress: bigint;
+  rwVirtualSize: bigint;
+  rwFileOffset: bigint;
+  rwFileSize: bigint;
+  topmostLoadEnd: bigint;
+  nextVirtualAddress: bigint;
+  newContentSize: bigint;
+  pageSize: bigint;
+}): BunSectionPlacement {
+  const {
+    rwVirtualAddress,
+    rwVirtualSize,
+    rwFileOffset,
+    rwFileSize,
+    topmostLoadEnd,
+    nextVirtualAddress,
+    newContentSize,
+    pageSize,
+  } = params;
+
+  const alignedNewSize = alignBigInt(newContentSize, pageSize);
+  const rwMemEnd = rwVirtualAddress + rwVirtualSize;
+  const compact = rwMemEnd >= topmostLoadEnd;
+  const newVaddr = compact
+    ? alignBigInt(rwMemEnd, pageSize)
+    : alignBigInt(nextVirtualAddress, pageSize);
+
+  const offsetInSegment = newVaddr - rwVirtualAddress;
+  const newFileOffset = rwFileOffset + offsetInSegment;
+  const oldRwFileEnd = rwFileOffset + rwFileSize;
+  const extensionSize = newFileOffset + alignedNewSize - oldRwFileEnd;
+
+  return { newVaddr, newFileOffset, alignedNewSize, extensionSize, compact };
+}
+
 /**
  * Repack an ELF binary that uses the new .bun section format (post-PR#26923).
  *
@@ -1473,42 +1545,34 @@ function repackELFSection(
 
     const pageSize = elfBinary.pageSize();
     const newContentSize = BigInt(newSectionData.length);
-    const alignedNewSize = alignBigInt(newContentSize, pageSize);
 
-    // Anti-bloat: reuse the original .bun location if no allocated section follows it.
-    // Without this check LIEF's nextVirtualAddress() rounds up to a high boundary,
-    // leaving old sections + empty gaps as dead weight on every patch (the bug that
-    // turned a ~275 MB Bun binary into ~723 MB).
-    const SHF_ALLOC = 0x2n;
-    const allocSectionAtOrAfterBun = elfBinary
-      .sections()
-      .some(
-        s =>
-          s.name !== '.bun' &&
-          (BigInt(s.flags) & SHF_ALLOC) !== 0n &&
-          BigInt(s.virtualAddress) >= oldBunSectionVaddr
-      );
+    // Place the rebuilt .bun right after the writable segment when that segment
+    // is the topmost LOAD, instead of at LIEF's nextVirtualAddress() — which
+    // rounds to a coarse boundary and pads the file with ~427 MB of zeroes,
+    // since the extended PT_LOAD has to cover the whole span contiguously.
+    const loadSegments = elfBinary.segments().filter(s => s.type === 'LOAD');
+    const topmostLoadEnd = loadSegments.reduce((max, s) => {
+      const end = BigInt(s.virtualAddress) + BigInt(s.virtualSize);
+      return end > max ? end : max;
+    }, 0n);
 
-    let newVaddr: bigint;
-    let newFileOffset: bigint;
-    if (allocSectionAtOrAfterBun) {
-      // Another allocated section sits at or after the old .bun vaddr — we must
-      // append after it to avoid clobbering live data.
-      newVaddr = alignBigInt(elfBinary.nextVirtualAddress(), pageSize);
-      const offsetInSegment = newVaddr - rwSegment.virtualAddress;
-      newFileOffset = rwSegment.fileOffset + offsetInSegment;
-    } else {
-      // No allocated section occupies the old .bun slot, so we can safely reuse it
-      // in-place and avoid growing the file.
-      newVaddr = oldBunSectionVaddr;
-      const offsetInSegment = newVaddr - rwSegment.virtualAddress;
-      newFileOffset = rwSegment.fileOffset + offsetInSegment;
-    }
+    const placement = computeBunSectionPlacement({
+      rwVirtualAddress: BigInt(rwSegment.virtualAddress),
+      rwVirtualSize: BigInt(rwSegment.virtualSize),
+      rwFileOffset: BigInt(rwSegment.fileOffset),
+      rwFileSize: BigInt(rwSegment.fileSize),
+      topmostLoadEnd,
+      nextVirtualAddress: BigInt(elfBinary.nextVirtualAddress()),
+      newContentSize,
+      pageSize: BigInt(pageSize),
+    });
+    const { newVaddr, newFileOffset, extensionSize, compact } = placement;
+    debug(
+      `repackELFSection: ${compact ? 'compact' : 'fallback'} placement ` +
+        `(topmost LOAD ends at 0x${topmostLoadEnd.toString(16)})`
+    );
 
-    const oldRwFileEnd = rwSegment.fileOffset + rwSegment.fileSize;
-    const extensionSize = newFileOffset + alignedNewSize - oldRwFileEnd;
-
-    if (extensionSize < 0n && allocSectionAtOrAfterBun) {
+    if (extensionSize < 0n) {
       throw new Error(
         'New .bun location overlaps existing writable ELF segment'
       );

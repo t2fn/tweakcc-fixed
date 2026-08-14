@@ -177,5 +177,16 @@ export const restoreNativeBinaryFromBackup = async (
     'restore'
   );
 
+  // The binary is back to vanilla, so no prompt override is applied any more.
+  // Without this the hash index keeps claiming every override is live against a
+  // pristine binary: no "unapplied changes" banner, and the user believes their
+  // prompts are in effect when they are not. The cli.js sibling has always done
+  // this; the native path silently did not.
+  await clearAllAppliedHashes();
+
+  await updateConfigFile(config => {
+    config.changesApplied = false;
+  });
+
   return true;
 };

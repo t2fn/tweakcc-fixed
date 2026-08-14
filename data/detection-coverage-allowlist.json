@@ -589,5 +589,17 @@
     "shape": "array",
     "excerpt": "an OAuth access token is required a directly presented OAuth access token is required db verbs require a user-scoped OAuth token, not an org",
     "note": "not model-facing: Q3b = new Set([...]) is read only by Z3b(e,t) => e===403 && Q3b.has(t.trim()), a membership test over an upstream artifact-db 403 body"
+  },
+  "4b38eff473783899": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "copy (default): the printed directory is copied into the plugin cache and content-hashed, so it may be deleted afterwards. link: the cache e",
+    "why": "zod .describe() on the command plugin-source mode field — marketplace config schema"
+  },
+  "540975f50eb13997": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "Controls the `command` plugin source, whose plugin directory is produced by running a marketplace-declared command on this machine. true: co",
+    "why": "zod .describe() on managed-settings disableCommandPluginSources — config schema"
   }
 }

@@ -41,6 +41,10 @@ const baseMenuItems: SelectItem[] = [
     desc: '[EXPERIMENTAL] Auto-route reasoning effort by task complexity (routine=low ... hardest=max)',
   },
   {
+    name: MainMenuItem.FABLE_PLAN,
+    desc: 'Plan on one model, execute on another (a /model entry, like opusplan)',
+  },
+  {
     name: MainMenuItem.CLAUDE_MD_ALT_NAMES,
     desc: 'Configure alternative filenames for CLAUDE.md (e.g., AGENTS.md)',
   },

@@ -29047,5 +29047,486 @@
   "b939ea4fab30d354631845f34d4569bd81d13641": { "facing": "internal" },
   "77e6f9bf490b5d45283fd3bdb97e1df329bad6d3": { "facing": "internal" },
   "7984eec200689a24519b2d36e962f52bbbe141cb": { "facing": "internal" },
-  "70a43739ad38cc74387a78db60eefd013af8b780": { "facing": "internal" }
+  "70a43739ad38cc74387a78db60eefd013af8b780": { "facing": "internal" },
+  "9ebf4b448aca5710f7beb0d4d7367b52f216fb10": {
+    "facing": "model",
+    "id": "skill-prototype-runtime-capabilities-guidance",
+    "name": "Skill: Prototype runtime capabilities guidance",
+    "desc": "Explains when prototype Artifacts should use user-granted runtime capabilities and requires loading the artifact-capabilities skill before relying on live data or actions"
+  },
+  "50837a8cd9768a533f4b39363c93aa6e8b1ec843": {
+    "facing": "model",
+    "id": "tool-description-powershell-git-guidance",
+    "name": "Tool Description: PowerShell (git guidance)",
+    "desc": "PowerShell tool guidance to prefer new commits, consider safer alternatives to destructive git operations, and never bypass hooks or signing without an explicit user request"
+  },
+  "b4c94f7ce14f74111a86f5f6638d8108f89869fb": {
+    "facing": "model",
+    "id": "data-auto-mode-recon-shell-history-optin-note",
+    "name": "Data: auto-mode recon shell-history opt-in note",
+    "desc": "Note in the auto-mode-setup shell-history recon section clarifying Q3 opt-in and that raw history was not read; fed to the propose model call"
+  },
+  "2969cdb45538082b22b801278db36d8cac8f6e58": {
+    "facing": "model",
+    "id": "data-auto-mode-recon-history-no-optin",
+    "name": "Data: auto-mode recon history NOT GATHERED (no opt-in)",
+    "desc": "NOT GATHERED placeholder in the auto-mode-setup shell-history recon section when the user did not opt in at Q3; fed to the propose model call"
+  },
+  "df44283bcb96d5c5f66dea86cd843936690866de": {
+    "facing": "model",
+    "id": "data-auto-mode-recon-home-not-searched",
+    "name": "Data: auto-mode recon home NOT GATHERED (beyond-repo not opted in)",
+    "desc": "NOT GATHERED placeholder in the auto-mode-setup recon output when the user did not opt into looking beyond the repo; fed to the propose model call"
+  },
+  "9750cf1f57cedb3ee2d185d30c2093a690e698c3": {
+    "facing": "model",
+    "id": "tool-result-artifact-comments-anchor-file-page-marker",
+    "name": "Tool Result: Artifact comments anchor-file/page marker",
+    "desc": "Artifact comment-list tool-result guidance for the emitted row marker identifying the file or page containing a thread's anchor in a multi-file artifact."
+  },
+  "5180c7993e2d4d6699aea565d80f821ce831943e": {
+    "facing": "model",
+    "id": "system-reminder-usage-limit-grace-checkpoint-next-steps",
+    "name": "System Reminder: Usage Limit Grace Checkpoint Next Steps",
+    "desc": "Completes the usage-limit grace reminder by asking the model to finish the current step and list the most impactful remaining work."
+  },
+  "d96409494f61b217b697d1927f94366ccb8aa5a3": {
+    "facing": "model",
+    "id": "skill-design-seed-canvas-script",
+    "name": "Skill: Design seed-canvas.mjs script",
+    "desc": "Bundled /design skill helper for safely seeding, extracting, and checking multi-artboard canvas Artifact pages."
+  },
+  "c80956ed80ec612d80764e7c951721f43061293e": { "facing": "internal" },
+  "67dd907c463a33be9c6e811b689c3e4cc0a9b2c7": {
+    "facing": "model",
+    "id": "tool-description-bash-git-commit-and-pr-creation-instructions",
+    "name": "Tool Description: Bash git commit and PR creation instructions",
+    "desc": "Bash-tool git commit + PR creation instructions (now wrapped in a ${.commit?…} conditional) — the git safety protocol, commit-only-when-asked rule, and the numbered parallel-command commit/PR workflow"
+  },
+  "c1efb77a7ad391703e88c3c0ac5a1ffaa65ee9a0": {
+    "facing": "model",
+    "id": "skill-artifact-slides-html-template",
+    "name": "Skill: Artifact slides HTML template",
+    "desc": "Bundled live slide-deck Artifact editor template used by the slides skill, including presentation mode, notes, comments, and overflow handling."
+  },
+  "50358d435d1666bb5a8f14d4d9048a75928d81cb": {
+    "facing": "model",
+    "id": "data-task-notification-queued-remote-notifications-nudge",
+    "name": "Data: Queued remote notifications task-notification nudge",
+    "desc": "Task-notification wrapper telling the model that remote notifications are pending and to call the notification-reading tool until the queue is empty."
+  },
+  "80f33ee7593953da556f79348d9763f2c627c2b2": { "facing": "ui" },
+  "a95dc66206b900dc837e5ccf629fb291b82c96ba": {
+    "facing": "model",
+    "id": "agent-prompt-quick-git-commit",
+    "name": "Agent Prompt: Quick git commit",
+    "desc": "Streamlined prompt for creating a single git commit with pre-populated context"
+  },
+  "b75cc407b8eb4ca0fcdce39ec980f4e5052b96e2": { "facing": "ui" },
+  "2edc5f571d8bd80031ad90a3d750d3808e41df06": {
+    "facing": "model",
+    "id": "data-auto-mode-safety-classifier-unavailable",
+    "name": "Auto Mode Safety Classifier Unavailable",
+    "desc": "Tells the model that the auto-mode safety classifier is temporarily unavailable and provides retry guidance in the denied tool result."
+  },
+  "70d409f5b5688b7cf8beb852f239430e4f6a3ff3": {
+    "facing": "model",
+    "id": "agent-prompt-pull-request-creation",
+    "name": "Agent Prompt: Pull request creation",
+    "desc": "Prompt for creating a single GitHub pull request from existing commits with branch, template, attribution, shell-formatting, and git-safety guidance"
+  },
+  "3a46afe866832a96f5f366df7e3fdcff5eaf38cf": {
+    "facing": "model",
+    "id": "tool-description-bash-git-commit-and-pr-creation-instructions",
+    "name": "Tool Description: Bash (Git commit and PR creation instructions)",
+    "desc": "Instructions for creating git commits and GitHub pull requests"
+  },
+  "a181c43115146033d45bef8a7f12838a6f789f93": {
+    "facing": "model",
+    "id": "system-prompt-brief-mode-progress-updates",
+    "name": "System Prompt: Brief mode progress updates",
+    "desc": "Brief-mode system-prompt section asking for a one-line start announcement, concise progress updates, and a self-contained final message."
+  },
+  "f25b158c8f2643bf2b8c94956034e14b691d35a8": { "facing": "ui" },
+  "d0795de2f89667ad6492b9d949e6c13cf06210f8": { "facing": "ui" },
+  "39999234ba4240a0ca42c1a04d6c0c239e67e1f8": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-session-context",
+    "name": "Tool Parameter: Artifact session_context",
+    "desc": "Artifact tool input-schema description for the optional session_context parameter, explaining when stored publish context is required and how supplied text replaces the previous context."
+  },
+  "172a9b3a705596e97c69fbd9914237cea2fa9daa": { "facing": "internal" },
+  "b16237dbb26ead56fad1aa21b38270254c9e6007": { "facing": "internal" },
+  "7fa841a13c1349d772aa76ea0d96d2c450a79d62": {
+    "facing": "model",
+    "id": "skill-design-description",
+    "name": "Skill: Design description",
+    "desc": "Trigger description for the Design skill, covering editable multi-artboard canvas Artifacts for interfaces, marketing graphics, and print layouts"
+  },
+  "c4ab83b91af49666355698594236dd3b7148f5ff": {
+    "facing": "model",
+    "id": "skill-commit-description",
+    "name": "Skill: Commit description",
+    "desc": "Trigger description for the /commit skill that gathers git context and applies the required commit workflow, including message style, staging rules, and attribution"
+  },
+  "e49a83ebeec6ce652a4fbd0c334df4b508cfccbe": {
+    "facing": "model",
+    "id": "skill-pr-description",
+    "name": "Skill: PR description",
+    "desc": "Trigger description for the /pr skill that gathers branch context and applies the required GitHub pull-request workflow, including gh CLI, title/body format, and attribution"
+  },
+  "cd2cb1624b2acc31357d57cc41eb73f8f5e36420": {
+    "facing": "model",
+    "id": "skill-artifact-pr-review-description-2",
+    "name": "Skill: Artifact PR review description",
+    "desc": "Trigger description for creating a shareable PR review briefing Artifact with a recommendation, reviewer judgment calls, visual explainer, signals, and blind spots"
+  },
+  "b61bd57cbbbe6913deed4f69c1fddcf875168f93": {
+    "facing": "model",
+    "id": "skill-artifact-pr-review-description",
+    "name": "Skill: Artifact PR review description",
+    "desc": "Trigger description for creating a shareable PR review briefing Artifact with a recommendation, reviewer judgment calls, visual explainer, signals, and blind spots"
+  },
+  "ff64795792097ecbad88e9881fcb8f5daa5eafcd": { "facing": "ui" },
+  "ebb799388f082d685a72d905cb25c98590412d82": { "facing": "internal" },
+  "4fd237aaf215b496e9a32186b1bddb470e0a4a8c": { "facing": "internal" },
+  "93181e11d278c53d3e26bb061fd74a04e4473157": { "facing": "ui" },
+  "e5aad9ddb7791b32249e99866606ff5438df326f": {
+    "facing": "model",
+    "id": "system-reminder-queued-notifications-delivery",
+    "name": "System Reminder: Queued notifications delivery",
+    "desc": "Formats an authoritative system notification for a drained batch of queued notifications, including relayed bodies and the remaining queue count"
+  },
+  "8f1bc7e8eeea84f7750f1c495ab4f3272cb3ffd3": { "facing": "internal" },
+  "6ddc901c257638c6a7f98aaed82e27d9e9d1ba95": { "facing": "internal" },
+  "8e4af503998a1f40414ce7ca6270dfbcadd38244": { "facing": "ui" },
+  "3228e25ed867360f820707eff8251306c12ce0c6": { "facing": "internal" },
+  "cbaa6c5718f0feac615f79c50de04c1754c59518": { "facing": "ui" },
+  "6f99bee6abc4265aeda9100a89a56c404774afb4": { "facing": "ui" },
+  "d3aeddbe8cf206be6d634f105f843f163d6de40c": {
+    "facing": "model",
+    "id": "data-login-success-env-token-warning",
+    "name": "Data: /login Success Environment-Token Warning",
+    "desc": "Model-visible /login output warning about an inherited CLAUDE_CODE_OAUTH_TOKEN and the session switching to newly obtained credentials."
+  },
+  "8e56cda6069657c545ae0dfcfef73426beb3a674": {
+    "facing": "model",
+    "id": "tool-parameter-readnotifications-remaining",
+    "name": "ReadNotifications Remaining Output Field",
+    "desc": "Output-schema description for the ReadNotifications remaining count, telling the model to call the tool again while notifications remain."
+  },
+  "2670ed263c82fce88a3f241bdaa4396130cad2c7": { "facing": "internal" },
+  "04d3641b900cc9cf64a7735a91a48567eebdecc9": { "facing": "internal" },
+  "3b9466489ac75a2f508f81dd7e7d6984b8cef2ac": { "facing": "internal" },
+  "7add1513d90070e4d791db61c5a6adb23455d96c": { "facing": "internal" },
+  "346fe1c8a9b1528d42dfe5a3810b3bf9b0ad85ee": {
+    "facing": "model",
+    "id": "tool-description-readnotifications",
+    "name": "Tool Description: ReadNotifications",
+    "desc": "Describes the ReadNotifications tool for draining queued GitHub, scheduled-trigger, and cross-session notifications in authoritative batches."
+  },
+  "83f5fe32633100f12e9e2231520fb7c5dd0c47aa": {
+    "facing": "model",
+    "id": "tool-parameter-readnotifications-queued-at",
+    "name": "ReadNotifications Queued At Field",
+    "desc": "Output-schema description for the ReadNotifications queued_at RFC3339 timestamp field."
+  },
+  "5a90f7ae7c3534adc3846c61210bcf2d6dcc6793": { "facing": "internal" },
+  "4c04dd6f0219c81df2244a30d6dbb79cf809a316": {
+    "facing": "model",
+    "id": "slash-command-teleport-description",
+    "name": "Slash Command: /teleport Description",
+    "desc": "Description of the /teleport command, injected into the model's Available commands listing when remote sessions are enabled."
+  },
+  "ea8bc4d844daa264be9e879a2f4b872783fd10d8": {
+    "facing": "model",
+    "id": "tool-parameter-readnotifications-notification-id",
+    "name": "ReadNotifications Notification ID Field",
+    "desc": "Output-schema description for the ReadNotifications notification_id stable deduplication field."
+  },
+  "c09c535544b74ade7c7488c2d32b4f89d1e3c5be": { "facing": "internal" },
+  "54deea5ae18f7b027fb7c964af273de896da8cc9": {
+    "facing": "model",
+    "id": "tool-parameter-readnotifications-origin",
+    "name": "ReadNotifications Origin Field",
+    "desc": "Output-schema description for the ReadNotifications origin source token, including open-set and normalization behavior."
+  },
+  "12201416074f3688bdbef1874f2faaa30ed29026": { "facing": "internal" },
+  "48667d2e36c8be2bfe9ae0e97efa93860a9cb9c4": { "facing": "internal" },
+  "19ff3b1e57e8cf794df4cec06e304abe428de7b1": { "facing": "internal" },
+  "c52b447d65f15ec7385e80c66d83dc62cb5b3d18": {
+    "facing": "model",
+    "id": "tool-result-artifact-supporting-file-contenttype-not-servable",
+    "name": "Tool Result: Supporting File ContentType Not Servable",
+    "desc": "ArtifactInputError returned when a supporting file's contentType is not in the servable allowlist."
+  },
+  "21b05d228bc6010f59e775afde2853b873bf6c89": { "facing": "internal" },
+  "b7597c4a77dbf36b0655b6e48c8092716f0922cd": { "facing": "internal" },
+  "ff6e404ce4a2b7f05472de221b2703b606bbc2df": {
+    "facing": "model",
+    "id": "data-teleport-remote-control-required",
+    "name": "Data: /teleport Remote Control Requirement",
+    "desc": "Model-visible /teleport precondition output telling the user to connect the session with /remote-control first."
+  },
+  "c23079ef4c12e5c81e2005135bf4ef8cbdc15429": { "facing": "ui" },
+  "632ff0d62939d17f6327c8e76d536ea74ecad50c": { "facing": "ui" },
+  "847e4fc92bdbb4fadc09b533192452c951a93aee": { "facing": "internal" },
+  "a3f1cb2cbf5566f831c6179daa9a5368cd259ae9": { "facing": "internal" },
+  "ec8af9e58317f7b772be15d6ee706e7e5649bf7b": {
+    "facing": "model",
+    "id": "tool-parameter-readnotifications-content",
+    "name": "ReadNotifications Notification Content Field",
+    "desc": "Output-schema description for the ReadNotifications notifications[].content field, which carries each verbatim external notification body to the model."
+  },
+  "285911a1730b8285d5c0ea857f8e3731061569ae": { "facing": "ui" },
+  "c938568f1622e6662e9eb50cab0acefea2beee32": { "facing": "internal" },
+  "6655978df652db11aa2b0adfce3cb7bc066405b2": { "facing": "ui" },
+  "a28d8531e5181dc547e8e97e5c83c1b50406306b": { "facing": "ui" },
+  "4296c5ccb0b56f497c9a2f9c0fb0ac8981f971c3": { "facing": "ui" },
+  "72a8c154c2e1971e743ac11625cca9bba49e0fa6": { "facing": "internal" },
+  "36029c7d22efb1b9cccd17f6badf8a36337edbfc": { "facing": "internal" },
+  "2019e2f4c8c5163b09b3855caed4d282a1585221": { "facing": "internal" },
+  "5eb025ee3729dbdc0c187e9966cb3a68fa4ed9f6": { "facing": "internal" },
+  "3682c3ca6fe3aae1cf69d820946cdf4198f9dc1b": { "facing": "ui" },
+  "2ae088d25e2f6066d03cd85058dc4cdb1b20ee25": { "facing": "ui" },
+  "35ca6cbfdfdabebad8ed3dc8aa43149d1aa3f467": { "facing": "ui" },
+  "c9975facb1deb248257908581eafb21dd1086003": { "facing": "ui" },
+  "58003a7769d47141b24c2269c1810d5ceeba2e8c": { "facing": "internal" },
+  "97937a154cd8452608914b52186ecd3741a019a8": { "facing": "ui" },
+  "daf69b9d3e9b71e3cb00b33aa544613a31a603ca": { "facing": "internal" },
+  "5a3c14434254a183e7d70b090f2164c321bc0356": { "facing": "internal" },
+  "4f933463d347a16f396816889a463b805d438b32": { "facing": "internal" },
+  "bf22eb7f835158ceca5ddf764c3fca7bcd65dec1": { "facing": "internal" },
+  "05b06dbce5824b8665a5ce331b894eecfc1a8560": { "facing": "internal" },
+  "180f6ff7c1e4bd88443e2d301f3d6600c3a243b7": { "facing": "ui" },
+  "4a61d55d668f173f07a731963bde4aaa3951e567": { "facing": "ui" },
+  "f35cc2752ab0fa53b720aefa7a9a54eec295390d": { "facing": "ui" },
+  "9113d5bb55b0087a1014bbee5bd651bff11c9fba": { "facing": "ui" },
+  "4820fe33188c277366c08b07f292725f4b7deb15": { "facing": "ui" },
+  "3103a4e80449a8e3cf5aae2517a8428538c16578": { "facing": "internal" },
+  "e3a2edfa6eca01838419d7f58060cbf428be010e": { "facing": "internal" },
+  "310780c5e558cdea1fc20216543bd9271f11ad09": { "facing": "internal" },
+  "be7cd5bb7491c91e636dabfb9cba4611795fe678": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-description-native-shift-enter",
+    "name": "Slash Command: Terminal Setup Description (Native Shift+Enter)",
+    "desc": "Describes /terminal-setup on terminals with native Shift+Enter support; it is included in the Available commands context sent to the model."
+  },
+  "8025caf5476bfa9296f5674630c54ce26f3ce923": { "facing": "internal" },
+  "c61655de3e6d11e3e9e401254740ee1ba9e028e1": {
+    "facing": "model",
+    "id": "tool-result-read-notifications-trigger-fire-label",
+    "name": "Tool Result: ReadNotifications Trigger Origin",
+    "desc": "Origin label for trigger_fire entries in the ReadNotifications tool result, delivered to the model with queued notification bodies."
+  },
+  "afd3e42a820a87c5c94cb48c3ca84f97571b845d": {
+    "facing": "model",
+    "id": "tool-result-read-notifications-entry",
+    "name": "Tool Result: ReadNotifications Entry",
+    "desc": "Per-notification header and verbatim body emitted in the model-visible ReadNotifications tool result."
+  },
+  "31c51c017092d232d75296b021536ee0846d227b": {
+    "facing": "model",
+    "id": "tool-result-read-notifications-remaining-tail",
+    "name": "Tool Result: ReadNotifications Remaining Tail",
+    "desc": "Continuation text telling the model how many queued notifications remain and to call ReadNotifications again."
+  },
+  "3205ca32de18caf396ac9c84d63f4c01f7695b70": { "facing": "internal" },
+  "83dec75c6be3e029567ac0a50d4edbb0899b073d": { "facing": "internal" },
+  "834809684cd3d2152844f0d66f02688db9efd8f8": { "facing": "internal" },
+  "0065bbb3feaea30239b464ee794910e947154560": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-session-context-guidance",
+    "name": "Tool Parameter: Artifact session context guidance",
+    "desc": "Guidance in the Artifact tool's session_context input-schema description listing what the model should preserve for later sessions."
+  },
+  "4d0c19c180c9174dd07a64ed4f131236c6263985": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-already-watching-publish-and-comment-wakes",
+    "name": "Tool Result: Artifact already-watching publish and comment wakes",
+    "desc": "Already-watching durable-wake note stating that artifact republishes and to-Claude comments will wake the session."
+  },
+  "c40850d85c9a6f648e7d086c3137146bffdc6c80": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-already-watching-note",
+    "name": "Tool Result: Artifact Durable Wake Already Watching Note",
+    "desc": "Already-watching durable-wake note for the branch where artifact republishes wake the session."
+  },
+  "908215b26e53667411940d952c1fe48e3d708535": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-watch",
+    "name": "Tool parameter: Artifact action — watch/unwatch/status",
+    "desc": "Artifact action-schema addendum describing live and durable watch behavior, unwatch, status, and comment-wake semantics."
+  },
+  "4d5a5f4eef0ec51480a67ab705b0b436587021f8": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-read-write-db",
+    "name": "Tool Parameter: Artifact Action read_db / write_db",
+    "desc": "Artifact action-schema segment describing database operations, paging, shared-row handling, private data/users rows, and the current-user me alias."
+  },
+  "d4ab953f60604da778c6f6383e02ef9a6008d805": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-permission-required",
+    "name": "Tool Result: Artifact Watch Permission Required",
+    "desc": "First-watch permission message explaining live or remote durable notifications, session scope, and that notifications carry no content."
+  },
+  "e745ca096d8b8204a4cc9680ef527785f8cbeac1": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-session-approval-reason",
+    "name": "Tool Result: Artifact watch first-session approval reason",
+    "desc": "Decision reason explaining why the first Artifact watch requires session-scoped confirmation and what notifications it covers."
+  },
+  "3bc130850e67d478192ed95a655cb5f2e966c659": {
+    "facing": "model",
+    "id": "data-artifact-watch-auto-classifier-input",
+    "name": "Data: Artifact watch auto-classifier input",
+    "desc": "watch-action summary supplied as user-role text to the auto-mode permission-classifier model."
+  },
+  "83efc47daaa84071c9d98a739d92dfecb184477b": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-status",
+    "name": "Tool Result: Artifact Durable Wake Status",
+    "desc": "Current durable-wake watch status returned to the model with the artifact URL and status note."
+  },
+  "f0c2c53bb7260e568278e1b0b782d58426d8f78f": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-status-fallback-note",
+    "name": "Tool Result: Artifact Durable Wake Status Fallback Note",
+    "desc": "Fallback status note in a durable-wake watch result telling the model when it will be woken and to reread the artifact."
+  },
+  "df21bc3139a28231138bf9c58a4adb2dd033ec7f": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-remote-skip-note",
+    "name": "Tool Result: Artifact Durable Wake Remote Skip Note",
+    "desc": "Remote watch tool-result suffix explaining that durable wake was skipped and appending the reason."
+  },
+  "8038adc96849c4af757f969f851bc2cbc2b776a8": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-remote-no-wake-minter-reason",
+    "name": "Tool Result: Artifact Durable Wake Remote No-Wake-Minter Reason",
+    "desc": "Specific remote durable-wake skip reason stating that no wake-webhook minter is available because the session MCP mount was not found."
+  },
+  "ea91e56e826c931c3c794f2d1a1c4e21bce8259e": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-watches-list-item",
+    "name": "Tool Result: Artifact Durable Wake Watches List Item",
+    "desc": "Per-watch line in the Artifact watches result for a durable-wake subscription, including wake events and since time."
+  },
+  "33038ed1f648ba0f53ca2b18429f8a1909a278d1": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-live-subscription-status",
+    "name": "Tool Result: Artifact Publish Live-Subscription Status",
+    "desc": "Dynamic live-subscription status suffix appended to the Artifact publish tool result, including durable-wake arming status."
+  },
+  "c6b21473139277e5254e16d46af6e81465102790": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-subscription-arming",
+    "name": "Tool Result: Artifact Durable-Wake Subscription Arming",
+    "desc": "Durable-wake arming sentence appended to the Artifact publish result while the background subscription is being established."
+  },
+  "da88149b01fedb12d0ce63d24bbd7a6979a5d587": { "facing": "ui" },
+  "aef222b721d3573c29853716d9f51fd9410f3e98": { "facing": "ui" },
+  "8402ba80d2ecd93cd204fe3555340afb67774f47": { "facing": "internal" },
+  "8e6697ae2d8e367fa130d58c3351af5ad4688d88": { "facing": "ui" },
+  "b1b14d3cacaed6f312e72a58320869812a4fb385": { "facing": "internal" },
+  "e70f47354d4bd9446b8ffacd2389a2dd02114b8d": { "facing": "ui" },
+  "57ec6cf3a7d594132e7ef72b6f6a907f8361adde": { "facing": "ui" },
+  "e5cefdd7acf7e0cc17f6d0a0278a03ae1e61b4e0": { "facing": "ui" },
+  "2d360b5ec3964a04846b2d5f0449ed6d1007034a": { "facing": "ui" },
+  "7735efbfb95858c51004f5aeae92b8520197b1b9": { "facing": "ui" },
+  "de1f156c8fb5587df91e628304978a1eac72e098": { "facing": "ui" },
+  "fb0cda942e7574748da2312c6461ab0327f4fd71": { "facing": "ui" },
+  "c71a3ee2adebd0763e72c0d149c0eef451dd1e04": { "facing": "ui" },
+  "28674c69054875fd7200e24463b9e6ff2e25d442": { "facing": "ui" },
+  "e55d2a6a4a4d4b775848701b9b65d8b6c63a460e": { "facing": "ui" },
+  "d4e833ed5b537d4300b269e5ab985d39ebf16969": { "facing": "ui" },
+  "8c7581a88fa2d27b34798b3f7abfb6db9612320c": { "facing": "ui" },
+  "82bf18dc0b4742d58b38d7a0cc523823f4f63e80": { "facing": "ui" },
+  "da248cb0aa5a32ec401c015db74076e353972da2": { "facing": "ui" },
+  "e66200f3ea29121be4618e58f2894bb715cc54f4": { "facing": "internal" },
+  "857d07dc0c03306316050e72108770a9acac686b": { "facing": "ui" },
+  "566d5b396d99dbc4d2e6b3cb2c0246f8316debb7": { "facing": "internal" },
+  "fa5aeee0f8300779377581fd51676de8550450a7": { "facing": "internal" },
+  "2f180c9a8b09eb8725fd02d2ebb7e7f69e4bf08f": { "facing": "internal" },
+  "1c7badb527b528b6edc3a98f90360c0089869cc8": { "facing": "ui" },
+  "d34ce5b63d514c2a1a8fdcbe1654992b59969a73": { "facing": "ui" },
+  "d2ae5b74f60276967d14ad6455102f3af410e3ab": {
+    "facing": "model",
+    "id": "data-teleport-move-to-cloud-network-error",
+    "name": "Data: /teleport move-to-cloud network error",
+    "desc": "Network-failure message returned by /teleport while moving a Remote Control session to the cloud; the move may or may not have committed."
+  },
+  "8acb3548ecb8cb97d908ec0ee139baef09ddfb74": {
+    "facing": "model",
+    "id": "data-teleport-move-to-cloud-network-error-commit-warning",
+    "name": "Data: /teleport move-to-cloud network-error commit warning",
+    "desc": "Conditional suffix on the /teleport network-failure result warning that the move may have committed when the failure was not a DNS or connection refusal."
+  },
+  "10a95181c7d086eef4ecb22ca31af0db2a954e9f": {
+    "facing": "model",
+    "id": "data-teleport-move-to-cloud-server-error-commit-warning",
+    "name": "Data: /teleport move-to-cloud server-error commit warning",
+    "desc": "HTTP-5xx suffix on a /teleport failure warning that the cloud move may have committed."
+  },
+  "e9dea803d10b5f8914423158e891eba12a9f3f06": {
+    "facing": "model",
+    "id": "data-teleport-already-on-cloud",
+    "name": "Data: /teleport already on cloud",
+    "desc": "Failure result for /teleport when the move endpoint reports that the session is already on cloud, directing the model to refresh the web UI."
+  },
+  "043dc56bac30498d79994420ecae5c780a6c4eec": {
+    "facing": "model",
+    "id": "data-teleport-move-to-cloud-http-error",
+    "name": "Data: /teleport move-to-cloud HTTP error",
+    "desc": "Fallback HTTP failure result from /teleport, with a --debug instruction."
+  },
+  "2dc71706499c0148adbdd539ba794b0dc7bee4f9": {
+    "facing": "model",
+    "id": "data-teleport-self-hosted-target",
+    "name": "Data: /teleport self-hosted target warning",
+    "desc": "Conditional /teleport result suffix explaining that a self-hosted default target cannot continue without a managed cloud environment."
+  },
+  "b4e9cdb7ce735fa8935cf26b8d99aacfe3f71c91": {
+    "facing": "model",
+    "id": "data-teleport-remote-control-session-reconnected",
+    "name": "Data: /teleport Remote Control session reconnected",
+    "desc": "Success output for /teleport when the new Remote Control session is found and includes its URL."
+  },
+  "21370d7b65ca2aa83f0495a0996d87d90aded52e": {
+    "facing": "model",
+    "id": "data-teleport-remote-control-session-reconnect-pending",
+    "name": "Data: /teleport Remote Control reconnect pending",
+    "desc": "Success output for /teleport while the new Remote Control session is still starting."
+  },
+  "77519ad6afd0f0ddd99dae05fb2df628a0aa9f63": {
+    "facing": "model",
+    "id": "data-teleport-remote-control-session-disconnected",
+    "name": "Data: /teleport Remote Control session disconnected",
+    "desc": "Success output for /teleport when the previous Remote Control session is disconnected."
+  },
+  "15c172ffeaa5f23e388513c2c29bf98a9befdd48": { "facing": "ui" },
+  "b258713320460eee0db8d1cfbb5a34dd3b620838": { "facing": "ui" },
+  "ca6a5720878767ce8437f7d8ed1bd811218f01b1": {
+    "facing": "model",
+    "id": "system-prompt-fix-settings-startup-snapshot-note",
+    "name": "Settings-fix prompt: startup-snapshot note",
+    "desc": "Conditional note in the buildSettingsFixPrompt user-turn prompt explaining that --settings is read at startup and changes take effect in a later session."
+  },
+  "e9904d862141277f8b14d711ad9a29ab31470009": {
+    "facing": "model",
+    "id": "system-prompt-fix-settings-startup-snapshot-note",
+    "name": "Settings-fix prompt: startup-snapshot note",
+    "desc": "Conditional note in the buildSettingsFixPrompt user-turn prompt explaining that --settings is read at startup and changes take effect in a later session."
+  },
+  "4dec14e07edf50d7e7a4e6369c5a6a8a7974b2a4": { "facing": "ui" },
+  "be83ce1c332d2e2fee192ab40fd15fef1761a3da": { "facing": "internal" },
+  "a55127ffae0098b6d00f586778971ae8065eae8d": { "facing": "ui" },
+  "2d97356d3cf39b6c5b7d6ade409b7b6cf100c2f7": { "facing": "ui" },
+  "57888f995d61064a7048d39590f7260845e3c7ea": { "facing": "internal" },
+  "dd79790eca3cb09fa7f5be3de91255e80115acee": { "facing": "internal" },
+  "82cae6eefd0027a720432d9e66a869dafdc737d3": { "facing": "ui" },
+  "24ad10ecb1e75bbde6add1daa5ab2c9bd14ca16e": { "facing": "ui" },
+  "8a0dcd77606154958feacd42cd0ff8e4e72d6615": { "facing": "ui" },
+  "b227fb0b5836a8b7c5690e76357c618c4b3648f5": { "facing": "ui" },
+  "a132dd4bc8fdd41462144525c0a40f6c60c1fa2b": { "facing": "ui" }
 }

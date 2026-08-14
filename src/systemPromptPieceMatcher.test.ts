@@ -31,7 +31,7 @@ const expectEquivalent = async (
   const matcher = spec(pieces);
   const expected = await findAllMatchesWithStackFallback(
     matcher.regex,
-    'sig',
+    'sg',
     content
   );
   const actual = await findAllPromptPieceMatches(matcher, content);
@@ -105,7 +105,7 @@ describe('findAllPromptPieceMatchesBatch', () => {
     for (const matcher of specs) {
       const expected = await findAllMatchesWithStackFallback(
         matcher.regex,
-        'sig',
+        'sg',
         content
       );
       expect(matches.get(matcher.regex)?.map(signature)).toEqual(
@@ -139,7 +139,7 @@ describe('findAllPromptPieceMatchesBatch', () => {
     for (const matcher of specs) {
       const expected = await findAllMatchesWithStackFallback(
         matcher.regex,
-        'sig',
+        'sg',
         content
       );
       expect(
@@ -152,7 +152,7 @@ describe('findAllPromptPieceMatchesBatch', () => {
     const matcher = spec(['The MCP server name']);
     const catalog = new PromptPieceMatcherCatalog([matcher]);
     const original = 'old resource description';
-    const content = 'new description with the MCP server name';
+    const content = 'new description with The MCP server name';
     await catalog.matchBatch(original);
     const working = new MutableText(content);
     catalog.recordSplice(working, {
@@ -162,7 +162,7 @@ describe('findAllPromptPieceMatchesBatch', () => {
     });
     const expected = await findAllMatchesWithStackFallback(
       matcher.regex,
-      'sig',
+      'sg',
       content
     );
     expect(
@@ -207,12 +207,31 @@ describe('findAllPromptPieceMatchesBatch', () => {
   });
 });
 
-describe('foldPromptMatchContent', () => {
-  it('only folds ASCII so UTF-16 offsets and RegExp semantics stay intact', () => {
-    expect(foldPromptMatchContent('A\u0130\u212A')).toBe('a\u0130\u212A');
+describe('case sensitivity', () => {
+  // Matching is case-sensitive. The `i` flag was carried for hex-casing in
+  // `\uXXXX` escapes, which escapeNonAsciiForRegex already handles precisely,
+  // and it widened every prompt regex over its own PROSE — `(no output)` occurs
+  // 6 times in cli.js (its exact catalogue multiplicity) but 8 times
+  // case-insensitively, so the group resolved as ambiguous and was skipped.
+  it('passes content through unfolded', () => {
+    expect(foldPromptMatchContent('A\u0130\u212A')).toBe('A\u0130\u212A');
   });
 
-  it('does not equate Kelvin signs with ASCII k under non-u ignoreCase', async () => {
-    await expectEquivalent(['kkkkkkkkkkkk'], '\u212A'.repeat(12));
+  it('does not match a prompt against differently-cased prose', async () => {
+    const matcher = spec(['Only http(s), mailto, relative, or fragment URLs']);
+    const found = await findAllPromptPieceMatches(
+      matcher,
+      'x = "only http(s), mailto, relative, or fragment URLs";'
+    );
+    expect(found).toEqual([]);
+  });
+
+  // Kelvin sign (U+212A) equates to ASCII k under non-unicode ignoreCase. With
+  // the flag gone the hazard cannot arise at all, but keep it pinned.
+  it('does not equate Kelvin signs with ASCII k', async () => {
+    const matcher = spec(['kkkkkkkkkkkk']);
+    expect(
+      await findAllPromptPieceMatches(matcher, '\u212A'.repeat(12))
+    ).toEqual([]);
   });
 });

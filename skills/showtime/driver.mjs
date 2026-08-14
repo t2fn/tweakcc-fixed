@@ -312,7 +312,99 @@ function cmdCheck() {
   }
   console.log('');
 
-  console.log(FAILED ? C.bad('HEALTH CHECK FAILED — see above') : C.ok('HEALTH CHECK PASSED — on-version, patched clean, mis-bind-free, injection-sites-intact, predicate-safe, boots'));
+  // 7. every registry patch against the pristine bundle. This is the strongest
+  //    gate in the repo (62 patches spliced and parse-checked with bun) and it
+  //    cannot run in CI — it needs a real extracted cli.js and a bun binary. It
+  //    is opt-in via TWEAKCC_PRISTINE_PATCHES=1, which means it SKIPS SILENTLY
+  //    everywhere it is not deliberately enabled. Run it here, where both
+  //    inputs exist, and treat a skip as a failure rather than a pass.
+  console.log(C.head('Every patch vs. pristine cli.js (bun parse oracle)'));
+  {
+    let out = '', code = 0;
+    try { out = execSync('pnpm test:pristine 2>&1', { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }); }
+    catch (e) { out = (e.stdout || '') + (e.stderr || ''); code = e.status || 1; }
+    const skipped = /\d+ skipped/.test(out) && !/Tests\s+\d+ passed/.test(out);
+    const passed = out.match(/Tests\s+(\d+) passed/);
+    if (code !== 0) fail(`pristine patch sweep: ${out.split('\n').filter((l) => /FAIL|Error/.test(l)).slice(0, 3).join(' | ').slice(0, 240)}`);
+    else if (skipped) fail('pristine patch sweep SKIPPED — no pristine cli.js or no bun; this gate silently passes when it cannot run');
+    else console.log(C.ok(`${passed ? passed[1] : '?'} patches spliced and parsed clean`));
+  }
+  console.log('');
+
+  // 8. prompt coverage vs the reference catalogue. The no-regression bar
+  //    compares NAMED COUNTS (ours ~3.8k vs upstream ~0.6k), which passes
+  //    unconditionally and is blind to the actual failure: CC ships more than
+  //    one description for the same tool on different code paths, and the two
+  //    extractors each find a different one. Compare by content, let the binary
+  //    arbitrate. See tools/checkPromptCoverage.mjs.
+  console.log(C.head('Prompt coverage vs upstream catalogue (content, not names)'));
+  {
+    const v = ccVersion(ccBinary()) || repoPromptsVersions().slice(-1)[0];
+    const ours = path.join(REPO, 'data/prompts', `prompts-${v}.json`);
+    let reference = '';
+    try {
+      // upstream lags; take the newest reference catalogue at or below ours
+      const tags = execSync('git ls-tree --name-only upstream/main data/prompts/', { cwd: REPO, encoding: 'utf8' })
+        .split('\n').map((l) => l.match(/prompts-(\d+\.\d+\.\d+)\.json$/)).filter(Boolean).map((m) => m[1]);
+      const pick = tags.filter((t) => cmpVer(t, v) <= 0).sort(cmpVer).slice(-1)[0] || tags.sort(cmpVer).slice(-1)[0];
+      if (pick) {
+        reference = path.join(os.tmpdir(), `reference-prompts-${pick}.json`);
+        fs.writeFileSync(reference, execSync(`git show upstream/main:data/prompts/prompts-${pick}.json`, { cwd: REPO, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }));
+      }
+    } catch { /* no upstream remote fetched — reported below */ }
+    if (!fs.existsSync(ORIG_JS) || !fs.existsSync(ours) || !reference) {
+      console.log(C.info('no pristine cli.js, prompts JSON or upstream reference — skipped'));
+    } else {
+      let out = '', code = 0;
+      try { out = execSync(`node tools/checkPromptCoverage.mjs ${ours} ${reference} ${ORIG_JS} 2>&1`, { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }); }
+      catch (e) { out = (e.stdout || '') + (e.stderr || ''); code = e.status || 1; }
+      if (code === 0) console.log(C.ok(out.trim().replace(/^✓\s*/, '')));
+      else fail(`prompt coverage: ${out.split('\n')[0]}`);
+    }
+  }
+  console.log('');
+
+  // 9. which Bun built this Claude Code — a tripwire, not a gate.
+  //
+  // Patching the JS invalidates Bun's cached bytecode (it carries a hash of the
+  // source), so a patched native install reparses ~25 MB on every launch: 48 ms
+  // -> 477 ms measured on darwin, a 10x startup penalty that no size fix
+  // touches. The fix would be to REGENERATE the bytecode for the patched
+  // source, and that is blocked on one thing only: the cache is version-locked
+  // by a leading per-Bun-version tag the shipped runtime validates, and CC is
+  // built with an UNRELEASED Bun (2.1.228: v1.4.0 eb835313a, while npm's latest
+  // is 1.3.14 and no public v1.4.0 tag exists). Splicing a blob built by any
+  // obtainable Bun does not merely miss the fast path, it crashes startup.
+  //
+  // So the whole question reduces to "is CC's Bun public yet", which changes
+  // only at a version bump. Report the stamp and shout when it moves, rather
+  // than leaving a note in a file nobody re-reads.
+  const KNOWN_BUN_BUILD = 'v1.4.0 (eb835313a)';
+  console.log(C.head('Bun build stamp (bytecode-regeneration tripwire)'));
+  {
+    const bin = ccBinary();
+    let stamp = null;
+    try {
+      // Read in chunks: the binary is ~275 MB and must not be buffered whole.
+      const out = execSync(
+        `strings -a ${JSON.stringify(bin)} | grep -oE 'Bun v[0-9]+\\.[0-9]+\\.[0-9]+ \\([0-9a-f]+\\)' | sort -u | head -1`,
+        { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 }
+      ).trim();
+      stamp = out || null;
+    } catch { /* strings unavailable or no match — reported below */ }
+    if (!stamp) console.log(C.info('no Bun stamp found in the binary — skipped'));
+    else if (stamp.replace(/^Bun /, '') === KNOWN_BUN_BUILD)
+      console.log(C.ok(`${stamp} — unreleased, bytecode regeneration still blocked`));
+    else
+      console.log(C.info(
+        `${stamp} CHANGED (was Bun ${KNOWN_BUN_BUILD}). If this one is public ` +
+        `(npm view bun dist-tags), regenerating bytecode for the patched source ` +
+        `becomes possible and recovers ~430 ms of startup. Update KNOWN_BUN_BUILD.`
+      ));
+  }
+  console.log('');
+
+  console.log(FAILED ? C.bad('HEALTH CHECK FAILED — see above') : C.ok('HEALTH CHECK PASSED — on-version, patched clean, mis-bind-free, injection-sites-intact, predicate-safe, fully-catalogued, boots'));
 }
 
 // ---- dispatch --------------------------------------------------------------

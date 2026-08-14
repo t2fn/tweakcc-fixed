@@ -62,6 +62,7 @@ import { writeAutonomousOperationAllModels } from './autonomousOperationAllModel
 import { writeAdhdOutputStyle } from './adhdOutputStyle';
 import { writeAutoModeClassifierModel } from './autoModeClassifierModel';
 import { writeComplexityRouter } from './complexityRouter';
+import { writeFablePlan } from './fablePlan';
 import { writeAllowCustomAgentModels } from './allowCustomAgentModels';
 import { writeWorktreeMode } from './worktreeMode';
 import { writeSessionMemory } from './sessionMemory';
@@ -280,6 +281,8 @@ const INVOCATIONS: Record<PatchId, (src: string) => string | null> = {
       ...DEFAULT_SETTINGS.complexityRouter,
       enabled: true,
     }),
+  'fable-plan': c =>
+    writeFablePlan(c, { ...DEFAULT_SETTINGS.fablePlan, enabled: true }),
   'allow-custom-agent-models': c => writeAllowCustomAgentModels(c),
   'worktree-mode': c => writeWorktreeMode(c),
   'session-memory': c => writeSessionMemory(c),

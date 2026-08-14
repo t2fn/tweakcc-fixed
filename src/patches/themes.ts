@@ -4,10 +4,29 @@ import { Theme } from '../types';
 import { debug } from '../utils';
 import { LocationResult, showDiff } from './index';
 
+/**
+ * CC's theme-ID whitelist: `Kls=["dark","light",...]`, immediately followed by
+ * `Rin=["auto",...Kls]`.
+ *
+ * This is a SEPARATE registry from the three surfaces below (name map, option
+ * array, color switch). The colour switch answers "what does this id look
+ * like"; this array answers "is this a real theme id at all", via a type guard
+ * `x1o(e){return typeof e==="string"&&Kls.includes(e)}`. Patching the first
+ * three and not this one leaves a custom theme rendering through the switch
+ * while every caller that validates the id first rejects it — a split palette
+ * rather than a clean failure.
+ *
+ * The `,IDENT2=["auto",...IDENT]` tail is the confirmer: it is what makes this
+ * array the theme registry rather than any other list of colour-ish words.
+ */
+const THEME_ID_REGISTRY =
+  /([$\w]+)=(\["dark","light"(?:,"[\w-]+")*\]),([$\w]+)=\["auto",\.\.\.\1\]/;
+
 function getThemesLocation(oldFile: string): {
   switchStatement: LocationResult;
   objArr: LocationResult;
   obj: LocationResult | null;
+  idRegistry: LocationResult | null;
 } | null {
   // === Switch Statement ===
   // CC >=2.1.83: switch(A){case"light":return LX9;...default:return CX9}
@@ -138,6 +157,14 @@ function getThemesLocation(oldFile: string): {
     );
   }
 
+  // === Theme ID Registry ===
+  const idRegistryMatch = oldFile.match(THEME_ID_REGISTRY);
+  if (!idRegistryMatch) {
+    debug(
+      'patch: themes: theme-id registry not found — custom theme ids will not validate'
+    );
+  }
+
   return {
     switchStatement: {
       startIndex: switchStart,
@@ -157,6 +184,20 @@ function getThemesLocation(oldFile: string): {
             startIndex: objMatch.index,
             endIndex: objMatch.index + objMatch[0].length,
             identifiers: [objMatch[1]],
+          }
+        : null,
+    idRegistry:
+      idRegistryMatch && idRegistryMatch.index !== undefined
+        ? {
+            // Span covers only the array literal, not the assignment or the
+            // `,Rin=["auto",...Kls]` tail: those must survive verbatim.
+            startIndex: idRegistryMatch.index + idRegistryMatch[1].length + 1,
+            endIndex:
+              idRegistryMatch.index +
+              idRegistryMatch[1].length +
+              1 +
+              idRegistryMatch[2].length,
+            identifiers: [idRegistryMatch[2]],
           }
         : null,
   };
@@ -245,6 +286,42 @@ export const writeThemes = (
     locations.switchStatement.startIndex,
     locations.switchStatement.endIndex
   );
+  oldFile = newFile;
+
+  // Register custom theme ids in CC's id whitelist, so the type guard
+  // `x1o(e){return typeof e==="string"&&IDS.includes(e)}` accepts them. Last,
+  // because this array sits at a LOWER offset than the three surfaces above and
+  // the writer splices in descending order.
+  //
+  // APPENDED, never replaced: CC's own paths (auto/daltonized/ansi resolution,
+  // the `["auto",...IDS]` superset built from this very array) reference the
+  // built-in ids, so dropping them would break vanilla themes to fix custom
+  // ones.
+  if (locations.idRegistry) {
+    const pristineIds: string[] = JSON.parse(
+      locations.idRegistry.identifiers?.[0] ?? '[]'
+    );
+    const extraIds = themes
+      .map(theme => theme.id)
+      .filter(id => !pristineIds.includes(id));
+    if (extraIds.length > 0) {
+      const registry = JSON.stringify([...pristineIds, ...extraIds]);
+      newFile =
+        newFile.slice(0, locations.idRegistry.startIndex) +
+        registry +
+        newFile.slice(locations.idRegistry.endIndex);
+      showDiff(
+        oldFile,
+        newFile,
+        registry,
+        locations.idRegistry.startIndex,
+        locations.idRegistry.endIndex
+      );
+      debug(
+        `patch: themes: registered custom theme id(s) ${extraIds.join(', ')}`
+      );
+    }
+  }
 
   return newFile;
 };

@@ -201,6 +201,38 @@ export interface RouterLevel {
   effort: RouterEffort; // the reasoning-effort level this complexity tier maps to
 }
 
+/**
+ * A plan-mode model pairing, in the shape Claude Code already ships for
+ * `opusplan` (Opus while planning, Sonnet otherwise) and `haiku` (Sonnet while
+ * planning).
+ *
+ * It is a SELECTABLE MODEL ALIAS, not a mode hook: nothing happens unless the
+ * user picks it in `/model`. Claude Code resolves the alias per request through
+ * `uM({permissionMode, mainLoopModel})`, so the selection stays `fableplan`
+ * throughout and no model is ever switched underneath the user.
+ *
+ * Models are Claude Code's own aliases rather than concrete ids, so its
+ * resolution — org model restrictions, availability, the `[1m]` variants —
+ * applies unchanged.
+ */
+export interface FablePlanConfig {
+  enabled: boolean;
+  /** Alias used while `permissionMode === 'plan'`. */
+  planModel: 'fable' | 'opus' | 'sonnet' | 'haiku';
+  planEffort: RouterEffort;
+  /** Alias used for everything else — the model that executes the plan. */
+  execModel: 'fable' | 'opus' | 'sonnet' | 'haiku';
+  execEffort: RouterEffort;
+  /**
+   * Force Claude Code's `showClearContextOnPlanAccept` setting on, so the
+   * plan-approval dialog offers "Yes, clear context (N% used) and …". Claude
+   * Code defaults it to false. Independent of the pairing, and useful on its
+   * own: clearing carries only the plan into execution, where continuing
+   * re-sends the whole planning transcript to a different model.
+   */
+  offerClearContextOnPlanAccept: boolean;
+}
+
 export interface ComplexityRouterConfig {
   enabled: boolean;
   pinPerTask: boolean; // default TRUE - monotonic floor: routed level never drops below the session max (only escalates). Off = track each message up and down.
@@ -225,6 +257,7 @@ export interface Settings {
   // Non-optional like subagentModels (its analog): DEFAULT_SETTINGS always
   // provides it and normalizeConfig backfills it via deepMergeWithDefaults.
   complexityRouter: ComplexityRouterConfig;
+  fablePlan: FablePlanConfig;
   inputPatternHighlighters: InputPatternHighlighter[];
   inputPatternHighlightersTestText: string; // Global test text for previewing highlighters
   claudeMdAltNames: string[] | null;
@@ -289,6 +322,7 @@ export enum MainMenuItem {
   TOOLSETS = 'Toolsets',
   SUBAGENT_MODELS = 'Subagent models',
   COMPLEXITY_ROUTER = 'Complexity effort router [experimental]',
+  FABLE_PLAN = 'Fable Plan mode',
   CLAUDE_MD_ALT_NAMES = 'CLAUDE.md alternative names',
   SYSTEM_REMINDERS = 'System reminders (injection lobotomy)',
   SKILLS = 'Skills (per-skill on/name-only/user-invocable/off)',

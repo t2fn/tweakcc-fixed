@@ -10,6 +10,7 @@ import { MiscView } from './components/MiscView';
 import { ToolsetsView } from './components/ToolsetsView';
 import { SubagentModelsView } from './components/SubagentModelsView';
 import { ComplexityRouterView } from './components/ComplexityRouterView';
+import { FablePlanView } from './components/FablePlanView';
 import { BrowserBridgeView } from './components/BrowserBridgeView';
 import { ClaudeMdAltNamesView } from './components/ClaudeMdAltNamesView';
 import { SystemRemindersView } from './components/SystemRemindersView';
@@ -236,6 +237,8 @@ Please reapply your changes by running \`${invocationCommand} --apply\`.`,
           <SubagentModelsView onBack={handleBack} />
         ) : currentView === MainMenuItem.COMPLEXITY_ROUTER ? (
           <ComplexityRouterView onBack={handleBack} />
+        ) : currentView === MainMenuItem.FABLE_PLAN ? (
+          <FablePlanView onBack={handleBack} />
         ) : currentView === MainMenuItem.CLAUDE_MD_ALT_NAMES ? (
           <ClaudeMdAltNamesView onBack={handleBack} />
         ) : currentView === MainMenuItem.SYSTEM_REMINDERS ? (

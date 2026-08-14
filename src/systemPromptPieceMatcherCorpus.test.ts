@@ -107,7 +107,7 @@ describe.runIf(CORPUS)(
           try {
             expected = await findAllMatchesWithStackFallback(
               regex,
-              'sig',
+              'sg',
               content
             );
           } catch {
@@ -183,7 +183,7 @@ describe.runIf(CORPUS)(
           try {
             expected = await findAllMatchesWithStackFallback(
               regex,
-              'sig',
+              'sg',
               content
             );
           } catch {

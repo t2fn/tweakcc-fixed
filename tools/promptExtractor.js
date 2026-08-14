@@ -157,6 +157,41 @@ const CURATED_IDENTIFIER_MAPS = {
 };
 
 const NEW_PROMPT_ASSIGNMENTS = [
+  // 2.1.228 — the two genuine holes found by the content-coverage gate
+  // (tools/checkPromptCoverage.mjs). Both are TOOL DESCRIPTIONS, so they reach
+  // the model on every session that exposes the tool, and both are instances of
+  // the class the gate exists to catch: Claude Code ships MORE THAN ONE
+  // description for the same tool on different code paths, and a name-level diff
+  // sees nothing wrong because a sibling description is already catalogued under
+  // the obvious id.
+  //
+  // Both extract cleanly and neither is hard-excluded; they were simply rejected
+  // by the prose-quality gate, which a NEW_PROMPT_ASSIGNMENTS hit bypasses.
+  {
+    // A THIRD TodoWrite description, alongside tool-description-todowrite and
+    // tool-description-todowrite-concise. Opens "Update the todo list…" where
+    // the other two open "Use this tool to create…" and "Create and update…".
+    matcher: t =>
+      t.startsWith('Update the todo list for the current session') &&
+      t.includes('To be used proactively and often'),
+    name: 'Tool Description: TodoWrite (proactive-update variant)',
+    id: 'tool-description-todowrite-proactive-update-guidance',
+    description:
+      'A third TodoWrite description Claude Code ships on a separate code path, pressing for proactive and frequent updates and for keeping exactly one task in_progress.',
+  },
+  {
+    // The MemoryWrite tool description. We catalogue 28 memory-write RESULTS and
+    // the good-memory criteria, but not the description itself — it carries the
+    // if_version contract, which is the part that governs whether the model can
+    // overwrite a document it has not read.
+    matcher: t =>
+      t.startsWith('Create or update a memory document with full content') &&
+      t.includes('if_version'),
+    name: 'Tool Description: MemoryWrite',
+    id: 'tool-description-memorywrite-prompt',
+    description:
+      "The MemoryWrite tool description: writing a full memory document to a connected store, and the if_version contract that stops the model overwriting content it hasn't read.",
+  },
   // 2.1.219 — ten fuzzy-carryover misses. Every one is still in the binary with a
   // bound override; Anthropic reworded each prompt's OPENING (inside FUZZY_PREFIX's
   // first 100 chars), so the carried name dropped. Four extracted anonymous; five
@@ -170,8 +205,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     // "# Communicating with the user" block, so the disambiguator collided it with
     // system-prompt-communicating-with-the-user and emitted "...-2".
     matcher: t =>
-      t.includes('# Model Migration Guide') &&
-      t.includes('If you arrived via'),
+      t.includes('# Model Migration Guide') && t.includes('If you arrived via'),
     name: 'Skill: Model migration guide',
     id: 'skill-model-migration-guide',
     description:
@@ -221,7 +255,9 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.includes('it already holds the synced memory of a different memory store'),
+      t.includes(
+        'it already holds the synced memory of a different memory store'
+      ),
     name: 'Tool Result: Memory sync foreign partition',
     id: 'tool-result-memory-sync-foreign-partition',
     description:
@@ -235,7 +271,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       'Tool-result explaining that the PR review target is fixed at invocation and could not be resolved, so the run cannot be revived.',
   },
   {
-    matcher: t => t.includes('reads the declared data island from the published artifact'),
+    matcher: t =>
+      t.includes('reads the declared data island from the published artifact'),
     name: 'Tool Parameter: Artifact action read_page_data',
     id: 'tool-parameter-artifact-action-read-page-data',
     description:
@@ -272,10 +309,10 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Core interactive-agent identity and harness instructions for the lean system-prompt arm: terminal Markdown output, permission modes, hook feedback, parallel tools, clickable file refs.',
     identifierMap: {
-      '0': 'OUTPUT_STYLE_CONFIG',
-      '1': 'SECURITY_NOTE',
-      '2': 'SYSTEM_REMINDER_TAG_GUIDANCE_FN',
-      '3': 'TOOL_CONTEXT',
+      0: 'OUTPUT_STYLE_CONFIG',
+      1: 'SECURITY_NOTE',
+      2: 'SYSTEM_REMINDER_TAG_GUIDANCE_FN',
+      3: 'TOOL_CONTEXT',
     },
   },
   // 2.1.211 — fuzzy-carryover misses. Both prompts are still in the binary with
@@ -292,10 +329,10 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'User-turn prompt for the agent_namer utility model call that generates a 2-4 word job label.',
     identifierMap: {
-      '0': 'PROMPT_VAR_0',
-      '1': 'PROMPT_VAR_1',
-      '2': 'PROMPT_VAR_2',
-      '3': 'PROMPT_VAR_3',
+      0: 'PROMPT_VAR_0',
+      1: 'PROMPT_VAR_1',
+      2: 'PROMPT_VAR_2',
+      3: 'PROMPT_VAR_3',
     },
   },
   {
@@ -322,8 +359,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Model-facing tool_result sentence shared by both loop-stopped envelopes: if a wakeup tool was armed for this loop, trigger the stop tool now. Split out of tool-result-loop-stopped in 2.1.206.',
     identifierMap: {
-      '0': 'TOOL_RESULT_LOOP_REARM_MONITOR_TOOL',
-      '1': 'TOOL_RESULT_LOOP_REARM_TASKSTOP_TOOL',
+      0: 'TOOL_RESULT_LOOP_REARM_MONITOR_TOOL',
+      1: 'TOOL_RESULT_LOOP_REARM_TASKSTOP_TOOL',
     },
   },
   {
@@ -333,8 +370,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Model-facing tool_result for stop:true when no dynamic wakeup was pending: the dynamic loop ended, but a fixed-interval /loop cron is NOT stopped and must be cancelled explicitly. New envelope in 2.1.206.',
     identifierMap: {
-      '0': 'TOOL_RESULT_LOOP_STOPPED_CRON_DELETE_TOOL',
-      '1': 'TOOL_RESULT_LOOP_STOPPED_REARM_SUFFIX',
+      0: 'TOOL_RESULT_LOOP_STOPPED_CRON_DELETE_TOOL',
+      1: 'TOOL_RESULT_LOOP_STOPPED_REARM_SUFFIX',
     },
   },
   {
@@ -348,8 +385,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Model-facing tool_result telling the model the dynamic loop stopped, with the wakeup-cancellation reason interpolated and the shared re-arm suffix appended. 2.1.206 reduced this to an envelope (fuzzy-miss restore).',
     identifierMap: {
-      '0': 'TOOL_RESULT_LOOP_STOPPED_REASON',
-      '1': 'TOOL_RESULT_LOOP_STOPPED_REARM_SUFFIX',
+      0: 'TOOL_RESULT_LOOP_STOPPED_REASON',
+      1: 'TOOL_RESULT_LOOP_STOPPED_REARM_SUFFIX',
     },
   },
   // 2.1.206 — the /design slash command was rewritten into a table dispatcher;
@@ -392,23 +429,25 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // fuzzy-miss that dropped the name. Restore it (pristine stub, model-facing).
   {
     matcher: t =>
-      t.includes("with 1M context - best for everyday, complex tasks"),
-    name: "Data: Model Catalog Opus 4.8 1M",
-    id: "data-model-catalog-opus-48-1m-description",
+      t.includes('with 1M context - best for everyday, complex tasks'),
+    name: 'Data: Model Catalog Opus 4.8 1M',
+    id: 'data-model-catalog-opus-48-1m-description',
     description:
-      "descriptionForModel for Opus 4.8 with 1M context: best for everyday, complex tasks. 2.1.199 interpolated the model display name (fuzzy-miss restore).",
+      'descriptionForModel for Opus 4.8 with 1M context: best for everyday, complex tasks. 2.1.199 interpolated the model display name (fuzzy-miss restore).',
   },
   {
     matcher: t => t.includes("Do not duplicate this agent's work"),
-    name: "System Reminder: Async agent launched",
-    id: "system-reminder-async-agent-launched",
-    description: "Model-facing reminder warning the model not to duplicate an asynchronously launched agent's work (same files/topics) and to take non-overlapping tasks. 2.1.193 reworded the opening (fuzzy-miss restore).",
+    name: 'System Reminder: Async agent launched',
+    id: 'system-reminder-async-agent-launched',
+    description:
+      "Model-facing reminder warning the model not to duplicate an asynchronously launched agent's work (same files/topics) and to take non-overlapping tasks. 2.1.193 reworded the opening (fuzzy-miss restore).",
   },
   {
-    matcher: t => t.includes("human-readable name for this version"),
-    name: "Artifact version label parameter",
-    id: "tool-parameter-artifact-version-label",
-    description: "Model-facing Artifact tool `label` input-schema param description (short human-readable version name shown in the version picker). 2.1.193 reworded the opening (fuzzy-miss restore).",
+    matcher: t => t.includes('human-readable name for this version'),
+    name: 'Artifact version label parameter',
+    id: 'tool-parameter-artifact-version-label',
+    description:
+      'Model-facing Artifact tool `label` input-schema param description (short human-readable version name shown in the version picker). 2.1.193 reworded the opening (fuzzy-miss restore).',
   },
   {
     // 2.1.204 — the SendUserFile "N file(s) delivered to user." tool_result is a
@@ -417,28 +456,31 @@ const NEW_PROMPT_ASSIGNMENTS = [
     // let it drop from capture. Force-include on the distinctive `"file")}` slot
     // (the pluralizer's literal "file" arg) which the message result lacks.
     matcher: t => t.includes('"file")} delivered to user.'),
-    name: "SendUserFile files delivered tool_result",
-    id: "tool-result-senduserfile-files-delivered",
+    name: 'SendUserFile files delivered tool_result',
+    id: 'tool-result-senduserfile-files-delivered',
     description:
-      "Model-facing SendUserFile tool_result confirming N file(s) were delivered to the user. 2.1.204 emission-shape change (subset-shadowed by the message-delivered result) dropped it from capture; force-restore.",
+      'Model-facing SendUserFile tool_result confirming N file(s) were delivered to the user. 2.1.204 emission-shape change (subset-shadowed by the message-delivered result) dropped it from capture; force-restore.',
   },
   {
-    matcher: t => t.includes("File unchanged since last read"),
-    name: "Read File-Unchanged Result",
-    id: "tool-result-read-file-unchanged",
-    description: "Model-facing Read tool_result hint (eSd) telling the model the file is unchanged since the last read and to refer to the earlier tool_result instead of re-reading.",
+    matcher: t => t.includes('File unchanged since last read'),
+    name: 'Read File-Unchanged Result',
+    id: 'tool-result-read-file-unchanged',
+    description:
+      'Model-facing Read tool_result hint (eSd) telling the model the file is unchanged since the last read and to refer to the earlier tool_result instead of re-reading.',
   },
   {
-    matcher: t => t.includes("Run `gh pr list` to show the open pull requests"),
-    name: "Review No-Arg Fallback",
-    id: "agent-prompt-review-no-arg-fallback",
-    description: "Model-facing /review no-argument fallback prompt instructing the model to run gh pr list to show open pull requests.",
+    matcher: t => t.includes('Run `gh pr list` to show the open pull requests'),
+    name: 'Review No-Arg Fallback',
+    id: 'agent-prompt-review-no-arg-fallback',
+    description:
+      'Model-facing /review no-argument fallback prompt instructing the model to run gh pr list to show open pull requests.',
   },
   {
-    matcher: t => t.includes("No matches found"),
-    name: "Grep No-Matches Fallback Literal",
-    id: "tool-result-grep-no-matches-literal",
-    description: "Model-facing Grep tool_result fallback text shown when a content/count search finds no matches.",
+    matcher: t => t.includes('No matches found'),
+    name: 'Grep No-Matches Fallback Literal',
+    id: 'tool-result-grep-no-matches-literal',
+    description:
+      'Model-facing Grep tool_result fallback text shown when a content/count search finds no matches.',
   },
 
   // 2.1.197 — Sonnet 5 added to the model catalog. The current-models system
@@ -448,16 +490,18 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // identifierMap so the override re-binds 1:1 (pieces + identifiers array are
   // byte-identical to 2.1.196; only the leading literal text changed).
   {
-    matcher: t => t.includes("most recent Claude models are the Claude 5 family"),
-    name: "System Prompt: Current Claude models",
-    id: "system-prompt-current-claude-models",
-    description: "Lists the current Claude model family IDs and recommends using the latest capable Claude models for AI applications. 2.1.197 reworded the opening for the Claude 5 family (fuzzy-miss restore).",
+    matcher: t =>
+      t.includes('most recent Claude models are the Claude 5 family'),
+    name: 'System Prompt: Current Claude models',
+    id: 'system-prompt-current-claude-models',
+    description:
+      'Lists the current Claude model family IDs and recommends using the latest capable Claude models for AI applications. 2.1.197 reworded the opening for the Claude 5 family (fuzzy-miss restore).',
     identifierMap: {
-      0: "CLAUDE_MODEL_IDS",
-      1: "MODEL_ID_COLLECTION",
-      2: "MODEL_ID",
-      3: "FORMAT_MODEL_NAME_FN",
-      4: "DISPLAY_NAME",
+      0: 'CLAUDE_MODEL_IDS',
+      1: 'MODEL_ID_COLLECTION',
+      2: 'MODEL_ID',
+      3: 'FORMAT_MODEL_NAME_FN',
+      4: 'DISPLAY_NAME',
     },
   },
 
@@ -465,136 +509,172 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // prose-quality gate: system-prompt fragments, var-indirected tool_results,
   // reminders, env/context blocks, git block, context-tip wrappers). Audit §4/§8/§9. =====
   {
-    matcher: t => t.includes("Interactive flags"),
-    name: "Git Guidance Block",
-    id: "system-prompt-git-guidance-block",
-    description: "Model-facing system-prompt `# Git` guidance block (built by Atm), listing the interactive-flag/gh-CLI/commit rules; gated by BFt() (git repo + git instructions enabled).",
+    matcher: t => t.includes('Interactive flags'),
+    name: 'Git Guidance Block',
+    id: 'system-prompt-git-guidance-block',
+    description:
+      'Model-facing system-prompt `# Git` guidance block (built by Atm), listing the interactive-flag/gh-CLI/commit rules; gated by BFt() (git repo + git instructions enabled).',
   },
   {
-    matcher: t => t.includes("on the default branch, branch first"),
-    name: "Git Default-Branch Branch-First Rule",
-    id: "system-prompt-git-default-branch-branch-first",
-    description: "Model-facing tail of the `# Git` system-prompt block (Atm) instructing the model to branch first when on the default branch; gated by BFt() (git repo + git instructions enabled).",
+    matcher: t => t.includes('on the default branch, branch first'),
+    name: 'Git Default-Branch Branch-First Rule',
+    id: 'system-prompt-git-default-branch-branch-first',
+    description:
+      'Model-facing tail of the `# Git` system-prompt block (Atm) instructing the model to branch first when on the default branch; gated by BFt() (git repo + git instructions enabled).',
   },
   {
-    matcher: t => t.includes("Plan mode still active"),
-    name: "Plan Mode Sparse Continuation Reminder",
-    id: "system-reminder-plan-mode-sparse-continuation",
-    description: "Model-facing system-reminder (L9m, injected via _p([On({content,isMeta:!0})])) re-asserting plan-mode constraints on plan-continuation turns; gated by reminderType sparse.",
+    matcher: t => t.includes('Plan mode still active'),
+    name: 'Plan Mode Sparse Continuation Reminder',
+    id: 'system-reminder-plan-mode-sparse-continuation',
+    description:
+      'Model-facing system-reminder (L9m, injected via _p([On({content,isMeta:!0})])) re-asserting plan-mode constraints on plan-continuation turns; gated by reminderType sparse.',
   },
   {
-    matcher: t => t.includes("Showing results with pagination"),
-    name: "Grep No-Matches / Pagination Result",
-    id: "tool-result-grep-no-matches-found",
-    description: "Model-facing Grep tool_result content for content/count modes when no matches are found, optionally annotated with the pagination footer.",
+    matcher: t => t.includes('Showing results with pagination'),
+    name: 'Grep No-Matches / Pagination Result',
+    id: 'tool-result-grep-no-matches-found',
+    description:
+      'Model-facing Grep tool_result content for content/count modes when no matches are found, optionally annotated with the pagination footer.',
   },
   {
-    matcher: t => t.includes("Results are truncated. Consider using a more specific path or pattern"),
-    name: "Grep Files-Truncated Result",
-    id: "tool-result-grep-files-truncated",
-    description: "Model-facing Grep files_with_matches tool_result note (f2p) telling the model results were truncated and to narrow the path or pattern.",
+    matcher: t =>
+      t.includes(
+        'Results are truncated. Consider using a more specific path or pattern'
+      ),
+    name: 'Grep Files-Truncated Result',
+    id: 'tool-result-grep-files-truncated',
+    description:
+      'Model-facing Grep files_with_matches tool_result note (f2p) telling the model results were truncated and to narrow the path or pattern.',
   },
   {
-    matcher: t => t.includes("Execution stopped by PreToolUse hook"),
-    name: "PreToolUse Hook Stopped Execution Result",
-    id: "tool-result-pretooluse-hook-stopped-execution",
-    description: "Model-facing error tool_result content emitted when a PreToolUse hook blocks a tool call (is_error:true); gated on the hook returning a stop decision.",
+    matcher: t => t.includes('Execution stopped by PreToolUse hook'),
+    name: 'PreToolUse Hook Stopped Execution Result',
+    id: 'tool-result-pretooluse-hook-stopped-execution',
+    description:
+      'Model-facing error tool_result content emitted when a PreToolUse hook blocks a tool call (is_error:true); gated on the hook returning a stop decision.',
   },
   {
-    matcher: t => t.includes("Permission denied by hook"),
-    name: "Permission Denied By Hook Result",
-    id: "tool-result-permission-denied-by-hook",
-    description: "Model-facing default deny message (buildDeny fallback) surfaced as the denied-tool result reason when a PermissionRequest hook denies a call without its own message.",
+    matcher: t => t.includes('Permission denied by hook'),
+    name: 'Permission Denied By Hook Result',
+    id: 'tool-result-permission-denied-by-hook',
+    description:
+      'Model-facing default deny message (buildDeny fallback) surfaced as the denied-tool result reason when a PermissionRequest hook denies a call without its own message.',
   },
   {
-    matcher: t => t.includes("Command timed out after"),
-    name: "Bash Command Timed Out Result",
-    id: "tool-result-bash-command-timed-out",
-    description: "Model-facing Bash tool_result text written into the command's stdout/stderr output when the command exceeds its timeout.",
+    matcher: t => t.includes('Command timed out after'),
+    name: 'Bash Command Timed Out Result',
+    id: 'tool-result-bash-command-timed-out',
+    description:
+      "Model-facing Bash tool_result text written into the command's stdout/stderr output when the command exceeds its timeout.",
   },
   {
-    matcher: t => t.includes("Command was aborted before completion"),
-    name: "Bash Command Aborted Result",
-    id: "tool-result-bash-command-aborted",
-    description: "Model-facing `<error>` marker appended to the Bash tool_result content when the command was aborted before completion.",
+    matcher: t => t.includes('Command was aborted before completion'),
+    name: 'Bash Command Aborted Result',
+    id: 'tool-result-bash-command-aborted',
+    description:
+      'Model-facing `<error>` marker appended to the Bash tool_result content when the command was aborted before completion.',
   },
   {
-    matcher: t => t.includes("The user modified your proposed content before accepting it"),
-    name: "Edit/Write User-Modified Content Result",
-    id: "tool-result-edit-user-modified-content",
-    description: "Model-facing suffix in the Edit/Write tool_result (mapToolResultToToolResultBlockParam) noting the user modified the proposed content before accepting; gated on userModified.",
+    matcher: t =>
+      t.includes('The user modified your proposed content before accepting it'),
+    name: 'Edit/Write User-Modified Content Result',
+    id: 'tool-result-edit-user-modified-content',
+    description:
+      'Model-facing suffix in the Edit/Write tool_result (mapToolResultToToolResultBlockParam) noting the user modified the proposed content before accepting; gated on userModified.',
   },
   {
-    matcher: t => t.includes("Truncated: PARTIAL view"),
-    name: "Read Partial-View Truncation Result",
-    id: "tool-result-read-partial-view-truncated",
-    description: "Model-facing Read tool_result prefix (iLt) introducing a truncated partial view of an oversized file with offset/limit continuation guidance; gated on token-cap overflow.",
+    matcher: t => t.includes('Truncated: PARTIAL view'),
+    name: 'Read Partial-View Truncation Result',
+    id: 'tool-result-read-partial-view-truncated',
+    description:
+      'Model-facing Read tool_result prefix (iLt) introducing a truncated partial view of an oversized file with offset/limit continuation guidance; gated on token-cap overflow.',
   },
   {
-    matcher: t => t.includes("The user did not answer the questions"),
-    name: "AskUserQuestion No-Answer Result",
-    id: "tool-result-askuserquestion-no-answer",
-    description: "Model-facing AskUserQuestion tool_result content telling the model the user did not answer the questions; gated on no response provided.",
+    matcher: t => t.includes('The user did not answer the questions'),
+    name: 'AskUserQuestion No-Answer Result',
+    id: 'tool-result-askuserquestion-no-answer',
+    description:
+      'Model-facing AskUserQuestion tool_result content telling the model the user did not answer the questions; gated on no response provided.',
   },
   {
-    matcher: t => t.includes("You MUST include the sources above in your response"),
-    name: "WebSearch Include Sources Reminder",
-    id: "tool-result-websearch-include-sources",
-    description: "Model-facing WebSearch tool_result trailer appended to formatted search results (\"REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.\"); always present on a non-empty web-search result.",
+    matcher: t =>
+      t.includes('You MUST include the sources above in your response'),
+    name: 'WebSearch Include Sources Reminder',
+    id: 'tool-result-websearch-include-sources',
+    description:
+      'Model-facing WebSearch tool_result trailer appended to formatted search results ("REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks."); always present on a non-empty web-search result.',
   },
   {
-    matcher: t => t.includes("# Custom Agent Instructions"),
-    name: "Custom Agent Instructions Header",
-    id: "system-prompt-custom-agent-instructions-header",
-    description: "Model-facing system-prompt wrapper header prepended to an in-process teammate/sub-agent's custom system prompt (\"# Custom Agent Instructions\\n${V}\"); conditional on the spawned agent supplying a system prompt.",
+    matcher: t => t.includes('# Custom Agent Instructions'),
+    name: 'Custom Agent Instructions Header',
+    id: 'system-prompt-custom-agent-instructions-header',
+    description:
+      'Model-facing system-prompt wrapper header prepended to an in-process teammate/sub-agent\'s custom system prompt ("# Custom Agent Instructions\\n${V}"); conditional on the spawned agent supplying a system prompt.',
   },
   {
-    matcher: t => t.includes("This is ambient context"),
-    name: "Ambient Context Do-Not-Narrate Note",
-    id: "system-reminder-ambient-context-do-not-narrate",
-    description: "Model-facing system-reminder fragment (knr) appended to MCP-delta / context-injection reminder messages instructing the model not to narrate the injected context unless relevant.",
+    matcher: t => t.includes('This is ambient context'),
+    name: 'Ambient Context Do-Not-Narrate Note',
+    id: 'system-reminder-ambient-context-do-not-narrate',
+    description:
+      'Model-facing system-reminder fragment (knr) appended to MCP-delta / context-injection reminder messages instructing the model not to narrate the injected context unless relevant.',
   },
   {
-    matcher: t => t.includes("# MCP Server Instructions"),
-    name: "MCP Server Instructions Header",
-    id: "system-reminder-mcp-server-instructions-header",
-    description: "Model-facing CC-authored framing/header wrapping per-server MCP instructions in the mcp_instructions_delta reminder (\"# MCP Server Instructions\\n\\nThe following MCP servers have provided instructions...\"); conditional on at least one connected MCP server providing instructions.",
+    matcher: t => t.includes('# MCP Server Instructions'),
+    name: 'MCP Server Instructions Header',
+    id: 'system-reminder-mcp-server-instructions-header',
+    description:
+      'Model-facing CC-authored framing/header wrapping per-server MCP instructions in the mcp_instructions_delta reminder ("# MCP Server Instructions\\n\\nThe following MCP servers have provided instructions..."); conditional on at least one connected MCP server providing instructions.',
   },
   {
-    matcher: t => t.includes("This session is being continued from a previous conversation that ran out of context"),
-    name: "Continued Session Compaction Preamble",
-    id: "system-prompt-continued-session-preamble",
-    description: "Model-facing preamble injected at the start of a compacted/continued session (\"This session is being continued from a previous conversation that ran out of context...\"); conditional on resuming after auto-compaction.",
+    matcher: t =>
+      t.includes(
+        'This session is being continued from a previous conversation that ran out of context'
+      ),
+    name: 'Continued Session Compaction Preamble',
+    id: 'system-prompt-continued-session-preamble',
+    description:
+      'Model-facing preamble injected at the start of a compacted/continued session ("This session is being continued from a previous conversation that ran out of context..."); conditional on resuming after auto-compaction.',
   },
   {
-    matcher: t => t.includes("[earlier conversation truncated for compaction retry]"),
-    name: "Compaction Retry Truncation Marker",
-    id: "data-compaction-retry-truncated-marker",
-    description: "Model-facing placeholder marker inserted into the message history passed to the summarization model when compaction is retried with fewer messages (\"[earlier conversation truncated for compaction retry]\"); conditional on a compaction retry.",
+    matcher: t =>
+      t.includes('[earlier conversation truncated for compaction retry]'),
+    name: 'Compaction Retry Truncation Marker',
+    id: 'data-compaction-retry-truncated-marker',
+    description:
+      'Model-facing placeholder marker inserted into the message history passed to the summarization model when compaction is retried with fewer messages ("[earlier conversation truncated for compaction retry]"); conditional on a compaction retry.',
   },
   {
-    matcher: t => t.includes("# Context management\nWhen the conversation grows long"),
-    name: "Context Management System Block",
-    id: "system-prompt-context-management-block",
-    description: "Model-facing system-prompt block (C2m) telling the model that long context is summarized and continued so it need not wrap up early; conditional on the context_management feature being active.",
+    matcher: t =>
+      t.includes('# Context management\nWhen the conversation grows long'),
+    name: 'Context Management System Block',
+    id: 'system-prompt-context-management-block',
+    description:
+      'Model-facing system-prompt block (C2m) telling the model that long context is summarized and continued so it need not wrap up early; conditional on the context_management feature being active.',
   },
   {
-    matcher: t => t.includes("The following skills are available for use with the Skill tool:"),
-    name: "Skill Listing System-Reminder Wrapper",
-    id: "system-reminder-skill-listing-wrapper",
-    description: "Model-facing skill_listing system-reminder wrapper injected each turn (\"The following skills are available for use with the Skill tool:\\n\\n${content}\"); conditional on at least one skill being available.",
+    matcher: t =>
+      t.includes(
+        'The following skills are available for use with the Skill tool:'
+      ),
+    name: 'Skill Listing System-Reminder Wrapper',
+    id: 'system-reminder-skill-listing-wrapper',
+    description:
+      'Model-facing skill_listing system-reminder wrapper injected each turn ("The following skills are available for use with the Skill tool:\\n\\n${content}"); conditional on at least one skill being available.',
   },
   {
-    matcher: t => t.includes("# Output Style: "),
-    name: "Output Style System-Prompt Header",
-    id: "system-prompt-output-style-framing-header",
-    description: "Model-facing system-prompt block (s2m) framing a custom output style's prompt (\"# Output Style: ${name}\\n${prompt}\"); conditional on a non-default output style being active.",
+    matcher: t => t.includes('# Output Style: '),
+    name: 'Output Style System-Prompt Header',
+    id: 'system-prompt-output-style-framing-header',
+    description:
+      'Model-facing system-prompt block (s2m) framing a custom output style\'s prompt ("# Output Style: ${name}\\n${prompt}"); conditional on a non-default output style being active.',
   },
   {
-    matcher: t => t.includes("(project instructions, checked into the codebase)"),
-    name: "CLAUDE.md Project Instructions Suffix",
-    id: "system-prompt-claude-md-project-instructions-suffix",
-    description: "Model-facing type-suffix label appended to a project CLAUDE.md path in the memory/context injection (\"Contents of ${path} (project instructions, checked into the codebase):\"); conditional on a Project-type memory item being present.",
+    matcher: t =>
+      t.includes('(project instructions, checked into the codebase)'),
+    name: 'CLAUDE.md Project Instructions Suffix',
+    id: 'system-prompt-claude-md-project-instructions-suffix',
+    description:
+      'Model-facing type-suffix label appended to a project CLAUDE.md path in the memory/context injection ("Contents of ${path} (project instructions, checked into the codebase):"); conditional on a Project-type memory item being present.',
   },
   {
     // Anchored on the skill's own H1, NOT on `includes('<command-name>')`.
@@ -620,154 +700,196 @@ const NEW_PROMPT_ASSIGNMENTS = [
       "Bundled /doctor skill — health-checks the user's Claude Code setup from local data only (installation and settings integrity, unused skills/MCP servers/plugins, CLAUDE.md dedup and trimming, slow hooks, context-heavy extensions, version currency, auto mode, frequently-denied read-only commands), then proposes fixes behind a confirm gate. Injected only when the skill is invoked.",
   },
   {
-    matcher: t => t.includes("<local-command-stdout>"),
-    name: "Local Command Stdout Framing Tag",
-    id: "system-prompt-local-command-stdout-framing-tag",
-    description: "Model-facing framing tag wrapping a forked/local slash-command's stdout into a user-role message sent to the model (\"<local-command-stdout>\\n${out}\\n</local-command-stdout>\"); present whenever a local command produces output that is fed back to the model.",
+    matcher: t => t.includes('<local-command-stdout>'),
+    name: 'Local Command Stdout Framing Tag',
+    id: 'system-prompt-local-command-stdout-framing-tag',
+    description:
+      'Model-facing framing tag wrapping a forked/local slash-command\'s stdout into a user-role message sent to the model ("<local-command-stdout>\\n${out}\\n</local-command-stdout>"); present whenever a local command produces output that is fed back to the model.',
   },
   {
-    matcher: t => t.includes("Stop hook feedback:"),
-    name: "Stop Hook Feedback Framing",
-    id: "system-prompt-stop-hook-feedback-framing",
-    description: "Model-facing framing 'Stop hook feedback:\\n${blockingError}' built by Qvo() and injected as an isMeta message (On({content:Qvo(...),isMeta:!0})) carrying a Stop-hook's blocking-error feedback to the model.",
+    matcher: t => t.includes('Stop hook feedback:'),
+    name: 'Stop Hook Feedback Framing',
+    id: 'system-prompt-stop-hook-feedback-framing',
+    description:
+      "Model-facing framing 'Stop hook feedback:\\n${blockingError}' built by Qvo() and injected as an isMeta message (On({content:Qvo(...),isMeta:!0})) carrying a Stop-hook's blocking-error feedback to the model.",
   },
   {
-    matcher: t => t.includes("operation blocked by hook:"),
-    name: "Operation Blocked By Hook Framing",
-    id: "system-prompt-operation-blocked-by-hook",
-    description: "Model-facing framing '<Surface> operation blocked by hook:\\n${blockingError}' (UserPromptSubmit/UserPromptExpansion) emitted by FBo()/gJa as a system informational message in the messages array when a hook blocks prompt expansion/submission.",
+    matcher: t => t.includes('operation blocked by hook:'),
+    name: 'Operation Blocked By Hook Framing',
+    id: 'system-prompt-operation-blocked-by-hook',
+    description:
+      "Model-facing framing '<Surface> operation blocked by hook:\\n${blockingError}' (UserPromptSubmit/UserPromptExpansion) emitted by FBo()/gJa as a system informational message in the messages array when a hook blocks prompt expansion/submission.",
   },
   {
     matcher: t => t.includes('Prefer dedicated tools over'),
-    name: "Prefer Dedicated Tools (Default CLI)",
-    id: "system-prompt-prefer-dedicated-tools-default-cli",
-    description: "Model-facing default-CLI branch of the '# Using your tools' system-prompt block ('Prefer dedicated tools over ${o} ... reserve ${o} for shell-only operations.'), the BASH_GUIDANCE anchor; emitted only on the non-REPL tool path.",
+    name: 'Prefer Dedicated Tools (Default CLI)',
+    id: 'system-prompt-prefer-dedicated-tools-default-cli',
+    description:
+      "Model-facing default-CLI branch of the '# Using your tools' system-prompt block ('Prefer dedicated tools over ${o} ... reserve ${o} for shell-only operations.'), the BASH_GUIDANCE anchor; emitted only on the non-REPL tool path.",
   },
   {
-    matcher: t => t.includes("Object and array parameter values must be a single JSON value"),
-    name: "Tool Parameter JSON Single-Value Rule",
-    id: "system-prompt-tool-param-json-single-value",
-    description: "Model-facing tool_param_json system-prompt block (e2m) instructing that object/array parameter values must be a single JSON value and never contain parameter-tag markup; conditionally injected (uwi() or tengu_silent_harbor gate).",
+    matcher: t =>
+      t.includes(
+        'Object and array parameter values must be a single JSON value'
+      ),
+    name: 'Tool Parameter JSON Single-Value Rule',
+    id: 'system-prompt-tool-param-json-single-value',
+    description:
+      'Model-facing tool_param_json system-prompt block (e2m) instructing that object/array parameter values must be a single JSON value and never contain parameter-tag markup; conditionally injected (uwi() or tengu_silent_harbor gate).',
   },
   {
-    matcher: t => t.includes("Reproduce the issue and observe the actual symptom before editing"),
-    name: "Reproduce-Verify Workflow",
-    id: "system-prompt-reproduce-verify-workflow",
-    description: "Model-facing reproduce_verify_workflow system-prompt block (g2m) prescribing the step-by-step reproduce/edit/re-observe debugging loop; conditionally injected (gated by h2m()).",
+    matcher: t =>
+      t.includes(
+        'Reproduce the issue and observe the actual symptom before editing'
+      ),
+    name: 'Reproduce-Verify Workflow',
+    id: 'system-prompt-reproduce-verify-workflow',
+    description:
+      'Model-facing reproduce_verify_workflow system-prompt block (g2m) prescribing the step-by-step reproduce/edit/re-observe debugging loop; conditionally injected (gated by h2m()).',
   },
   {
-    matcher: t => t.includes("If you need the user to run a shell command themselves"),
-    name: "Suggest Bang-Prefix Shell Command",
-    id: "system-prompt-shell-command-suggest-bang-prefix",
-    description: "Model-facing session-guidance fragment inside the '# Using your tools' block telling the model to suggest the user type '! <command>' for interactive shell commands (e.g. gcloud auth login); gated on Hr().",
+    matcher: t =>
+      t.includes('If you need the user to run a shell command themselves'),
+    name: 'Suggest Bang-Prefix Shell Command',
+    id: 'system-prompt-shell-command-suggest-bang-prefix',
+    description:
+      "Model-facing session-guidance fragment inside the '# Using your tools' block telling the model to suggest the user type '! <command>' for interactive shell commands (e.g. gcloud auth login); gated on Hr().",
   },
   {
-    matcher: t => t.includes("Here is useful information about the environment you are running in:"),
-    name: "Environment Info Block",
-    id: "system-prompt-env-info-block",
-    description: "Model-facing environment context block (T2m) 'Here is useful information about the environment you are running in:' with the <env> working-directory/git/platform/OS details, injected into the (sub)agent system prompt.",
+    matcher: t =>
+      t.includes(
+        'Here is useful information about the environment you are running in:'
+      ),
+    name: 'Environment Info Block',
+    id: 'system-prompt-env-info-block',
+    description:
+      "Model-facing environment context block (T2m) 'Here is useful information about the environment you are running in:' with the <env> working-directory/git/platform/OS details, injected into the (sub)agent system prompt.",
   },
   {
-    matcher: t => t.includes("You have been invoked in the following environment:"),
-    name: "Environment Info Worktree Block",
-    id: "system-prompt-env-info-worktree-block",
-    description: "Model-facing '# Environment / You have been invoked in the following environment:' block (S2m, env_info_simple) listing primary working directory, git-worktree note, and is-a-git-repository status in the system prompt.",
+    matcher: t =>
+      t.includes('You have been invoked in the following environment:'),
+    name: 'Environment Info Worktree Block',
+    id: 'system-prompt-env-info-worktree-block',
+    description:
+      "Model-facing '# Environment / You have been invoked in the following environment:' block (S2m, env_info_simple) listing primary working directory, git-worktree note, and is-a-git-repository status in the system prompt.",
   },
   {
-    matcher: t => t.includes("Assistant knowledge cutoff is "),
-    name: "Knowledge Cutoff Line",
-    id: "system-prompt-knowledge-cutoff-line",
-    description: "Model-facing 'Assistant knowledge cutoff is ${date}.' line emitted in the environment system-prompt blocks (b2m/S2m/T2m); conditional on a known cutoff for the model.",
+    matcher: t => t.includes('Assistant knowledge cutoff is '),
+    name: 'Knowledge Cutoff Line',
+    id: 'system-prompt-knowledge-cutoff-line',
+    description:
+      "Model-facing 'Assistant knowledge cutoff is ${date}.' line emitted in the environment system-prompt blocks (b2m/S2m/T2m); conditional on a known cutoff for the model.",
   },
   {
-    matcher: t => t.includes("Claude Code is available as a CLI in the terminal, desktop app"),
-    name: "Claude Code CLI Availability",
-    id: "system-prompt-claude-code-cli-availability",
-    description: "Model-facing line in the static environment system-prompt block (b2m, env_info_static) stating Claude Code is available as a CLI in the terminal, desktop app, web app, and IDE extensions.",
+    matcher: t =>
+      t.includes(
+        'Claude Code is available as a CLI in the terminal, desktop app'
+      ),
+    name: 'Claude Code CLI Availability',
+    id: 'system-prompt-claude-code-cli-availability',
+    description:
+      'Model-facing line in the static environment system-prompt block (b2m, env_info_static) stating Claude Code is available as a CLI in the terminal, desktop app, web app, and IDE extensions.',
   },
   {
     matcher: t => t.includes("The user's email address is ${"),
-    name: "User Email Context Line",
-    id: "system-prompt-user-email-context",
-    description: "Model-facing dynamic-context line 'The user's email address is ${email}.' assembled into the context payload (userEmail) injected into the model's system/context.",
+    name: 'User Email Context Line',
+    id: 'system-prompt-user-email-context',
+    description:
+      "Model-facing dynamic-context line 'The user's email address is ${email}.' assembled into the context payload (userEmail) injected into the model's system/context.",
   },
   {
     matcher: t => t.includes("The date has changed. Today's date is now "),
-    name: "Date Changed Reminder",
-    id: "system-reminder-date-changed",
-    description: "Model-facing date_change system-reminder ('The date has changed. Today's date is now ${newDate}. DO NOT mention this to the user explicitly...') dispatched via _p([On({content,isMeta:!0})]) from the L6l reminder registry.",
+    name: 'Date Changed Reminder',
+    id: 'system-reminder-date-changed',
+    description:
+      "Model-facing date_change system-reminder ('The date has changed. Today's date is now ${newDate}. DO NOT mention this to the user explicitly...') dispatched via _p([On({content,isMeta:!0})]) from the L6l reminder registry.",
   },
   {
-    matcher: t => t.includes("Retrieved for possible relevance"),
-    name: "Relevant Memories Retrieved Reminder",
-    id: "system-reminder-relevant-memories-retrieved",
-    description: "Model-facing system-reminder (relevant_memories case in the L6l registry, injected via pp([Mn({content,isMeta:!0})])) that prefaces recalled memories with a relevance caveat before showing the memory body.",
+    matcher: t => t.includes('Retrieved for possible relevance'),
+    name: 'Relevant Memories Retrieved Reminder',
+    id: 'system-reminder-relevant-memories-retrieved',
+    description:
+      'Model-facing system-reminder (relevant_memories case in the L6l registry, injected via pp([Mn({content,isMeta:!0})])) that prefaces recalled memories with a relevance caveat before showing the memory body.',
   },
   {
-    matcher: t => t.includes("Available agent types for the Agent tool:"),
-    name: "Agent Listing Delta Initial Reminder",
-    id: "system-reminder-agent-listing-delta-initial",
-    description: "Model-facing system-reminder (agent_listing_delta isInitial branch, isMeta meta-message) that lists the initial set of available subagent types for the Agent tool.",
+    matcher: t => t.includes('Available agent types for the Agent tool:'),
+    name: 'Agent Listing Delta Initial Reminder',
+    id: 'system-reminder-agent-listing-delta-initial',
+    description:
+      'Model-facing system-reminder (agent_listing_delta isInitial branch, isMeta meta-message) that lists the initial set of available subagent types for the Agent tool.',
   },
   {
-    matcher: t => t.includes("updated your memory directory"),
-    name: "Memory Directory Updated Reminder",
-    id: "system-reminder-memory-directory-updated",
-    description: "Model-facing system-reminder (memory_update case in the L6l registry, isMeta meta-message) announcing that a source updated the agent's memory directory and which files changed.",
+    matcher: t => t.includes('updated your memory directory'),
+    name: 'Memory Directory Updated Reminder',
+    id: 'system-reminder-memory-directory-updated',
+    description:
+      "Model-facing system-reminder (memory_update case in the L6l registry, isMeta meta-message) announcing that a source updated the agent's memory directory and which files changed.",
   },
   {
-    matcher: t => t.includes("The user named this session"),
-    name: "Session Named Reminder",
-    id: "system-reminder-session-named",
-    description: "Model-facing system-reminder (NXn renameSystemReminder wrapped in Qw) telling the model the user named the session, signalling its likely focus or intent.",
+    matcher: t => t.includes('The user named this session'),
+    name: 'Session Named Reminder',
+    id: 'system-reminder-session-named',
+    description:
+      'Model-facing system-reminder (NXn renameSystemReminder wrapped in Qw) telling the model the user named the session, signalling its likely focus or intent.',
   },
   {
-    matcher: t => t.includes("The PermissionDenied hook indicated you may retry this tool call."),
-    name: "Permission Denied Retry Nudge",
-    id: "system-reminder-permission-denied-retry-nudge",
-    description: "Model-facing isMeta meta-message injected in auto-mode (H3p @10361519) when a PermissionDenied hook signals the tool call may be retried.",
+    matcher: t =>
+      t.includes(
+        'The PermissionDenied hook indicated you may retry this tool call.'
+      ),
+    name: 'Permission Denied Retry Nudge',
+    id: 'system-reminder-permission-denied-retry-nudge',
+    description:
+      'Model-facing isMeta meta-message injected in auto-mode (H3p @10361519) when a PermissionDenied hook signals the tool call may be retried.',
   },
   {
-    matcher: t => t.includes("Continue from where you left off."),
-    name: "Resume Continue Prompt",
-    id: "system-prompt-resume-continue-prompt",
-    description: "Model-facing resume prompt (aqn() env-fallback returning CLAUDE_CODE_RESUME_PROMPT or this literal, isMeta) injected as a user message on interrupted-turn and deferred-tool auto-resume.",
+    matcher: t => t.includes('Continue from where you left off.'),
+    name: 'Resume Continue Prompt',
+    id: 'system-prompt-resume-continue-prompt',
+    description:
+      'Model-facing resume prompt (aqn() env-fallback returning CLAUDE_CODE_RESUME_PROMPT or this literal, isMeta) injected as a user message on interrupted-turn and deferred-tool auto-resume.',
   },
   {
-    matcher: t => t.includes("<bash-input>"),
-    name: "Bash Input Tag Wrapper",
-    id: "tool-result-bash-input-tag-wrapper",
-    description: "Model-facing framing tag (Swt='bash-input') wrapping a user's bang-command (!cmd) shell input into <bash-input>...</bash-input> via XVm -> On({content}) as a message to the model.",
+    matcher: t => t.includes('<bash-input>'),
+    name: 'Bash Input Tag Wrapper',
+    id: 'tool-result-bash-input-tag-wrapper',
+    description:
+      "Model-facing framing tag (Swt='bash-input') wrapping a user's bang-command (!cmd) shell input into <bash-input>...</bash-input> via XVm -> On({content}) as a message to the model.",
   },
   {
-    matcher: t => t.includes("Command failed: missing command"),
-    name: "Bash Command Missing (SDK)",
-    id: "tool-result-bash-command-missing-sdk",
-    description: "Model-facing error wrapped in <bash-stderr> and enqueued as a user message when a malformed SDK bash_command message omits the command string.",
+    matcher: t => t.includes('Command failed: missing command'),
+    name: 'Bash Command Missing (SDK)',
+    id: 'tool-result-bash-command-missing-sdk',
+    description:
+      'Model-facing error wrapped in <bash-stderr> and enqueued as a user message when a malformed SDK bash_command message omits the command string.',
   },
   {
-    matcher: t => t.includes("Suggested action:"),
-    name: "Context Tip Reception Suggested Action Label",
-    id: "data-context-tip-reception-tip-shown-wrapper",
-    description: "Model-facing label inside the <tip_shown> user-message block sent to the context-tip reception evaluator aux model (gated tengu_context_tip, gsf system + _sf tool).",
+    matcher: t => t.includes('Suggested action:'),
+    name: 'Context Tip Reception Suggested Action Label',
+    id: 'data-context-tip-reception-tip-shown-wrapper',
+    description:
+      'Model-facing label inside the <tip_shown> user-message block sent to the context-tip reception evaluator aux model (gated tengu_context_tip, gsf system + _sf tool).',
   },
   {
-    matcher: t => t.includes("<session_metadata>"),
-    name: "Context Tip Selector Session Metadata Block",
-    id: "data-context-tip-selector-session-metadata",
-    description: "Model-facing session-metadata framing block (hsf) injected into the user message sent to the context-tip selector aux model (csf system, gated tengu_context_tip).",
+    matcher: t => t.includes('<session_metadata>'),
+    name: 'Context Tip Selector Session Metadata Block',
+    id: 'data-context-tip-selector-session-metadata',
+    description:
+      'Model-facing session-metadata framing block (hsf) injected into the user message sent to the context-tip selector aux model (csf system, gated tengu_context_tip).',
   },
   {
-    matcher: t => t.includes("<tip_shown>"),
-    name: "Context Tip Reception Tip Shown Block",
-    id: "data-context-tip-reception-tip-shown-block",
-    description: "Model-facing wrapper (Tsf) framing the previously shown tip (feature/tip/action) as the user message sent to the context-tip reception evaluator aux model (gated tengu_context_tip).",
+    matcher: t => t.includes('<tip_shown>'),
+    name: 'Context Tip Reception Tip Shown Block',
+    id: 'data-context-tip-reception-tip-shown-block',
+    description:
+      'Model-facing wrapper (Tsf) framing the previously shown tip (feature/tip/action) as the user message sent to the context-tip reception evaluator aux model (gated tengu_context_tip).',
   },
   {
-    matcher: t => t.includes("shared with you; summary below"),
-    name: "Artifact Read Shared-With-You Result",
-    id: "tool-result-artifact-read-shared-with-you",
-    description: "Model-facing tool_result framing for an artifact read (frame-reader-persist branch) returned as result:k, prefixing the artifact summary with a shared-with-you header.",
+    matcher: t => t.includes('shared with you; summary below'),
+    name: 'Artifact Read Shared-With-You Result',
+    id: 'tool-result-artifact-read-shared-with-you',
+    description:
+      'Model-facing tool_result framing for an artifact read (frame-reader-persist branch) returned as result:k, prefixing the artifact summary with a shared-with-you header.',
   },
   // 2.1.186 — five prompts were reworded/rewritten past the 100-char fuzzy
   // fingerprint so they extract anonymous (and read-mcp-resource, after
@@ -864,17 +986,17 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Effort-tier prompt for high code review — 3 angles, up to 6 candidates, recall-biased, up to 10 findings',
     identifierMap: {
-      '0': 'PHASE_0_GATHER_DIFF',
-      '1': 'AGENT_TOOL_NAME',
-      '2': 'ANGLES_LINE_BY_LINE',
-      '3': 'ANGLE_REUSE',
-      '4': 'ANGLE_SIMPLIFICATION',
-      '5': 'ANGLE_EFFICIENCY',
-      '6': 'ANGLE_ALTITUDE',
-      '7': 'ANGLE_CONVENTIONS',
-      '8': 'CLEANUP_CANDIDATES_NOTE',
-      '9': 'PHASE_2_VERIFY_RECALL_BIASED',
-      '10': 'OUTPUT_FORMAT_FN',
+      0: 'PHASE_0_GATHER_DIFF',
+      1: 'AGENT_TOOL_NAME',
+      2: 'ANGLES_LINE_BY_LINE',
+      3: 'ANGLE_REUSE',
+      4: 'ANGLE_SIMPLIFICATION',
+      5: 'ANGLE_EFFICIENCY',
+      6: 'ANGLE_ALTITUDE',
+      7: 'ANGLE_CONVENTIONS',
+      8: 'CLEANUP_CANDIDATES_NOTE',
+      9: 'PHASE_2_VERIFY_RECALL_BIASED',
+      10: 'OUTPUT_FORMAT_FN',
     },
   },
   {
@@ -884,17 +1006,17 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Effort-tier prompt for medium code review — 3 angles, up to 6 candidates, precision-biased, up to 8 findings',
     identifierMap: {
-      '0': 'PHASE_0_GATHER_DIFF',
-      '1': 'AGENT_TOOL_NAME',
-      '2': 'ANGLES_LINE_BY_LINE',
-      '3': 'ANGLE_REUSE',
-      '4': 'ANGLE_SIMPLIFICATION',
-      '5': 'ANGLE_EFFICIENCY',
-      '6': 'ANGLE_ALTITUDE',
-      '7': 'ANGLE_CONVENTIONS',
-      '8': 'CLEANUP_CANDIDATES_NOTE',
-      '9': 'PHASE_2_VERIFY_3_STATE',
-      '10': 'OUTPUT_FORMAT_FN',
+      0: 'PHASE_0_GATHER_DIFF',
+      1: 'AGENT_TOOL_NAME',
+      2: 'ANGLES_LINE_BY_LINE',
+      3: 'ANGLE_REUSE',
+      4: 'ANGLE_SIMPLIFICATION',
+      5: 'ANGLE_EFFICIENCY',
+      6: 'ANGLE_ALTITUDE',
+      7: 'ANGLE_CONVENTIONS',
+      8: 'CLEANUP_CANDIDATES_NOTE',
+      9: 'PHASE_2_VERIFY_3_STATE',
+      10: 'OUTPUT_FORMAT_FN',
     },
   },
   {
@@ -904,19 +1026,19 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Effort-tier prompt for max and xhigh code review — 5 angles, up to 8 candidates, recall-biased, up to 15 findings',
     identifierMap: {
-      '0': 'EFFORT_LEVEL',
-      '1': 'PHASE_0_GATHER_DIFF',
-      '2': 'AGENT_TOOL_NAME',
-      '3': 'HIGH_EFFORT_ANGLES',
-      '4': 'ANGLE_REUSE',
-      '5': 'ANGLE_SIMPLIFICATION',
-      '6': 'ANGLE_EFFICIENCY',
-      '7': 'ANGLE_ALTITUDE',
-      '8': 'ANGLE_CONVENTIONS',
-      '9': 'CLEANUP_CANDIDATES_NOTE',
-      '10': 'PHASE_2_VERIFY_3_STATE',
-      '11': 'PHASE_3_SWEEP',
-      '12': 'OUTPUT_FORMAT_FN',
+      0: 'EFFORT_LEVEL',
+      1: 'PHASE_0_GATHER_DIFF',
+      2: 'AGENT_TOOL_NAME',
+      3: 'HIGH_EFFORT_ANGLES',
+      4: 'ANGLE_REUSE',
+      5: 'ANGLE_SIMPLIFICATION',
+      6: 'ANGLE_EFFICIENCY',
+      7: 'ANGLE_ALTITUDE',
+      8: 'ANGLE_CONVENTIONS',
+      9: 'CLEANUP_CANDIDATES_NOTE',
+      10: 'PHASE_2_VERIFY_3_STATE',
+      11: 'PHASE_3_SWEEP',
+      12: 'OUTPUT_FORMAT_FN',
     },
   },
   // 2.1.177 — the fork/subagent prompt cluster was reworded for the new
@@ -969,7 +1091,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       'Concise WebFetch tool description — fetches a URL, converts the page to markdown, and answers a prompt against it via a small fast model; notes auth-URL failure, HTTPS upgrade, cross-host redirect return, and the 15-minute per-URL cache',
   },
   {
-    matcher: t => t.startsWith('IMPORTANT: WebFetch WILL FAIL for authenticated'),
+    matcher: t =>
+      t.startsWith('IMPORTANT: WebFetch WILL FAIL for authenticated'),
     name: 'Tool Description: WebFetch private URL warning',
     id: 'tool-description-webfetch-private-url-warning',
     description:
@@ -1015,8 +1138,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
       'Agent tool usage notes — always include a short description, the agent returns a single result not visible to the user, and guidance on stateless invocation and trusting agent output',
   },
   {
-    matcher: t =>
-      t.includes("You are a teammate in this session's agent team"),
+    matcher: t => t.includes("You are a teammate in this session's agent team"),
     name: 'System Reminder: Team coordination',
     id: 'system-reminder-team-coordination',
     description:
@@ -1207,8 +1329,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // 2.1.172 — new: ShowOnboardingRolePicker (Cowork onboarding chip row).
   // Tool name literal: var $S6="ShowOnboardingRolePicker".
   {
-    matcher: t =>
-      t.startsWith('Render a clickable role-picker chip row'),
+    matcher: t => t.startsWith('Render a clickable role-picker chip row'),
     name: 'Tool Description: ShowOnboardingRolePicker',
     id: 'tool-description-showonboardingrolepicker',
     description:
@@ -1229,8 +1350,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // 2.1.172 — new: the Fable 5 / Mythos 5 model-identity paragraph appended
   // to the system prompt (standalone double-quoted var, single site).
   {
-    matcher: t =>
-      t.startsWith('This iteration of Claude is Claude Fable 5'),
+    matcher: t => t.startsWith('This iteration of Claude is Claude Fable 5'),
     name: 'System Prompt: Fable 5 model identity',
     id: 'system-prompt-fable-5-model-identity',
     description:
@@ -1244,16 +1364,15 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // both shapes share one id and one .md, and whichever shape the .md targets
   // corrupts the other's sites at apply time.
   {
-    matcher: t =>
-      t.includes('${"IMPORTANT: This is NOT from your user'),
+    matcher: t => t.includes('${"IMPORTANT: This is NOT from your user'),
     name: 'System Reminder: Cross-session peer message wrapper',
     id: 'system-reminder-cross-session-peer-message-wrapper',
     description:
       'Wrapper template for an incoming message from another Claude session — header, peer message content, and reply-routing note around the inlined authority warning',
     identifierMap: {
-      '0': 'PEER_MESSAGE_HEADER',
-      '1': 'PEER_MESSAGE_CONTENT',
-      '2': 'PEER_RESPONSE_NOTE',
+      0: 'PEER_MESSAGE_HEADER',
+      1: 'PEER_MESSAGE_CONTENT',
+      2: 'PEER_RESPONSE_NOTE',
     },
   },
   // 2.1.170 — four-zeros fix: three code-review prompts carried partial
@@ -1269,8 +1388,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Phase 2 of the code-review skill for precision tiers — one verifier per candidate, 3-state CONFIRMED/PLAUSIBLE/REFUTED vote',
     identifierMap: {
-      '0': 'AGENT_TOOL_NAME',
-      '1': 'VERIFY_VOTE_DEFINITIONS',
+      0: 'AGENT_TOOL_NAME',
+      1: 'VERIFY_VOTE_DEFINITIONS',
     },
   },
   {
@@ -1282,8 +1401,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Phase 2 of the code-review skill for recall tiers — one verifier per candidate, recall-biased keep rule',
     identifierMap: {
-      '0': 'AGENT_TOOL_NAME',
-      '1': 'RECALL_BIASED_RUBRIC',
+      0: 'AGENT_TOOL_NAME',
+      1: 'RECALL_BIASED_RUBRIC',
     },
   },
   {
@@ -1295,7 +1414,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Shared Phase 3 of the code-review skill — a fresh finder re-reads the diff for defects not already listed',
     identifierMap: {
-      '0': 'SWEEP_MISS_CATEGORIES',
+      0: 'SWEEP_MISS_CATEGORIES',
     },
   },
   // 2.1.169
@@ -1316,21 +1435,21 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Guides the user through scheduling, updating, listing, or running remote Claude Code agents on cron triggers via the Anthropic cloud API',
     identifierMap: {
-      '0': 'ONE_OFF_ENABLED_FN',
-      '1': 'ASK_USER_QUESTION_TOOL_NAME',
-      '2': 'ADDITIONAL_INFO_BLOCK',
-      '3': 'REMOTE_TRIGGER_TOOL_NAME',
-      '4': 'DEFAULT_GIT_REPO_URL',
-      '5': 'MCP_CONNECTORS_LIST',
-      '6': 'ENVIRONMENTS_LIST',
-      '7': 'NEW_ENVIRONMENT_OBJECT',
-      '8': 'USER_TIMEZONE',
-      '9': 'NOW_LOCAL_TIME',
-      '10': 'NOW_UTC_ISO',
-      '11': 'IS_GITHUB_REMINDER_ENABLED',
-      '12': 'IS_TRUTHY_FN',
-      '13': 'CHECK_FEATURE_FLAG_FN',
-      '14': 'USER_REQUEST',
+      0: 'ONE_OFF_ENABLED_FN',
+      1: 'ASK_USER_QUESTION_TOOL_NAME',
+      2: 'ADDITIONAL_INFO_BLOCK',
+      3: 'REMOTE_TRIGGER_TOOL_NAME',
+      4: 'DEFAULT_GIT_REPO_URL',
+      5: 'MCP_CONNECTORS_LIST',
+      6: 'ENVIRONMENTS_LIST',
+      7: 'NEW_ENVIRONMENT_OBJECT',
+      8: 'USER_TIMEZONE',
+      9: 'NOW_LOCAL_TIME',
+      10: 'NOW_UTC_ISO',
+      11: 'IS_GITHUB_REMINDER_ENABLED',
+      12: 'IS_TRUTHY_FN',
+      13: 'CHECK_FEATURE_FLAG_FN',
+      14: 'USER_REQUEST',
     },
   },
   {
@@ -1375,8 +1494,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     // New in 2.1.169: EnterWorktree isolation directive — instructs the agent to
     // call EnterWorktree before its first edit unless already isolated. Net-new
     // system-prompt fragment paired with the EnterWorktree/ExitWorktree tools.
-    matcher: t =>
-      t.includes('use the EnterWorktree tool to isolate your work'),
+    matcher: t => t.includes('use the EnterWorktree tool to isolate your work'),
     name: 'System Prompt: EnterWorktree isolation directive',
     id: 'system-prompt-enter-worktree-isolation-directive',
     description:
@@ -1415,13 +1533,13 @@ const NEW_PROMPT_ASSIGNMENTS = [
     description:
       'Describes the CronCreate tool for enqueuing one-shot or recurring cron-based jobs with jitter and off-minute scheduling guidance',
     identifierMap: {
-      '0': 'CRON_DURABILITY_SECTION',
-      '1': 'IS_MONITOR_TOOL_ENABLED_FN',
-      '2': 'CRON_CREATE_TOOL_NAME',
-      '3': 'MONITOR_TOOL_NAME',
-      '4': 'CRON_DURABLE_RUNTIME_NOTE',
-      '5': 'CANCEL_TIMEFRAME_DAYS',
-      '6': 'CRON_DELETE_TOOL_NAME',
+      0: 'CRON_DURABILITY_SECTION',
+      1: 'IS_MONITOR_TOOL_ENABLED_FN',
+      2: 'CRON_CREATE_TOOL_NAME',
+      3: 'MONITOR_TOOL_NAME',
+      4: 'CRON_DURABLE_RUNTIME_NOTE',
+      5: 'CANCEL_TIMEFRAME_DAYS',
+      6: 'CRON_DELETE_TOOL_NAME',
     },
   },
   // 2.1.167
@@ -1549,7 +1667,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     id: 'tool-description-notebookedit',
     description:
       'Describes the NotebookEdit tool for replacing, inserting, or deleting a single cell in a Jupyter notebook (.ipynb)',
-    identifierMap: { '0': 'READ_TOOL_NAME' },
+    identifierMap: { 0: 'READ_TOOL_NAME' },
   },
   {
     matcher: t =>
@@ -1591,119 +1709,150 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('Generate a short kebab-case name (2-4 words)'),
     name: 'Agent Prompt: /rename auto-generate session name',
     id: 'agent-prompt-rename-auto-generate-session-name',
-    description: 'Prompt used by /rename (no args) to auto-generate a kebab-case session name from conversation context',
+    description:
+      'Prompt used by /rename (no args) to auto-generate a kebab-case session name from conversation context',
   },
   {
-    matcher: t => t.includes('Send files to the user. Use this when the file *is* the deliverable'),
+    matcher: t =>
+      t.includes(
+        'Send files to the user. Use this when the file *is* the deliverable'
+      ),
     name: 'Tool Description: SendUserFile',
     id: 'tool-description-senduserfile',
-    description: 'Describes the SendUserFile tool for surfacing generated deliverable files to the user, with optional captions and normal or proactive status',
+    description:
+      'Describes the SendUserFile tool for surfacing generated deliverable files to the user, with optional captions and normal or proactive status',
   },
   {
-    matcher: t => t.includes('verifier skills that can be used by the Verify agent'),
+    matcher: t =>
+      t.includes('verifier skills that can be used by the Verify agent'),
     name: 'Skill: Create verifier skills',
     id: 'skill-create-verifier-skills',
-    description: 'Prompt for creating verifier skills for the Verify agent to automatically verify code changes',
-    identifierMap: { '0': 'ENABLE_TASKS_FEATURE', '1': 'TASKCREATE_TOOL_NAME', '2': 'TODOWRITE_TOOL_NAME' },
+    description:
+      'Prompt for creating verifier skills for the Verify agent to automatically verify code changes',
+    identifierMap: {
+      0: 'ENABLE_TASKS_FEATURE',
+      1: 'TASKCREATE_TOOL_NAME',
+      2: 'TODOWRITE_TOOL_NAME',
+    },
   },
   {
-    matcher: t => t.includes('was read before the last conversation was summarized'),
+    matcher: t =>
+      t.includes('was read before the last conversation was summarized'),
     name: 'System Reminder: Compact file reference',
     id: 'system-reminder-compact-file-reference',
     description: 'Reference to file read before conversation summarization',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT', '1': 'READ_TOOL_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT', 1: 'READ_TOOL_OBJECT' },
   },
   {
-    matcher: t => t.includes('other modified files in this turn already exceeded the snippet budget'),
+    matcher: t =>
+      t.includes(
+        'other modified files in this turn already exceeded the snippet budget'
+      ),
     name: 'System Reminder: File modification detected (budget exceeded)',
     id: 'system-reminder-file-modification-detected-budget-exceeded',
-    description: 'System reminder for when a file modification is detected - specifically when other modified files in the turn already exceeded the budget.',
-    identifierMap: { '0': 'FILE_OBJECT' },
+    description:
+      'System reminder for when a file modification is detected - specifically when other modified files in the turn already exceeded the budget.',
+    identifierMap: { 0: 'FILE_OBJECT' },
   },
   {
-    matcher: t => t.includes('Here are the relevant changes (shown with line numbers):'),
+    matcher: t =>
+      t.includes('Here are the relevant changes (shown with line numbers):'),
     name: 'System Reminder: File modified by user or linter',
     id: 'system-reminder-file-modified-externally',
     description: 'Notification that a file was modified externally',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
-    matcher: t => t.includes('was too large and has been truncated to the first'),
+    matcher: t =>
+      t.includes('was too large and has been truncated to the first'),
     name: 'System Reminder: File truncated',
     id: 'system-reminder-file-truncated',
     description: 'Notification that file was truncated due to size',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT', '1': 'MAX_LINES_CONSTANT', '2': 'READ_TOOL_OBJECT' },
+    identifierMap: {
+      0: 'ATTACHMENT_OBJECT',
+      1: 'MAX_LINES_CONSTANT',
+      2: 'READ_TOOL_OBJECT',
+    },
   },
   {
     matcher: t => /^\$\{[^}]+\} hook additional context: /.test(t),
     name: 'System Reminder: Hook additional context',
     id: 'system-reminder-hook-additional-context',
     description: 'Additional context from a hook',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => /^\$\{[^}]+\} hook blocking error from command:/.test(t),
     name: 'System Reminder: Hook blocking error',
     id: 'system-reminder-hook-blocking-error',
     description: 'Error from a blocking hook command',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => /^\$\{[^}]+\} hook success: \$\{/.test(t),
     name: 'System Reminder: Hook success',
     id: 'system-reminder-hook-success',
     description: 'Success message from a hook',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => t.includes('(No content)</mcp-resource>'),
     name: 'System Reminder: MCP resource no content',
     id: 'system-reminder-mcp-resource-no-content',
     description: 'Shown when MCP resource has no content',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => t.includes('(No displayable content)</mcp-resource>'),
     name: 'System Reminder: MCP resource no displayable content',
     id: 'system-reminder-mcp-resource-no-displayable-content',
     description: 'Shown when MCP resource has no displayable content',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => t.includes('output style is active'),
     name: 'System Reminder: Output style active',
     id: 'system-reminder-output-style-active',
     description: 'Notification that an output style is active',
-    identifierMap: { '0': 'OUTPUT_STYLE_CONFIG', '1': 'OUTPUT_STYLE_TURN_REMINDER' },
+    identifierMap: {
+      0: 'OUTPUT_STYLE_CONFIG',
+      1: 'OUTPUT_STYLE_TURN_REMINDER',
+    },
   },
   {
     matcher: t => t.startsWith('Token usage: ${'),
     name: 'System Reminder: Token usage',
     id: 'system-reminder-token-usage',
     description: 'Current token usage statistics',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     matcher: t => t.startsWith('USD budget: $${'),
     name: 'System Reminder: USD budget',
     id: 'system-reminder-usd-budget',
     description: 'Current USD budget statistics',
-    identifierMap: { '0': 'ATTACHMENT_OBJECT' },
+    identifierMap: { 0: 'ATTACHMENT_OBJECT' },
   },
   {
     // cli.js has `it’s` (curly apostrophe escape) so match what's stable.
-    matcher: t => t.includes('better to use the built-in tools as they provide a better'),
+    matcher: t =>
+      t.includes('better to use the built-in tools as they provide a better'),
     name: 'Tool Description: Bash (built-in tools note)',
     id: 'tool-description-bash-built-in-tools-note',
-    description: 'Note that built-in tools provide better UX than Bash equivalents',
-    identifierMap: { '0': 'BASH_TOOL_NAME' },
+    description:
+      'Note that built-in tools provide better UX than Bash equivalents',
+    identifierMap: { 0: 'BASH_TOOL_NAME' },
   },
   // 2.1.144
   {
-    matcher: t => t.startsWith('## Durability\n\nBy default (durable: false) the job lives only in this Claude session'),
+    matcher: t =>
+      t.startsWith(
+        '## Durability\n\nBy default (durable: false) the job lives only in this Claude session'
+      ),
     name: 'Tool Description: CronCreate (durability note)',
     id: 'tool-description-croncreate-durability',
-    description: 'Sub-prompt explaining the durable: true / false trade-off, inserted into CronCreate when the durable-cron feature flag is on',
+    description:
+      'Sub-prompt explaining the durable: true / false trade-off, inserted into CronCreate when the durable-cron feature flag is on',
   },
   // 2.1.148 — the /code-review skill was restructured from one prompt
   // (skill-code-review) into 11 composable fragments. The skill (tK4)
@@ -1715,7 +1864,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('## Posting to GitHub (--comment)'),
     name: 'Skill: Code Review (--comment GitHub posting)',
     id: 'skill-code-review-posting-to-github',
-    description: 'Appended to the code-review prompt when --comment is passed; instructs posting each finding as an inline PR comment',
+    description:
+      'Appended to the code-review prompt when --comment is passed; instructs posting each finding as an inline PR comment',
   },
   // 2.1.151+ shape: effort-tier prompts gained 5 per-angle fragment slots
   // (g4q/Q4q/d4q/c4q/l4q = Reuse/Simplification/Efficiency/Altitude/Cleanup-note
@@ -1728,7 +1878,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       t.includes('5+4 angles') && t.includes('"maximum":"extra-high"'),
     name: 'Skill: Code Review (max / xhigh effort)',
     id: 'skill-code-review-effort-max',
-    description: 'Effort-tier prompt for max and xhigh code review — 5+4 angles, up to 8 candidates, recall-biased, sweep + 3-state verify, up to 15 findings',
+    description:
+      'Effort-tier prompt for max and xhigh code review — 5+4 angles, up to 8 candidates, recall-biased, sweep + 3-state verify, up to 15 findings',
     identifierMap: {
       0: 'EFFORT_LEVEL',
       1: 'PHASE_0_GATHER_DIFF',
@@ -1749,7 +1900,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       t.includes('3+4 angles') && t.includes('catch every real bug a careful'),
     name: 'Skill: Code Review (high effort)',
     id: 'skill-code-review-effort-high',
-    description: 'Effort-tier prompt for high code review — 3+4 angles, up to 6 candidates, recall-biased verify, up to 10 findings',
+    description:
+      'Effort-tier prompt for high code review — 3+4 angles, up to 6 candidates, recall-biased verify, up to 10 findings',
     identifierMap: {
       0: 'PHASE_0_GATHER_DIFF',
       1: 'AGENT_TOOL_NAME',
@@ -1765,10 +1917,12 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.includes('3+4 angles') && t.includes('at medium effort: every finding you surface'),
+      t.includes('3+4 angles') &&
+      t.includes('at medium effort: every finding you surface'),
     name: 'Skill: Code Review (medium effort)',
     id: 'skill-code-review-effort-medium',
-    description: 'Effort-tier prompt for medium code review — 3+4 angles, up to 6 candidates, precision-biased 3-state verify, up to 8 findings',
+    description:
+      'Effort-tier prompt for medium code review — 3+4 angles, up to 6 candidates, precision-biased 3-state verify, up to 8 findings',
     identifierMap: {
       0: 'PHASE_0_GATHER_DIFF',
       1: 'AGENT_TOOL_NAME',
@@ -1788,7 +1942,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('"maximum":"extra-high"} effort: catch'),
     name: 'Skill: Code Review (max / xhigh effort)',
     id: 'skill-code-review-effort-max',
-    description: 'Effort-tier prompt for max and xhigh code review — 5 angles, up to 8 candidates, recall-biased, up to 15 findings',
+    description:
+      'Effort-tier prompt for max and xhigh code review — 5 angles, up to 8 candidates, recall-biased, up to 15 findings',
     identifierMap: {
       0: 'EFFORT_LEVEL',
       1: 'PHASE_0_GATHER_DIFF',
@@ -1803,7 +1958,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('catch every real bug a careful'),
     name: 'Skill: Code Review (high effort)',
     id: 'skill-code-review-effort-high',
-    description: 'Effort-tier prompt for high code review — 3 angles, up to 6 candidates, recall-biased, up to 10 findings',
+    description:
+      'Effort-tier prompt for high code review — 3 angles, up to 6 candidates, recall-biased, up to 10 findings',
     identifierMap: {
       0: 'PHASE_0_GATHER_DIFF',
       1: 'AGENT_TOOL_NAME',
@@ -1816,7 +1972,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('at medium effort: every finding you surface'),
     name: 'Skill: Code Review (medium effort)',
     id: 'skill-code-review-effort-medium',
-    description: 'Effort-tier prompt for medium code review — 3 angles, up to 6 candidates, precision-biased, up to 8 findings',
+    description:
+      'Effort-tier prompt for medium code review — 3 angles, up to 6 candidates, precision-biased, up to 8 findings',
     identifierMap: {
       0: 'PHASE_0_GATHER_DIFF',
       1: 'AGENT_TOOL_NAME',
@@ -1829,46 +1986,53 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('1 diff pass '),
     name: 'Skill: Code Review (low effort)',
     id: 'skill-code-review-effort-low',
-    description: 'Effort-tier prompt for low code review — single diff pass, no verify, up to 4 findings',
+    description:
+      'Effort-tier prompt for low code review — single diff pass, no verify, up to 4 findings',
   },
   {
     matcher: t => t.includes('Return findings as a JSON array of at most'),
     name: 'Skill: Code Review (findings JSON output)',
     id: 'skill-code-review-output-format',
-    description: 'Shared output spec for the code-review skill — findings as a JSON array with file/line/summary/failure_scenario',
+    description:
+      'Shared output spec for the code-review skill — findings as a JSON array with file/line/summary/failure_scenario',
     identifierMap: { 0: 'MAX_FINDINGS' },
   },
   {
     matcher: t => t.includes('Gather the diff'),
     name: 'Skill: Code Review (Phase 0 — gather the diff)',
     id: 'skill-code-review-phase-0-gather-diff',
-    description: 'Shared Phase 0 of the code-review skill — gather the unified diff under review via git diff',
+    description:
+      'Shared Phase 0 of the code-review skill — gather the unified diff under review via git diff',
   },
   {
     matcher: t => t.includes('Verify (1-vote, 3-state)'),
     name: 'Skill: Code Review (Phase 2 — verify, 3-state)',
     id: 'skill-code-review-phase-2-verify-3-state',
-    description: 'Phase 2 of the code-review skill for precision tiers — one verifier per candidate, 3-state CONFIRMED/PLAUSIBLE/REFUTED vote',
+    description:
+      'Phase 2 of the code-review skill for precision tiers — one verifier per candidate, 3-state CONFIRMED/PLAUSIBLE/REFUTED vote',
     identifierMap: { 0: 'AGENT_TOOL_NAME' },
   },
   {
     matcher: t => t.includes('Verify (1-vote, recall-biased)'),
     name: 'Skill: Code Review (Phase 2 — verify, recall-biased)',
     id: 'skill-code-review-phase-2-verify-recall-biased',
-    description: 'Phase 2 of the code-review skill for recall tiers — one verifier per candidate, recall-biased keep rule',
+    description:
+      'Phase 2 of the code-review skill for recall tiers — one verifier per candidate, recall-biased keep rule',
     identifierMap: { 0: 'AGENT_TOOL_NAME' },
   },
   {
     matcher: t => t.includes('Sweep for gaps'),
     name: 'Skill: Code Review (Phase 3 — sweep for gaps)',
     id: 'skill-code-review-phase-3-sweep',
-    description: 'Shared Phase 3 of the code-review skill — a fresh finder re-reads the diff for defects not already listed',
+    description:
+      'Shared Phase 3 of the code-review skill — a fresh finder re-reads the diff for defects not already listed',
   },
   {
     matcher: t => t.includes('line-by-line diff scan'),
     name: 'Skill: Code Review (Angle A — line-by-line diff scan)',
     id: 'skill-code-review-angle-line-by-line',
-    description: 'The line-by-line diff-scan finder angle of the code-review skill — read every hunk plus the enclosing function',
+    description:
+      'The line-by-line diff-scan finder angle of the code-review skill — read every hunk plus the enclosing function',
   },
 
   // 2.1.160 — the code-review skill's finder angles B–E and the recall-biased
@@ -1879,31 +2043,36 @@ const NEW_PROMPT_ASSIGNMENTS = [
     matcher: t => t.includes('removed-behavior auditor'),
     name: 'Skill: Code Review (Angle B — removed-behavior auditor)',
     id: 'skill-code-review-angle-removed-behavior-auditor',
-    description: 'The removed-behavior finder angle of the code-review skill — for every deleted/replaced line, name the invariant it enforced and check it is re-established',
+    description:
+      'The removed-behavior finder angle of the code-review skill — for every deleted/replaced line, name the invariant it enforced and check it is re-established',
   },
   {
     matcher: t => t.includes('cross-file tracer'),
     name: 'Skill: Code Review (Angle C — cross-file tracer)',
     id: 'skill-code-review-angle-cross-file-tracer',
-    description: 'The cross-file finder angle of the code-review skill — for each changed function, trace its callers to flag broken contracts',
+    description:
+      'The cross-file finder angle of the code-review skill — for each changed function, trace its callers to flag broken contracts',
   },
   {
     matcher: t => t.includes('language-pitfall specialist'),
     name: 'Skill: Code Review (Angle D — language-pitfall specialist)',
     id: 'skill-code-review-angle-language-pitfall-specialist',
-    description: "The language-pitfall finder angle of the code-review skill — scan for the classic pitfalls of the diff's language/framework",
+    description:
+      "The language-pitfall finder angle of the code-review skill — scan for the classic pitfalls of the diff's language/framework",
   },
   {
     matcher: t => t.includes('wrapper/proxy correctness'),
     name: 'Skill: Code Review (Angle E — wrapper/proxy correctness)',
     id: 'skill-code-review-angle-wrapper-proxy-correctness',
-    description: 'The wrapper/proxy finder angle of the code-review skill — when a type wraps another (cache, proxy, decorator), check the forwarding is faithful',
+    description:
+      'The wrapper/proxy finder angle of the code-review skill — when a type wraps another (cache, proxy, decorator), check the forwarding is faithful',
   },
   {
     matcher: t => t.includes('**PLAUSIBLE by default**'),
     name: 'Skill: Code Review (verify — PLAUSIBLE/REFUTED rubric)',
     id: 'skill-code-review-verify-plausible-refuted-rubric',
-    description: 'The keep/kill rubric for the code-review verify phase — PLAUSIBLE by default, REFUTED only when constructible from the code',
+    description:
+      'The keep/kill rubric for the code-review verify phase — PLAUSIBLE by default, REFUTED only when constructible from the code',
   },
 
   // 2.1.160 — DesignSync tool, paired with the new design-sync skill. Reads and
@@ -1916,7 +2085,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       ),
     name: 'Tool Description: DesignSync',
     id: 'tool-description-designsync',
-    description: "Describes the DesignSync tool — reads/updates the user's claude.ai/design design-system projects through their claude.ai login, dispatching on a method field, paired with the /design-sync skill",
+    description:
+      "Describes the DesignSync tool — reads/updates the user's claude.ai/design design-system projects through their claude.ai login, dispatching on a method field, paired with the /design-sync skill",
   },
 
   // 2.1.160 — bundled /code-review workflow script (export const meta = {...}
@@ -1929,7 +2099,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
       t.includes('export const meta') && t.includes('// code-review: Scope'),
     name: 'Workflow Script: /code-review',
     id: 'workflow-script-code-review',
-    description: 'Bundled /code-review workflow — scopes the diff, fans out per-angle finders, dedups, verifies, sweeps for gaps (xhigh/max), and synthesizes; effort-parameterized via LEVEL_PARAMS',
+    description:
+      'Bundled /code-review workflow — scopes the diff, fans out per-angle finders, dedups, verifies, sweeps for gaps (xhigh/max), and synthesizes; effort-parameterized via LEVEL_PARAMS',
     identifierMap: {
       0: 'JSON',
       1: 'WORKFLOW_NAME',
@@ -2047,7 +2218,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     id: 'skill-code-review',
     description:
       'Bundled /code-review skill (renamed from /simplify in 2.1.146) — reviews all changed files for reuse, quality, and efficiency across three parallel review agents and fixes issues found',
-    identifierMap: { '0': 'AGENT_TOOL_NAME' },
+    identifierMap: { 0: 'AGENT_TOOL_NAME' },
   },
   {
     matcher: t => t.startsWith('After you finish implementing the change:'),
@@ -2055,7 +2226,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     id: 'system-prompt-worker-instructions',
     description:
       'Post-implementation checklist injected for worker/subagent turns — run the code-review skill, run unit tests, test end-to-end',
-    identifierMap: { '0': 'SKILL_TOOL_NAME' },
+    identifierMap: { 0: 'SKILL_TOOL_NAME' },
   },
   {
     matcher: t =>
@@ -2079,18 +2250,20 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.startsWith('You are a subagent spawned by a workflow orchestration script') &&
-      t.includes('You MUST call the'),
+      t.startsWith(
+        'You are a subagent spawned by a workflow orchestration script'
+      ) && t.includes('You MUST call the'),
     name: 'Agent Prompt: Workflow subagent structured output',
     id: 'agent-prompt-workflow-subagent-structured-output',
     description:
       'Prompt for a workflow-spawned subagent that must return its answer by calling a structured-output tool exactly once',
-    identifierMap: { '0': 'STRUCTURED_OUTPUT_TOOL_NAME' },
+    identifierMap: { 0: 'STRUCTURED_OUTPUT_TOOL_NAME' },
   },
   {
     matcher: t =>
-      t.startsWith('You are a subagent spawned by a workflow orchestration script') &&
-      t.includes('returned **verbatim**'),
+      t.startsWith(
+        'You are a subagent spawned by a workflow orchestration script'
+      ) && t.includes('returned **verbatim**'),
     name: 'Agent Prompt: Workflow subagent plain text output',
     id: 'agent-prompt-workflow-subagent-plain-text-output',
     description:
@@ -2103,7 +2276,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
   // `${JSON.stringify(phases)}` pair — so they share one identifierMap.
   {
     matcher: t =>
-      t.includes('export const meta') && t.includes('// ===== Phase 0: Scope ====='),
+      t.includes('export const meta') &&
+      t.includes('// ===== Phase 0: Scope ====='),
     name: 'Workflow Script: review-branch',
     id: 'workflow-script-review-branch',
     description:
@@ -2121,7 +2295,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.includes('export const meta') && t.includes('const RAPID_PROMPT = idx =>'),
+      t.includes('export const meta') &&
+      t.includes('const RAPID_PROMPT = idx =>'),
     name: 'Workflow Script: bughunt-lite',
     id: 'workflow-script-bughunt-lite',
     description:
@@ -2129,8 +2304,7 @@ const NEW_PROMPT_ASSIGNMENTS = [
     identifierMap: WORKFLOW_SCRIPT_IDENTIFIER_MAP,
   },
   {
-    matcher: t =>
-      t.includes('export const meta') && t.includes("key: 'mvp',"),
+    matcher: t => t.includes('export const meta') && t.includes("key: 'mvp',"),
     name: 'Workflow Script: plan-hunter',
     id: 'workflow-script-plan-hunter',
     description:
@@ -2188,7 +2362,8 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.includes('export const meta') && t.includes('const COMPLETENESS_SCHEMA = {'),
+      t.includes('export const meta') &&
+      t.includes('const COMPLETENESS_SCHEMA = {'),
     name: 'Workflow Script: autopilot',
     id: 'workflow-script-autopilot',
     description:
@@ -2220,7 +2395,9 @@ const NEW_PROMPT_ASSIGNMENTS = [
   },
   {
     matcher: t =>
-      t.includes('You are a worker agent executing a task assigned by the coordinator'),
+      t.includes(
+        'You are a worker agent executing a task assigned by the coordinator'
+      ),
     name: 'System Prompt: Worker agent',
     id: 'system-prompt-worker-agent',
     description:
@@ -2397,7 +2574,8 @@ function leadShowsModelFacingContext(lead, text = '') {
   // Static tool_result content the model reads: {type:"tool_result",content:"…"}.
   // (The var-indirected / template-literal forms are caught as ≥40-char candidates
   // + classified; this catches the inline-literal content. Audit gap G5/G23.)
-  if (/\btype:\s*["']tool_result["']\s*,\s*content:\s*$/.test(tail)) return true;
+  if (/\btype:\s*["']tool_result["']\s*,\s*content:\s*$/.test(tail))
+    return true;
   // Skill/slash-command "when to use" guidance — surfaced in the model's
   // available-skills list.
   if (/\bwhenToUse:\s*$/.test(tail)) return true;
@@ -2650,7 +2828,9 @@ function isHardExcluded(text) {
     return true;
   if (
     text.startsWith('You are an agent for Claude Code, Anthropic') &&
-    text.includes('When you complete the task, respond with a concise report') &&
+    text.includes(
+      'When you complete the task, respond with a concise report'
+    ) &&
     !text.includes('Your strengths') &&
     text.trimEnd().endsWith('so it only needs the essentials.')
   )
@@ -2743,7 +2923,23 @@ function recordGateCandidate(body, lead) {
 function shouldCapture(text, cacheBody, lead, minLength) {
   if (leadShowsDropContext(lead)) return false;
   const cls = classifyByCache(cacheBody);
-  if (cls) return cls.facing === 'model' && !isHardExcluded(text);
+  if (cls) {
+    if (isHardExcluded(text)) return false;
+    // A CURATED assignment outranks the cached verdict. The cache is written by
+    // an LLM classification pass reading each string's emission site, and it is
+    // right often enough to be the authority for below-floor capture — but it is
+    // still a heuristic, and when it is wrong it is wrong SILENTLY, because it
+    // short-circuits every gate below including the curated list that exists to
+    // say "this one, specifically, is a prompt".
+    //
+    // It classified the TodoWrite description ("Update the todo list for the
+    // current session. To be used proactively and often…") as `ui`. That is a
+    // tool description: the model reads it on every session that exposes the
+    // tool. Naming a prompt in NEW_PROMPT_ASSIGNMENTS is a human decision about
+    // one specific string, so it wins; everything else still defers to the cache.
+    if (cls.facing !== 'model' && !lookupNewPromptAssignment(text)) return false;
+    if (cls.facing === 'model') return true;
+  }
   const signalled = leadShowsModelFacingContext(lead, text);
   const eff = signalled ? 1 : Math.min(minLength, ADMIT_FLOOR);
   if (validateInput(text, eff, { bypassQuality: signalled })) return true;
@@ -2778,7 +2974,8 @@ function validateInput(text, minLength = 500, opts = {}) {
   if (text.startsWith('This is the git status')) return true;
 
   // Include the system reminder accompanying every Read tool.
-  if (text.includes('Whenever you read a file, you should consider whether it')) return true;
+  if (text.includes('Whenever you read a file, you should consider whether it'))
+    return true;
 
   // Another prompt smaller then 500 characters that should be included
   if (text.includes('IMPORTANT: Assist with authorized security testing'))
@@ -2800,21 +2997,43 @@ function validateInput(text, minLength = 500, opts = {}) {
   // outdated-version banner, excluded below. As of 2.1.145 its interpolated
   // ${{ISSUES_EXPLAINER,PACKAGE_URL,...}} object pushes it past 400 chars, so
   // an include rule here would shadow the exclude and leak 2 junk entries.
-  if (text.length >= 400 && /^\s*(Use this (?:tool|skill|agent)|Your strengths:|<system-reminder>)/.test(text)) return true;
+  if (
+    text.length >= 400 &&
+    /^\s*(Use this (?:tool|skill|agent)|Your strengths:|<system-reminder>)/.test(
+      text
+    )
+  )
+    return true;
 
   // Specific medium-length prompts (400–500c) that open with directive
   // patterns. Each entry is anchored to text confirmed unique in 2.1.141
   // cli.js. `trimStart` lets us catch leading-whitespace variants (some
   // cli.js templates open with `\n` before the directive verb).
   const ts = text.trimStart();
-  if (text.includes('Provide a concise response based only on the content above')) return true;
-  if (ts.startsWith('Find elements on the page using natural language')) return true;
-  if (ts.startsWith('Your plan has been submitted to the team lead for approval')) return true;
-  if (ts.startsWith("I'm sending this plan to Ultraplan to be refined remotely")) return true;
-  if (text.includes('If the user asks about "ultrareview" or how to run it')) return true;
-  if (text.includes('If they want a one-time run (e.g., "once at 3pm"')) return true;
-  if (ts.startsWith('You are an interactive agent that helps users')) return true;
-  if (ts.startsWith("You are an agent for Claude Code, Anthropic's official CLI")) return true;
+  if (
+    text.includes('Provide a concise response based only on the content above')
+  )
+    return true;
+  if (ts.startsWith('Find elements on the page using natural language'))
+    return true;
+  if (
+    ts.startsWith('Your plan has been submitted to the team lead for approval')
+  )
+    return true;
+  if (
+    ts.startsWith("I'm sending this plan to Ultraplan to be refined remotely")
+  )
+    return true;
+  if (text.includes('If the user asks about "ultrareview" or how to run it'))
+    return true;
+  if (text.includes('If they want a one-time run (e.g., "once at 3pm"'))
+    return true;
+  if (ts.startsWith('You are an interactive agent that helps users'))
+    return true;
+  if (
+    ts.startsWith("You are an agent for Claude Code, Anthropic's official CLI")
+  )
+    return true;
 
   // Very short interpolated fragments (under 100 chars) that ship in
   // cli.js. Bash-alt-* tool sub-descriptions and subagent-guidance.
@@ -2823,7 +3042,11 @@ function validateInput(text, minLength = 500, opts = {}) {
   if (ts.startsWith('Write files: Use ${')) return true;
   if (ts.startsWith('File search: Use ${')) return true;
   if (ts.startsWith('Content search: Use ${')) return true;
-  if (ts.startsWith('Use the ${') && ts.includes('tool with specialized agents')) return true;
+  if (
+    ts.startsWith('Use the ${') &&
+    ts.includes('tool with specialized agents')
+  )
+    return true;
   if (ts.startsWith('Contents of ${') && ts.includes(':')) return true;
 
   // ////////////////
@@ -2916,9 +3139,14 @@ function validateInput(text, minLength = 500, opts = {}) {
   // System-reminder short fragments and a few specific tool-description /
   // system-prompt fragments shipped under 500 chars in 2.1.141.
   if (text.startsWith('Stop hook blocking error from command')) return true;
-  if (text.startsWith('The user opened the file ') && text.includes('in the IDE')) return true;
+  if (
+    text.startsWith('The user opened the file ') &&
+    text.includes('in the IDE')
+  )
+    return true;
   if (text.includes('The user selected the lines ')) return true;
-  if (text.includes('The user has expressed a desire to invoke the agent')) return true;
+  if (text.includes('The user has expressed a desire to invoke the agent'))
+    return true;
   if (text.startsWith('A plan file exists from plan mode at:')) return true;
   if (text.includes('IMPORTANT: Avoid using this tool to run')) return true;
   if (text.startsWith('Break down and manage your work with the')) return true;
@@ -2937,11 +3165,14 @@ function validateInput(text, minLength = 500, opts = {}) {
   if (text.includes('Cannot install keybindings from a remote')) return false;
 
   // HTML output from the /insights report (and similar). Not a prompt.
-  if (text.startsWith('<!DOCTYPE html>') || text.startsWith('<html')) return false;
+  if (text.startsWith('<!DOCTYPE html>') || text.startsWith('<html'))
+    return false;
   if (/^\s*<h\d[\s>]/.test(text)) return false;
 
   // `claude` CLI help screens (Remote Control feature et al). Not prompts.
-  if (text.includes('Remote Control - Control local sessions from claude.ai/code'))
+  if (
+    text.includes('Remote Control - Control local sessions from claude.ai/code')
+  )
     return false;
 
   // CC version-update banner shown to users when their install is outdated.
@@ -3161,6 +3392,169 @@ function assembleComposite(node) {
   return null;
 }
 
+// A prompt that is byte-identical at several sites needs ONE CATALOGUE ENTRY
+// PER SITE: the apply consumes one site per entry, and when the binary matches
+// in more places than the catalogue has entries no site is attributable and the
+// whole group is skipped rather than spliced into whichever came first.
+//
+// Capture is gated on `lead` — the 600 characters before the node — so whether
+// a site is admitted depends on the code around it. Anthropic emits the same
+// error text from several call sites with quite different surroundings, so one
+// site clears the gate and its twins do not: `project_write: local_path was
+// replaced during the upload.` occupies 6 sites and produced 1 entry, and the
+// group then resolved as ambiguous and applied nowhere.
+//
+// If a body is model-facing at one site it is the same prompt text at every
+// site, so admit the twins. Gated on length: below this floor the "same text"
+// is something like `/mcp` (144 sites) or `(empty)`, which is a shared token
+// rather than a repeated prompt, and admitting 144 entries for it would be
+// worse than skipping. Those stay skipped by design.
+const IDENTICAL_SITE_FLOOR = 40;
+
+// Literal text of a template, with ONLY the interpolations that are a bare
+// variable or member chain blanked — `${d}`, `${c.status}` — so two sites that
+// differ purely by minifier renaming key alike.
+//
+// Every other interpolation stays verbatim, because its own text is part of the
+// prompt. Blanking those too made `${x.env.A??"Custom Fable"}` and
+// `${y.env.B??"Custom Opus"}` key alike and minted 48 entries for a prompt with
+// one site — entries with nowhere to splice, which is the same cardinality
+// failure this backfill exists to remove, pointed the other way.
+//
+// Returns null when nothing was blanked (nothing to generalise over) or when an
+// interpolation nests braces, which the cheap scan cannot read correctly. A
+// missed backfill is safe; a wrong one is not.
+const BARE_VAR = /^([A-Za-z_$][\w$]*)((?:\.[A-Za-z_$][\w$]*)*)$/;
+
+function templateKey(source) {
+  if (/\$\{[^{}]*\{/.test(source)) return null;
+  let blanked = 0;
+  const key = source.replace(/\$\{([^{}]*)\}/g, (whole, expr) => {
+    const parts = BARE_VAR.exec(expr.trim());
+    if (!parts) return whole;
+    blanked++;
+    // Blank ONLY the identifier root. The member suffix stays, because the
+    // extractor splits pieces around the IDENTIFIER, so `.name` is literal
+    // prompt text in the entry — `${Od.name}` and `${Ls}` are different
+    // prompts, and treating them as twins minted 14 entries for 6 sites.
+    return '${\u0000' + parts[2] + '}';
+  });
+  return blanked > 0 ? key : null;
+}
+
+// Whether a candidate site shares the captured site's variable-reuse pattern.
+// `identifiers` is label-encoded positionally (0,1,1,2 = first var, second var,
+// second var again, third), so it is only transferable when the candidate reuses
+// its own vars in the same places.
+function sameVarPattern(template, node, code) {
+  const expected = template.identifiers || [];
+  const expressions = node.expressions || [];
+  if (expressions.length !== expected.length) return false;
+  const labels = new Map();
+  for (let i = 0; i < expressions.length; i++) {
+    const text = code.slice(expressions[i].start, expressions[i].end);
+    if (!labels.has(text)) labels.set(text, labels.size);
+    if (labels.get(text) !== expected[i]) return false;
+  }
+  return true;
+}
+
+function backfillIdenticalSites(stringData, ast, code) {
+  // A StringLiteral twin is identified by its VALUE — quoting may differ between
+  // sites and the search regex matches the value either way.
+  //
+  // A TemplateLiteral twin cannot be identified by raw source, because the twins
+  // differ in exactly the thing the minifier renames: the binary carries both
+  // `Task ${d} is not running (status: ${c.status})` and `Task ${i} is not
+  // running (status: ${s.status})`. Identity is therefore the LITERAL TEXT with
+  // every interpolation blanked, and the entry is cloned only after the twin's
+  // own variable-sharing pattern is confirmed to match — a site that reuses one
+  // var where the captured site used two has a different label encoding, and
+  // cloning the wrong one would build a regex that cannot match.
+  // Candidate sites NESTED inside an already-captured span are not separate
+  // sites. Anthropic embeds one message inside a larger template, and a nested
+  // template literal is exempt from the subset filter below (it opens right
+  // after a `${`), so those copies survive as their own nodes while the search
+  // regex only ever matches the outer span. Backfilling them produced 14 entries
+  // for the 6 matchable sites of `Permission to use ${} with command ${} has
+  // been denied.` — entries with nowhere to splice, the same cardinality failure
+  // this exists to remove, pointed the other way.
+  const capturedRanges = stringData
+    .filter(item => typeof item.start === 'number')
+    .map(item => [item.start, item.end])
+    .sort((a, b) => a[0] - b[0]);
+  const isNested = node =>
+    capturedRanges.some(
+      ([start, end]) =>
+        node.start >= start &&
+        node.end <= end &&
+        !(node.start === start && node.end === end)
+    );
+
+  const byValue = new Map();
+  const bySource = new Map();
+  for (const item of stringData) {
+    const body = (item.pieces || []).join('');
+    if (body.trim().length < IDENTICAL_SITE_FLOOR) continue;
+    if ((item.pieces || []).length === 1 && !(item.identifiers || []).length) {
+      if (!byValue.has(item.pieces[0])) byValue.set(item.pieces[0], item);
+    } else if (typeof item.start === 'number' && typeof item.end === 'number') {
+      const key = templateKey(code.slice(item.start, item.end));
+      if (key && !bySource.has(key)) bySource.set(key, item);
+    }
+  }
+  if (byValue.size === 0 && bySource.size === 0) return;
+
+  const takenStarts = new Set(stringData.map(item => item.start));
+  const added = new Map();
+  const clone = (template, node) => {
+    takenStarts.add(node.start);
+    const body = (template.pieces || []).join('');
+    added.set(body, (added.get(body) || 0) + 1);
+    stringData.push({
+      name: '',
+      id: '',
+      description: '',
+      pieces: [...template.pieces],
+      identifiers: [...(template.identifiers || [])],
+      identifierMap: { ...(template.identifierMap || {}) },
+      start: node.start,
+      end: node.end,
+    });
+  };
+
+  const visit = node => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) {
+      for (const child of node) visit(child);
+      return;
+    }
+    if (!takenStarts.has(node.start) && !isNested(node)) {
+      if (node.type === 'StringLiteral' && byValue.has(node.value)) {
+        clone(byValue.get(node.value), node);
+      } else if (node.type === 'TemplateLiteral') {
+        const key = templateKey(code.slice(node.start, node.end));
+        const template = key ? bySource.get(key) : null;
+        if (template && sameVarPattern(template, node, code)) {
+          clone(template, node);
+        }
+      }
+    }
+    for (const key of Object.keys(node)) {
+      if (key === 'loc' || key === 'leadingComments') continue;
+      const child = node[key];
+      if (child && typeof child === 'object') visit(child);
+    }
+  };
+  visit(ast);
+
+  for (const [body, count] of added) {
+    console.log(
+      `Backfilled ${count} identical site(s) for "${body.slice(0, 60).replace(/\n/g, ' ')}${body.length > 60 ? '\u2026' : ''}"`
+    );
+  }
+}
+
 function extractStrings(filepath, minLength = 500) {
   _gateCandidates.clear(); // idempotent across calls
   const code = fs.readFileSync(filepath, 'utf-8');
@@ -3183,7 +3577,10 @@ function extractStrings(filepath, minLength = 500) {
       if (composite !== null) {
         const fragCaptured = composite.nodes.map(frag => {
           const v = literalOf(frag);
-          const fragLead = code.slice(Math.max(0, frag.start - 600), frag.start);
+          const fragLead = code.slice(
+            Math.max(0, frag.start - 600),
+            frag.start
+          );
           return shouldCapture(v, v, fragLead, minLength);
         });
         const lead = code.slice(Math.max(0, node.start - 600), node.start);
@@ -3440,6 +3837,7 @@ function extractStrings(filepath, minLength = 500) {
   };
 
   traverse(ast);
+  backfillIdenticalSites(stringData, ast, code);
 
   // Filter out strings that are subsets of other strings
   // Step 1: Sort by start index (ascending), then by end index (descending)
@@ -3476,14 +3874,12 @@ function extractStrings(filepath, minLength = 500) {
     }
   }
 
-  const gateCandidates = [...(_gateCandidates.entries())].map(
-    ([body, lead]) => ({
-      hash: crypto.createHash('sha1').update(body).digest('hex'),
-      len: body.length,
-      lead,
-      body,
-    })
-  );
+  const gateCandidates = [..._gateCandidates.entries()].map(([body, lead]) => ({
+    hash: crypto.createHash('sha1').update(body).digest('hex'),
+    len: body.length,
+    lead,
+    body,
+  }));
 
   return { prompts: filteredData, gateCandidates };
 }
@@ -3514,7 +3910,8 @@ function extractStrings(filepath, minLength = 500) {
 // genuinely-new model-facing captures. (Facing/keep-drop already happened in
 // extractStrings.) See [[reference_below_floor_classification_cache]].
 function applyCacheNames(prompts) {
-  const body = (p) => (p.pieces || []).filter((x) => typeof x === 'string').join('');
+  const body = p =>
+    (p.pieces || []).filter(x => typeof x === 'string').join('');
   for (const p of prompts) {
     if (p.id) continue; // established/fuzzy-carried name wins
     const cls = classifyByCache(body(p));
@@ -3536,15 +3933,16 @@ function applyCacheNames(prompts) {
 // colliding content gets a -N suffix so every prompt stays independently
 // overridable. Battleproof: handles collisions from any naming source.
 function disambiguateIdCollisions(prompts, existingData) {
-  const body = (p) => (p.pieces || []).filter((x) => typeof x === 'string').join('');
+  const body = p =>
+    (p.pieces || []).filter(x => typeof x === 'string').join('');
   const established = new Map(); // id -> Set(content) from the seed/previous JSON
   for (const p of (existingData && existingData.prompts) || []) {
     if (!p.id) continue;
     if (!established.has(p.id)) established.set(p.id, new Set());
     established.get(p.id).add(body(p));
   }
-  const allIds = new Set(prompts.filter((p) => p.id).map((p) => p.id));
-  const uniqueSuffix = (base) => {
+  const allIds = new Set(prompts.filter(p => p.id).map(p => p.id));
+  const uniqueSuffix = base => {
     let n = 2;
     while (allIds.has(`${base}-${n}`)) n++;
     const id = `${base}-${n}`;
@@ -3566,7 +3964,9 @@ function disambiguateIdCollisions(prompts, existingData) {
     }
     if (clusters.size < 2) continue; // single content (multi-site) is fine
     const est = established.get(id);
-    const keepBare = new Set([...clusters.keys()].filter((c) => est && est.has(c)));
+    const keepBare = new Set(
+      [...clusters.keys()].filter(c => est && est.has(c))
+    );
     if (keepBare.size === 0) {
       // all-new collision: longest content keeps the bare id.
       keepBare.add([...clusters.keys()].sort((a, b) => b.length - a.length)[0]);
@@ -3575,7 +3975,9 @@ function disambiguateIdCollisions(prompts, existingData) {
       if (keepBare.has(c)) continue;
       const newId = uniqueSuffix(id);
       for (const p of members) p.id = newId;
-      console.log(`Disambiguated id collision: "${id}" -> "${newId}" (distinct content not established)`);
+      console.log(
+        `Disambiguated id collision: "${id}" -> "${newId}" (distinct content not established)`
+      );
     }
   }
   return prompts;
@@ -3728,9 +4130,10 @@ function mergeWithExisting(newData, oldData, currentVersion) {
       // post-rename JSONs. Without this, a report/greenfield extraction seeded
       // from an older JSON silently resurrects the old id.
       const assignedFromMap = lookupNewPromptAssignment(newContent);
-      const overlaidIdentifierMap = assignedFromMap && assignedFromMap.identifierMap
-        ? { ...matchingOld.identifierMap, ...assignedFromMap.identifierMap }
-        : matchingOld.identifierMap;
+      const overlaidIdentifierMap =
+        assignedFromMap && assignedFromMap.identifierMap
+          ? { ...matchingOld.identifierMap, ...assignedFromMap.identifierMap }
+          : matchingOld.identifierMap;
       return {
         ...newItem,
         name: (assignedFromMap && assignedFromMap.name) || matchingOld.name,
@@ -3757,9 +4160,10 @@ function mergeWithExisting(newData, oldData, currentVersion) {
         `Fuzzy-matched item ${idx} to "${fuzzyOld.name || fuzzyOld.id}" (${oldLen} → ${newContent.length} chars)`
       );
       const assignedFromMap = lookupNewPromptAssignment(newContent);
-      const overlaidIdentifierMap = assignedFromMap && assignedFromMap.identifierMap
-        ? { ...fuzzyOld.identifierMap, ...assignedFromMap.identifierMap }
-        : fuzzyOld.identifierMap;
+      const overlaidIdentifierMap =
+        assignedFromMap && assignedFromMap.identifierMap
+          ? { ...fuzzyOld.identifierMap, ...assignedFromMap.identifierMap }
+          : fuzzyOld.identifierMap;
       return {
         ...newItem,
         name: (assignedFromMap && assignedFromMap.name) || fuzzyOld.name,
@@ -3800,9 +4204,7 @@ function mergeWithExisting(newData, oldData, currentVersion) {
     const assigned =
       lookupNewPromptAssignment(newContent) || inferPromptIdentity(newContent);
     if (assigned) {
-      console.log(
-        `Assigned new prompt item ${idx} → "${assigned.id}"`
-      );
+      console.log(`Assigned new prompt item ${idx} → "${assigned.id}"`);
       // If the assignment provides identifierMap (semantic names for the
       // ${var.field} interpolations), use it. Override files reference these
       // semantic names — without them, syncPrompt falls back to UNKNOWN_<idx>.
@@ -3933,7 +4335,10 @@ if (require.main === module) {
   );
   mergedResult.prompts = applyCacheNames(mergedResult.prompts);
   mergedResult.prompts = normalizeIdGroups(mergedResult.prompts);
-  mergedResult.prompts = disambiguateIdCollisions(mergedResult.prompts, existingData);
+  mergedResult.prompts = disambiguateIdCollisions(
+    mergedResult.prompts,
+    existingData
+  );
 
   // For every prompt upstream also ships whose `identifiers` array matches ours,
   // take upstream's identifierMap. Upstream labels every slot, so it is the
@@ -3963,7 +4368,9 @@ if (require.main === module) {
           adopted++;
         }
       }
-      console.log(`Adopted upstream identifierMap for ${adopted} shared prompt(s)`);
+      console.log(
+        `Adopted upstream identifierMap for ${adopted} shared prompt(s)`
+      );
       // ...except where upstream's map is verifiably WRONG against the binary.
       // Adoption runs last and overwrites wholesale, so curated corrections must
       // be re-applied on top of it. See CURATED_IDENTIFIER_MAPS.
@@ -3973,8 +4380,7 @@ if (require.main === module) {
         if (!entry) continue;
         const variants = Array.isArray(entry) ? entry : [entry];
         const fix = variants.find(
-          (v) =>
-            JSON.stringify(v.identifiers) === JSON.stringify(p.identifiers)
+          v => JSON.stringify(v.identifiers) === JSON.stringify(p.identifiers)
         );
         if (fix) {
           p.identifierMap = { ...fix.identifierMap };
@@ -4038,7 +4444,9 @@ if (require.main === module) {
   });
 
   // Remove start/end fields before writing
-  mergedResult.prompts = mergedResult.prompts.map(({ start, end, ...rest }) => rest);
+  mergedResult.prompts = mergedResult.prompts.map(
+    ({ start, end, ...rest }) => rest
+  );
 
   // Add version as top-level field
   const outputData = {
@@ -4082,14 +4490,19 @@ module.exports.normalizeIdGroups = normalizeIdGroups;
 // Exported for the test suite (below-floor capture rules — battleproof guarantee).
 module.exports.leadShowsModelFacingContext = leadShowsModelFacingContext;
 module.exports.leadShowsDropContext = leadShowsDropContext;
-module.exports.contentIsModelFacingShortPrompt = contentIsModelFacingShortPrompt;
+module.exports.contentIsModelFacingShortPrompt =
+  contentIsModelFacingShortPrompt;
 module.exports.validateInput = validateInput;
 module.exports.ADMIT_FLOOR = ADMIT_FLOOR;
 module.exports.shouldCapture = shouldCapture;
 module.exports.looksLikeEnglishProse = looksLikeEnglishProse;
 module.exports.isHardExcluded = isHardExcluded;
 module.exports.setCcVersionForCacheLookups = setCcVersionForCacheLookups;
-module.exports._setClassificationCacheForTests = _setClassificationCacheForTests;
+module.exports._setClassificationCacheForTests =
+  _setClassificationCacheForTests;
 // Test seam: fuzzy-carryover collision policy (same-id multi-site vs
 // genuinely-ambiguous cross-id) is behavior worth locking down.
 module.exports.mergeWithExisting = mergeWithExisting;
+module.exports.templateKey = templateKey;
+module.exports.sameVarPattern = sameVarPattern;
+module.exports.IDENTICAL_SITE_FLOOR = IDENTICAL_SITE_FLOOR;
