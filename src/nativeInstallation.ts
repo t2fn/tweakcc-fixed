@@ -232,13 +232,17 @@ function parseStringPointer(buffer: Buffer, offset: number): StringPointer {
 
 /**
  * True if the module represents the native claude entrypoint.
+ * Version-bounded: Bun filesystem patterns only apply to CC 2.1.229+ where they were tested.
  */
-export function isClaudeModule(moduleName: string): boolean {
+export function isClaudeModule(
+  moduleName: string,
+  ccVersion?: string
+): boolean {
   const normalizedName = moduleName.replaceAll('\\', '/');
 
   // Check for common Claude Code CLI entrypoint patterns
   return (
-    // Legacy path-based patterns
+    // Legacy path-based patterns (all versions)
     normalizedName.endsWith('/claude') ||
     normalizedName === 'claude' ||
     normalizedName.endsWith('/claude.exe') ||
@@ -246,17 +250,37 @@ export function isClaudeModule(moduleName: string): boolean {
     // Entry points with src/entrypoints/cli.js naming (CC 2.1.226-2.1.228)
     normalizedName.endsWith('/src/entrypoints/cli.js') ||
     normalizedName === 'src/entrypoints/cli.js' ||
-    // Bun filesystem virtual paths - full paths with $bunfs/root prefix (CC 2.1.229+)
-    normalizedName.endsWith('/$bunfs/root/cli') ||
-    normalizedName === '/$bunfs/root/cli' ||
-    normalizedName.endsWith('/B:/~BUN/root/cli') ||
-    normalizedName === 'B:/~BUN/root/cli' ||
-    // Simple CLI names without path components (legacy)
-    normalizedName === 'cli' ||
-    normalizedName === 'cli.js' ||
-    normalizedName === '/cli' ||
-    normalizedName === '/cli.js'
+    // Bun filesystem virtual paths - only for CC 2.1.229+ (tested and verified)
+    (!!ccVersion &&
+      compareVersions(ccVersion, '2.1.229') >= 0 &&
+      (normalizedName.endsWith('/$bunfs/root/cli') ||
+        normalizedName === '/$bunfs/root/cli' ||
+        normalizedName.endsWith('/B:/~BUN/root/cli') ||
+        normalizedName === 'B:/~BUN/root/cli' ||
+        // Simple CLI names without path components (CC 2.1.229+)
+        normalizedName === 'cli' ||
+        normalizedName === 'cli.js' ||
+        normalizedName === '/cli' ||
+        normalizedName === '/cli.js'))
   );
+}
+
+/**
+ * Simple version comparison for CC versions (e.g., '2.1.229').
+ */
+function compareVersions(v1: string, v2: string): number {
+  const parts1 = v1.split('.').map(Number);
+  const parts2 = v2.split('.').map(Number);
+
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const num1 = parts1[i] || 0;
+    const num2 = parts2[i] || 0;
+
+    if (num1 < num2) return -1;
+    if (num1 > num2) return 1;
+  }
+
+  return 0;
 }
 
 /**

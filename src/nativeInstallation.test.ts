@@ -6,6 +6,7 @@ import {
 } from './nativeInstallation';
 
 describe('isClaudeModule', () => {
+  // Legacy patterns that work without version (all CC versions)
   it.each([
     'claude',
     '/usr/local/bin/claude',
@@ -13,23 +14,35 @@ describe('isClaudeModule', () => {
     'C:/tools/claude.exe',
     'src/entrypoints/cli.js',
     '/app/src/entrypoints/cli.js',
-    // Bun filesystem paths with full prefix (CC 2.1.229+)
+    'C:/Claude/claude.exe',
+  ])('recognizes %s as the Claude entrypoint (legacy)', moduleName => {
+    expect(isClaudeModule(moduleName)).toBe(true);
+  });
+
+  // Version-gated patterns for CC 2.1.229+
+  it.each([
     '/$bunfs/root/cli',
     '/$bunfs/root/src/entrypoints/cli.js',
     'B:/~BUN/root/cli',
     'B:\\~BUN\\root\\cli',
-    // Simple CLI names (legacy)
     'cli',
     'cli.js',
     '/cli',
     '/cli.js',
-    'C:/Claude/claude.exe',
-  ])('recognizes %s as the Claude entrypoint', moduleName => {
-    expect(isClaudeModule(moduleName)).toBe(true);
+  ])('recognizes %s as the Claude entrypoint (CC 2.1.229+)', moduleName => {
+    expect(isClaudeModule(moduleName, '2.1.230')).toBe(true);
   });
 
+  // Version-gated patterns should NOT match for older versions
+  it.each(['/$bunfs/root/cli', 'cli', 'cli.js', '/cli', '/cli.js'])(
+    'rejects %s as Claude entrypoint for pre-2.1.229 (version-gated)',
+    moduleName => {
+      expect(isClaudeModule(moduleName, '2.1.228')).toBe(false);
+    }
+  );
+
+  // Non-CLI modules that should never match
   it.each([
-    // Non-CLI modules that look similar but shouldn't match
     '/$bunfs/root/image-processor.js',
     '/$bunfs/root/not-cli',
     'B:/~BUN/root/cli.js', // Bun filesystem paths with .js extension don't match our patterns
@@ -39,6 +52,14 @@ describe('isClaudeModule', () => {
   ])('rejects %s as a non-Claude module', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(false);
   });
+
+  // Version-gated patterns should also reject non-CLI modules for CC 2.1.229+
+  it.each(['/$bunfs/root/image-processor.js', 'random-module-name'])(
+    'rejects %s as Claude entrypoint even with version (non-CLI)',
+    moduleName => {
+      expect(isClaudeModule(moduleName, '2.1.230')).toBe(false);
+    }
+  );
 });
 
 // Ported with upstream b36a8ca (#915) alongside the placement function itself.
