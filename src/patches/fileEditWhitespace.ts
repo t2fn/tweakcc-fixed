@@ -195,7 +195,7 @@ function injectCatchHelper(file: string): string {
 
     // Determine the variable names used in this code path by scanning backwards from anchor.
     // In NPM cli.js: "updatedFile=edit.old_string..." → inject using edit.old_string/editedFile
-    // In native binary: "xvd(r,o.old_string..." → inject using r and o.old_string/new_string
+    // In native binary: "<fn>(r,o.old_string..." → inject using r and o.old_string/new_string
     // Search back up to 300 chars from anchor to cover the try block body where .old_string may be.
     const searchStart = Math.max(0, lastIdx - 300);
     const beforeThrow = file.slice(searchStart, lastIdx);
@@ -203,8 +203,8 @@ function injectCatchHelper(file: string): string {
     let varName: string; // the content variable (updatedFile in NPM, r in native)
     let objPrefix: string; // edit. in NPM, o. in native
 
-    if (beforeThrow.includes('xvd(')) {
-      // Native binary pattern: xvd(r,o.old_string,...) → use r as content var, o. as prefix
+    if (beforeThrow.match(/\w+\(r,o\.old_string/)) {
+      // Native binary pattern: <fn>(r,o.old_string,...) → use r as content var, o. as prefix
       varName = 'r';
       objPrefix = 'o.';
     } else if (beforeThrow.includes('.old_string')) {
@@ -406,45 +406,113 @@ function patchNpmCli(file: string): string | null {
 
 /**
  * Patch for native binary minified bundle.
- * Uses context-based anchor since applyEditToFile is minified (e.g., xvd).
+ * Uses context-based anchor since applyEditToFile is minified (any identifier).
  */
 function patchNativeBinary(file: string): string | null {
-  // Find the edit function call site pattern: xvd(r,o.old_string,...)
+  // Find the edit function call site pattern: <fn>(r,o.old_string,...)
   // This is unique to the FileEditTool's try-catch in native builds.
-  // We need the xvd that appears near "String not found in file" which survives minification.
+  // We need the function call that appears near "String not found in file" which survives minification.
+  // The function name varies across CC versions (xvd, Evp, etc.) so we search generically.
+  // Injection only happens at known safe boundaries to avoid breaking Bun's strict single-line parser.
 
   const anchor = 'String not found in file';
   const anchorIdx = file.indexOf(anchor);
   if (anchorIdx === -1) return null;
 
-  // Search backwards from the error string to find the xvd call in context
+  // Search backwards from the error string to find the edit function call in context
   const searchBack = file.slice(Math.max(0, anchorIdx - 500), anchorIdx);
-  // Find the LAST occurrence of xvd( before "String not found" — that's our edit function
-  const lastXvdIdx = searchBack.lastIndexOf('xvd(');
-  if (lastXvdIdx === -1) return null;
+  // Find any function call with old_string/new_string args before "String not found"
+  // Pattern: identifier(...old_string...new_string...) where identifier is minified
+  const editFuncPattern = /(\w+)\([^)]*old_string[^)]*,[^)]*new_string[^)]*\)/g;
+  let lastMatchIdx = -1;
+  let bestMatch: RegExpExecArray | null = null;
+  let m: RegExpExecArray | null;
+  while ((m = editFuncPattern.exec(searchBack)) !== null) {
+    if (m.index > lastMatchIdx) {
+      lastMatchIdx = m.index;
+      bestMatch = m;
+    }
+  }
+  if (!bestMatch || lastMatchIdx === -1) return null;
 
-  const absXvdIdx = Math.max(0, anchorIdx - 500) + lastXvdIdx;
+  const absFuncIdx = Math.max(0, anchorIdx - 500) + lastMatchIdx;
 
   // Verify it's the edit function: must have old_string and new_string as args
-  const xvdContext = file.slice(absXvdIdx, absXvdIdx + 120);
+  const funcContext = file.slice(absFuncIdx, absFuncIdx + 120);
   if (
-    !xvdContext.includes('old_string') ||
-    !xvdContext.includes('new_string')
+    !funcContext.includes('old_string') ||
+    !funcContext.includes('new_string')
   ) {
     return null; // Not the edit function — false positive
   }
 
-  // Find injection point: go back to find function B1s or statement boundary
-  let injectPoint = searchBack.lastIndexOf(';') + Math.max(0, anchorIdx - 500);
-  if (injectPoint < absXvdIdx - 200) {
-    injectPoint = absXvdIdx; // Fall back to injection before the call itself
+  // Find injection point: look for the nearest safe function boundary before the edit call.
+  // Safe boundaries are positions preceded by '}' (end of previous function) where we can
+  // inject without breaking Bun's strict single-line parser.
+  const searchFrom = Math.max(0, absFuncIdx - 5000);
+  // Match both "function Name(" and minified "functionName(" patterns
+  const funcPattern = /function\s*([$\w]+)\s*\(/g;
+  let lastSafeFuncStart = -1;
+  let funcMatch: RegExpExecArray | null;
+
+  // Search backwards for the last function before our edit call that ends with '}'
+  while (
+    (funcMatch = funcPattern.exec(file.slice(searchFrom, absFuncIdx))) !== null
+  ) {
+    const absFuncPos = searchFrom + funcMatch.index;
+
+    // Find the actual body opening brace '{' by skipping past parameter list
+    // Parameters may contain parens (for regular params) and braces (for destructuring)
+    let scanPos = absFuncPos + funcMatch[0].length;
+    while (scanPos < file.length && /[\s)]/.test(file[scanPos])) {
+      scanPos++;
+    }
+
+    // If next char is '(', skip past the entire parameter list to find '{'
+    if (file[scanPos] === '(') {
+      let parenDepth = 1;
+      scanPos++;
+      while (scanPos < file.length && parenDepth > 0) {
+        if (file[scanPos] === '(') parenDepth++;
+        else if (file[scanPos] === ')') parenDepth--;
+        scanPos++;
+      }
+    }
+
+    // Now scanPos should be at or just past the body opening '{'
+    const bodyStart = file.indexOf('{', scanPos);
+    if (bodyStart < 0) continue;
+
+    // Count braces from body start to find function end
+    let depth = 1;
+    let funcEnd = -1;
+    for (let i = bodyStart + 1; i < file.length && depth > 0; i++) {
+      if (file[i] === '{') depth++;
+      else if (file[i] === '}') {
+        depth--;
+        if (depth === 0) {
+          funcEnd = i;
+          break;
+        }
+      }
+    }
+
+    // Check if function ends with '}' followed by another function start (safe boundary)
+    if (funcEnd >= 0 && funcEnd < absFuncIdx - 50) {
+      const afterBrace = file[funcEnd + 1];
+      // Safe injection point: any character that's not part of a function body continuation
+      // In minified code, functions are typically followed by another function keyword or identifier
+      if (afterBrace && !/^[{(;]$/.test(afterBrace)) {
+        lastSafeFuncStart = absFuncPos;
+      }
+    }
   }
 
-  // Check we're not inside another function's body — find the B1s function boundary
-  const funcStart = file.lastIndexOf('function B1s', injectPoint);
-  if (funcStart > 0) {
-    injectPoint = funcStart;
+  if (lastSafeFuncStart < 0) {
+    return null; // No safe injection point found — skip native patching for this CC version
   }
+
+  const injectPoint = lastSafeFuncStart;
 
   // Verify helpers don't conflict with existing code at injection point
   const helpersCode = buildHelpersInjection();
@@ -457,6 +525,8 @@ function patchNativeBinary(file: string): string | null {
   }
 
   const beforePatch = file;
+  // Always use \n prefix when injecting into minified single-line code
+  // to maintain proper separation from surrounding code
   file =
     file.slice(0, injectPoint) +
     '\n' +
