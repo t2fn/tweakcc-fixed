@@ -1,0 +1,130 @@
+# Dockerfile.rocky10 — Multi-stage build for Claude Code container on Rocky Linux 10
+#
+# Two stages:
+#   BUILD stage: installs deps, downloads Claude CLI, clones tweakcc-fixed, applies patches
+#   DEPLOY stage: minimal runtime image with only necessary artifacts copied over
+
+# ============================================================================
+# STAGE 1: BUILD — all heavy lifting (deps, download, patch)
+# ============================================================================
+FROM rockylinux/rockylinux:10 AS builder
+
+ARG CLAUDE_VERSION=latest \
+    TWEAKCC_SHA=HEAD \
+    LOBOTOMIZED_SHA=HEAD \
+    CLAUDE_TOOLS_SHA=HEAD \
+    AWESOME_TOOLKIT_SHA=HEAD \
+    SUPERPOWERS_SHA=HEAD \
+    SHANNON_SHA=HEAD
+
+ENV CLAUDE_VERSION=$CLAUDE_VERSION \
+    TWEAKCC_SHA=$TWEAKCC_SHA \
+    LOBOTOMIZED_SHA=$LOBOTOMIZED_SHA \
+    CLAUDE_TOOLS_SHA=$CLAUDE_TOOLS_SHA \
+    AWESOME_TOOLKIT_SHA=$AWESOME_TOOLKIT_SHA \
+    SUPERPOWERS_SHA=$SUPERPOWERS_SHA \
+    SHANNON_SHA=$SHANNON_SHA
+
+# Install build dependencies (everything needed to compile and patch)
+RUN dnf install -y epel-release && \
+    dnf config-manager --set-enabled crb && \
+    dnf -y install dnf-plugins-core && \
+    dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+    dnf makecache --refresh && \
+    dnf install -y --skip-broken \
+        coreutils diffutils rsync gzip jq yq gh bc vim-common grep gawk sed \
+        gpg socat tar findutils zip binutils strace lsof curl git zstd p7zip \
+        file wget bzip2 xz unzip bsdiff bspatch binwalk yara fmutils \
+        python3 python3-pip dialog which procps-ng docker-ce-cli sshpass expect tmux nodejs && \
+    npm install -g --force pnpm && \
+    dnf clean all && rm -rf /var/cache/dnf/*
+
+# Create claudeuser for running the patcher
+RUN useradd -ms /bin/bash claudeuser && chown -R claudeuser: /home/claudeuser
+
+USER claudeuser
+WORKDIR /home/claudeuser
+
+# Run install.sh to download Claude CLI, clone tweakcc-fixed, apply patches
+COPY install.sh config.json start_claude.sh /tmp/
+RUN /bin/bash /tmp/install.sh
+
+# Move the patched native binary to /usr/bin/claude for the deploy stage
+RUN cp /home/claudeuser/.local/share/claude/versions/$CLAUDE_VERSION /usr/bin/claude 2>/dev/null || true
+RUN chmod +x /usr/bin/claude && chown claudeuser:claudeuser /usr/bin/claude
+
+# Copy start_claude.sh to a system path for the deploy stage
+COPY --chmod=+x start_claude.sh /usr/bin/start_claude.sh
+
+# ============================================================================
+# STAGE 2: DEPLOY — minimal runtime image
+# ============================================================================
+FROM rockylinux/rockylinux:10 AS deploy
+
+ARG CLAUDE_VERSION=latest
+
+ENV CLAUDE_VERSION=$CLAUDE_VERSION \
+    HOME=/home/claudeuser \
+    PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/claudeuser/bin:/home/claudeuser/.local/bin" \
+    BASH_DEFAULT_TIMEOUT_MS=3600000 \
+    BASH_MAX_TIMEOUT_MS=3600000 \
+    CLAUDE_CODE_FORK_SUBAGENT=1 \
+    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 \
+    DISABLE_AUTOUPDATE=1 \
+    DISABLE_TELEMETRY=1 \
+    DISABLE_ERROR_REPORTING=1 \
+    DISABLE_BUG_COMMAND=1 \
+    CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1 \
+    DISABLE_NON_ESSENTIAL_MODEL_CALLS=1 \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+    CLAUDE_CODE_ENABLE_TELEMETRY=0
+
+# Install minimal runtime dependencies (no build tools)
+RUN dnf install -y epel-release && \
+    dnf config-manager --set-enabled crb && \
+    dnf -y install dnf-plugins-core && \
+    dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+    dnf makecache --refresh && \
+    dnf install -y --skip-broken \
+        coreutils diffutils rsync gzip jq yq gh bc grep gawk sed \
+        socat tar findutils zip file wget bzip2 xz unzip bsdiff bspatch binwalk yara fmutils \
+        python3 procps-ng docker-ce-cli sshpass expect tmux nodejs && \
+    dnf clean all && rm -rf /var/cache/dnf/*
+
+# Create claudeuser and set up directories
+RUN useradd -ms /bin/bash claudeuser && \
+    mkdir -p /home/claudeuser/bin /home/claudeuser/.local/bin /home/claudeuser/.claude /home/claudeuser/.tweakcc && \
+    chown -R claudeuser:claudeuser /home/claudeuser && \
+    chmod 777 /var/run && \
+    mkdir -p /etc/claude-code/.claude/{rules,skills,templates} && chmod -R 777 /etc/claude-code
+
+# Copy patched Claude Code binary from builder to /usr/bin/claude
+COPY --from=builder /usr/bin/claude /usr/bin/claude
+RUN chown claudeuser:claudeuser /usr/bin/claude && chmod +x /usr/bin/claude
+
+# Copy tweakcc config and symlinks from builder
+COPY --from=builder /home/claudeuser/.tweakcc/config.json /home/claudeuser/.tweakcc/config.json
+COPY --from=builder /home/claudeuser/.tweakcc/system-prompts /home/claudeuser/.tweakcc/system-prompts
+COPY --from=builder /home/claudeuser/.tweakcc/system-reminders /home/claudeuser/.tweakcc/system-reminders
+RUN chown -R claudeuser:claudeuser /home/claudeuser/.tweakcc
+
+# Copy bin scripts (slash commands) from builder
+COPY --from=builder /home/claudeuser/bin/* /home/claudeuser/bin/ 2>/dev/null || true
+RUN chown -R claudeuser:claudeuser /home/claudeuser/bin && chmod +x /home/claudeuser/bin/*
+
+# Copy rules, skills, templates from builder (already at system paths)
+COPY --from=builder /etc/claude-code/.claude/rules /etc/claude-code/.claude/rules
+COPY --from=builder /etc/claude-code/.claude/skills /etc/claude-code/.claude/skills
+COPY --from=builder /etc/claude-code/.claude/templates /etc/claude-code/.claude/templates
+
+# Copy start_claude.sh entrypoint from builder
+COPY --from=builder /usr/bin/start_claude.sh /usr/bin/start_claude.sh
+RUN chown claudeuser:claudeuser /usr/bin/start_claude.sh && chmod +x /usr/bin/start_claude.sh
+
+# Copy container-cron if available
+COPY --from=builder /usr/bin/container-cron /usr/bin/container-cron 2>/dev/null || true
+
+USER claudeuser
+WORKDIR /home/claudeuser
+
+ENTRYPOINT ["start_claude.sh"]
