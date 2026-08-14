@@ -112,8 +112,7 @@ describe('writeContent', () => {
       '/usr/bin/claude',
       Buffer.from('modified content', 'utf8'),
       '/usr/bin/claude',
-      true,
-      '1.0.0'
+      true
     );
   });
 
@@ -130,8 +129,7 @@ describe('writeContent', () => {
       '/usr/bin/claude',
       Buffer.from('modified content', 'utf8'),
       '/usr/bin/claude',
-      false,
-      '1.0.0'
+      false
     );
   });
 

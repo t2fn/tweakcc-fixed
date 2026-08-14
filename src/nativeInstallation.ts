@@ -232,12 +232,8 @@ function parseStringPointer(buffer: Buffer, offset: number): StringPointer {
 
 /**
  * True if the module represents the native claude entrypoint.
- * Version-bounded: Bun filesystem patterns only apply to CC 2.1.229+ where they were tested.
  */
-export function isClaudeModule(
-  moduleName: string,
-  ccVersion?: string
-): boolean {
+export function isClaudeModule(moduleName: string): boolean {
   const normalizedName = moduleName.replaceAll('\\', '/');
 
   // Check for common Claude Code CLI entrypoint patterns
@@ -250,37 +246,17 @@ export function isClaudeModule(
     // Entry points with src/entrypoints/cli.js naming (CC 2.1.226-2.1.228)
     normalizedName.endsWith('/src/entrypoints/cli.js') ||
     normalizedName === 'src/entrypoints/cli.js' ||
-    // Bun filesystem virtual paths - only for CC 2.1.229+ (tested and verified)
-    (!!ccVersion &&
-      compareVersions(ccVersion, '2.1.229') >= 0 &&
-      (normalizedName.endsWith('/$bunfs/root/cli') ||
-        normalizedName === '/$bunfs/root/cli' ||
-        normalizedName.endsWith('/B:/~BUN/root/cli') ||
-        normalizedName === 'B:/~BUN/root/cli' ||
-        // Simple CLI names without path components (CC 2.1.229+)
-        normalizedName === 'cli' ||
-        normalizedName === 'cli.js' ||
-        normalizedName === '/cli' ||
-        normalizedName === '/cli.js'))
+    // Bun filesystem virtual paths - documented behavior of modern CC binaries
+    normalizedName.endsWith('/$bunfs/root/cli') ||
+    normalizedName === '/$bunfs/root/cli' ||
+    normalizedName.endsWith('/B:/~BUN/root/cli') ||
+    normalizedName === 'B:/~BUN/root/cli' ||
+    // Simple CLI names without path components (CC 2.1.229+)
+    normalizedName === 'cli' ||
+    normalizedName === 'cli.js' ||
+    normalizedName === '/cli' ||
+    normalizedName === '/cli.js'
   );
-}
-
-/**
- * Simple version comparison for CC versions (e.g., '2.1.229').
- */
-function compareVersions(v1: string, v2: string): number {
-  const parts1 = v1.split('.').map(Number);
-  const parts2 = v2.split('.').map(Number);
-
-  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
-    const num1 = parts1[i] || 0;
-    const num2 = parts2[i] || 0;
-
-    if (num1 < num2) return -1;
-    if (num1 > num2) return 1;
-  }
-
-  return 0;
 }
 
 /**
@@ -911,7 +887,7 @@ export function extractClaudeJsFromNativeInstallation(
           `extractClaudeJsFromNativeInstallation: Module ${index}: ${moduleName}`
         );
 
-        if (!isClaudeModule(moduleName, version)) return undefined;
+        if (!isClaudeModule(moduleName)) return undefined;
 
         const moduleContents = getStringPointerContent(
           bunData,
@@ -1020,8 +996,7 @@ function rebuildBunData(
   bunOffsets: BunOffsets,
   modifiedClaudeJs: Buffer | null,
   moduleStructSize: number,
-  clearBytecode: boolean,
-  ccVersion?: string
+  clearBytecode: boolean
 ): Buffer {
   // Phase 1: Collect all string data
   const stringsData: Buffer[] = [];
@@ -1045,7 +1020,7 @@ function rebuildBunData(
     // Check if this is claude.js and we have modified contents
     let contentsBytes: Buffer;
     let bytecodeBytes: Buffer;
-    if (modifiedClaudeJs && isClaudeModule(moduleName, ccVersion)) {
+    if (modifiedClaudeJs && isClaudeModule(moduleName)) {
       contentsBytes = modifiedClaudeJs;
       bytecodeBytes = clearBytecode
         ? Buffer.alloc(0)
@@ -1723,8 +1698,7 @@ export function repackNativeInstallation(
   binPath: string,
   modifiedClaudeJs: Buffer,
   outputPath: string,
-  clearBytecode: boolean,
-  ccVersion?: string
+  clearBytecode: boolean
 ): void {
   LIEF.logging.disable();
   const binary = LIEF.parse(binPath);
@@ -1735,8 +1709,7 @@ export function repackNativeInstallation(
     bundle.bunOffsets,
     modifiedClaudeJs,
     bundle.moduleStructSize,
-    clearBytecode,
-    ccVersion
+    clearBytecode
   );
 
   bundle.write(newBuffer, outputPath);

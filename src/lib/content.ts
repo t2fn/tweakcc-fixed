@@ -77,8 +77,7 @@ export async function writeContent(
       installation.path,
       modifiedBuffer,
       installation.path,
-      clearBytecode,
-      installation.version || undefined
+      clearBytecode
     );
   } else {
     await replaceFileBreakingHardLinks(installation.path, content, 'patch');

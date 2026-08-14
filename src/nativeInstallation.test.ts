@@ -6,7 +6,7 @@ import {
 } from './nativeInstallation';
 
 describe('isClaudeModule', () => {
-  // Legacy patterns that work without version (all CC versions)
+  // All patterns match unconditionally (no version gating)
   it.each([
     'claude',
     '/usr/local/bin/claude',
@@ -15,31 +15,19 @@ describe('isClaudeModule', () => {
     'src/entrypoints/cli.js',
     '/app/src/entrypoints/cli.js',
     'C:/Claude/claude.exe',
-  ])('recognizes %s as the Claude entrypoint (legacy)', moduleName => {
-    expect(isClaudeModule(moduleName)).toBe(true);
-  });
-
-  // Version-gated patterns for CC 2.1.229+
-  it.each([
+    // Bun filesystem virtual paths (CC 2.1.229+)
     '/$bunfs/root/cli',
     '/$bunfs/root/src/entrypoints/cli.js',
     'B:/~BUN/root/cli',
     'B:\\~BUN\\root\\cli',
+    // Simple CLI names without path components (CC 2.1.229+)
     'cli',
     'cli.js',
     '/cli',
     '/cli.js',
-  ])('recognizes %s as the Claude entrypoint (CC 2.1.229+)', moduleName => {
-    expect(isClaudeModule(moduleName, '2.1.230')).toBe(true);
+  ])('recognizes %s as the Claude entrypoint', moduleName => {
+    expect(isClaudeModule(moduleName)).toBe(true);
   });
-
-  // Version-gated patterns should NOT match for older versions
-  it.each(['/$bunfs/root/cli', 'cli', 'cli.js', '/cli', '/cli.js'])(
-    'rejects %s as Claude entrypoint for pre-2.1.229 (version-gated)',
-    moduleName => {
-      expect(isClaudeModule(moduleName, '2.1.228')).toBe(false);
-    }
-  );
 
   // Non-CLI modules that should never match
   it.each([
@@ -52,14 +40,6 @@ describe('isClaudeModule', () => {
   ])('rejects %s as a non-Claude module', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(false);
   });
-
-  // Version-gated patterns should also reject non-CLI modules for CC 2.1.229+
-  it.each(['/$bunfs/root/image-processor.js', 'random-module-name'])(
-    'rejects %s as Claude entrypoint even with version (non-CLI)',
-    moduleName => {
-      expect(isClaudeModule(moduleName, '2.1.230')).toBe(false);
-    }
-  );
 });
 
 // Ported with upstream b36a8ca (#915) alongside the placement function itself.
