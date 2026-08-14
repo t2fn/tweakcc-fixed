@@ -235,16 +235,23 @@ function parseStringPointer(buffer: Buffer, offset: number): StringPointer {
  */
 export function isClaudeModule(moduleName: string): boolean {
   const normalizedName = moduleName.replaceAll('\\', '/');
+
+  // Check for common Claude Code CLI entrypoint patterns
   return (
+    // Legacy path-based patterns
     normalizedName.endsWith('/claude') ||
     normalizedName === 'claude' ||
     normalizedName.endsWith('/claude.exe') ||
     normalizedName === 'claude.exe' ||
+    // Entry points with cli.js naming
     normalizedName.endsWith('/src/entrypoints/cli.js') ||
     normalizedName === 'src/entrypoints/cli.js' ||
+    // Bun filesystem virtual paths (Unix and Windows) - exact matches only
     normalizedName === '/$bunfs/root/cli' ||
     normalizedName === 'B:/~BUN/root/cli' ||
-    normalizedName === 'cli'
+    // Simple CLI names without path components
+    normalizedName === 'cli' ||
+    normalizedName === 'cli.js'
   );
 }
 
@@ -890,6 +897,32 @@ export function extractClaudeJsFromNativeInstallation(
         return moduleContents.length > 0 ? moduleContents : undefined;
       }
     );
+
+    // If no match found, log all module names for debugging (helps identify missing patterns)
+    if (!result) {
+      const allModules: string[] = [];
+      mapModules(
+        bunData,
+        bunOffsets,
+        moduleStructSize,
+        (module, moduleName) => {
+          allModules.push(moduleName);
+          return undefined;
+        }
+      );
+      debug(
+        `extractClaudeJsFromNativeInstallation: No claude module found. Total modules scanned: ${allModules.length}`
+      );
+      if (allModules.length <= 20) {
+        debug(
+          `extractClaudeJsFromNativeInstallation: All module names:\n${allModules.map(m => `  - ${m}`).join('\n')}`
+        );
+      } else {
+        debug(
+          `extractClaudeJsFromNativeInstallation: First 10 modules: ${allModules.slice(0, 10).join(', ')}, ...`
+        );
+      }
+    }
 
     if (result) {
       const head = result.subarray(0, 64).toString('utf8');

@@ -17,6 +17,9 @@ describe('isClaudeModule', () => {
     'B:/~BUN/root/cli',
     'B:\\~BUN\\root\\cli',
     'cli',
+    // New patterns added for CC 2.1.231+ compatibility
+    'cli.js',
+    'C:/Claude/claude.exe',
   ])('recognizes %s as the Claude entrypoint', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(true);
   });
@@ -24,8 +27,10 @@ describe('isClaudeModule', () => {
   it.each([
     '/$bunfs/root/image-processor.js',
     '/$bunfs/root/not-cli',
-    'B:/~BUN/root/cli.js',
+    'B:/~BUN/root/cli.js', // Bun filesystem paths with .js extension don't match our patterns
     '/other/cli',
+    '/path/to/cli', // Paths with components before /cli are not matched (only exact 'cli' or 'cli.js')
+    'random-module-name',
   ])('rejects %s as a non-Claude module', moduleName => {
     expect(isClaudeModule(moduleName)).toBe(false);
   });
