@@ -81,7 +81,8 @@ export async function repackNativeInstallation(
   binPath: string,
   modifiedClaudeJs: Buffer,
   outputPath: string,
-  clearBytecode: boolean
+  clearBytecode: boolean,
+  version?: string
 ): Promise<void> {
   const mod = await tryLoadNativeInstallationModule();
   if (!mod) {
@@ -94,7 +95,8 @@ export async function repackNativeInstallation(
     binPath,
     modifiedClaudeJs,
     outputPath,
-    clearBytecode
+    clearBytecode,
+    version
   );
 }
 

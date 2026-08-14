@@ -911,7 +911,7 @@ export function extractClaudeJsFromNativeInstallation(
           `extractClaudeJsFromNativeInstallation: Module ${index}: ${moduleName}`
         );
 
-        if (!isClaudeModule(moduleName)) return undefined;
+        if (!isClaudeModule(moduleName, version)) return undefined;
 
         const moduleContents = getStringPointerContent(
           bunData,
@@ -1020,7 +1020,8 @@ function rebuildBunData(
   bunOffsets: BunOffsets,
   modifiedClaudeJs: Buffer | null,
   moduleStructSize: number,
-  clearBytecode: boolean
+  clearBytecode: boolean,
+  ccVersion?: string
 ): Buffer {
   // Phase 1: Collect all string data
   const stringsData: Buffer[] = [];
@@ -1044,7 +1045,7 @@ function rebuildBunData(
     // Check if this is claude.js and we have modified contents
     let contentsBytes: Buffer;
     let bytecodeBytes: Buffer;
-    if (modifiedClaudeJs && isClaudeModule(moduleName)) {
+    if (modifiedClaudeJs && isClaudeModule(moduleName, ccVersion)) {
       contentsBytes = modifiedClaudeJs;
       bytecodeBytes = clearBytecode
         ? Buffer.alloc(0)
@@ -1722,7 +1723,8 @@ export function repackNativeInstallation(
   binPath: string,
   modifiedClaudeJs: Buffer,
   outputPath: string,
-  clearBytecode: boolean
+  clearBytecode: boolean,
+  ccVersion?: string
 ): void {
   LIEF.logging.disable();
   const binary = LIEF.parse(binPath);
@@ -1733,7 +1735,8 @@ export function repackNativeInstallation(
     bundle.bunOffsets,
     modifiedClaudeJs,
     bundle.moduleStructSize,
-    clearBytecode
+    clearBytecode,
+    ccVersion
   );
 
   bundle.write(newBuffer, outputPath);
