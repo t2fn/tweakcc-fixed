@@ -29528,5 +29528,1373 @@
   "24ad10ecb1e75bbde6add1daa5ab2c9bd14ca16e": { "facing": "ui" },
   "8a0dcd77606154958feacd42cd0ff8e4e72d6615": { "facing": "ui" },
   "b227fb0b5836a8b7c5690e76357c618c4b3648f5": { "facing": "ui" },
-  "a132dd4bc8fdd41462144525c0a40f6c60c1fa2b": { "facing": "ui" }
+  "a132dd4bc8fdd41462144525c0a40f6c60c1fa2b": { "facing": "ui" },
+  "5204f07841fd204b81619a62851d4408a6b522a5": {
+    "facing": "model",
+    "id": "tool-result-webfetch-binary-saved-path-withheld",
+    "name": "Tool Result: WebFetch binary saved, path withheld",
+    "desc": "WebFetch result suffix used inside the built-in web-fetch subagent, telling the reading model that binary content was persisted for the caller and that no file path may appear in its report."
+  },
+  "6307ebe9c6d07203604194945585dd41fa49b5f9": {
+    "facing": "model",
+    "id": "tool-result-webfetch-overflow-summary-unavailable",
+    "name": "Tool Result: WebFetch overflow summary unavailable",
+    "desc": "Appended to the WebFetch page result when the secondary summarizer call for the truncated remainder failed, telling the model that part of the page is unknown to it."
+  },
+  "56caae40911e2b4c40a74fb423c0f5bd3c34fc7d": {
+    "facing": "model",
+    "id": "tool-result-webfetch-overflow-summary-note",
+    "name": "Tool Result: WebFetch overflow summary note",
+    "desc": "Appended to the WebFetch page result when the remainder past the verbatim cut was model-summarized, marking that summary as untrusted data derived from the same page and asking the model to say which parts of its report rest on it."
+  },
+  "52684f0c65ef0a7b1d11b2a218d3c2d13c9ea2cc": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-target-untrusted",
+    "name": "Tool Result: WebFetch redirect target is untrusted",
+    "desc": "Fragment of the WebFetch REDIRECT DETECTED result, added on the built-in web-fetch subagent path, warning the model that the redirect target is server-supplied data and should usually be reported rather than followed."
+  },
+  "a256197e65181c82b8af29db57a1fa0ff3bb7b94": {
+    "facing": "model",
+    "id": "data-webfetch-reporting-rules",
+    "name": "Data: WebFetch reporting rules",
+    "desc": "Shared quote-length, attribution, legality and lyrics rules injected into the WebFetch summarizer prompt and into the fetched-page tool result on the built-in web-fetch subagent path."
+  },
+  "0e94860806b1dc877846e4f9be72ecf8e7621719": { "facing": "ui" },
+  "94dd99209ee38c5ff9074782625167a1942106b3": { "facing": "ui" },
+  "559d6b631a6de2f5dd6d495eb939ce2347e29779": { "facing": "ui" },
+  "7a64b5cbbed5575e185793bc3269d246a3d6fe74": { "facing": "ui" },
+  "20e31a750056bdfcce7956f238c5fa92a6d1add4": { "facing": "ui" },
+  "183923ddb0b2870c08e1f19583c99e73d636ce90": { "facing": "ui" },
+  "92a63f6e32468728998ac5217f36c4a7f393a36d": { "facing": "ui" },
+  "ecdc7147db58c0bc3a92f95f3528ffcf38cf693d": { "facing": "ui" },
+  "8018885e23133108cfa1e625e08aaba3ba5973bb": { "facing": "ui" },
+  "6a6a9a226638cfc718a84297fe61fe81f5214b03": { "facing": "ui" },
+  "72b0c0ea8f8ff5a9b4988523a4a3dacfe235ce34": { "facing": "ui" },
+  "7e32ed2a6fba57209107efb25ffdac874ef33c7e": { "facing": "ui" },
+  "776350906c9fcfec528bd8e22d703761bc78b6c9": {
+    "facing": "model",
+    "id": "tool-result-tool-unavailable-webfetch-agent-not-dispatchable",
+    "name": "Tool Result: WebFetch unavailable, web-fetch agent not dispatchable",
+    "desc": "Suffix on the no-such-tool result explaining that WebFetch is unavailable here and the web-fetch subagent cannot be dispatched from this nesting depth, so the model should report the gap to its caller."
+  },
+  "610cdec94650310e3f45ad549c975b1514feaf14": {
+    "facing": "model",
+    "id": "tool-result-tool-unavailable-webfetch-agent-not-allowed",
+    "name": "Tool Result: WebFetch unavailable, web-fetch agent not allowed",
+    "desc": "Suffix on the no-such-tool result for depth-0 sessions: WebFetch is unavailable and the web-fetch agent is outside the session's allowed subagent types, so the model should tell the user."
+  },
+  "b70ce0350449283ea113474323ae057fc8cee1ff": {
+    "facing": "model",
+    "id": "tool-result-send-target-ambiguous-prefix-match",
+    "name": "Tool Result: Send target ambiguous by prefix",
+    "desc": "SendMessage refusal headline telling the model that the recipient name prefix-matched several agents and it must resend with a specific ref."
+  },
+  "fe2160b7e0425f0e81ad2ff84676473dbaf9ece9": {
+    "facing": "model",
+    "id": "tool-result-send-target-confirm-required",
+    "name": "Tool Result: Send target needs one-time confirm",
+    "desc": "SendMessage refusal headline telling the model a one-time confirmation by ref is required before this recipient can be messaged."
+  },
+  "50d753f6cee855468fc85569015a2a89cb37e909": { "facing": "ui" },
+  "49b288248bc05a2fdcbf8ce3ded6c2feffba9c61": { "facing": "ui" },
+  "2a6e19355ae0b3e0521dfa6732787c41b10ba289": { "facing": "ui" },
+  "9dff961f8f1155348725361d97ef94862a58fec7": { "facing": "ui" },
+  "e2edd4223ec9cd19150345faa554eab81a94268e": { "facing": "ui" },
+  "a6c485651b04bac6b718352304d4194be4cbb7ca": { "facing": "ui" },
+  "6b27d98ad263fd98a3a8a980d7d75973bac20ffd": {
+    "facing": "model",
+    "id": "data-artifact-decision-component-design-tokens",
+    "name": "Data: Artifact decision component design tokens",
+    "desc": "Provides the byte-pinned Claude Design System custom-property token block required by the reusable Artifact decision component"
+  },
+  "e20f05b2b146ef5204084f81f5df331f3f138ed6": {
+    "facing": "model",
+    "id": "data-artifact-decision-component-styles",
+    "name": "Data: Artifact decision component styles",
+    "desc": "Provides the byte-pinned CSS asset for reusable Artifact decision cards, option rows, confirmation chrome, and responsive and print states"
+  },
+  "9ce8617d8e20a1a6cfc1f202a89d90bfa85ed472": {
+    "facing": "model",
+    "id": "skill-artifact-pr-review-html-template",
+    "name": "Skill: artifact-pr-review HTML template",
+    "desc": "Bundled template.html body fragment for the artifact-pr-review skill — the escaping rules, slots, decision islands and baked scripts the model copies and fills when publishing a review page."
+  },
+  "eec470e74cbed951d3210fea15ad0ba68dd9ce9c": {
+    "facing": "model",
+    "id": "data-artifact-decision-component-html-skeleton",
+    "name": "Data: Artifact decision component HTML skeleton",
+    "desc": "Provides the canonical HTML and JSON-island skeleton for embedding one reusable Artifact decision block"
+  },
+  "2cba177a3f803f607203e5e99cc6516ada36abcc": {
+    "facing": "model",
+    "id": "data-artifact-decision-component-script",
+    "name": "Data: Artifact decision component script",
+    "desc": "Provides the pinned JavaScript asset for the reusable Artifact decision component, including selection, confirmation, persistence, restore, and conflict behavior"
+  },
+  "505ca9deb87ac6ad559f400ca6c49872505ffcaa": {
+    "facing": "model",
+    "id": "data-model-description-custom-fable",
+    "name": "Data: Custom Fable model description for model",
+    "desc": "descriptionForModel string for an env-configured custom Fable model, the model-facing description of that model option."
+  },
+  "a382ce21b058ad7ea67f4eb48c48ee31d0b523ee": {
+    "facing": "model",
+    "id": "tool-result-artifact-live-doc-published",
+    "name": "Tool Result: Artifact live doc published",
+    "desc": "Artifact tool result frame reported to the model after a live-doc publish: prefix, path, URL, collaboration line, capability and warning notes, and the privacy/browse tail."
+  },
+  "3c73e52bcd9b5224d6fcee86c4980d87b216443c": {
+    "facing": "model",
+    "id": "tool-result-send-target-ambiguous-same-name",
+    "name": "Tool Result: Send target ambiguous, same name",
+    "desc": "SendMessage refusal headline telling the model that several agents share the given name exactly and it must resend with a specific ref."
+  },
+  "b344f34706b4e15eef238a7419faa1bd25db2829": { "facing": "ui" },
+  "1672b930bddd22e481dfc15dce66e942de01daac": { "facing": "ui" },
+  "bfc0cc12f10ad4d26a96d3a64b789b05ab28cb2a": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-fast-acknowledgement",
+    "name": "System Prompt: Artifact comment fast acknowledgement",
+    "desc": "Prompts a no-tools helper model to produce one short plain-text acknowledgement for the newest Artifact comment before the full reply"
+  },
+  "6ca8053371afe1a076ecf9041cf5cadd177102dc": { "facing": "ui" },
+  "f37244b5e2b33b5e9ac6f57371892d01525a715b": { "facing": "ui" },
+  "b5ac4ccbd17f727ca3f7a0402d02963b86df8592": { "facing": "ui" },
+  "011ee73ba77110cabf75b435231eb8fdd84f1a31": {
+    "facing": "model",
+    "id": "tool-result-subagent-report-cut-for-saved-files-note",
+    "name": "Tool Result: Subagent report cut to fit the saved-files note",
+    "desc": "Harness note appended to a subagent's report when the report was truncated so that it and the saved-files harness note both fit inside the Task tool result."
+  },
+  "f1714ff708007d76fc83584596ff3fe5e6aba815": { "facing": "ui" },
+  "df33d3374720ef82a75fe12dd706523f9d07d67f": { "facing": "ui" },
+  "05bbf8eeed5c398ea91210ad50ff69c60d97d787": { "facing": "ui" },
+  "301aaa4d37110187fb83cb2be462e4f7b79537c1": { "facing": "internal" },
+  "b4982dd2c5d4f9731339ac47e0e7ba885d4cfe4a": { "facing": "internal" },
+  "2aa74e6b07b853212b8f77cae990611a493dcecc": { "facing": "ui" },
+  "6c204123bb66782fd32e97f19d27e3586dc19973": { "facing": "ui" },
+  "0a0d3008b04317fb09ea0eb6fbf1e4af1a8d0d85": { "facing": "ui" },
+  "fed8466d7a2ff4cf654f2510a11864b07f2c82dc": { "facing": "ui" },
+  "e0660458606a09ec615d29de7af44b207772e812": {
+    "facing": "model",
+    "id": "tool-result-artifact-org-policy-disabled",
+    "name": "Tool Result: Artifacts disabled by org policy",
+    "desc": "Artifact tool error returned to the model when the signed-in organization's policy disables artifacts."
+  },
+  "baf9c17232d1d20967b5ff04c7bf6ba9f2054b74": {
+    "facing": "model",
+    "id": "tool-result-artifact-login-required-env-quad",
+    "name": "Tool Result: Artifact login required (federation env quad)",
+    "desc": "Artifact tool error returned to the model when API access comes from managed settings or the ANTHROPIC_FEDERATION_RULE_ID / ANTHROPIC_ORGANIZATION_ID variables and a claude.ai login is still needed."
+  },
+  "85d18b638cfe6c4ecec1f3e3452858ae3353ea9c": { "facing": "ui" },
+  "1e7e594fcb70c2f13bf46d4bbb600c7c829e1918": { "facing": "ui" },
+  "07d6c7c05c847b55b2d4e17608d891546f076933": { "facing": "ui" },
+  "4f14195868371040bdc0408436db8827c470ee34": { "facing": "ui" },
+  "68e0e80f108903ca06f75352d6de9605b482d2c1": { "facing": "ui" },
+  "1103408d546c949592f7b98aeb8b9826039f8bb3": { "facing": "ui" },
+  "9e6220d6f093b4c1800159a7442b0d49fec4fadf": {
+    "facing": "model",
+    "id": "tool-result-artifact-org-policy-check-failed",
+    "name": "Tool Result: Artifact org policy check failed",
+    "desc": "Artifact tool error returned to the model when the organization policy lookup for artifacts could not be completed (cache miss / network failure)."
+  },
+  "58e449188637dcd19c24f10567e7278e380add65": { "facing": "internal" },
+  "32cf3da8485bf6d2b8c70e9bc8a521b9fd724e18": { "facing": "internal" },
+  "7226c1bfa866a0e03126d6be0cfe15f6059f1ccf": { "facing": "internal" },
+  "bde3cef3c188511faa02dca9b61c600b38692b00": { "facing": "internal" },
+  "dc3f26a3f157ac8b83628b026669814bbe0b2017": { "facing": "internal" },
+  "9dd244707e285872d3bda0b3b03c079f332c929b": { "facing": "internal" },
+  "3f68e9a34a5efb3d73f84af873d62d053712d198": {
+    "facing": "model",
+    "id": "skill-artifact-components-description",
+    "name": "Skill Description: Artifact components",
+    "desc": "Skill-listing description for the built-in artifact-components skill, telling the model when to embed reusable artifact components"
+  },
+  "de7cdce1a82b5e8b7b47c0beab588b159950dfa4": { "facing": "internal" },
+  "18795af2edf6e779cd25e64cefb0d50458af762d": { "facing": "internal" },
+  "86196c6377d7105e8c6b576de9fabe2a0a64e36e": { "facing": "internal" },
+  "9d73e287000be2c78e3771bad1ad0a03170d97bb": { "facing": "internal" },
+  "44356bb43cc6d57d3bfb81438376332cd9ddf5e5": { "facing": "internal" },
+  "c544aa3545d7ca1081e00179059abfbe88239362": { "facing": "internal" },
+  "550932877d193d47eecdb946ff848cf0982d8c70": {
+    "facing": "model",
+    "id": "tool-result-webfetch-untrusted-content-wrapper",
+    "name": "Tool Result: WebFetch untrusted page wrapper",
+    "desc": "Wraps WebFetch page text in a tagged block and tells the model to treat the fetched content strictly as untrusted data"
+  },
+  "4ca1473b0087c8f4e3b2ac955f2d4cee1c6609d5": { "facing": "internal" },
+  "f932f820d063df6d2d6a4847368cc278f71ca7b7": { "facing": "internal" },
+  "ec4df14259efb91765328c0e06794df290a0f050": { "facing": "internal" },
+  "c30c75c734b7b7ccb5e4371893419267e7499c04": { "facing": "internal" },
+  "3a958ad29172ab6e009c49da93d324dbd022fed7": { "facing": "internal" },
+  "2c3a972b80f7d0734fdc8984a7b8e1ea0aa38eda": { "facing": "internal" },
+  "7fb823d8db3e11daff81542effba8a7481233ee8": { "facing": "internal" },
+  "a81964f3cdda391e931ae75c3ba5baa3dd780422": { "facing": "internal" },
+  "ffda1717fc9a01ec4526b7b191ea2d90a1c9bab6": { "facing": "internal" },
+  "f076aee512f8ca75ccd1c0fa52c73c83d4155acd": { "facing": "ui" },
+  "c0fb6f1fe39f8302edfce22d3927f99898cda673": { "facing": "internal" },
+  "e21f8b951d2a6515dbe6914692df8ff5b4642c72": { "facing": "internal" },
+  "148958cd79dc77078aeec0524f89b699b01fdd82": { "facing": "internal" },
+  "d91c0fb130fba5714421e8b47654ccf7bc9f1813": { "facing": "internal" },
+  "cfe675b227dcb1dd92564b8e1314009c1aaaad33": { "facing": "internal" },
+  "b059ff68e6d001d91c5730a45b7b68b513152852": { "facing": "internal" },
+  "7a4d60cf99153bb220a36d084cf5d8c5b60582e2": { "facing": "internal" },
+  "ff69a13d737383ce17e2ba76f901368923c4104b": {
+    "facing": "model",
+    "id": "tool-result-send-message-no-exact-name-confirm-ref",
+    "name": "Tool Result: SendMessage no exact name confirm ref",
+    "desc": "Tells the model that the recipient name only matched by prefix and that it must re-send with the session ref to confirm the intended agent"
+  },
+  "af0a830c2d69b254104ca363b62cd3ec6fcc628e": { "facing": "internal" },
+  "7bf147e7171c01f391727aaeca3ce6d726a4eeb8": {
+    "facing": "model",
+    "id": "tool-result-auto-mode-setup-no-model",
+    "name": "Tool Result: Auto-mode setup no model available",
+    "desc": "Reports that /auto-mode-setup could not run its scan because no model is configured for auto mode in this session"
+  },
+  "df09f3be456a5536af2eed11f9a4a6559c2497f6": { "facing": "internal" },
+  "c7550909fff502f19c7941f25ec39d77aa78b942": { "facing": "internal" },
+  "e8d4a7a590b8419a29560ca91232a41136b8b161": { "facing": "internal" },
+  "c2fd18a4c35bf29d178c1ea4d4ca0a4bcd746ef6": { "facing": "internal" },
+  "60b2eee2adfb6cea6f334101aff86022bc387b37": { "facing": "internal" },
+  "4897667e7c21951c399e631b05d1f47283d9d1aa": { "facing": "internal" },
+  "9ae9304e03dc41434476340f84c07e4f01886594": { "facing": "internal" },
+  "54fbc8ef14a6029c1b98f69466ce51e4d686a0d7": { "facing": "internal" },
+  "4fe6bc056105c327856ffd894fcff2087fb29041": { "facing": "internal" },
+  "ff7ded15f649ff9392ff422a3c5d1d38466c91fa": { "facing": "internal" },
+  "cb4b17f383cbf7fd2d26cd1ea41f627293c18c29": { "facing": "internal" },
+  "e0aeae42caa607cca14c580a18a60fd1d68f5a41": {
+    "facing": "model",
+    "id": "agent-prompt-webfetch-summarizer-preapproved-instruction",
+    "name": "Agent Prompt: WebFetch summarizer preapproved instruction",
+    "desc": "Instructs the small summarizer model to answer in detail from a preapproved domain's page, including code examples and documentation excerpts"
+  },
+  "f43ff358da7426038816e0896b3c9e357f849d14": {
+    "facing": "model",
+    "id": "agent-prompt-webfetch-summarizer-quote-restricted-instruction",
+    "name": "Agent Prompt: WebFetch summarizer quote-restricted instruction",
+    "desc": "Instructs the summarizer model to answer only from the page above and appends the quote-length and reproduction restrictions"
+  },
+  "cbd20328268506133dc5bf78691d36535ef98e76": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-success",
+    "name": "Tool Result: Artifact published",
+    "desc": "Confirms to the model that an artifact was published, naming the path, URL and any live-subscription follow-up"
+  },
+  "3e00af2994d6e01d0729db8c66b1fdc3f52970bc": { "facing": "internal" },
+  "2d7b80abc00f2c78be2d34fb5f2f77d0becfed1f": { "facing": "internal" },
+  "20407a54b4abadd200f6e877400196a95914ffad": { "facing": "internal" },
+  "8b19d1e584d2a1299a577afda268bf55eb4005c8": {
+    "facing": "model",
+    "id": "system-reminder-artifact-comment-reply-activation-failure",
+    "name": "System Reminder: Artifact comment reply activation failure",
+    "desc": "Explains that an Artifact comment reply was not posted because Claude is not currently activated for the thread and requires reactivation before retrying"
+  },
+  "5788990b71ddf52f463cf19c3a48936dfdeb71d1": { "facing": "internal" },
+  "97729da797ade0cde4df04b041ee3c4d848958b3": { "facing": "internal" },
+  "581e61449eb54501c5e0cbab0d7023a7beb05bdb": { "facing": "internal" },
+  "05e2d9b24bafe97da4295c46d8e5ab60d3fe8558": { "facing": "internal" },
+  "036db19d9bbd018f95046d82f613812ef7adbb67": { "facing": "internal" },
+  "023513b043367777f78a6be95e72de59e0f7183c": { "facing": "ui" },
+  "976353a9b363b2094a4123d29201042b83964b15": { "facing": "internal" },
+  "e752ebd9ad7facb5b9bdcd8345dd47bd571449cc": { "facing": "internal" },
+  "e49fe7a8cd3cc61082b9587463c8b04879da0486": { "facing": "internal" },
+  "6336c2c88656761b3c9bdf8316a5ab2c7c985d08": { "facing": "internal" },
+  "096f1423de11a2606ade58b4e5b2d854c51fd513": { "facing": "internal" },
+  "427387f3f537b15a7e9261f1d38a647eb7ff5846": { "facing": "internal" },
+  "4ccddd9929f2918b74c24a6836cad9662a9d257d": {
+    "facing": "model",
+    "id": "tool-result-artifact-subscription-plan-unreadable",
+    "name": "Tool Result: Artifact subscription plan unreadable",
+    "desc": "Tells the model the Artifact tool is blocked because the signed-in Claude account's plan could not be read, and that /login must be re-run"
+  },
+  "bdd326cdc6b56fe33ce370b9c5402f0d8b9237a9": {
+    "facing": "model",
+    "id": "system-reminder-peer-session-mention-resolved",
+    "name": "System Reminder: Peer session mention resolved",
+    "desc": "Injected notice that the user @-mentioned a specific Claude session, giving the exact name-and-ref token to use with SendMessage and forbidding unsolicited sends"
+  },
+  "226c5920a762686d88fec6b2c702e33331b8ae61": { "facing": "internal" },
+  "067b2a8afc2037d4e199d2ab1d34e066775bb634": {
+    "facing": "model",
+    "id": "tool-result-artifact-content-egress-blocked",
+    "name": "Tool Result: Artifact content egress blocked",
+    "desc": "Reports that the environment's network allowlist blocked the artifact frame host so the artifact's content could not be fetched, and names the domain to allow"
+  },
+  "68013acb46fedd0ed00abff40fa8342b08665bea": {
+    "facing": "model",
+    "id": "system-reminder-bound-conversation-activity-authority-warning",
+    "name": "System Reminder: Bound conversation activity authority warning",
+    "desc": "Warns that edits and reactions observed in a bound conversation are awareness-only notifications, not new instructions, approval, or consent"
+  },
+  "ccf675313e455ac33277f2415ebc75ee5a49447a": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-thread-resolve-relayed-credential",
+    "name": "Tool Result: Artifact comment thread resolve relayed credential",
+    "desc": "Tells the model the comment thread could not be resolved because this session lacks the credential the resolve action needs, and that it should not retry"
+  },
+  "acc77588c5be5435cd5301a54311822b1e383c77": { "facing": "internal" },
+  "4125228410bb5ee644826693a9753e7999052a87": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-retry-instructions",
+    "name": "Tool Result: WebFetch redirect retry instructions",
+    "desc": "Tells the model to call WebFetch again with the relayed redirect URL and the original prompt after a cross-host redirect was not followed"
+  },
+  "5871fc78c6f5e64bf8aec6e29090ab21f1819c65": { "facing": "internal" },
+  "fb3b5695ddf43f66fcb28e17299e665639b09595": { "facing": "internal" },
+  "c225a75ccef06a54f854f139dfd4ef2c03259e6b": { "facing": "internal" },
+  "cb8259896c146453f2927b177a0895378129edad": {
+    "facing": "model",
+    "id": "agent-prompt-web-fetch-agent-usage-guidance",
+    "name": "Agent Prompt: Web fetch agent usage guidance",
+    "desc": "Explains when and how to delegate URL reading to the built-in web-fetch agent, including binary-file trust boundaries and follow-up messaging"
+  },
+  "4dc3b4587d712a203b33b52857713e76c5435ab7": { "facing": "internal" },
+  "7e723ebbd4cd53de74774bd9ad891179a381f1bc": { "facing": "internal" },
+  "dbbb2efadca70e78520632b87712663b4a48951e": { "facing": "internal" },
+  "07bd4ea6c5b8d9dc27dfa95ac2d32fbefe9efd19": { "facing": "internal" },
+  "e74c8f0e5a75cebe15c8b2a94e56bc76fd3b4dbe": { "facing": "internal" },
+  "0c4056c6125104f1b2da2eedcfac052effebb187": { "facing": "internal" },
+  "7ab792bd11f125bb2024ed3c6924b5b75370f246": { "facing": "internal" },
+  "691f9dce48bcea1f292548322f0b6f6ef2bf2e36": { "facing": "internal" },
+  "5b703900a6314615c772020fecdf90856ca031dd": { "facing": "internal" },
+  "cda9bf4a722a6e59f4b48e98fe9c02ebbe2b3079": { "facing": "internal" },
+  "0dfcd4ec7fe506519d8faea491397af5dada19c8": { "facing": "internal" },
+  "a4b14cc24c5aa4fdf8f55afa28d382fc8b122217": { "facing": "internal" },
+  "bf1932842b2a34ed7f3c60b04a333bdef3c37505": {
+    "facing": "model",
+    "id": "agent-prompt-web-reading-specialist",
+    "name": "Agent Prompt: Web reading specialist",
+    "desc": "System prompt for the built-in web-fetch agent that reads untrusted URL content with WebFetch and returns a focused, source-grounded report to its caller"
+  },
+  "d95f1bbf4bd2101211c0b097e25ad90498f311f6": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-fast-acknowledgement-writer",
+    "name": "System Prompt: Artifact comment fast acknowledgement writer",
+    "desc": "System prompt for the small model call that writes the one-sentence acknowledgement posted to an artifact comment thread"
+  },
+  "52f90d6a54741d9b40d2708c855bb94f8670aa71": { "facing": "ui" },
+  "12cd95a82b5bddadb961ce0007ca3cbd5437242f": { "facing": "ui" },
+  "7feda30d0e26d22e45ed6e74730ae4bddd83e6c1": { "facing": "ui" },
+  "c2e7d797326000f6a4c76f85403cb7d8ba997970": { "facing": "internal" },
+  "b5e429acd2f0f20c4282ceaa3b0e5126b445c731": { "facing": "internal" },
+  "423c7f6ddae30d8e68e58baad01c34b389b35402": { "facing": "internal" },
+  "a072098dcf64fa092933207e6858aff86657d161": { "facing": "internal" },
+  "7d6bb3521ad1ee658acefeb2f2edabe3b2674696": { "facing": "internal" },
+  "8db36ec5fd271e2d826d81c6bb559788997f5251": { "facing": "internal" },
+  "b6bbae2a51ce56301882b487b89c9de9f650362e": { "facing": "internal" },
+  "3a65d030e43eeec18639433ba72c6589599ac3b8": { "facing": "internal" },
+  "3cee73d125bc0ebd584eb9f29f73400c55d701bf": { "facing": "internal" },
+  "d4ff3d757e1fb9c09ab380b2bd8bc5c09a3068ba": { "facing": "internal" },
+  "4b7e637e0749bb9c5b39ddda7d68db200d765cf8": { "facing": "internal" },
+  "cc44bdd0bc87b16d47973c85a11dc3679fd3198c": { "facing": "internal" },
+  "8f6338d8895ff3c4c65778f60d67cd65f1c9d40e": { "facing": "internal" },
+  "2f4b08e3786e9b2b97a4c868b509895e883e6ca5": { "facing": "internal" },
+  "ecf18a34ea253dba812e54bcdef8000d98853136": { "facing": "internal" },
+  "9dbd8d3cc78d7ab3c0720e76b1320d6e2cad134e": { "facing": "internal" },
+  "935c17650ac0c9d68c33e6f5e1c33a4001209037": { "facing": "internal" },
+  "e6741317bdd7edeff68b0a29fe35bbfe4f06b33a": { "facing": "internal" },
+  "c25a5c950c1a1d4187554da0f4a32b7ff7685987": { "facing": "internal" },
+  "45eeb2a65b81f430f7aba61276e43ce599204076": { "facing": "internal" },
+  "65aa2738f4e3790e196e7e4aa7b01bda65d67ede": { "facing": "internal" },
+  "376c9e6c3e4aed2bead465684853672c400ba39b": { "facing": "internal" },
+  "552b026d55c393273b05c82e0409b7ace3b536df": { "facing": "internal" },
+  "b9277052e7dda8f4143b6848e88377b26cb3759d": { "facing": "internal" },
+  "8fd3681525e0d2f119f12baa5ee7e48f88cc5151": { "facing": "internal" },
+  "dde1d7f5b2d53fd1d28bedf56b0d51b0c7523f47": { "facing": "internal" },
+  "995a2fb57c1f422e7d34aaf5175eb0eba247b542": { "facing": "internal" },
+  "d6da1bc71d73d6b11fab4add430e50e4ef0cc503": { "facing": "ui" },
+  "18dec2c751bfa33e50b827d2cfe7215ac55b6f26": { "facing": "internal" },
+  "d300474b428fa3be154c1d4224adaab0101d6edf": { "facing": "ui" },
+  "e6fadc3a34eac76deee7606a2c55405afc09eb00": { "facing": "ui" },
+  "00e2ad1119a899f3a201119a446ba79cce08db75": { "facing": "ui" },
+  "9e32ebf6b50f68f7a480c29ec83f145c0fd1e1d1": { "facing": "internal" },
+  "3a14f98ca40b5836f35bb6d6434e5759133a7055": { "facing": "ui" },
+  "14fb33858314285828da783071c92b0f2d36dc01": { "facing": "ui" },
+  "e1cd1a6dcac235f8382d7ad40d398ee385109549": { "facing": "ui" },
+  "e9080fe88e2102448e69c77e892551e04d704fbf": { "facing": "internal" },
+  "02c9ab739494ed8c08e588df194a2272d8ce7a3e": {
+    "facing": "model",
+    "id": "tool-result-send-message-cloud-cannot-reach-elevated-session",
+    "name": "SendMessage cloud cannot reach elevated session",
+    "desc": "Explains that a Remote Control session requiring a trusted device is unreachable from a cloud session, so nothing was sent."
+  },
+  "75d4375fb0e44db0ef010cfedc701749f200d2ea": {
+    "facing": "model",
+    "id": "tool-result-artifact-policy-org-settings-unverifiable",
+    "name": "Artifact org policy unverifiable",
+    "desc": "Artifact tool error saying the signed-in org's artifact policy cannot be read with this session's credential."
+  },
+  "f3de9fb99d36e84c89c408482ab8c1daab8a400a": {
+    "facing": "model",
+    "id": "tool-result-artifact-policy-lookup-blocked-by-session-config",
+    "name": "Artifact policy lookup blocked by session config",
+    "desc": "Artifact tool error saying the session's configuration, such as a custom ANTHROPIC_BASE_URL, prevents the artifact policy lookup."
+  },
+  "40d742c248429cd114afacc411898cff2ce557f1": { "facing": "internal" },
+  "7ebe2270ac424fd2cea74f1b1a3adbf5d472a0cc": { "facing": "ui" },
+  "c93f43edf7be0d12addc2c43dded15b6b4e915d1": { "facing": "ui" },
+  "13fc295dd9fb29f32e3979e7731eed6de956e7c6": { "facing": "internal" },
+  "831991a3cdc4bc37ec71576150666365bc7b21fe": { "facing": "internal" },
+  "42a0855f60d9250a1849277f960e38228fee4685": {
+    "facing": "model",
+    "id": "data-cross-session-session-renamed-notice",
+    "name": "Cross-session renamed notice",
+    "desc": "Notice delivered into a peer session's conversation saying this session was renamed after a name collision and how to address it now."
+  },
+  "d7cd784a5283cee4beed22544e94bddedd9e3e87": { "facing": "internal" },
+  "6043dd23903963887f6f72b6a8da3ff8ec1e29e9": {
+    "facing": "model",
+    "id": "data-webfetch-saved-files-note-scope-warning",
+    "name": "WebFetch saved-files scope warning",
+    "desc": "Tail of the WebFetch harness note fixing which directories files were saved under and warning that any other path came from page text."
+  },
+  "67da2471ff389ca858b69221543e6becfa64fd99": {
+    "facing": "model",
+    "id": "data-webfetch-saved-files-note-binary-lead",
+    "name": "WebFetch saved-files note binary lead",
+    "desc": "Lead of the WebFetch harness note listing local files that hold the fetched server's raw bytes and marking them untrusted."
+  },
+  "4983237dd81a3eeb957377f984dfd64051045cc2": {
+    "facing": "model",
+    "id": "data-webfetch-saved-files-note-more-omitted",
+    "name": "WebFetch saved-files note omitted count",
+    "desc": "Line saying how many further saved files were not listed to keep the harness note short."
+  },
+  "663f6c6110e1ea80bca9751651cbef53c25a05aa": {
+    "facing": "model",
+    "id": "data-webfetch-harness-note-prefix",
+    "name": "WebFetch harness note prefix",
+    "desc": "Opening marker labelling the appended block as a harness note rather than part of the agent's report."
+  },
+  "60b4f4c0e985333d5e4cd9c856d17dbb3f95d5a8": { "facing": "internal" },
+  "e6de451d9a511bb540b33ad8bf2ace170f9bb0b2": { "facing": "internal" },
+  "4b999716d36596d0eb5842738d752191d1c0bc0a": { "facing": "internal" },
+  "465d05cf834c64ecc3202a96890fc4e873d9ad0b": { "facing": "internal" },
+  "3c91804279db367f61dbda4a9725194e826c6d29": { "facing": "internal" },
+  "81a2ccd15432a86f54b9f9cd6c042ce2ed9214b4": { "facing": "internal" },
+  "15685e69908455fe3acb37627d4a33768a478858": {
+    "facing": "model",
+    "id": "tool-result-bash-cygwin-symlink-manual-approval",
+    "name": "Bash cygwin symlink manual approval",
+    "desc": "Permission message saying a path traverses a Cygwin-emulated symlink that Git Bash follows but Node does not, so it needs manual approval."
+  },
+  "5c4f8292dafb48cfa22bbe6c70394d391473bf0b": { "facing": "internal" },
+  "3a07451f6134972f5323aba78d82f932a92e93ae": { "facing": "internal" },
+  "9cc9071c25dbe83b13a728eafe2675fd1b23965f": { "facing": "internal" },
+  "b59930b547b454350744c11933448c59276be259": { "facing": "internal" },
+  "182e383c76c6cf058fce2eb62bb5a60f18cac783": { "facing": "internal" },
+  "467fb6a91163959d6a7da17db38b72a63e137873": { "facing": "internal" },
+  "363d391939cc86cbfb2d8788ae27efd02d3b9494": {
+    "facing": "model",
+    "id": "tool-result-artifact-capabilities-dual-spelling-fragment",
+    "name": "Artifact dual capability spelling fragment",
+    "desc": "Middle fragment of the artifact publish error about `artifact` and `self` being two spellings of one capability."
+  },
+  "ce24a8147d4e06bbb0803874bd10fc54f1f3dbff": {
+    "facing": "model",
+    "id": "tool-result-artifact-capabilities-dual-spelling-conflict",
+    "name": "Artifact dual capability spelling conflict",
+    "desc": "Artifact publish error refusing a declaration that spells the same capability as both `artifact` and `self` with different configs."
+  },
+  "9af4e8e839f7b22cd3b11c3b3f32ae9a8355d4f9": {
+    "facing": "model",
+    "id": "tool-result-artifact-capabilities-dual-spelling-lead",
+    "name": "Artifact dual capability spelling lead",
+    "desc": "Leading two fragments of the artifact publish dual-spelling capability error."
+  },
+  "4865afa947be059ebcfbaf2ca1678d6a911d9fef": {
+    "facing": "model",
+    "id": "tool-result-artifact-create-endpoint-not-available",
+    "name": "Artifact create endpoint unavailable",
+    "desc": "Artifact publish error reporting a 404 from the create endpoint with nothing created."
+  },
+  "5644c5519f2cdc125c56bfe79599b23cb7674139": {
+    "facing": "model",
+    "id": "tool-result-artifact-contract-echo-rejected",
+    "name": "Artifact contract echo rejected",
+    "desc": "Artifact publish 422 error explaining the republish echoed the stored contract pin and how to move off it."
+  },
+  "08255622e557bb0f4effb674d00118a9ac019261": {
+    "facing": "model",
+    "id": "tool-result-webfetch-reporting-rules-lead",
+    "name": "WebFetch reporting rules lead",
+    "desc": "Line introducing the WebFetch tool's own reporting rules inside the fetched-page tool result."
+  },
+  "0757114deec061605aed72361494601ebf82b257": {
+    "facing": "model",
+    "id": "tool-result-webfetch-content-truncated-count",
+    "name": "WebFetch content truncated count",
+    "desc": "Size line saying the page text was truncated to its first N characters."
+  },
+  "6ce69c0f77ebf66de5e7b8d51f304c4cdc93d6ef": {
+    "facing": "model",
+    "id": "tool-result-webfetch-overflow-final-chars-unread",
+    "name": "WebFetch overflow final chars unread",
+    "desc": "Parenthetical noting the final characters of the overflow were never read at all."
+  },
+  "d59880852e775fead640d62e6cc60c16f352cd18": {
+    "facing": "model",
+    "id": "tool-result-webfetch-verbatim-text-cutoff",
+    "name": "WebFetch verbatim text cutoff",
+    "desc": "Bracketed marker where the verbatim page text stops, noting that re-fetching returns the same split."
+  },
+  "80406cde5d730f7189a0f1ff53f23742841821c3": {
+    "facing": "model",
+    "id": "tool-result-webfetch-overflow-summary-unavailable",
+    "name": "WebFetch overflow summary unavailable",
+    "desc": "Size-line suffix saying the remaining characters could not be summarized and were not read."
+  },
+  "4b7543c2a1fdd308b93638a4b0ddcd3899e9a1e2": {
+    "facing": "model",
+    "id": "tool-result-webfetch-overflow-summary-appended",
+    "name": "WebFetch overflow summary appended",
+    "desc": "Size-line suffix saying a model-extracted summary of the rest follows."
+  },
+  "fb3f3b06083576e800d2ca684715875f4eb52dd9": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-url-withheld",
+    "name": "WebFetch redirect URL withheld",
+    "desc": "Redirect result line saying the server's redirect target was not a valid http(s) URL and is withheld."
+  },
+  "d308e32f8776e5afe4218d5f99fdce80e96f86c5": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-url-unverified",
+    "name": "WebFetch redirect URL unverified",
+    "desc": "Redirect result line relaying the server-supplied Location target with withheld-length and hostname-length caveats."
+  },
+  "ce9913d9d15c63d4c665c946d0fe777857102ef3": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-hostname-too-long",
+    "name": "WebFetch redirect hostname too long",
+    "desc": "Caveat that the redirect hostname is longer than any DNS name and is not a fetchable address."
+  },
+  "7f0fd3fdaaf8a678abde0b8b02a92c334f09fffd": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-not-relayable",
+    "name": "WebFetch redirect not relayable",
+    "desc": "Instruction to report the redirect because its target could not be relayed in full or is not fetchable from here."
+  },
+  "11365d79e7d4ee52f455cd05a5d627054a6cde1a": {
+    "facing": "model",
+    "id": "tool-result-webfetch-redirect-detected",
+    "name": "WebFetch redirect detected",
+    "desc": "Body of the WebFetch redirect result: original URL, relayed target, status, and what to do next."
+  },
+  "7447ffd82644977ab3032481f4494aa58a31312c": {
+    "facing": "model",
+    "id": "tool-result-hook-blocked-webfetch-only-via-agent",
+    "name": "Hook blocked web fetch agent-only path",
+    "desc": "Tells the model a hook blocked the session's only web-fetch route and how a hook could exempt it."
+  },
+  "59d1215b7bf3f2f0f8d1ef08c87e072065dfa636": { "facing": "internal" },
+  "e370b140a77504db1416476e8cf40896ea7074a0": { "facing": "ui" },
+  "d8f8416957581af18ee3d2814c4e1fb8c00a528a": { "facing": "ui" },
+  "b1c5d46d107d147d0058a100e86022059e097ec4": { "facing": "internal" },
+  "9c47610c48071d3f8944dcc091db62c64d8314c6": { "facing": "internal" },
+  "e81c323646c2e0679fa313611aaf6d7b90662bbb": {
+    "facing": "model",
+    "id": "tool-result-tool-unavailable-webfetch-use-web-fetch-agent",
+    "name": "WebFetch unavailable use web-fetch agent",
+    "desc": "Suffix on the no-such-tool error telling the model to reach web pages through the web-fetch subagent instead."
+  },
+  "f08dcbe8e8d7e101d8178753bb7a9221cfe9ab48": { "facing": "ui" },
+  "2ecf7346168c49ad906fdeb8fc097c7c89683c0c": { "facing": "internal" },
+  "67e894a984b45cb25b42261c419c3c55cee216d4": { "facing": "internal" },
+  "2bc8206d9d8c881071f10c5e940b42bb65a50296": { "facing": "internal" },
+  "68913cd22de12317fb3ebb933acecfde84e0d7cf": { "facing": "ui" },
+  "f7a245ece08d0b683de627c9c8137b70a735781f": { "facing": "ui" },
+  "b680239a367afec34b97e91bc1c57007e9f26e9c": { "facing": "ui" },
+  "efc8d53702134f3954f8eaf55f59433dd7432868": { "facing": "internal" },
+  "1e920f5f5e7287d0546909a995dcffb455fca710": { "facing": "ui" },
+  "ce98fbdf29bec8dfbf637a18af8c3913e92ace4a": { "facing": "ui" },
+  "909c6c1aeeb188ec7ad77be5faec352455ed4d02": { "facing": "ui" },
+  "4f02b1d8325e35563b6c3e924b1145be2f9829be": {
+    "facing": "model",
+    "id": "tool-result-send-message-cloud-session-cannot-send",
+    "name": "Cloud session cannot message peers",
+    "desc": "Explains that this cloud session's credential cannot deliver to another session, so the model should say so instead of retrying."
+  },
+  "ab1110ba91f5c287228f37ce45d2c5f0f83abc4e": { "facing": "internal" },
+  "ee2d45510ce9bb96ec2091cb6b3309392e6bd640": { "facing": "ui" },
+  "eb7f5d89aec40c3a879b1bb3470a7f933ed1f9f2": { "facing": "internal" },
+  "2c67550396136e6b15de6f1bc6b0df1bebcf2226": {
+    "facing": "model",
+    "id": "system-reminder-session-named-collision",
+    "name": "Session named collision reminder",
+    "desc": "System reminder telling the model the requested session name was already taken so the session got a different one."
+  },
+  "baead2f7b4995b40bb653ec9c6bfce108ca86d27": { "facing": "ui" },
+  "0e0d30fb3a15fc7941093cc80e28e44e9c8e6538": {
+    "facing": "model",
+    "id": "slash-command-rename-yielded-to-live-session",
+    "name": "Rename yielded to live session",
+    "desc": "/rename result saying the requested name is held by another live session, so a different name was taken."
+  },
+  "5389f6adec958d60c4b2f9021db9cc5fe1562abf": {
+    "facing": "model",
+    "id": "slash-command-rename-superseded",
+    "name": "Rename superseded by newer rename",
+    "desc": "/rename result saying a newer rename landed first, so the session keeps that name."
+  },
+  "c7cc33343e71237a0ed985bd841484fa462fb186": { "facing": "ui" },
+  "cc03046fe83fb5526a7e6cfbf6b8c23e46272fec": { "facing": "ui" },
+  "fa65ff6b7a381e36cbf088cff786a13eecfe1935": { "facing": "ui" },
+  "4b3cd4da9074fdd5b43ac81c958a5b18cb3f0cee": { "facing": "ui" },
+  "b24c06092ec8d6439b6b264f1c36044b0ff59888": { "facing": "ui" },
+  "db74b6cd93d0cca9e80227e8c78c9c387cd89b84": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-description-native-shift-enter",
+    "name": "Terminal-setup description native Shift+Enter",
+    "desc": "/terminal-setup description shown when the current terminal already supports Shift+Enter natively."
+  },
+  "1ea301f6875760d9cf8f587d7a79348c76a05ac4": {
+    "facing": "model",
+    "id": "tool-result-subagent-security-review-flagged",
+    "name": "Subagent security review flagged",
+    "desc": "Warning prepended to a subagent's output when the handoff classifier flags a possible security-policy violation."
+  },
+  "ee36a154ef0f18a38959adbe069a43a873717f95": {
+    "facing": "model",
+    "id": "slash-command-update-refused-background-tasks",
+    "name": "Update refused background tasks running",
+    "desc": "/restart (/update) refusal saying background work must finish or be stopped before restarting."
+  },
+  "0caff95c65711da3a14a9c2031ce8311bf505869": { "facing": "internal" },
+  "5e1f3a37213efef685b3715ad09b6baff89e8333": { "facing": "ui" },
+  "ae36500ce55ebd687c9d54fb2fb89a088895ea61": { "facing": "ui" },
+  "2366861c4191b8edf391e529ebd1f9f44158bfa8": { "facing": "ui" },
+  "087d44ea1d4278aca93d054570794839dbd5cb2a": { "facing": "ui" },
+  "d115edb877a9aadd9c8bdeb841deccf92b99b3d8": {
+    "facing": "model",
+    "id": "tool-result-listagents-account-listing-incomplete",
+    "name": "ListAgents account listing incomplete",
+    "desc": "Footnote saying account session rows carry no [ref] and are not messageable by name until a later listing completes."
+  },
+  "0666bd108ab9e6fb862714a0ecc4d626a0bc719c": {
+    "facing": "model",
+    "id": "tool-result-listagents-cloud-list-unavailable",
+    "name": "ListAgents cloud list unavailable",
+    "desc": "Footnote saying cloud sessions are missing from the ListAgents listing and a later listing retries."
+  },
+  "111cf98134d1612b1d798fef5a2d5d8dbae1455c": {
+    "facing": "model",
+    "id": "slash-command-list-agents-cloud-list-unavailable",
+    "name": "/list-agents cloud list unavailable",
+    "desc": "Footnote in the /list-agents output saying cloud sessions could not be fetched and to try again shortly."
+  },
+  "fd8d89a3c4047fea7da3e3a989b1806bcb7e3dfa": { "facing": "internal" },
+  "eddf41921b2e60e16033572f60075ca9d0c6d397": { "facing": "internal" },
+  "49c030596aef8e5db241d8d93b517bca23abfa7e": { "facing": "internal" },
+  "b89df6aad3a18b1b55bfac46cd05d8565eda7fda": {
+    "facing": "model",
+    "id": "tool-result-bash-path-blocked-deny-rule-labeled",
+    "name": "Bash labeled path blocked by deny rule",
+    "desc": "Permission deny message naming the redirection kind and the path a deny rule blocked."
+  },
+  "89063436aa8243eefd8c53561a940dcb75db352a": {
+    "facing": "model",
+    "id": "tool-result-bash-input-redirection-deny-rule",
+    "name": "Bash input redirection deny rule",
+    "desc": "Permission deny message for a `<` redirection source blocked by a deny rule."
+  },
+  "493e9a617cdb002d99a13c1d20618ebbdbe49afc": {
+    "facing": "model",
+    "id": "tool-result-bash-input-redirection-outside-working-directories",
+    "name": "Bash input redirection outside working dirs",
+    "desc": "Permission message saying a `<` redirection source lies outside the session's allowed working directories."
+  },
+  "6f6cdc202888ced8c7165a67c32b852ea80396ba": {
+    "facing": "model",
+    "id": "tool-result-bash-path-blocked-deny-rule",
+    "name": "Bash path blocked by deny rule",
+    "desc": "Permission deny message for a scanned command path blocked by a deny rule."
+  },
+  "9df68b4eaa156d3d3900704818d6c2b375bdb4c2": {
+    "facing": "model",
+    "id": "tool-result-bash-command-too-long-to-scan",
+    "name": "Bash command too long to scan",
+    "desc": "Permission message saying the command exceeds the maximum analyzable length so its full text cannot be security-scanned."
+  },
+  "e20a9bac5e15db26c03feff230997e512245f924": {
+    "facing": "model",
+    "id": "tool-result-bash-opaque-shell-string-cygwin-review",
+    "name": "Bash opaque shell string cygwin review",
+    "desc": "Permission message saying a previously-approved command runs unscannable shell code whose Windows writes need human review."
+  },
+  "e06b1d5d635cf5c5efb714bd4de34b668ebeff65": {
+    "facing": "model",
+    "id": "tool-result-bash-cd-compound-cygwin-undeterminable-cwd",
+    "name": "Bash cd-compound cygwin undeterminable cwd",
+    "desc": "Suffix explaining that a cd-compound's final working directory cannot be determined on Git Bash, so the request cannot be delegated to the classifier."
+  },
+  "eaf8cc6d3d7581da153187e8ef4cbc7569b89429": {
+    "facing": "model",
+    "id": "tool-result-agent-type-all-tools-denied",
+    "name": "Agent type all tools denied",
+    "desc": "Error saying an agent type is unusable because every tool it may use is denied by the current permission settings."
+  },
+  "7c857be7cceb15f322778f12e2774b892a4759bd": { "facing": "internal" },
+  "fe9eb04583c387e1d313ca347d9563b713137c25": {
+    "facing": "model",
+    "id": "tool-result-task-output-truncated-tail-only",
+    "name": "Task output truncated tail only",
+    "desc": "Header saying the task output was truncated to its last N characters and the earlier part is unrecoverable."
+  },
+  "6d97745296fcd8b9595aff775c4c34acd28945b7": {
+    "facing": "model",
+    "id": "tool-result-task-output-web-fetch-agent-no-report",
+    "name": "Web-fetch agent has no report yet",
+    "desc": "Placeholder returned when a web-fetch agent produced no report and its raw fetched-page transcript is withheld."
+  },
+  "138283edad10be1978a6357559fb6cc045e5fcb4": {
+    "facing": "model",
+    "id": "tool-result-send-message-local-session-identity-notes",
+    "name": "SendMessage local session identity notes",
+    "desc": "Parenthetical identity notes appended when messaging a local session that is also on Remote Control or has a remote namesake."
+  },
+  "ba8195dcab8b075b5d4decfd8c37a486b0072d6a": {
+    "facing": "model",
+    "id": "tool-result-send-message-also-on-remote-control",
+    "name": "SendMessage target also on Remote Control",
+    "desc": "Identity note saying the local target session is also connected via Remote Control."
+  },
+  "2ead9ca7d8aa3d26c2c04fc6b53abdd600b88506": {
+    "facing": "model",
+    "id": "tool-result-send-message-remote-namesake-claimed-locally",
+    "name": "SendMessage remote namesake claimed locally",
+    "desc": "Identity note that a Remote Control or cloud session with the same name is registered to a session on this machine."
+  },
+  "0d99bb63002f2651e98e9f0ee985c2fd4919b172": {
+    "facing": "model",
+    "id": "tool-result-send-message-namesake-claimed-locally",
+    "name": "SendMessage namesake claimed locally",
+    "desc": "Identity note that another session with the same name is registered on this machine."
+  },
+  "e4a1e63120b00a623accf2a135a71207d4ee82da": { "facing": "ui" },
+  "8728c8ee9aa2e5a66e09952440e75e45de661757": {
+    "facing": "model",
+    "id": "tool-result-send-message-first-send-under-reused-name",
+    "name": "SendMessage first send under reused name",
+    "desc": "Note that this is the first message to a new session under a previously used name."
+  },
+  "8b1a6f4454ddeb18bea84a2845ef2daba775f1e6": {
+    "facing": "model",
+    "id": "tool-result-send-message-remote-control-unreachable-from-cloud",
+    "name": "SendMessage remote control unreachable from cloud",
+    "desc": "Permission deny message saying nothing was sent because the Remote Control target is unreachable from this session."
+  },
+  "453988ba9a17b92c70f221aedc001c12d7c65f98": {
+    "facing": "model",
+    "id": "tool-result-send-message-local-sessions-unlisted",
+    "name": "SendMessage local sessions unlisted",
+    "desc": "Note that this machine's sessions could not be listed, so they were not searched."
+  },
+  "a93127792cd24602fe17c00e66b13412e2de7d73": {
+    "facing": "model",
+    "id": "tool-result-send-message-no-agent-reachable",
+    "name": "SendMessage no agent reachable",
+    "desc": "Failure message saying no agent by that name is reachable, with the degraded-listing notes appended."
+  },
+  "5d72c6a96e6864fdbd25be40d0b1dbe4058c2b7c": { "facing": "ui" },
+  "a62f62f144344c72cc576498c4b0d8bb8025b5bc": { "facing": "ui" },
+  "271deabecd6441d6befa6d42b2c6fd7c6952fee0": { "facing": "ui" },
+  "766286758bc8b71eddbb98c73bb2e5fa30a9a282": { "facing": "ui" },
+  "95efdb844cd32105ed14c75002fedf2f0aa4ecfe": { "facing": "ui" },
+  "9421b6e4625b228a6cc514e41960c4ba7ffdf49a": { "facing": "ui" },
+  "00edc5524ff444f18f34f194aa7493d35a604b21": { "facing": "ui" },
+  "9c2f245298804ca7c95b3f9fb421bb859874445a": { "facing": "ui" },
+  "b1d01c386070fcb1be6d252e6d38ea1f98ebf25b": { "facing": "ui" },
+  "cb828d0447983e30fdadc1bd08d9a4c6f735909c": { "facing": "ui" },
+  "03258c1a6f0f72d8b169e62b1f3de9e2807ab24e": { "facing": "ui" },
+  "3b82eaa7c2345359824727df1cd3ae1f735ea16a": { "facing": "ui" },
+  "c981d2d2ea33f68a4f004eb0e14124f5d3677444": { "facing": "ui" },
+  "6f410d4f712c6d1e59d349c341d840f3bd8eeafc": { "facing": "ui" },
+  "b55060bc191d03f0b1a5ed10c0d89c2a766082b3": { "facing": "ui" },
+  "ca654607cdbf5c4a9f619394e4e998ee2db603c3": { "facing": "ui" },
+  "5033368ca7cc68f00a9a98e89956823acc73fd82": { "facing": "ui" },
+  "d46d091d48ef3537b6593a8b9f8e8565680dfcb7": { "facing": "ui" },
+  "c178ae30c5f1b88f292b039f8a74a03cd34fe380": { "facing": "ui" },
+  "c14e914ffdf65de38e3b00483d33e9fe0c6dbb21": { "facing": "ui" },
+  "aebda67c8d0378c74e3be42ece23d28f9af607fd": { "facing": "ui" },
+  "1729c60a9e451c0906f8eaaaa2368b43e56ff6cd": { "facing": "ui" },
+  "880a8ec8769b70144366073a9e15427c2a71fcfb": { "facing": "ui" },
+  "129b140158fb2073bef4a7333721b81d901e7c92": { "facing": "ui" },
+  "d0be1286d8e634cc890ddbaf812630a66185e06a": { "facing": "ui" },
+  "74bcbe9330279b87911a5d0f9fb961032b352c0b": { "facing": "ui" },
+  "c53f4821d3d75c872f1e9c6dac921759feb34122": { "facing": "ui" },
+  "bcd49742f935c8253adfdf3d891d1e366810d23d": { "facing": "ui" },
+  "fe34f5ee9deb9c8b1f41b0738832e29bfc28f1c6": { "facing": "ui" },
+  "17bcef3d99ca690ebdf9083b491f0fc2aedd0d27": { "facing": "ui" },
+  "a49ea933e56d8f9e5796c1e9740563f6c200b175": { "facing": "ui" },
+  "e326e5e3b17ec0a39c68c6ccc1ec1ffd4c0a6f96": { "facing": "ui" },
+  "65ff74cc10c4794d1083834c0dc767a9cab17c97": { "facing": "ui" },
+  "66d9d22b46562adc17dc287a7e7ea5518a925a74": { "facing": "ui" },
+  "22839e0e2d26b0a2eb6eaf12cefaad6533f9c696": { "facing": "ui" },
+  "5506336c477357cb786cf786fecd15733400e450": { "facing": "ui" },
+  "fca4595ede22e1aa3c900d4c055c0d4c3162adad": { "facing": "ui" },
+  "4bb4fbb03c4f77b4155ea725fe21521617c2623e": { "facing": "ui" },
+  "e4eeeb6ec8bde34094e0bb2b0db96c67641d14e5": { "facing": "ui" },
+  "e378ba40bc1999b45b40294f72c3cbfb1b4bf994": { "facing": "ui" },
+  "d2c945bf5fbff99f0f21bc9b63ffa42bd0e7dce5": { "facing": "ui" },
+  "f5217bc251bcc9b56443f3aecc6f626759340802": { "facing": "ui" },
+  "1584756951ee2d6c1738ff2c4518da9f4a6504e3": { "facing": "ui" },
+  "8796adf57d6908b105e27953ced7f9d7a2158484": { "facing": "ui" },
+  "737bb645c8657271e848c166716f38b22425b8db": { "facing": "ui" },
+  "c4094db24ccae0745e088ffac1f7e74324fbcfc5": { "facing": "ui" },
+  "42a0f6f7f4af241f730c056aeef82120caeeb59b": { "facing": "ui" },
+  "832636bc2320008a7cd4b37e3345e80eba630140": { "facing": "ui" },
+  "1e1df0f893618f1625c12226ac845235642b41fa": { "facing": "ui" },
+  "f190e40a1a2c3304cbd962367209c003339a1ac8": { "facing": "ui" },
+  "bb7593088d52a47962510a7eab05cac07d8db60f": { "facing": "ui" },
+  "8d5ce8691a8f214a09d4995d64b55b29a05d505e": { "facing": "ui" },
+  "e5cd9c0892c6c49ac8f68566a1dd8c1fe57793eb": { "facing": "ui" },
+  "ba793af53b0d30046d8e20ba26378a7eb982a802": { "facing": "ui" },
+  "85e17c8ad9d551b3a52b82e84d7703c33c30b538": { "facing": "ui" },
+  "d1229b466fd118cf9855276619573673b751c1cf": { "facing": "ui" },
+  "d88139b438830fac80a31895baf49b0dfac4919f": { "facing": "ui" },
+  "64d7ca08d8c4ef6de773e46f6dc638d83a0e0541": { "facing": "ui" },
+  "2562b7e91318db9220833bae46c884f6c8bb6fab": { "facing": "ui" },
+  "f5b4b1aa1ae442174bd99dad21bfb3cc553e08dc": { "facing": "ui" },
+  "87b957c2b320e18fba5781fea906bec0ff88b90e": { "facing": "internal" },
+  "528a83441bb005c54cd657bd7e7a150ae4995c1c": { "facing": "ui" },
+  "b366c47b4a450b92856df0ff55c259af60b0fb71": { "facing": "ui" },
+  "784f476e6622540aba09db0ffc4b4508d1691119": { "facing": "ui" },
+  "fe08a1647c3b74f945756b0dd7377289288ba4e8": { "facing": "ui" },
+  "7a6cdc062b14b9e653085189cb2a85b2ce58b59f": { "facing": "internal" },
+  "c2bf3b0b714c586478271f51e54965a1a846eb80": { "facing": "internal" },
+  "910ead5dff1e7577b56313634f0f3268c89bf226": { "facing": "internal" },
+  "61908f65fa65c20d275f26e62bb70bfd656e940b": { "facing": "ui" },
+  "d7b73f077a6235fa28387e945308e5b0c7188072": { "facing": "ui" },
+  "e91446dff526dd953dd8644b9f39c5b67ed07850": { "facing": "ui" },
+  "74753a2d11be5c953ff53baebb4b8a20656e73f5": { "facing": "ui" },
+  "020951530bda9ea5bc2842b457021fd379c4b34e": { "facing": "ui" },
+  "c7841724903fe2fc67d91d268cbb71b19ad9ebd6": { "facing": "ui" },
+  "86a6ca5434ddd650381a202c80a79deeaf9f3367": { "facing": "ui" },
+  "bca59e396988178ea5f6285b077e44f789d7b3e5": { "facing": "ui" },
+  "e54512ca94cddd078e8073ae5a19b5d929637b84": { "facing": "ui" },
+  "6ec59b9b411d8d3ea7dd43f213df9bf9cdb8d2cf": { "facing": "ui" },
+  "ad2f0649b64bdd71e82eae3985d3f582e21131aa": { "facing": "ui" },
+  "9521b7b54b8bf6f706786b4403f2e739df0c549c": { "facing": "ui" },
+  "b154ee659769b24ab949aedf7a91acdf86c4a267": { "facing": "ui" },
+  "bc1d5b9790593a6f2bad580a45f3769aec9ee189": { "facing": "ui" },
+  "8c11b696dad986013d96dacacdcb283bedad552b": { "facing": "ui" },
+  "2ca5bbdd0ef53035d70adc4d19ca5decb1b1f8ea": { "facing": "ui" },
+  "d907a0e1bc362534ab83407de6b1fbe294e01a7d": { "facing": "ui" },
+  "da418d8545267deb1307afe8cbe793b517164f0d": { "facing": "ui" },
+  "74f8e16747fb7bf79b33dec80015f82d6b3273e3": { "facing": "ui" },
+  "0920c7cf31a028a64a3bb3b616fcbf3bff628b9f": { "facing": "ui" },
+  "99767fb813552ba5763dae97b90d93c90260a9ba": { "facing": "ui" },
+  "a500b383e47e311e1699f16c21231eea37b6f40b": { "facing": "ui" },
+  "28bb556b5dfe05955196d43a98817e33a37c8e2b": { "facing": "internal" },
+  "d7cf485648a84c8b3a20dffd0e0fcc7634afccf5": { "facing": "internal" },
+  "69eb0932b745b6fd798bdd53601603a8b147b814": { "facing": "ui" },
+  "c7c14562dc1df08717f97c5bf1f8ffe5e1091cf8": { "facing": "internal" },
+  "26846a5c8bc9da9e3e62c42ea441e6a0add1cf23": { "facing": "internal" },
+  "9a302fd4dba22dea7b45aacd5262f86a59bb9614": { "facing": "ui" },
+  "95ec345f8fe9fe868f84d23316e2a4c54afa6eda": { "facing": "ui" },
+  "43d3485f9197ba1b86eef33db6176e0ef1764627": { "facing": "internal" },
+  "c8fbe8c1ac14238435475f8168e25e9f07240814": { "facing": "ui" },
+  "80661b26616fc4665a347d22a03eca2fd61fcae6": { "facing": "ui" },
+  "3148d47cbae634bee4a3766871d8f5dfc525a0b5": { "facing": "ui" },
+  "0b309204ff4575f86941e79dcb319104bb3d2612": { "facing": "ui" },
+  "98f5b7c88e18909cb44944076ac73527b055ef29": { "facing": "ui" },
+  "57823f27ad8c6ba12e8cf2fa59102f2b9ca08f1e": { "facing": "ui" },
+  "e4c3fe13ae7d29b47eaaaa15d3b7e4f30c741d80": { "facing": "ui" },
+  "b861776ec24e2d1d02a68ba5aad78878211c60a3": { "facing": "ui" },
+  "ae374bd3bd2f5e3cd8d85d09a4a8fd4f9c520496": { "facing": "ui" },
+  "b2e6c432eb478aa1d01eab120bde6f5521f34a82": { "facing": "ui" },
+  "c7248bed55ba7e8d69881a76a929e8c56bb82e08": { "facing": "ui" },
+  "075e77e8f2184cae91a0ce746f556f70a4968cab": { "facing": "internal" },
+  "acaafb7e183f1739c561a79787acdadd137a83e4": { "facing": "internal" },
+  "4b60a8e6ea42ab444c3d06891100dd0589d896bc": { "facing": "internal" },
+  "d353c3a934c621d138df50e1f2bd35ee4478a58f": { "facing": "internal" },
+  "0ff764c2fba3f581eb3a87268bd5304221c168ed": { "facing": "internal" },
+  "ef5c5936805189047515848fee835b444be3ace0": { "facing": "internal" },
+  "3e61c385da48a0b9aaafb059ecf78e4c2f86d67d": { "facing": "ui" },
+  "620eae1de3949cf05146fe15cd4defb70101a922": { "facing": "ui" },
+  "449eba05134442de203a565b325038a81da627d1": { "facing": "ui" },
+  "8fe64fd1e0c854819d37e52c4f083082726bc283": { "facing": "ui" },
+  "938df4686ab88a5ffbb03a79ca181ff1724d3713": { "facing": "internal" },
+  "db6bbebd6cce7903de8f8dc7fecb664548a7046d": { "facing": "internal" },
+  "88bb453bb5f2e4fa9248c333467a92d78080c981": { "facing": "ui" },
+  "0fb2a35ff9cae99b1df878541575a29561a6dfa2": { "facing": "ui" },
+  "7a312f6240548f9ce7f45db43f81b97093862369": { "facing": "ui" },
+  "65cf20c48fa294b80a27aafad6857a8f88630745": { "facing": "ui" },
+  "9258128cd4f435bede486663d38f1ee86c113bbd": { "facing": "ui" },
+  "41f41e4d0016526984ae881dce39ca0987301f10": { "facing": "ui" },
+  "c60b7226d4504c9e368bc0583239303819791a6c": { "facing": "ui" },
+  "b639ae9b251ca58ccba1767539e683b450178b8b": { "facing": "internal" },
+  "013966898f0f4b493313c8cb57c99cb8b168f531": { "facing": "ui" },
+  "acbf98eefb7e732573dabc7980ea215639dd4654": { "facing": "ui" },
+  "f80d4368fc49e9b5e7a13005386e9baab1280588": { "facing": "internal" },
+  "a04daa6cbc376a58e205147cc9ef1d05f4fe8aa8": { "facing": "ui" },
+  "31472f70a957505a03feca2de897f3b2e42b83f7": { "facing": "ui" },
+  "c31056bb5605a05d548a0907da77ea522ceed030": { "facing": "internal" },
+  "b69761db943076cba4260397ae7a89a238a35070": { "facing": "ui" },
+  "ec49f52c26bdc22784e38abe960323406f51ec7e": { "facing": "ui" },
+  "722d5e200d93244f54dec0ab0dbaca7d96bc4eb7": { "facing": "ui" },
+  "8df0caaaf5f73936adaa38b6fdc04f9f7c8098aa": { "facing": "ui" },
+  "acb211f5181a716311c2cd86d499b23a4fd324e2": { "facing": "ui" },
+  "9189cea2dd7c96098ad33ab50b4f7902afc5c4f2": { "facing": "ui" },
+  "0e03d23f35dcab1e73cc1f14bec06b8d95ef0690": { "facing": "ui" },
+  "448fd3b8b3b26b877adc5873b2489b300c334d3e": { "facing": "ui" },
+  "931346116254de237028b2b89e6f635571a711f9": { "facing": "ui" },
+  "b26716d851b11ba7434b93f444e63e542327b1ea": { "facing": "ui" },
+  "8061583c5ea50092939997d3939ad55b4aa45b5c": { "facing": "ui" },
+  "e6e401b025e9af44e3d07485a8f3218c92999dcc": { "facing": "ui" },
+  "bbd3fc010f96358507e8887b538b20487cad6df5": { "facing": "ui" },
+  "e9d12c120e7268370cc3ca3163db3722b0bcffb6": { "facing": "ui" },
+  "7a5a52a4eb6b8ded48f86ad463d49ebd9c2bb898": { "facing": "ui" },
+  "34ce5a8dbbb843ff0bcf439a60f78862cff7cb60": { "facing": "ui" },
+  "8a99d986c2307a14a9025ef08984cfcdf80c4a75": { "facing": "ui" },
+  "2f91f871786b809ce0d5d063ebe68262d7429ce8": { "facing": "ui" },
+  "39ef38fa4f9bf76db3b1654f0503b364ca537100": { "facing": "ui" },
+  "183e26eb7574cccadf153393580323d3539f93ed": { "facing": "ui" },
+  "1a94bb1a1fda45cff7f5dc1307113c6449f4612d": { "facing": "ui" },
+  "f4804d2dcaad0bdb8976d5cf24e9bf02717045c0": { "facing": "ui" },
+  "0877509bd37fcee61bb875fc0573351b5db8a835": { "facing": "internal" },
+  "57447d9400f5fc3cd888b8bed0f4cb65fb1aef2b": { "facing": "ui" },
+  "b225127168e96bce903954c5fc365645e95e4d6c": { "facing": "ui" },
+  "e066ea3c6cecf101d18e0eabf2a4286a662de8c0": { "facing": "ui" },
+  "27b2132d85f8f7ac17d8945259022397932cea7d": { "facing": "ui" },
+  "fa6ea5c6c8eeeaba5546d94e262496286e3962c1": { "facing": "ui" },
+  "81149b29f8f09bc2329439e281efc126d46389cb": { "facing": "ui" },
+  "62a6214eb68f64a36555e05dc7f7dca7c82f7054": { "facing": "ui" },
+  "7ed71f70b7669085354e8789b2a25d00e0981697": { "facing": "ui" },
+  "be49f4f2e916c3e1d5727e035fadf8b4b8934ebb": { "facing": "ui" },
+  "d2ead247fe8abdaebc1e5975f444e25b85a6bfdc": { "facing": "ui" },
+  "7108c47a9b514a2c246a1aadefb6f938419a27e2": { "facing": "ui" },
+  "eba5e7e994dc05eab09002d1e219ae2cdae543c1": { "facing": "ui" },
+  "f890c2d05e2ff24eb2b921d3efb70b9ad133bb39": { "facing": "ui" },
+  "abe4fca199fde531d3e8fc302bb339ce5263b3e6": { "facing": "ui" },
+  "c35f0914c1611c1df87d7e6032561f682e318826": { "facing": "ui" },
+  "9bace232c50841bd55b1da48f7b3bc8a51e292a9": { "facing": "ui" },
+  "ea91c8dca3d66e8eca83546acf1ff4849b88bd03": { "facing": "ui" },
+  "fec9a99de7b497687514552a11c01be09be919f4": { "facing": "ui" },
+  "ddc0c3567993374e02ceda5e7ca4486c7cc1af62": { "facing": "ui" },
+  "88de3ac312dbdd002919636ba4d3ce9ad6653336": { "facing": "ui" },
+  "01a7ddd0fbe88eb8e38c16241d466b0b694d2726": { "facing": "ui" },
+  "35063cb0e070d65dd182a7a955842ea9cd9971ec": { "facing": "ui" },
+  "05bad6990fbf47a83202cc9076316a6ab3052b09": { "facing": "ui" },
+  "8340dbbfffc691c5f08b34e49745debb719cc340": { "facing": "ui" },
+  "5d889133419630415edd253319ec5ba58096f8e9": { "facing": "ui" },
+  "620f80610f3fbd67717e6fb0bb25957563672ddd": { "facing": "ui" },
+  "96247a0e8c609e09e193067d52554529f9e1c101": { "facing": "ui" },
+  "424e8ce1587fdc7ddb356922b26fdd2df6c6557e": { "facing": "ui" },
+  "399b426a94602e20605945e3056a2b5ec7532a9f": { "facing": "ui" },
+  "01a87ea3267e666bfd9caa1fdf450dfafcda2e3f": { "facing": "ui" },
+  "5ad82682e67a3a239ca00885d571c1e0a8d60635": { "facing": "ui" },
+  "9a4676b967a7ece35aedd47e6399fc3223428ee6": { "facing": "internal" },
+  "d1429b36012d6bad8e8f532e8a42769940460b26": { "facing": "internal" },
+  "ca0da7e7f570a2f346054e9d24acbe89458755e0": { "facing": "ui" },
+  "b898ba5c5987fe78639f57889918203e2a7a5265": { "facing": "ui" },
+  "dde818b64b7db542ce020d44e8be75e314becb33": { "facing": "ui" },
+  "55486a34023a1aaaa7d19f6ba9ab0c9a333ad51d": { "facing": "ui" },
+  "9f369875b441e731ca7e7bc0db2b1c90465f6b43": { "facing": "ui" },
+  "a5a712f8457ca347349bb5617e323a2544efae74": { "facing": "ui" },
+  "95261c86f308d2eac7cc2fcac55f83846dbb17cd": { "facing": "ui" },
+  "3e10a3361c468b87014ec8d8ce1e5e50bf5e445c": { "facing": "ui" },
+  "f5c7009620f9bd05c21e9c249d64f8fbdc729597": { "facing": "ui" },
+  "2996dfb2a7f13c8fd402f24c47ab1e084f528b73": { "facing": "ui" },
+  "79f807385d65ef480567a3a65997b87b069746e5": { "facing": "ui" },
+  "c2aa6b151ae7834d4cb9eb1bfc6029dc8b99bea0": { "facing": "ui" },
+  "8e34281a4a04d5f7f804e42e09f4c2cddbb60988": { "facing": "ui" },
+  "94c5102236dd2f55c01f631f268f3085e91000ef": { "facing": "ui" },
+  "0502496cc617e30305b5016ba4a75a2649c82fec": { "facing": "ui" },
+  "e83bd96ba2f976c74db85ce88643b2672f8ff511": { "facing": "ui" },
+  "69ee8954f31f7fb4ad2955d3de02dc1387fd822d": { "facing": "ui" },
+  "17206e16e54425088824f963cdfa420be7080420": { "facing": "ui" },
+  "53544bf2429a34938996e5bfd8db1c37314509b2": { "facing": "ui" },
+  "8ab7f7ffdd6370563ca2b667b78012d5340884b3": { "facing": "ui" },
+  "f475afcaeb14c3d45b86bdc67e7171464183fbd8": {
+    "facing": "model",
+    "id": "tool-result-send-message-ambiguous-partial-check-confirm",
+    "name": "SendMessage ambiguous — only some sessions checkable",
+    "desc": "Headline of the SendMessage ambiguous-recipient tool result when one candidate matched but not every session could be checked, asking for a re-send with the ref."
+  },
+  "4fc3c38b163440c9cbf0751bc995bd3553ed487c": {
+    "facing": "model",
+    "id": "tool-result-send-message-ambiguous-cloud-list-unavailable",
+    "name": "Ambiguous recipient — cloud list unavailable",
+    "desc": "Note appended to the ambiguous-recipient tool result of SendMessage and SendFile when the cloud session list could not be fetched."
+  },
+  "cc9a870581538a2190f6f02b049cc3bdff03e5d3": {
+    "facing": "model",
+    "id": "tool-result-send-message-ambiguous-local-list-unavailable",
+    "name": "Ambiguous recipient — local list unavailable",
+    "desc": "Note appended to the ambiguous-recipient tool result of SendMessage and SendFile when sessions on this machine could not be listed."
+  },
+  "c3ebef1352c277cfcc4f89b355c03ac780d26d29": { "facing": "ui" },
+  "05e988e7aca00567b3781e39b15825789d7bcdd7": { "facing": "ui" },
+  "94e7267f3930542febdcabf84530deea10eaf9a5": { "facing": "ui" },
+  "c48497da2d2a7191c85be05bc160b547598780ba": { "facing": "ui" },
+  "4914283c6ba7b98b15278652074fe465ac262063": { "facing": "ui" },
+  "9de69a82f106c3759b2a8d0e117c5f118f2bc49d": { "facing": "ui" },
+  "1770e605a356629fcab6725b7966cdf9d77854d9": { "facing": "ui" },
+  "b56e9eff3440cb6da7812d53796af8ad8e1caabc": { "facing": "ui" },
+  "1239535ea267522b1f28d6b935b46fe7967f5806": { "facing": "ui" },
+  "1d6f37b0ec4ab3c24b7c01337626f6151ad5df23": {
+    "facing": "model",
+    "id": "tool-result-send-message-rebound-earlier-recipient-identity",
+    "name": "SendMessage rebound — what the name meant before",
+    "desc": "Tail of the rebound SendMessage tool result identifying the earlier recipient (a session on another machine, or one on this machine) and noting the name now belongs to an in-session agent."
+  },
+  "19f89c95747a266ab4cc9441d38e0c2b8131a197": { "facing": "ui" },
+  "37b29fc1e17741db92adc415b2707c8506128872": {
+    "facing": "model",
+    "id": "tool-result-send-message-cloud-cannot-reach-elevated",
+    "name": "SendMessage blocked — elevated peer unreachable",
+    "desc": "Tool result telling the model nothing was sent because the named Remote Control peer is an elevated-security session unreachable from here."
+  },
+  "42e343b33b917a89832dd5868e93089a567202a6": {
+    "facing": "model",
+    "id": "tool-result-send-message-cloud-one-way-transcript-note",
+    "name": "SendMessage cloud send — one-way note",
+    "desc": "Note in the successful cloud-session SendMessage tool result warning that the cloud session cannot reply back here and that its response lands in its own transcript."
+  },
+  "c888064ab29937038b1a25c94238ecb04286c257": { "facing": "ui" },
+  "6b6ffa49f6a9862c1ee4144fbd6903fd3b3b9ab4": { "facing": "ui" },
+  "d4bbffb4f5016895bd67e2b579dc42ff90755caf": { "facing": "ui" },
+  "c53f7fe15b9b6dca1cb27b328994e39be5109462": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-thread-or-artifact-missing",
+    "name": "Artifact or comment thread not found (404)",
+    "desc": "HTTP 404 error text for posting a comment reply or resolving a thread, surfaced to the model as the Artifact tool's error result."
+  },
+  "b99c25b54d83de4ad587d826b5f45417e577ce9c": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-fast-ack-plan-mode",
+    "name": "Artifact fast-ack posted (plan mode)",
+    "desc": "Task notification that an acknowledgement reply was posted but automatic replies are paused in plan mode, so the full reply comes when the session next acts."
+  },
+  "e25fcc6f050fee46b527df0d7959031935bbc017": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-fast-ack-posted",
+    "name": "Artifact fast-ack posted",
+    "desc": "Task notification that the acknowledgement reply landed and the substantive auto-reply is still being composed and will be reported separately."
+  },
+  "ffcc4b235ff3873c0d2aebdc9054653325205909": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-attribution-unverified-withheld",
+    "name": "Auto-edit published, attribution unverified",
+    "desc": "Task notification that an auto-edit published but its edit-grant attribution could not be verified and the follow-up note was withheld."
+  },
+  "82daffca6c016875e7d126230caa00865058cd0d": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-unknown-result-withheld",
+    "name": "Auto-edit result unknown",
+    "desc": "Task notification that an automatic edit returned no recognizable publish result, so it is unknown whether the artifact changed, and the follow-up note was withheld."
+  },
+  "91855c7061b26adae21b71ec7e34d62d50f15915": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edited-reply-withheld-lead",
+    "name": "Auto-edit landed, summary reply withheld",
+    "desc": "Lead sentence of the task notification saying the artifact was auto-edited but the summary reply was withheld; shared by the answered-elsewhere and foreign-summon arms."
+  },
+  "90f52670b0f125e2b4de57a6f055d1b7cfc87db8": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edited-changed-review-tail",
+    "name": "Auto-edit changed the artifact — review tail",
+    "desc": "Tail of the auto-edit task notification stating the artifact was changed and asking for a review."
+  },
+  "6343d266d299c572c2a511508a35c20e54e72b65": { "facing": "ui" },
+  "e97ea66a8c1075fa9b35ee24b51460883a92bebc": {
+    "facing": "model",
+    "id": "data-artifact-comment-reply-plain-text-constraint",
+    "name": "Comment reply plain-text constraint",
+    "desc": "Reusable constraint clause injected into the artifact comment reply/ack/edit composer prompts forbidding emoji and exotic spaces."
+  },
+  "bf7ffc1abfa19362c49f4ae25842e89a40846b1d": {
+    "facing": "model",
+    "id": "data-artifact-comment-reply-no-mechanics-disclosure",
+    "name": "Comment reply no-mechanics rule",
+    "desc": "Reusable prompt clause telling the comment-reply composer never to describe the session/thread/capability machinery behind the scenes."
+  },
+  "72c9c500ad485905054d7d2d7da574a1d60ee6b6": {
+    "facing": "model",
+    "id": "data-artifact-comment-reply-withheld-foreign-summon-reason",
+    "name": "Withheld reason — foreign summon",
+    "desc": "Reason fragment used inside artifact auto-react task notifications explaining a reply was withheld because another user's summon or activation triggered it."
+  },
+  "d9e591f3385f4e8f85f41a7cbcbc4421aee8dd4e": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-whiteboard-needs-artifact-capability",
+    "name": "Whiteboard publish needs artifact capability",
+    "desc": "Artifact-publish error telling the model a whiteboard page was published without the `artifact` capability its Send-to-Claude button needs."
+  },
+  "11db2aab7fc1c5534ddb569bdbbb3031aff90783": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-whiteboard-capability-add-fresh",
+    "name": "Whiteboard fix — declare capabilities",
+    "desc": "Remediation arm shown when no `capabilities` were passed: re-run the same publish with `capabilities: {artifact: {}}`."
+  },
+  "5aeb68eca8a9d0645f5b4fc98552fb4f15707daa": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-whiteboard-capability-add-existing",
+    "name": "Whiteboard fix — add artifact to capabilities",
+    "desc": "Remediation arm shown when a `capabilities` object was already passed: add `artifact: {}` to it and re-run."
+  },
+  "7d2f4b05f81cc531721d46472e4287b7b81f1ce7": {
+    "facing": "model",
+    "id": "tool-result-artifact-review-page-unknown-capability-families",
+    "name": "Review page capability manifest invalid",
+    "desc": "Validation reason returned when a PR-review page's capabilities declaration carries families other than `mcp` and the artifact-publish capability."
+  },
+  "6d100001e4d1cfa08db5e1a38913fbb0ea1cb707": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-watch-verbs",
+    "name": "Artifact action — watch verbs",
+    "desc": "Portion of the Artifact tool's `action` parameter description covering the watch/unwatch/status verbs and durable wake subscriptions."
+  },
+  "8a3f042fe636d03feb8c6d96aac5942db2a338e4": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-no-originator",
+    "name": "Artifact watch — no linked originator",
+    "desc": "Explains that the session has no linked human originator, so it cannot hold durable wake subscriptions, and when a retry will re-check."
+  },
+  "07ff2237c6a311eec0b95f21548fa7c13ecdb637": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-upload-consent-ask",
+    "name": "Artifact publish consent prompt",
+    "desc": "The `{behavior:\"ask\"}` permission message for publishing an artifact to claude.ai; it becomes the tool_result the model reads if the user declines."
+  },
+  "6c6ec17d50bd226589a715bf54e39105eee78f56": {
+    "facing": "model",
+    "id": "tool-result-artifact-comments-summon-first-ordering-note",
+    "name": "Comments listing — summon-first ordering",
+    "desc": "Ordering note in the Artifact `comments` tool result explaining that threads with comments sent to Claude are listed first."
+  },
+  "b1cc9a09715d22433fb5ebd5d68079b0c4fa5450": {
+    "facing": "model",
+    "id": "tool-result-artifact-comments-recency-ordering-note",
+    "name": "Comments listing — recency ordering",
+    "desc": "Ordering note used when no thread carries comments sent to Claude: threads are ordered by newest viewer comment."
+  },
+  "1b995b5072e4a1ef8f9af2dc6f34592aa8a075c6": {
+    "facing": "model",
+    "id": "tool-result-artifact-comments-cursor-resume-skip-note",
+    "name": "Comments listing — cursor resume caveat",
+    "desc": "Warns that resuming from a cursor skips threads at or before it and that re-ranking can hide threads from the walk."
+  },
+  "8147f599c018287ac44b0396e1f6b52214aa841b": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-reply-foreign-summon",
+    "name": "Comment reply not posted — foreign summon",
+    "desc": "Tool result telling the model the reply draft was discarded because the thread's summon or activation came from a different user."
+  },
+  "5a05a87855bc624cfb5b03644d77554afaa2c29b": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-resolve-foreign-activation",
+    "name": "Thread not resolved — foreign activation",
+    "desc": "Tool result telling the model the thread was not resolved because Claude on it was activated by a different user."
+  },
+  "58d44edfdf0fd387ff84ea2e719cceb6cc92ee92": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-update-instructions",
+    "name": "Publish result — how to update",
+    "desc": "Tail of the successful publish tool result explaining how to update the artifact later without minting a new one."
+  },
+  "880195071810fed8a0e15213b1bd7cce73282bc2": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-privacy-note",
+    "name": "Publish result — privacy note",
+    "desc": "Tail of the successful publish tool result noting artifacts are private until shared and where the user can browse them."
+  },
+  "ad44e0225561f0133118faecedfdb2a0ad10fbc1": {
+    "facing": "model",
+    "id": "system-reminder-peer-mention-sendmessage-tool-reference",
+    "name": "Peer mention — SendMessage tool reference",
+    "desc": "Reusable clause naming the built-in SendMessage tool (and how to load it) inside the @-mention peer reminder injected into the conversation."
+  },
+  "7d0d0d210d1c51ae256af70df657691612df22c3": {
+    "facing": "model",
+    "id": "system-reminder-peer-mention-more-candidates-tail",
+    "name": "Peer mention — truncated candidate list tail",
+    "desc": "Tail line of the ambiguous @-mention reminder saying how many further same-named sessions exist and which tool lists them all."
+  },
+  "62e90b57caa11ed2e4e8e5c62ca79574151c4f06": {
+    "facing": "model",
+    "id": "system-reminder-peer-mention-ambiguous-confirm",
+    "name": "Peer mention — ambiguous, confirm first",
+    "desc": "Reminder telling the model an @-mention matched several Claude sessions and it must confirm with the user before messaging any of them."
+  },
+  "4ee74c5ea969e49754e3a587340b4095b8e8b1bb": { "facing": "ui" },
+  "7321ba02d8a7c231e10b9dcef5ef6d8e05ae02fc": { "facing": "internal" },
+  "ce6d620cca820f1ca0a115efe46dcf3bbcb04d5f": { "facing": "internal" },
+  "3c090124ade9829c86678cd3d915f4ea33951182": { "facing": "internal" },
+  "b98ff0c4c8296c33d9a7fbb2216fade874b5e3b7": { "facing": "internal" },
+  "652ac1eee1ecfc89c0a6d7306c110921d3c4e35e": { "facing": "internal" },
+  "c19cf73bc2439cadf225d7af1304cf432d5dc86b": { "facing": "internal" },
+  "c47bb964f51fa817b4aa95906668f9b3f130b974": { "facing": "internal" },
+  "c6b1629a1bf6d4436d927a9dacb91f1eec95d384": { "facing": "internal" },
+  "9a939080c4e25fc9da276bbb3b392cebe35c48b8": { "facing": "internal" },
+  "f52b2125e222374a173146f52198237b02e391bd": { "facing": "ui" },
+  "abb4d7636991fa026784e78ae294351401ca3245": { "facing": "ui" },
+  "effe6675e057b98e60e0b3076149861f4084a074": { "facing": "ui" },
+  "a1965f508d1765d01a7500513c19a7abc9be9233": { "facing": "ui" },
+  "b1db67cdc71d57680dd9a15c8105c72100b4cf9c": { "facing": "ui" },
+  "123f5e661420a0ae488ed85ec3cdb5c2f95f677e": { "facing": "ui" },
+  "17c16ab6cb3b834bc1fbfeba29120e01cb87a433": { "facing": "ui" },
+  "1fd044f6b538a828bcf8575ee5ffcc206e07c613": { "facing": "ui" },
+  "17b66aa4b83409f0a4adff87736883465f0353a5": { "facing": "ui" },
+  "4d85a530ee0106160a00c504e261a9fd3e7c2c83": { "facing": "ui" },
+  "9b650467954de1c079253350419f3970d9a4e41a": { "facing": "ui" },
+  "4b380cff433e327d59a23c11d3b89c3b4efb6d4f": { "facing": "ui" },
+  "9e2b7b19f11e3a3693de2e2cd105b5d30099b441": { "facing": "ui" },
+  "e419eafdc7130cd7dd0136976bb98470938b34eb": { "facing": "ui" },
+  "21610254bdedeed238d783e58268d0bfc12fc76a": { "facing": "ui" },
+  "902896e42275917f0d7334146b599a9662615c2e": { "facing": "ui" },
+  "e63ca8c9be95057f8ce637677ae5875d1af7474a": { "facing": "ui" },
+  "ca4454bebef5ae4b495637660e37b55c1801e457": { "facing": "internal" },
+  "7d5a6f5c46a2157fed36ed091c79da2da06e421e": { "facing": "internal" },
+  "a5e6a3c584e308cae561d3e7e2b92c269d6aecee": { "facing": "internal" },
+  "eda29e0a43d0e8ea31446215a412103b6cfc75ac": { "facing": "internal" },
+  "8ae54eaded3b3ef75f7c1a83239b5549fcbce052": { "facing": "internal" },
+  "a53710ea78085e0ffb9a1e877781c20bf295b229": { "facing": "internal" },
+  "09d19967b0c4466da13007c5d319561bdb86b84e": { "facing": "internal" },
+  "2e6de416caa0eb6c112bba9f894ceb15eb1273d1": { "facing": "internal" },
+  "ae6defd31cafb8ba6ef02ea38cfd9cc74c510aff": { "facing": "internal" },
+  "342f175322cf60fbebfc9862503569e6abbb1fe6": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-redispatched-no-record",
+    "name": "Redispatched agent — no completion record",
+    "desc": "Task notification that a background agent re-dispatched via SendMessage in the previous session left no completion record."
+  },
+  "27a845f7e4d0a0d020fdd274ec63327559a3a01c": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-redispatched-webfetch-resume",
+    "name": "Redispatched WebFetch agent — resume tail",
+    "desc": "Tail telling the model to send the agent another SendMessage before assuming the fetch landed."
+  },
+  "a7a5fac2e3da5588f6f87c56470ab097062de92a": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-no-completion-record",
+    "name": "Background agent — no completion record",
+    "desc": "Task notification that a background agent from the previous session has no completion record but its transcript is saved on disk."
+  },
+  "cd99f8f49eef8f4df18bce0a7a12586e78fa09b1": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-resume-webfetch-report",
+    "name": "Resume WebFetch agent for its report",
+    "desc": "Tail telling the model to resume a WebFetch-launched agent with SendMessage to get its report."
+  },
+  "3535aa40ba22d18e41408566d83e894533f22593": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-resume-or-check-worktree",
+    "name": "Resume agent or check its worktree",
+    "desc": "Tail telling the model to resume the agent or inspect its worktree/output before assuming the task landed."
+  },
+  "e84405ccf563341bb1871dadf6027acb56a4e0ef": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-completed-notification-lost",
+    "name": "Agent finished, notification lost",
+    "desc": "Task notification that the agent had already completed before the previous process exited and only its completion notification was lost."
+  },
+  "10bf9f9f7435a72019f4d7c2bd0c98aa4e55c88b": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-sendmessage-report-tail",
+    "name": "Get the report with SendMessage",
+    "desc": "Tail of the completed-agent notification directing the model to SendMessage the agent for its report."
+  },
+  "f00ea2c99ee6379bd660a107dab4f2d481768545": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-output-file-tail",
+    "name": "Read the output file instead",
+    "desc": "Tail of the completed-agent notification directing the model to read the agent's output file and check its worktree."
+  },
+  "456a3e05f141a1a0314ef8c748693e6d4a515912": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-restart-failed",
+    "name": "Agent could not be restarted",
+    "desc": "Task notification that a background agent from the previous session could not be automatically restarted, with its resume path."
+  },
+  "9aae12159acce9a6c7eb875d881b4a250c2f37ce": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-webfetch-only-report-tail",
+    "name": "SendMessage is the only way to the report",
+    "desc": "Tail used for WebFetch-launched agents: resuming by SendMessage is the only way to get the report."
+  },
+  "e1fffa3840b5926ca565fc1eba72fe1e61a7c45b": {
+    "facing": "model",
+    "id": "data-task-notification-background-agent-worktree-check-tail",
+    "name": "Check worktree before assuming success",
+    "desc": "Tail telling the model to check the agent's worktree/output for partial work before assuming the task landed."
+  },
+  "d0268db99cb40de8eec215f1895114f0c0413c18": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-resume-all-webfetch",
+    "name": "Resume all agents for their reports",
+    "desc": "Guidance line in the multi-agent notification: resume each by sending a message to its id with SendMessage to get its report."
+  },
+  "4416390ba4e680a8ca694304d7f5d8841ea7a9c8": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-resume-all-or-check",
+    "name": "Resume all agents or check their output",
+    "desc": "Mixed-launch variant of that guidance line, adding the worktree/output check."
+  },
+  "3d23d47f03dc42019c62ddb470cca4d5bb12685c": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-webfetch-no-artifacts-tail",
+    "name": "WebFetch agents have nothing to check",
+    "desc": "Tail noting the WebFetch-launched agents have no worktree or output, so SendMessage is the only route."
+  },
+  "0c06ff270039db6e42045f4abc8d66e8c2d048cf": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-relaunch-all",
+    "name": "Launch the agents again",
+    "desc": "Guidance line for agents whose in-process state was lost: launch them again if their reports are still needed."
+  },
+  "f6d7d830f7caa755f8e86d8f9af7daf02f227c13": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-webfetch-relaunch-tail",
+    "name": "WebFetch agents — nothing to check, relaunch",
+    "desc": "Tail noting the WebFetch-launched agents left nothing to check, so they must be launched again."
+  },
+  "1fecaa4296080c4b42a621eb3f4488c6e8cbd846": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-no-completion-record",
+    "name": "Several agents — no completion record",
+    "desc": "Task notification listing several background agents from the previous session with no completion record but transcripts saved on disk."
+  },
+  "ded2085db3de5d91f93e7141fd65c9a0acc90e64": {
+    "facing": "model",
+    "id": "data-task-notification-background-agents-lost-in-process-state",
+    "name": "Several agents — in-process state lost",
+    "desc": "Task notification that several background agents were running at process exit and lost their in-process state."
+  },
+  "9f05bf156847e238de0605b984e7f0142060e678": { "facing": "ui" },
+  "6e8b2ff5818ec7d59b79279ad41c428e9fd43108": { "facing": "ui" },
+  "74dcf8a92bb7fcbcc08b15cd9cefd0c84405b5d2": { "facing": "ui" },
+  "1bc69a525cc4cb6fb32d020584303c8edc675abd": { "facing": "ui" },
+  "53288c2bfcef822c55617a66dcb3e87d6862ba49": { "facing": "ui" },
+  "428c97f78ad51c4594c105a60bd26d8e01a55439": { "facing": "ui" },
+  "1d59f9b2fba6dd35b07d995aa69264f6975df252": { "facing": "internal" },
+  "c27e779277d851f7007cbca49fe93bc569d864ad": { "facing": "internal" },
+  "657ea30d5d2a8808e220e4d63b2351f82fe28470": { "facing": "internal" },
+  "adee4ab696df53f193ca0cf25182f4938c321b64": { "facing": "internal" },
+  "565a87f78122b7bea4719936fea1abc32bb75979": { "facing": "internal" },
+  "7868f059e88836acd575051eb9230d11a73dd00d": { "facing": "internal" },
+  "188c2766fbb9c432f6e3c03d04a803a0e1e0b22d": { "facing": "internal" },
+  "0e18360417dedde8491f042e23cf38352fe198f2": { "facing": "internal" },
+  "9d7eabc5b38ff74ed26d6231d2c4f18c695e1300": { "facing": "internal" },
+  "ad04243da8a3cb85fd83837b8b87234958a944a1": { "facing": "internal" },
+  "b4c4dc1fac4a7d36d38c842dbedd21bb43584008": { "facing": "internal" },
+  "a813c3c5aa05f558b9ee2d194719cf1bc4880c6d": { "facing": "internal" },
+  "e2193ed85c43cf820c9485132d4928371547c652": {
+    "facing": "model",
+    "id": "tool-result-artifact-capability-dual-spelling",
+    "name": "Tool Result: Artifact capability declared under both spellings",
+    "desc": "First fragment of the ArtifactInputError message returned to the model when a publish declares both `artifact` and `self` with different configs."
+  },
+  "3d0f8bcf88a1ccd433f97e5748173ad442ead521": {
+    "facing": "model",
+    "id": "tool-result-artifact-capability-dual-spelling-remedy",
+    "name": "Tool Result: Artifact dual-spelling remedy",
+    "desc": "Closing fragment of the dual-spelling ArtifactInputError telling the model to declare the capability once, canonically as `artifact: {}`."
+  },
+  "374eda6005cf31d43906c632317b6ff0cecc2cdf": { "facing": "ui" },
+  "86222f89030f0e115df7bcc86747ff4e00abce09": { "facing": "ui" },
+  "919337a3765b3ee5f9504db5e1ddcb6a39feee92": { "facing": "ui" }
 }

@@ -71,6 +71,26 @@ const BIND_WINDOW_BACK = 1500;
 // or a `let v=` just before its `${v}`). A slot bound in its own window is a plain
 // local in emitted code — it parses and never ReferenceErrors, so it is never
 // dangerous, in pristine OR patched.
+// Second-chance lookback. Minified module consts are emitted as one long
+// comma-declarator chain inside a `var X=T(()=>{…})` IIFE, so a use and its
+// declaration can sit tens of KB apart in the SAME statement. An override that
+// legitimately expands a neighbouring const in that chain pushes the declaration
+// past BIND_WINDOW_BACK, and the slot then reads as newly dangerous although the
+// name is still declared in scope and the file still parses — 2.1.232 flagged
+// `${xJh}`/`${RJh}` in all four sets exactly this way. So when the narrow window
+// misses, look much further back for a DECLARATION of that specific name. A name
+// declared nowhere within reach — the real leak this gate exists to find — still
+// flags, because this only ever searches for that one identifier.
+const DECL_WINDOW_BACK = 200_000;
+const declaredFurtherBack = (s, idx, v) => {
+  const from = Math.max(0, idx - DECL_WINDOW_BACK);
+  const window = s.slice(from, idx);
+  const esc = v.replace(/[$]/g, '\\$&');
+  return new RegExp(
+    `(?:\\b(?:let|const|var|function)\\s+|(?<!\\$)[([,{;]\\s*)${esc}\\s*(?:=[^=>]|[)\\]},:]|=>)`
+  ).test(window);
+};
+
 const dangerousSlots = (s) => {
   const out = new Map();
   out.positions = new Map();
@@ -80,6 +100,7 @@ const dangerousSlots = (s) => {
     const idx = m.index;
     const window = s.slice(Math.max(0, idx - BIND_WINDOW_BACK), idx + 60);
     if (bindsInWindow(window, v)) continue; // bound local — safe
+    if (declaredFurtherBack(s, idx, v)) continue; // module const further up the same chain
     out.set(v, (out.get(v) || 0) + 1);
     out.positions.set(v, [...(out.positions.get(v) || []), idx]);
   }

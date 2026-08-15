@@ -40,7 +40,29 @@ const jsonPath = path.isAbsolute(promptsJson)
   ? promptsJson
   : path.join(REPO, 'data/prompts', promptsJson);
 
-for (const p of [CLI, jsonPath]) {
+// The stale-backup rule deletes native-claudejs-orig.js before the bump's first
+// apply, so the default CLI does not exist for the first half of every run. Fall
+// back to the extraction the pipeline makes at that point, version-checked so a
+// leftover file from another release cannot stand in.
+const jsonVersion = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(jsonPath, 'utf8')).version;
+  } catch {
+    return null;
+  }
+})();
+const cliPath = (() => {
+  if (fs.existsSync(CLI)) return CLI;
+  if (!jsonVersion) return CLI;
+  const tmp = `/tmp/cli-${jsonVersion}.js`;
+  if (fs.existsSync(tmp)) {
+    console.error(`substitution-tags: ${CLI} absent — using ${tmp}`);
+    return tmp;
+  }
+  return CLI;
+})();
+
+for (const p of [cliPath, jsonPath]) {
   if (!fs.existsSync(p)) {
     console.error(`substitution-tags: missing ${p}`);
     process.exit(2);
@@ -61,7 +83,7 @@ for (const p of [CLI, jsonPath]) {
 // deferring to agent-prompt-conversation-summary-analysis-summary-blocks, which does keep
 // <summary>. If Anthropic ever adds a regex-form site that injects INTO a prompt, add it
 // here explicitly rather than widening the pattern.
-const cli = fs.readFileSync(CLI, 'utf8');
+const cli = fs.readFileSync(cliPath, 'utf8');
 const tags = new Set();
 for (const m of cli.matchAll(/\.replace\(\s*"(<[a-z0-9_]{3,60}>)"/g)) tags.add(m[1]);
 

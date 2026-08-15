@@ -305,9 +305,28 @@ function main() {
 
   const promptsDir =
     args['prompts-dir'] || path.join(repoRoot, 'data', 'prompts');
-  const cliPath =
-    args.cli || path.join(os.homedir(), '.tweakcc', 'native-claudejs-orig.js');
+  // The stale-backup rule deletes native-claudejs-orig.js before a bump's first
+  // apply, which leaves this whole report unable to run for exactly the half of
+  // the bump it is meant to gate. Fall back to the pipeline's own extraction,
+  // and let detectVersionFromCli below prove the fallback is the right build.
+  const defaultCli = path.join(
+    os.homedir(),
+    '.tweakcc',
+    'native-claudejs-orig.js'
+  );
   const versions = listPromptVersions(promptsDir);
+  const fallbackTarget = args.new || args._[1] || versions[versions.length - 1];
+  const tmpCli = fallbackTarget ? `/tmp/cli-${fallbackTarget}.js` : null;
+  const cliPath =
+    args.cli ||
+    (fs.existsSync(defaultCli)
+      ? defaultCli
+      : tmpCli && fs.existsSync(tmpCli)
+        ? tmpCli
+        : defaultCli);
+  if (!args.cli && cliPath === tmpCli) {
+    console.log(`(${defaultCli} absent — reading ${tmpCli})`);
+  }
 
   // Explicit target: --new flag or positional arg[1]. When absent the target is
   // inferred from the cli itself, so binary == target by construction (no check needed).

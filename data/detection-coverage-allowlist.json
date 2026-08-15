@@ -2,7 +2,7 @@
   "449a9bee144b47c0": {
     "verdict": "internal",
     "shape": "array",
-    "excerpt": "You've hit your You've reached your You're out of usage credits Your org is out of usage · add funds to continue Your org is out of usage · ",
+    "excerpt": "You've hit your You've reached your You're out of usage credits Your org is out of usage \u00b7 add funds to continue Your org is out of usage \u00b7 ",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "79f8d8934690894d": {
@@ -38,7 +38,7 @@
   "c061c16d38e1b76e": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Allow sentinel→real substitution on the plain-HTTP proxy path. Defaults to false: without TLS termination the upstream identity is unverifie",
+    "excerpt": "Allow sentinel\u2192real substitution on the plain-HTTP proxy path. Defaults to false: without TLS termination the upstream identity is unverifie",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "a03d1af5c47a17a0": {
@@ -56,7 +56,7 @@
   "ad2221e3dd76a41c": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Argument list for exec form. When present, `command` is resolved as an executable and spawned directly with these arguments — no shell. Path",
+    "excerpt": "Argument list for exec form. When present, `command` is resolved as an executable and spawned directly with these arguments \u2014 no shell. Path",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "396747dd128c5e84": {
@@ -68,19 +68,19 @@
   "a2306938a3b98fe4": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Placeholder for source types this Claude Code version does not recognize. Never authored by hand — PluginMarketplaceSchema rewrites unparsea",
+    "excerpt": "Placeholder for source types this Claude Code version does not recognize. Never authored by hand \u2014 PluginMarketplaceSchema rewrites unparsea",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "a896dd0b20f094d5": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Where to fetch the plugin from. Must be a remote source — relative paths have no marketplace repository to resolve against.",
+    "excerpt": "Where to fetch the plugin from. Must be a remote source \u2014 relative paths have no marketplace repository to resolve against.",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "39153f450619319e": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Glob patterns (e.g. [\"**/*.tf\"]) — the plugin is relevant when a file Claude has read this session matches any pattern. Matched against read",
+    "excerpt": "Glob patterns (e.g. [\"**/*.tf\"]) \u2014 the plugin is relevant when a file Claude has read this session matches any pattern. Matched against read",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "d6d426f3af153fa2": {
@@ -92,25 +92,25 @@
   "5604fedd01e10677": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Glob patterns (e.g. [\"Engine/Source/Runtime/Renderer/**\"]) — the plugin is relevant when the session's working directory is at or under a di",
+    "excerpt": "Glob patterns (e.g. [\"Engine/Source/Runtime/Renderer/**\"]) \u2014 the plugin is relevant when the session's working directory is at or under a di",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "dffac88775950017": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "What the user is working with when this plugin is relevant — fills \"Working with {topic}?\". Often the product name (e.g. \"Stripe\"); use a do",
+    "excerpt": "What the user is working with when this plugin is relevant \u2014 fills \"Working with {topic}?\". Often the product name (e.g. \"Stripe\"); use a do",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "9e6af820a08bf67e": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "When true in any settings source, claude.ai MCP cloud connectors are not auto-fetched or connected. Only gates auto-fetched connectors — a c",
+    "excerpt": "When true in any settings source, claude.ai MCP cloud connectors are not auto-fetched or connected. Only gates auto-fetched connectors \u2014 a c",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "4bfc82448302de00": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Directories to include when creating worktrees, via git sparse-checkout (cone mode). Dramatically faster in large monorepos — only the liste",
+    "excerpt": "Directories to include when creating worktrees, via git sparse-checkout (cone mode). Dramatically faster in large monorepos \u2014 only the liste",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "b197ffdf43272f49": {
@@ -134,13 +134,13 @@
   "1a05c0a446549112": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Enable ultracode for the session: xhigh effort plus standing dynamic-workflow orchestration. Session-scoped — typically provided via --setti",
+    "excerpt": "Enable ultracode for the session: xhigh effort plus standing dynamic-workflow orchestration. Session-scoped \u2014 typically provided via --setti",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "649b00f31c7c8ec4": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Managed-org allowlist of channel plugins. When set, replaces the default Anthropic allowlist — admins decide which plugins may push inbound ",
+    "excerpt": "Managed-org allowlist of channel plugins. When set, replaces the default Anthropic allowlist \u2014 admins decide which plugins may push inbound ",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "70e4a004e08e046d": {
@@ -152,7 +152,7 @@
   "eb17e31f022cb8cf": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Every address for a gateway host must be private — if this is a dual-stack DNS name, publish only private records for it (for example, remov",
+    "excerpt": "Every address for a gateway host must be private \u2014 if this is a dual-stack DNS name, publish only private records for it (for example, remov",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "168e22a5a43b3c57": {
@@ -176,7 +176,7 @@
   "c82af7b353d9e38e": {
     "verdict": "model",
     "shape": "array",
-    "excerpt": "## What NOT to save in memory - Code patterns, conventions, architecture, file paths, or project structure — these can be derived by reading",
+    "excerpt": "## What NOT to save in memory - Code patterns, conventions, architecture, file paths, or project structure \u2014 these can be derived by reading",
     "note": "model-facing; fragments captured via the composite evidence path"
   },
   "ee9a8eff5c32f159": {
@@ -194,13 +194,13 @@
   "001e7b1d061eb689": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "[Sandbox Windows] updateConfig: the resolved file-access set (filesystem.* ∪ credentials.files) changed but the ACL stamp/grant is session-w",
+    "excerpt": "[Sandbox Windows] updateConfig: the resolved file-access set (filesystem.* \u222a credentials.files) changed but the ACL stamp/grant is session-w",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "0cbe12305e464c29": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "it2 was found on PATH — check that the iTerm2 Python API is enabled (Preferences > General > Magic > Enable Python API).",
+    "excerpt": "it2 was found on PATH \u2014 check that the iTerm2 Python API is enabled (Preferences > General > Magic > Enable Python API).",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "257b0632319d1016": {
@@ -212,31 +212,31 @@
   "9e0d9926f343db12": {
     "verdict": "internal",
     "shape": "array",
-    "excerpt": "Almost done! Enable the Python API in iTerm2: iTerm2 → Settings → General → Magic → Enable Python API After enabling, you may need to restar",
+    "excerpt": "Almost done! Enable the Python API in iTerm2: iTerm2 \u2192 Settings \u2192 General \u2192 Magic \u2192 Enable Python API After enabling, you may need to restar",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "d1bd0c3ba749f77e": {
     "verdict": "model",
     "shape": "concat",
-    "excerpt": "clearing a stored declaration also needs the current contract. Retry when the contract service is reachable — until the clear lands, the sto",
+    "excerpt": "clearing a stored declaration also needs the current contract. Retry when the contract service is reachable \u2014 until the clear lands, the sto",
     "note": "model-facing; fragments captured via the composite evidence path"
   },
   "713662f6b0f5628c": {
     "verdict": "model",
     "shape": "concat",
-    "excerpt": "workshop pages cannot ship renderable or executable sidecar files — each is a URL that bypasses the publish-time verifier:",
+    "excerpt": "workshop pages cannot ship renderable or executable sidecar files \u2014 each is a URL that bypasses the publish-time verifier:",
     "note": "model-facing; fragments captured via the composite evidence path"
   },
   "59ab0468c080a919": {
     "verdict": "model",
     "shape": "concat",
-    "excerpt": "the server answered the upload preflight for a different artifact — not publishing.",
+    "excerpt": "the server answered the upload preflight for a different artifact \u2014 not publishing.",
     "note": "model-facing; fragments captured via the composite evidence path"
   },
   "3a773556461da09f": {
     "verdict": "model",
     "shape": "concat",
-    "excerpt": "the server kept reporting missing content at deploy time after it was uploaded — not looping. Retry publishing to",
+    "excerpt": "the server kept reporting missing content at deploy time after it was uploaded \u2014 not looping. Retry publishing to",
     "note": "model-facing; fragments captured via the composite evidence path"
   },
   "9c6e37bafb6d8067": {
@@ -254,7 +254,7 @@
   "7c5a938ac9fb3d13": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Voice mode could not find a working audio recorder in WSL. WSL2 with WSLg provides audio via PulseAudio — install SoX with its PulseAudio ba",
+    "excerpt": "Voice mode could not find a working audio recorder in WSL. WSL2 with WSLg provides audio via PulseAudio \u2014 install SoX with its PulseAudio ba",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "45e6c9c94c55ecf6": {
@@ -278,7 +278,7 @@
   "6200c200d74ed331": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "does not exist or is not a directory. The path came from a WorktreeCreate hook — the hook must print the directory it created as the last li",
+    "excerpt": "does not exist or is not a directory. The path came from a WorktreeCreate hook \u2014 the hook must print the directory it created as the last li",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "367140252562af45": {
@@ -302,7 +302,7 @@
   "80b12137bb04b7a6": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Optional hard cost ceiling; abort and report partial results if hit (exit 2). Overrun is bounded to one agent run — when that run breaches, ",
+    "excerpt": "Optional hard cost ceiling; abort and report partial results if hit (exit 2). Overrun is bounded to one agent run \u2014 when that run breaches, ",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "bf62d436862b9b67": {
@@ -314,37 +314,37 @@
   "4db688730cb9d766": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "the background service on this machine is running without background sessions — its control socket failed to start. Check the cause with 'cl",
+    "excerpt": "the background service on this machine is running without background sessions \u2014 its control socket failed to start. Check the cause with 'cl",
     "note": "re-judged: {reason:} field behind a tengu_bg_daemon telemetry call, fragments already judged ui - operator-facing, not model-facing"
   },
   "be9fbfebe9af882b": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Quick lessons on the things power users do — plan mode, undo, subagents, memory. About 5 minutes. Come back any time with /powerup.",
+    "excerpt": "Quick lessons on the things power users do \u2014 plan mode, undo, subagents, memory. About 5 minutes. Come back any time with /powerup.",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "73d174b9c138c8b3": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "New here? Type /powerup for a 5-minute tour — modes, undo, @-mentions, and how to teach Claude your rules.",
+    "excerpt": "New here? Type /powerup for a 5-minute tour \u2014 modes, undo, @-mentions, and how to teach Claude your rules.",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "b23bfaf3d2947618": {
     "verdict": "internal",
     "shape": "array",
-    "excerpt": "· managed hooks and settings policy from your organization still apply; managed plugins, skills, CLAUDE.md, and MCP servers do not",
+    "excerpt": "\u00b7 managed hooks and settings policy from your organization still apply; managed plugins, skills, CLAUDE.md, and MCP servers do not",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "607d7dee658cf925": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Need help? Common issues: · Permission denied → Run: gh auth refresh -h github.com -s repo,workflow · Not authorized → Ensure you have admin",
+    "excerpt": "Need help? Common issues: \u00b7 Permission denied \u2192 Run: gh auth refresh -h github.com -s repo,workflow \u00b7 Not authorized \u2192 Ensure you have admin",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "668ae9d1be2b1948": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Need help? Common issues: · Permission denied → Run: gh auth refresh -h github.com -s repo · Not authorized → Ensure you have admin access t",
+    "excerpt": "Need help? Common issues: \u00b7 Permission denied \u2192 Run: gh auth refresh -h github.com -s repo \u00b7 Not authorized \u2192 Ensure you have admin access t",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "00941a14e2862353": {
@@ -380,7 +380,7 @@
   "6d07c0fc47c88814": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Dynamic workflows can use a lot of tokens quickly by running many subagents in parallel — which counts against your usage limit. Stop a runn",
+    "excerpt": "Dynamic workflows can use a lot of tokens quickly by running many subagents in parallel \u2014 which counts against your usage limit. Stop a runn",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "525c946f97cddf81": {
@@ -392,7 +392,7 @@
   "65d16b04890a85c7": {
     "verdict": "internal",
     "shape": "array",
-    "excerpt": "## How User Bindings Interact with Defaults - User bindings are **additive** — they are appended after the default bindings - To **move** a ",
+    "excerpt": "## How User Bindings Interact with Defaults - User bindings are **additive** \u2014 they are appended after the default bindings - To **move** a ",
     "note": "captured per-FRAGMENT as of 2026-07-27 (the joined form only exists at runtime and can never be spliced); coverage is judged on the fragments"
   },
   "ed6d0c352843bfdf": {
@@ -404,7 +404,7 @@
   "e31d8f35ee3358f5": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Press enter again to restart this session fresh — it has no saved transcript (stopped before its first response; any conversation it was bac",
+    "excerpt": "Press enter again to restart this session fresh \u2014 it has no saved transcript (stopped before its first response; any conversation it was bac",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "41b1b98e0825ced8": {
@@ -416,13 +416,13 @@
   "7dda4425729a361b": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Prompt text submitted when the cron fires. Capped at 1000 chars; clipped values append an in-string \"… [+N chars]\" marker.",
+    "excerpt": "Prompt text submitted when the cron fires. Capped at 1000 chars; clipped values append an in-string \"\u2026 [+N chars]\" marker.",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "db1c38848a3809cb": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Ordered messagesToKeep UUIDs. Supersedes preserved_segment — readers look up each UUID directly and relink uuids[i] to uuids[i-1] (uuids[0] ",
+    "excerpt": "Ordered messagesToKeep UUIDs. Supersedes preserved_segment \u2014 readers look up each UUID directly and relink uuids[i] to uuids[i-1] (uuids[0] ",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "ecd9d62bb371c8d5": {
@@ -434,25 +434,25 @@
   "0a23219a958a660c": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "MCP tool result — the content array, structuredContent, and _meta from CallToolResult. Content passes through the same processing as model-t",
+    "excerpt": "MCP tool result \u2014 the content array, structuredContent, and _meta from CallToolResult. Content passes through the same processing as model-t",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "1cc646a273d690b4": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "telemetry.forward_to is configured but listen.public_url is not — clients will not be told to export OTLP. Set listen.public_url so /managed",
+    "excerpt": "telemetry.forward_to is configured but listen.public_url is not \u2014 clients will not be told to export OTLP. Set listen.public_url so /managed",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "4b578bb7ffc5200b": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "listen.public_url is required when listen.host is not a loopback address — set it to the externally-visible origin (e.g. https://claude-gate",
+    "excerpt": "listen.public_url is required when listen.host is not a loopback address \u2014 set it to the externally-visible origin (e.g. https://claude-gate",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "957a10ccc68e4f6a": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "oidc.allowed_groups is set but Google ID tokens do not carry a groups claim — every login will be denied. Set oidc.google_groups to fetch Wo",
+    "excerpt": "oidc.allowed_groups is set but Google ID tokens do not carry a groups claim \u2014 every login will be denied. Set oidc.google_groups to fetch Wo",
     "note": "not model-facing: config schema / CLI help / operator error / TUI dialog"
   },
   "2df6127dd307e666": {
@@ -488,96 +488,96 @@
   "5e380c50edb1fc5d": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "extract must contain at least one capturing group — group 1 is the credential value to mask (e.g. \"token:\\s*(\\S+)\")."
+    "excerpt": "extract must contain at least one capturing group \u2014 group 1 is the credential value to mask (e.g. \"token:\\s*(\\S+)\")."
   },
   "592fae635b7df596": {
     "verdict": "ui",
     "shape": "concat",
-    "excerpt": "Install was cancelled at the elevation prompt, but the sandbox user is already provisioned — the sandbox TLS inspection CA is now set up and"
+    "excerpt": "Install was cancelled at the elevation prompt, but the sandbox user is already provisioned \u2014 the sandbox TLS inspection CA is now set up and"
   },
   "90a5646c0be8f5c2": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "[sandbox] implicit AWS credential pair: 'AWS_SESSION_TOKEN' is declared but not forwarded as a whole-value mask entry (deny-overridden or us",
-    "why": "emitted via E(msg,{level:\"warn\"}) — sandbox credential-forwarding warning log, never enters model context"
+    "why": "emitted via E(msg,{level:\"warn\"}) \u2014 sandbox credential-forwarding warning log, never enters model context"
   },
   "74ec95c97983d102": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "What to do when `extract` matches nothing in the file — or, with `decode`, when no candidate survives verification. `warn` (default) emits a",
-    "why": "zod .describe() on settings.json sandbox.credentials file-mask onExtractNoMatch — config schema, validated locally"
+    "excerpt": "What to do when `extract` matches nothing in the file \u2014 or, with `decode`, when no candidate survives verification. `warn` (default) emits a",
+    "why": "zod .describe() on settings.json sandbox.credentials file-mask onExtractNoMatch \u2014 config schema, validated locally"
   },
   "19537b7e6c62e12d": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "If true, verbatim occurrences of each captured credential value outside the regex-matched spans are also replaced with the corresponding sen",
-    "why": "zod .describe() on settings.json sandbox.credentials maskDuplicates — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials maskDuplicates \u2014 config schema"
   },
   "1e508385e87fc15b": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Optional regex for structured masking when mode is `mask`. Applied globally to the value; capture group 1 of each match is a credential valu",
-    "why": "zod .describe() on settings.json sandbox.credentials extract — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials extract \u2014 config schema"
   },
   "e0ce8a9339b88394": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "What to do when `extract` matches nothing in the value. `warn` (default) emits a stderr warning and lets the variable pass through unmasked ",
-    "why": "zod .describe() on settings.json sandbox.credentials onExtractNoMatch (env-var form) — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials onExtractNoMatch (env-var form) \u2014 config schema"
   },
   "dcea83b722369dc1": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Optional encoded-credential format for `mask` mode. `jwt`: the variable's whole value is verified to actually be a JWT and replaced with a s",
-    "why": "zod .describe() on settings.json sandbox.credentials decode — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials decode \u2014 config schema"
   },
   "bb0d274ab31ebcc7": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Explicit groupings of masked env vars into AWS credential pairs for SigV4 re-signing, for non-standard variable names. The conventional AWS_",
-    "why": "zod .describe() on settings.json sandbox.credentials awsPairs — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials awsPairs \u2014 config schema"
   },
   "37fc5034991f6517": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Policies for AWS SigV4 request shapes the proxy cannot re-sign (streaming, presigned, sigv4a) when they reference a masked credential pair: ",
-    "why": "zod .describe() on settings.json sandbox.credentials sigv4 — config schema"
+    "why": "zod .describe() on settings.json sandbox.credentials sigv4 \u2014 config schema"
   },
   "d56ed46fcca3f604": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "GitHub repository in owner/repo format. ONLY in the managed-settings policy lists (strictKnownMarketplaces / blockedMarketplaces) the owner-",
-    "why": "zod .describe() on the plugin marketplace github source schema — config schema"
+    "why": "zod .describe() on the plugin marketplace github source schema \u2014 config schema"
   },
   "bcf5ea56640a222d": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "HTTPS URL of a zip archive containing the plugin. The plugin root (the directory holding .claude-plugin/) may be at the top of the archive o",
-    "why": "zod .describe() on the plugin archive source url — config schema"
+    "why": "zod .describe() on the plugin archive source url \u2014 config schema"
   },
   "8aea3cccc6b2cb3a": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "SHA-256 digest of the archive. When set, every download is verified against it and the install is refused on mismatch. It also serves as the",
-    "why": "zod .describe() on the plugin archive sha256 — config schema"
+    "why": "zod .describe() on the plugin archive sha256 \u2014 config schema"
   },
   "fb6b086aa5341567": {
     "verdict": "internal",
     "shape": "concat",
-    "excerpt": "Plugin distributed as a zip archive fetched over HTTPS — for hosting on any static file server or artifact repository (S3, GitLab, nginx) wi",
-    "why": "zod .describe() on the plugin archive source object — config schema"
+    "excerpt": "Plugin distributed as a zip archive fetched over HTTPS \u2014 for hosting on any static file server or artifact repository (S3, GitLab, nginx) wi",
+    "why": "zod .describe() on the plugin archive source object \u2014 config schema"
   },
   "42bacea260a1981a": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Placeholder for source types this Claude Code version does not recognize, or a known type whose fields failed validation (then `error` holds",
-    "why": "zod .describe() on the plugin unsupported-source placeholder — config schema"
+    "why": "zod .describe() on the plugin unsupported-source placeholder \u2014 config schema"
   },
   "9f1cb33088965789": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Enterprise strict list of allowed marketplace sources. When set in managed settings, ONLY these sources can be added as marketplaces. Entrie",
-    "why": "zod .describe() on managed-settings strictKnownMarketplaces — config schema"
+    "why": "zod .describe() on managed-settings strictKnownMarketplaces \u2014 config schema"
   },
   "475fd77e044371ba": {
     "verdict": "internal",
@@ -594,12 +594,96 @@
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "copy (default): the printed directory is copied into the plugin cache and content-hashed, so it may be deleted afterwards. link: the cache e",
-    "why": "zod .describe() on the command plugin-source mode field — marketplace config schema"
+    "why": "zod .describe() on the command plugin-source mode field \u2014 marketplace config schema"
   },
   "540975f50eb13997": {
     "verdict": "internal",
     "shape": "concat",
     "excerpt": "Controls the `command` plugin source, whose plugin directory is produced by running a marketplace-declared command on this machine. true: co",
-    "why": "zod .describe() on managed-settings disableCommandPluginSources — config schema"
+    "why": "zod .describe() on managed-settings disableCommandPluginSources \u2014 config schema"
+  },
+  "56fc062365a981c8": {
+    "verdict": "model",
+    "shape": "concat",
+    "excerpt": "capabilities declares both `artifact` and `self` \u2014 two spellings of the same capability \u2014 with different configs. Declare it once (canonical",
+    "why": "thrown as Jc (ArtifactInputError, reasonCode files_invalid/dual_spelling_ambiguous) from the Artifact publish path; its sibling \"Fix or drop the declaration...\" is already catalogued as tool-result-artifact-unknown-capability"
+  },
+  "5976789570b34e99": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "Each category enables a class of raw content in OpenTelemetry events sent to your collector (this data never reaches Anthropic): - `userProm",
+    "why": "longDescription of the --otel-content-capture CLI option (jg.longDescription); terminal help text only"
+  },
+  "f6180d6e1323a393": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "Per-user bootstrap configuration response. Nested subset of managed-config-v2 (bootstrapable keys only). Structural reference for editor aut",
+    "why": "assigned to o.description on the BootstrapConfig JSON-schema definition; editor autocomplete metadata"
+  },
+  "dd68719453a536c0": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "Custom ripgrep configuration for bundled ripgrep support. Only honored from user, managed/policy, or CLI (--settings) settings \u2014 project set",
+    "why": ".describe() on the ripgrep settings-schema field"
+  },
+  "32d3c952d49a8836": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "Alias for extraKnownMarketplaces: this key is read exactly as if it were spelled extraKnownMarketplaces. Do not set both in one file \u2014 if bo",
+    "why": ".describe() on the additionalMarketplaces settings-schema alias; validation/JSON-schema metadata"
+  },
+  "6e0d56c1375ddc41": {
+    "verdict": "internal",
+    "shape": "concat",
+    "excerpt": "Alias for strictKnownMarketplaces (managed settings only): this key is read exactly as if it were spelled strictKnownMarketplaces. Do not se",
+    "why": ".describe() on the allowedMarketplaces settings-schema alias"
+  },
+  "ed7ca71a8b29fa24": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "- **`browser`** (default) \u2014 opens the system browser for an authorization-code (PKCE) sign-in on the loopback redirect URI. - **`broker`** \u2014",
+    "why": "longDescription of the MCP server authFlow subfield (short sibling GsolzpV43N)"
+  },
+  "7426f24722e0903b": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "Absolute path to an executable that prints a single JSON object of environment variables to stdout, e.g. `{\"API_KEY\": \"\u2026\"}`. The app runs it",
+    "why": "longDescription of the MCP server env-helper-script field (short sibling eFAGgyRLfK)"
+  },
+  "6e48beb751fda38a": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "For inference providers without native web search (Bedrock, custom gateways). On Anthropic API and Vertex, the model\u2019s built-in web search i",
+    "why": "longDescription of the built-in web-search MCP server config (short sibling bCPLE+aN2t)"
+  },
+  "4a92ed3cdb468b85": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "- **`browser`** (default) \u2014 opens the system browser for an authorization-code (PKCE) sign-in on a loopback redirect URI. See the **IdP setu",
+    "why": "longDescription of inferenceGatewayOidcAuthFlow (short sibling InfGatewayOidcAuthFlowShort)"
+  },
+  "6c1981aa84cf72b9": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "- **`browser`** (default) \u2014 opens the system browser for an authorization-code (PKCE) sign-in on a loopback redirect URI. See the **IdP setu",
+    "why": "longDescription of inferenceVertexWorkforceAuthFlow (short sibling InfVertexWifAuthFlowShort)"
+  },
+  "7a96bcd10aefa350": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "- **`device-code`** (default) \u2014 shows a code to enter at microsoft.com/devicelogin. The app registration must have **Allow public client flo",
+    "why": "longDescription of inferenceFoundryAuthFlow (short sibling id qCKLNhSFcP); settings-form help text"
+  },
+  "78de69ecd46a456d": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "Covers the version-shipped announcement UI baked into each release: the **What's new** button that appears on its own after an update, and t",
+    "why": "longDescription of disableFeatureDiscovery (short sibling DisableFeatureDiscoveryHint)"
+  },
+  "6b1f434ce7b78d7d": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "Read-only folders can be viewed and searched but not modified in Cowork (by Claude or via the UI). Bash runs in Cowork's isolated workspace ",
+    "why": "longDescription of the Cowork read-only folders field (short sibling XMxsnX6Se9)"
   }
 }

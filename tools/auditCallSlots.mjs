@@ -20,31 +20,71 @@
 // an author adds a spurious call. A real interactive turn remains the belt+braces
 // for the rarer call-the-bare-and-skip-the-real-fn swap.)
 //
-// Usage:
-//   node tools/auditCallSlots.mjs [ourJson] [overridesDir]
+// Usage: node tools/auditCallSlots.mjs [prompts.json] [set-dir ...]
 // Exits non-zero if any override calls more distinct vars than its prompt has
-// callable slots.
+// callable slots, and exits 2 if it could not run at all.
 import fs from 'node:fs';
 
-const VER = process.env.CC_VER || '2.1.186';
-const ourJson = process.argv[2] || `data/prompts/prompts-${VER}.json`;
-const overridesDir =
-  process.argv[3] ||
-  `${process.env.HOME}/.tweakcc/lobotomized-claude-code/system-prompts-opus-4-8`;
+//
+// Every maintained set is scanned, not one. This bug class is exactly the
+// parallel-set-drift case: `--apply` rebases only the ACTIVE set, so a stale
+// `${VAR()}` on a slot that became a bare value survives in the OTHER sets for
+// dozens of releases while the active set stays green. Defaulting to a single
+// hardcoded set name made the gate blind to the failures it exists to find.
+const newestJson = () => {
+  try {
+    return fs
+      .readdirSync('data/prompts')
+      .filter(f => /^prompts-\d+\.\d+\.\d+\.json$/.test(f))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+      .pop();
+  } catch {
+    return null;
+  }
+};
+const VER = process.env.CC_VER || null;
+const ourJson =
+  process.argv[2] ||
+  (VER ? `data/prompts/prompts-${VER}.json` : `data/prompts/${newestJson()}`);
+const LCC = `${process.env.HOME}/.tweakcc/lobotomized-claude-code`;
+const cliDirs = process.argv.slice(3).map(a => a.replace(/^--set=/, ''));
+const overrideDirs = cliDirs.length
+  ? cliDirs
+  : (() => {
+      try {
+        return fs
+          .readdirSync(LCC)
+          .filter(d => d.startsWith('system-prompts-'))
+          .filter(d => fs.statSync(`${LCC}/${d}`).isDirectory())
+          .map(d => `${LCC}/${d}`);
+      } catch {
+        return [];
+      }
+    })();
 
 let OURS;
 try {
   OURS = JSON.parse(fs.readFileSync(ourJson, 'utf8'));
 } catch (e) {
+  // A gate that could not run is a gate that did not run: exit non-zero so it
+  // can never be read as "found nothing".
   console.error(`call-slot audit: SKIPPED — prompts JSON '${ourJson}' missing/unreadable (${e.message}).`);
-  process.exit(0);
+  process.exit(2);
 }
-let files;
-try {
-  files = fs.readdirSync(overridesDir).filter(f => f.endsWith('.md'));
-} catch (e) {
-  console.error(`call-slot audit: SKIPPED — overrides dir '${overridesDir}' missing (${e.message}).`);
-  process.exit(0);
+if (overrideDirs.length === 0) {
+  console.error(`call-slot audit: SKIPPED — no override sets found under ${LCC}.`);
+  process.exit(2);
+}
+const files = [];
+for (const dir of overrideDirs) {
+  let entries;
+  try {
+    entries = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
+  } catch (e) {
+    console.error(`call-slot audit: SKIPPED — overrides dir '${dir}' missing (${e.message}).`);
+    process.exit(2);
+  }
+  for (const f of entries) files.push({ dir, f });
 }
 
 // id -> max number of direct-call interpolations across that id's JSON entries
@@ -61,12 +101,12 @@ for (const p of OURS.prompts) {
 }
 
 const findings = [];
-for (const f of files) {
+for (const { dir, f } of files) {
   const id = f.slice(0, -3);
   // Only named-prompt overrides map to the JSON. inline-* / system-reminder-* use
   // other surfaces (positional remap / registry) and aren't in prompts JSON.
   if (!(id in callsById)) continue;
-  const raw = fs.readFileSync(`${overridesDir}/${f}`, 'utf8');
+  const raw = fs.readFileSync(`${dir}/${f}`, 'utf8');
   const body = (raw.match(/^<!--[\s\S]*?-->\n?([\s\S]*)$/) || [, raw])[1];
   // Distinct vars the override CALLS: ${VAR( ... — VAR immediately followed by `(`
   // (a direct call on VAR). Member-calls ${VAR.method( are not a direct call on
@@ -78,7 +118,7 @@ for (const f of files) {
   const available = callsById[id];
   if (calledVars.size > available) {
     findings.push(
-      `${id}: override calls ${calledVars.size} distinct var(s) [${[...calledVars].join(', ')}] but pristine has only ${available} direct-call slot(s) — a ${'${VAR()}'} on a bare value slot throws at runtime`
+      `${dir.split('/').pop()}/${id}: override calls ${calledVars.size} distinct var(s) [${[...calledVars].join(', ')}] but pristine has only ${available} direct-call slot(s) — a ${'${VAR()}'} on a bare value slot throws at runtime`
     );
   }
 }
@@ -91,4 +131,6 @@ if (findings.length) {
   );
   process.exit(1);
 }
-console.log('call-slot audit: 0 (no override calls a non-callable slot)');
+console.log(
+  `call-slot audit: 0 (no override calls a non-callable slot; ${files.length} file(s) across ${overrideDirs.length} set(s))`
+);

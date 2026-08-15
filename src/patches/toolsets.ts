@@ -597,8 +597,16 @@ export const writeComputeToolsFilter = (
   //     return REF.current={tpc:...,result:RESULT},RESULT},[deps])
   // Both exits are wrapped; the cache keeps storing the UNFILTERED list so a
   // /toolset switch takes effect without invalidating the memo.
+  //
+  // CC 2.1.232 kept this shape but grew two optional pieces, both tolerated
+  // below so older builds still match: the assemble call's options object
+  // gained `,activeAgents:STATE.agentDefinitions.activeAgents`, and the agent
+  // arm wraps MERGED in a nested call —
+  // `RESOLVE(AGENT,INNER(AGENT,MERGED,STATE.toolPermissionContext,{...}),!1,!0)`
+  // instead of `RESOLVE(AGENT,MERGED,!1,!0)`. The cache-guard and cache-object
+  // windows also widened to 600 because the guard gained an `ad` key.
   const memoPattern =
-    /([,;{])([$\w]+)=([$\w]+\.useCallback\()\(\)=>\{let ([$\w]+)=([$\w]+)\.getState\(\),([$\w]+)=([$\w]+)\.current;if\(\6!==null&&[\s\S]{0,400}?\)return \6\.result;[\s\S]{0,300}?let ([$\w]+)=[$\w]+\(\4\.toolPermissionContext,\4\.mcp\.tools(?:,\{skillTools:\4\.skillTools\})?\),([$\w]+)=[$\w]+\([$\w]+,\8,\4\.toolPermissionContext\.mode\),([$\w]+)=[$\w]+\([$\w]+\?[$\w]+\([$\w]+,\9,!1,!0\)\.resolvedTools:\9,\4\.toolPermissionContext\);return \7\.current=\{[\s\S]{0,400}?result:\10\},\10\},\[/;
+    /([,;{])([$\w]+)=([$\w]+\.useCallback\()\(\)=>\{let ([$\w]+)=([$\w]+)\.getState\(\),([$\w]+)=([$\w]+)\.current;if\(\6!==null&&[\s\S]{0,600}?\)return \6\.result;[\s\S]{0,300}?let ([$\w]+)=[$\w]+\(\4\.toolPermissionContext,\4\.mcp\.tools(?:,\{skillTools:\4\.skillTools(?:,activeAgents:[^{}]*)?\})?\),([$\w]+)=[$\w]+\([$\w]+,\8,\4\.toolPermissionContext\.mode\),([$\w]+)=[$\w]+\([$\w]+\?[$\w]+\([$\w]+,(?:\9|[$\w]+\([$\w]+,\9,[^()]*\)),!1,!0\)\.resolvedTools:\9,\4\.toolPermissionContext\);return \7\.current=\{[\s\S]{0,600}?result:\10\},\10\},\[/;
 
   const memoMatch = oldFile.match(memoPattern);
   if (memoMatch && memoMatch.index !== undefined) {
@@ -1071,7 +1079,10 @@ const compilerComponentHeader = () =>
   /function ([$\w]+)\([$\w]+\)\{(?:let currentToolset=[^;]*;)?let ([$\w]+)=[$\w]+\.c\(\d+\),/g;
 
 // `Que(dne)," on",EWf` — the permission-mode label in the status line.
-const modeLabelPattern = () => /([$\w]+\([$\w]+\))," on"/g;
+// CC 2.1.232 split the label into its own component and precomputes the mode
+// name into a local first (`isc=Zme(B4t)` … `[osc,isc," on",T4h]`), so the
+// call form is optional and a bare identifier must match too.
+const modeLabelPattern = () => /([$\w]+(?:\([$\w]+\))?)," on"/g;
 
 const SHORTCUTS_LABEL = '"? for shortcuts"';
 
@@ -1086,6 +1097,53 @@ const SHORTCUTS_LABEL = '"? for shortcuts"';
  * (CC 2.1.219 moved the shell-mode hint ~1.1 MB away into its own component,
  * which is exactly the trap the old bashBorder anchor fell into).
  */
+/**
+ * Every compiler-memoized component whose body contains `needle`.
+ *
+ * CC 2.1.232 broke the single-component assumption above: the permission-mode
+ * label moved into its own `function JKi(props){...[osc,isc," on",T4h]...}` while
+ * "? for shortcuts" stayed in the parent status line. Each component that reads
+ * `currentToolset` therefore needs its own declaration, so step 5 injects into
+ * all of them instead of one.
+ */
+export const findComponentsContaining = (
+  file: string,
+  needle: string
+): StatusLineComponent[] => {
+  const headers = Array.from(file.matchAll(compilerComponentHeader()));
+  const out: StatusLineComponent[] = [];
+  for (const site of matchAllIndexes(file, needle)) {
+    let header: RegExpMatchArray | null = null;
+    for (const h of headers) {
+      if (h.index !== undefined && h.index < site) header = h;
+      else break;
+    }
+    if (!header || header.index === undefined) continue;
+    const braceIndex = header.index + header[0].indexOf('){') + 1;
+    const bodyEnd = matchDelimiter(file, braceIndex);
+    if (bodyEnd === null || site > bodyEnd) continue;
+    if (out.some(c => c.braceIndex === braceIndex)) continue;
+    out.push({
+      name: header[1],
+      cacheVar: header[2],
+      braceIndex,
+      bodyStart: braceIndex + 1,
+      bodyEnd,
+    });
+  }
+  return out;
+};
+
+const matchAllIndexes = (file: string, needle: string): number[] => {
+  const out: number[] = [];
+  let at = file.indexOf(needle);
+  while (at !== -1) {
+    out.push(at);
+    at = file.indexOf(needle, at + needle.length);
+  }
+  return out;
+};
+
 export const findStatusLineComponent = (
   file: string
 ): StatusLineComponent | null => {
@@ -1267,27 +1325,6 @@ export const insertShiftTabAppStateVar = (
   oldFile: string,
   defaultToolset: string | null
 ): string | null => {
-  // Method 1 (CC >=2.1.204): declare it at the top of the React-compiler status
-  // line component, which is the same body steps 6/7 read it from.
-  const comp = findStatusLineComponent(oldFile);
-  let insertionPoint: number | null = comp ? comp.bodyStart : null;
-
-  if (comp && oldFile.startsWith('let currentToolset=', comp.bodyStart)) {
-    return oldFile;
-  }
-
-  // Method 2 (CC <2.1.204): the statusline component was found by walking back
-  // from the bash/shell mode hint, which used to live in the same component.
-  if (insertionPoint === null) {
-    insertionPoint = findShiftTabAppStateVarInsertionPoint(oldFile);
-  }
-  if (insertionPoint === null) {
-    console.error(
-      'patch: toolsets: insertShiftTabAppStateVar: failed to find insertion point'
-    );
-    return null;
-  }
-
   const stateInfo = getAppStateSelectorAndUseState(oldFile);
   if (!stateInfo) {
     console.error(
@@ -1301,6 +1338,48 @@ export const insertShiftTabAppStateVar = (
     ? JSON.stringify(defaultToolset)
     : 'undefined';
   const codeToInsert = `let currentToolset=${appStateUseSelectorFn}(state => state.toolset) ?? ${fallback};`;
+
+  // Method 1 (CC >=2.1.204): declare it at the top of every React-compiler
+  // component steps 6/7 rewrite a label in. Up to CC 2.1.231 that was a single
+  // component owning both labels; 2.1.232 split the mode label out, so injecting
+  // into just one of them leaves the other reading an undeclared binding —
+  // a ReferenceError at render, not a failed match.
+  const comp = findStatusLineComponent(oldFile);
+  const targets = [
+    ...(comp ? [comp] : []),
+    ...findComponentsContaining(oldFile, SHORTCUTS_LABEL),
+  ];
+  const seen = new Set<number>();
+  const points = targets
+    .filter(c =>
+      seen.has(c.braceIndex) ? false : (seen.add(c.braceIndex), true)
+    )
+    .filter(c => !oldFile.startsWith('let currentToolset=', c.bodyStart))
+    .map(c => c.bodyStart);
+
+  if (targets.length > 0) {
+    // Every target already carries the declaration — idempotent re-run.
+    if (points.length === 0) return oldFile;
+    const splices: Splice[] = points.map(at => ({
+      start: at,
+      end: at,
+      text: codeToInsert,
+    }));
+    const newFile = applySplices(oldFile, splices);
+    const first = Math.min(...points);
+    showDiff(oldFile, newFile, codeToInsert, first, first);
+    return newFile;
+  }
+
+  // Method 2 (CC <2.1.204): the statusline component was found by walking back
+  // from the bash/shell mode hint, which used to live in the same component.
+  const insertionPoint = findShiftTabAppStateVarInsertionPoint(oldFile);
+  if (insertionPoint === null) {
+    console.error(
+      'patch: toolsets: insertShiftTabAppStateVar: failed to find insertion point'
+    );
+    return null;
+  }
 
   const newFile =
     oldFile.slice(0, insertionPoint) +
@@ -1321,7 +1400,19 @@ export const appendToolsetToModeDisplay = (oldFile: string): string | null => {
   //   Que(dne)," on",EWf]},"mode"):null,bm[35]=dne,...
   // Rewrite every mode label inside that component so the toolset shows in
   // both the normal and the dense layout variant.
-  const comp = findStatusLineComponent(oldFile);
+  // Target the component that actually owns the label. Since CC 2.1.232 that is
+  // not necessarily the one owning "? for shortcuts", and once step 5 has run
+  // several components carry the `currentToolset` declaration, so selecting by
+  // declaration alone picks the wrong body and finds no label to rewrite.
+  // Prefer a label-owning component that already carries the declaration (after
+  // step 5 several components do, and only this one owns the label), but fall
+  // back to the first label owner so the step still works called on its own.
+  if (oldFile.includes('currentToolset?` on [')) return oldFile;
+  const labelComps = findComponentsContaining(oldFile, '," on"');
+  const comp =
+    labelComps.find(c =>
+      oldFile.startsWith('let currentToolset=', c.bodyStart)
+    ) ?? labelComps[0];
   if (comp) {
     const body = oldFile.slice(comp.bodyStart, comp.bodyEnd);
     if (body.includes('currentToolset?` on [')) return oldFile;
@@ -1391,10 +1482,30 @@ export const appendToolsetToShortcutsDisplay = (
   // inside the status line component may reference `currentToolset`; rewriting
   // the last occurrence in the file — as Method 2 does — lands ~2.9 MB away in
   // a component where that binding does not exist (ReferenceError at render).
-  const comp = findStatusLineComponent(oldFile);
-  if (comp) {
-    const body = oldFile.slice(comp.bodyStart, comp.bodyEnd);
-    if (body.includes('currentToolset?`? for shortcuts [')) return oldFile;
+  // The hint may live in a different component from the mode label (CC 2.1.232
+  // split them), so target every component that owns it — step 5 declared
+  // `currentToolset` in each of those same components.
+  const hintComps = findComponentsContaining(oldFile, SHORTCUTS_LABEL);
+  const declared = hintComps.filter(c =>
+    oldFile.startsWith('let currentToolset=', c.bodyStart)
+  );
+  // After step 5 only the components that will read `currentToolset` carry the
+  // declaration, so restrict to those. Called standalone (no step 5 yet) nothing
+  // carries it, and every hint owner is a candidate.
+  const statusLine = hintComps.length ? findStatusLineComponent(oldFile) : null;
+  const comps = declared.length
+    ? declared
+    : statusLine
+      ? hintComps.filter(c => c.braceIndex === statusLine.braceIndex)
+      : [];
+  let result = oldFile;
+  let rewroteAny = false;
+  for (const comp of comps) {
+    const body = result.slice(comp.bodyStart, comp.bodyEnd);
+    if (body.includes('currentToolset?`? for shortcuts [')) {
+      rewroteAny = true;
+      continue;
+    }
     const sites: { start: number; end: number; text: string }[] = [];
     let at = body.indexOf(SHORTCUTS_LABEL);
     while (at !== -1) {
@@ -1406,9 +1517,16 @@ export const appendToolsetToShortcutsDisplay = (
       });
       at = body.indexOf(SHORTCUTS_LABEL, at + SHORTCUTS_LABEL.length);
     }
-    const patched = rewriteStatusLineLabels(oldFile, comp, sites);
-    if (patched) return patched;
+    const patched = rewriteStatusLineLabels(result, comp, sites);
+    if (patched) {
+      // Each rewrite shifts later offsets, so re-derive the remaining
+      // components against the updated file rather than reusing stale ranges.
+      result = patched;
+      rewroteAny = true;
+      return appendToolsetToShortcutsDisplay(result);
+    }
   }
+  if (rewroteAny) return result;
 
   // Method 2 (CC <2.1.204): a single statusline component owned the hint.
   const shortcutsPattern = /"\? for shortcuts"/g;

@@ -11,6 +11,26 @@ import { LocationResult, showDiff } from './index';
  * - "tengu_amber_wren" (CC >=2.1.83)
  */
 const getFileReadLimitLocation = (oldFile: string): LocationResult | null => {
+  // Method 1 (CC >=2.1.232): the limit moved OUT of the gate's neighbourhood
+  // into its own `var psb=25000` further down, so every anchor-then-value and
+  // value-then-anchor window misses it. Bind through the identifier the gate
+  // actually falls back to instead of through proximity:
+  //   ...t.maxTokens>0?t.maxTokens:psb) ... var psb=25000,
+  const fallbackIdent = oldFile.match(
+    /tengu_amber_wren[\s\S]{0,800}?\bmaxTokens\s*:\s*([$\w]+)\s*\)/
+  );
+  if (fallbackIdent) {
+    const ident = fallbackIdent[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // The declaration is `var psb=25000,fZs=128,` — the char before the
+    // identifier is a space after `var`, not punctuation, so exclude only
+    // identifier characters rather than listing separators.
+    const decl = oldFile.match(new RegExp(`[^$\\w]${ident}=25000[,;}]`));
+    if (decl && decl.index !== undefined) {
+      const startIndex = decl.index + decl[0].indexOf('25000');
+      return { startIndex, endIndex: startIndex + 5 };
+    }
+  }
+
   const newConfigRegion = oldFile.match(
     /CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS[\s\S]{0,1200}tengu_amber_wren/
   );
