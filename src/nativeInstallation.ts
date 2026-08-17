@@ -234,7 +234,12 @@ function parseStringPointer(buffer: Buffer, offset: number): StringPointer {
  * True if the module represents the native claude entrypoint.
  */
 export function isClaudeModule(moduleName: string): boolean {
-  const normalizedName = moduleName.replaceAll('\\', '/');
+  // Normalize backslashes and strip file:// protocol prefixes so both absolute
+  // paths and URL-style module names match the same patterns. Some CC versions
+  // append extra characters to .js (e.g., .jst).
+  const normalizedName = moduleName
+    .replaceAll('\\', '/')
+    .replace(/^file:\/\/.*?\//, '/');
 
   // Check for common Claude Code CLI entrypoint patterns
   return (
@@ -1593,19 +1598,67 @@ function repackELFSection(
       return end > max ? end : max;
     }, 0n);
 
-    const placement = computeBunSectionPlacement({
-      rwVirtualAddress: BigInt(rwSegment.virtualAddress),
-      rwVirtualSize: BigInt(rwSegment.virtualSize),
-      rwFileOffset: BigInt(rwSegment.fileOffset),
-      rwFileSize: BigInt(rwSegment.fileSize),
-      topmostLoadEnd,
-      nextVirtualAddress: BigInt(elfBinary.nextVirtualAddress()),
-      newContentSize,
-      pageSize: BigInt(pageSize),
-    });
-    const { newVaddr, newFileOffset, extensionSize, compact } = placement;
+    // Anti-bloat: check if we can reuse the old .bun vaddr when no allocated
+    // section follows it. This prevents growing the file when patches don't
+    // actually need more space than the original.
+    const SHF_ALLOC = 0x2n;
+    const allocSectionAtOrAfterBun = elfBinary
+      .sections()
+      .some(
+        s =>
+          s.name !== '.bun' &&
+          (BigInt(s.flags) & SHF_ALLOC) !== 0n &&
+          BigInt(s.virtualAddress) >= oldBunSectionVaddr
+      );
+
+    let newVaddr: bigint;
+    let newFileOffset: bigint;
+    let extensionSize: bigint;
+    let isCompact: boolean;
+
+    if (allocSectionAtOrAfterBun) {
+      // Another allocated section sits at or after the old .bun vaddr — we must
+      // append after it to avoid clobbering live data. Use computeBunSectionPlacement
+      // for proper segment-aware placement.
+      const placement = computeBunSectionPlacement({
+        rwVirtualAddress: BigInt(rwSegment.virtualAddress),
+        rwVirtualSize: BigInt(rwSegment.virtualSize),
+        rwFileOffset: BigInt(rwSegment.fileOffset),
+        rwFileSize: BigInt(rwSegment.fileSize),
+        topmostLoadEnd,
+        nextVirtualAddress: BigInt(elfBinary.nextVirtualAddress()),
+        newContentSize,
+        pageSize: BigInt(pageSize),
+      });
+      ({
+        compact: isCompact,
+        newVaddr,
+        newFileOffset,
+        extensionSize,
+      } = placement);
+    } else {
+      // No allocated section occupies the old .bun slot, so we can safely reuse it
+      // in-place and avoid growing the file. This is the key anti-bloat optimization.
+      newVaddr = oldBunSectionVaddr;
+      const offsetInSegment = newVaddr - BigInt(rwSegment.virtualAddress);
+      newFileOffset = BigInt(rwSegment.fileOffset) + offsetInSegment;
+
+      // Calculate extension size: how much the file grows (should be 0 or negative if in-place)
+      const oldRwFileEnd =
+        BigInt(rwSegment.fileOffset) + BigInt(rwSegment.fileSize);
+      extensionSize =
+        newFileOffset +
+        alignBigInt(newContentSize, BigInt(pageSize)) -
+        oldRwFileEnd;
+      isCompact = true; // In-place reuse doesn't grow the file
+    }
+    const placementType = allocSectionAtOrAfterBun
+      ? isCompact
+        ? 'compact'
+        : 'fallback'
+      : 'in-place reuse (anti-bloat)';
     debug(
-      `repackELFSection: ${compact ? 'compact' : 'fallback'} placement ` +
+      `repackELFSection: ${placementType} placement ` +
         `(topmost LOAD ends at 0x${topmostLoadEnd.toString(16)})`
     );
 
