@@ -20,9 +20,12 @@
 // an author adds a spurious call. A real interactive turn remains the belt+braces
 // for the rarer call-the-bare-and-skip-the-real-fn swap.)
 //
+// Two checks run: the per-prompt call COUNT above, and a per-label SHAPE check
+// (see below) that resolves what each slot actually is and catches the opposite
+// direction too — an override reading a call slot as a bare value.
+//
 // Usage: node tools/auditCallSlots.mjs [prompts.json] [set-dir ...]
-// Exits non-zero if any override calls more distinct vars than its prompt has
-// callable slots, and exits 2 if it could not run at all.
+// Exits non-zero on any shape disagreement, and 2 if it could not run at all.
 import fs from 'node:fs';
 
 //
@@ -100,6 +103,31 @@ for (const p of OURS.prompts) {
   callsById[p.id] = Math.max(callsById[p.id] ?? 0, n);
 }
 
+// The count check above is one-directional: it catches ${VAR()} on a value slot
+// (a TypeError) but not ${VAR} on a CALL slot, which interpolates the FUNCTION
+// OBJECT into the prompt — wrong content, no crash, and invisible to apply,
+// four zeros and the smoke. 2.1.233 turned webfetch's
+// ${eZ_} into ${eZ_()} and three sets kept the bare form.
+//
+// So also resolve each label's slot SHAPE. Pieces already carry the `${` and `}`,
+// so identifiers[i] labels the slot between pieces[i] and pieces[i+1], and the
+// first char of pieces[i+1] gives the shape: `(` a direct call, `.` a member,
+// anything else a bare value. A label reused across slots collects every shape it
+// legitimately takes, and only a shape outside that set is a finding.
+const shapeOf = next => (next.startsWith('(') ? 'call' : next.startsWith('.') ? 'member' : 'value');
+const shapesById = {};
+for (const p of OURS.prompts) {
+  if (!p.id || !Array.isArray(p.pieces) || !Array.isArray(p.identifiers)) continue;
+  const map = p.identifierMap || {};
+  const byLabel = (shapesById[p.id] ??= {});
+  for (let i = 0; i < p.identifiers.length; i += 1) {
+    const label = map[String(p.identifiers[i])];
+    const next = p.pieces[i + 1];
+    if (!label || typeof next !== 'string') continue;
+    (byLabel[label] ??= new Set()).add(shapeOf(next));
+  }
+}
+
 const findings = [];
 for (const { dir, f } of files) {
   const id = f.slice(0, -3);
@@ -114,6 +142,22 @@ for (const { dir, f } of files) {
   const calledVars = new Set(
     [...body.matchAll(/(?<!\\)\$\{([A-Z][A-Z0-9_]+)\(/g)].map(m => m[1])
   );
+
+  // Shape check, both directions, per label.
+  const shapes = shapesById[id];
+  if (shapes) {
+    for (const m of body.matchAll(/(?<!\\)\$\{([A-Z][A-Z0-9_]+)([(.]?)/g)) {
+      const [, label, punct] = m;
+      const known = shapes[label];
+      if (!known) continue;
+      const used = punct === '(' ? 'call' : punct === '.' ? 'member' : 'value';
+      if (known.has(used)) continue;
+      findings.push(
+        `${dir.split('/').pop()}/${id}: override interpolates \${${label}${punct}} as a ${used}, but pristine only ever uses that slot as ${[...known].join('/')} — a call slot read as a value emits the function itself into the prompt`
+      );
+    }
+  }
+
   if (!calledVars.size) continue;
   const available = callsById[id];
   if (calledVars.size > available) {
@@ -124,13 +168,15 @@ for (const { dir, f } of files) {
 }
 
 if (findings.length) {
-  console.error(`CALL-SLOT BUGS: ${findings.length} (override calls a non-callable slot)`);
+  console.error(
+    `CALL-SLOT BUGS: ${findings.length} (an override's interpolation shape disagrees with the pristine slot)`
+  );
   for (const m of findings) console.error('  ' + m);
   console.error(
-    '\nFix: drop the spurious () so the override interpolates the value (e.g. ${VAR}), matching the pristine. The pristine renders a call as ${(...)} and a value as ${}. See reference_print_smoke_misses_interactive_prompt_bugs.'
+    '\nFix: match the pristine shape exactly. Pristine renders a call as ${(...)}, a member as ${.x}, a value as ${}. ${VAR()} on a value slot throws at runtime; ${VAR} on a call slot silently interpolates the function itself. See reference_print_smoke_misses_interactive_prompt_bugs.'
   );
   process.exit(1);
 }
 console.log(
-  `call-slot audit: 0 (no override calls a non-callable slot; ${files.length} file(s) across ${overrideDirs.length} set(s))`
+  `call-slot audit: 0 (every override interpolation matches its pristine slot shape; ${files.length} file(s) across ${overrideDirs.length} set(s))`
 );

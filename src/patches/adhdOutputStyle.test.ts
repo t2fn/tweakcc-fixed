@@ -35,45 +35,45 @@ describe('writeAdhdOutputStyle', () => {
     expect(out).toContain("user's standing preference");
   });
 
-  it('installs the extracted plain-output rules', () => {
+  it('installs the report-not-story rules', () => {
     const out = writeAdhdOutputStyle(FILE)!;
-    expect(out).toContain('Answer first');
-    expect(out).toContain('Keep a reply short by leaving things out');
-    expect(out).toContain('Plain does not mean more certain');
-    expect(out).toContain('reporting work that did not succeed');
-    expect(out).toContain('Instead of "load-bearing"');
+    expect(out).toContain('File a status report');
+    expect(out).toContain('so a reader can start anywhere');
+    expect(out).toContain('noun labels ending in a colon');
     expect(out).not.toContain('MUST land under 120 words');
   });
 
-  // Each of these earned its place in testing, and each has been dropped by a
-  // rewrite at least once. Assert them so a future edit has to be deliberate.
-  it('keeps the rules that measurably changed the output', () => {
+  // Each of these earned its place in the 2026-08-17 corpus review (two Opus 5
+  // reviewers over Claude vs Codex finals). Assert them so a future edit has to
+  // be deliberate.
+  it('keeps the rules the corpus review converged on', () => {
     const out = writeAdhdOutputStyle(FILE)!;
-    // Replacing description with the command or path was the largest single
-    // reduction on a "how do I fix this" task, 434 words down to 361.
-    expect(out).toContain('Show the thing rather than describing it');
-    // Targets the categories that padding actually fell into.
-    expect(out).toContain('Say each thing once');
-    expect(out).toContain('Do not defend a choice nobody questioned');
-    // Abstract fidelity wording did not hold; the named failures did.
-    expect(out).toContain('Keep both sides of a count');
+    // Bold as a value index, not applause; label-ranking, not asides.
+    expect(out).toContain('skimming only the bold yields the numbers');
+    expect(out).toContain('rather than an aside like "worth flagging"');
+    // Limits as facts, not confession; fidelity keepers.
+    expect(out).toContain('in the same voice as everything else');
+    expect(out).toContain('every count with both sides');
     expect(out).toContain('in the browser only');
-    expect(out).toContain('Do not add technical detail you were not given');
-    // Dropping this list let "genuinely" back in and pushed em dashes above
-    // the unpatched rate.
+    // Graceful-failure clauses: without these an obedient model collapses into
+    // fragments or deletes caveats along with the voice.
+    expect(out).toContain('Long is fine when the length is more facts');
+    expect(out).toContain('drop only the narration around them');
+    // Never-trimmed failure reports and the no-coined-images rule.
+    expect(out).toContain('each thing you could not check');
+    expect(out).toContain('coined images');
+    // Dropping the tic list let "genuinely" back in at 4 uses per 12 replies.
     expect(out).toContain('genuinely');
-    expect(out).toContain('Never use em dashes');
-    // A heading over every single line was caused by an earlier, unconditional
-    // version of the skimmability rule.
-    expect(out).toContain('never above a single line');
+    // Closers were 5 of 14 recent finals; the close is state, not an offer.
+    expect(out).toContain('name the options and stop');
   });
 
   it('installs the full rules in the alternate text-output prompt', () => {
     const textOutput =
       "End-of-turn summary: one or two sentences. What changed and what's next. Nothing else.";
     const out = writeAdhdOutputStyle(textOutput)!;
-    expect(out).toContain('Keep a reply short by leaving things out');
-    expect(out).toContain('Plain does not mean more certain');
+    expect(out).toContain('File a status report');
+    expect(out).toContain('Long is fine when the length is more facts');
   });
 
   it('inserts no backticks or backslashes that could break a JS literal', () => {

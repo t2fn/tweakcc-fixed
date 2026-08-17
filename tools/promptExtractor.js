@@ -157,6 +157,51 @@ const CURATED_IDENTIFIER_MAPS = {
 };
 
 const NEW_PROMPT_ASSIGNMENTS = [
+  // 2.1.233 — the OTHER branch of four conditionals whose first branch is a
+  // catalogued slot literal. Both branches share the phrase the slot-literal
+  // allowlist is keyed on, so both capture and both want the same name; the
+  // disambiguator then suffixes one `-2` and it inherits a description of its
+  // sibling. Name each branch for what it actually says instead. These are
+  // curated per-string decisions, so they belong here rather than in the
+  // allowlist, and they run before applySlotLiteralNames.
+  {
+    // `n = embedded ? `- Use \`find\` via ${Glob} …` : `- Use ${Glob} …``
+    matcher: t =>
+      t.startsWith('- Use ${') && t.includes('for broad file pattern matching'),
+    name: 'Agent Prompt: Explore — file pattern matching, dedicated tool',
+    id: 'agent-prompt-explore-glob-dedicated-tool-line',
+    description:
+      "The Explore agent's file-pattern-matching instruction in the variant that names a dedicated tool, rather than routing `find` through Bash.",
+  },
+  {
+    matcher: t =>
+      t.startsWith('- Use ${') &&
+      t.includes('for searching file contents with regex'),
+    name: 'Agent Prompt: Explore — content search, dedicated tool',
+    id: 'agent-prompt-explore-grep-dedicated-tool-line',
+    description:
+      "The Explore agent's content-search instruction in the variant that names a dedicated tool, rather than routing `grep` through Bash.",
+  },
+  {
+    // The no-suggestion branch of the unknown-command message.
+    matcher: t =>
+      t.startsWith('Unknown command: /') && !t.includes('Did you mean'),
+    name: 'System Prompt: Unknown slash command, no suggestion',
+    id: 'system-prompt-unknown-slash-command-no-suggestion',
+    description:
+      'The unknown-command message returned to the model when no near-match command name was found to suggest.',
+  },
+  {
+    // The Remote Control refusal without the consumed-token clause.
+    matcher: t =>
+      t.startsWith('/${') &&
+      t.includes("isn't available over Remote Control") &&
+      !t.includes('consumedToken'),
+    name: 'System Prompt: Slash command unavailable over Remote Control (bare)',
+    id: 'system-prompt-slash-command-unavailable-over-remote-control-bare',
+    description:
+      'The Remote Control refusal in the form that names only the command, without the consumed-token clause its sibling carries.',
+  },
   // 2.1.228 — the two genuine holes found by the content-coverage gate
   // (tools/checkPromptCoverage.mjs). Both are TOOL DESCRIPTIONS, so they reach
   // the model on every session that exposes the tool, and both are instances of
@@ -2738,6 +2783,111 @@ function loadClassificationCache() {
   }
   return _classificationCache;
 }
+// ////////////////////////////////////////////////////////////////////////////
+// Slot literals — prose that renders INTO a catalogued prompt's substitution
+// slot, so it reaches the model on the back of an id that is not its own.
+//
+// The classification cache above answers "is this string model-facing?" for
+// strings the extractor SEES as candidates. A slot literal is a candidate it
+// sees and drops on length: `system-reminder-team-coordination` builds two
+// slots off one flag, and the long branch (" Check the task list
+// periodically…") cleared the prose gate and got an id while the short one
+// ("\n- Task list: ") did not. Both render into the same reminder.
+//
+// `tools/checkSlotLiterals.mjs` finds them and records a per-hash verdict in
+// data/slot-literal-allowlist.json: `catalogue` (carries an instruction, so it
+// needs its own id) or `glue` (labels an interpolated value). A `catalogue`
+// verdict is a curated human decision about one specific string, exactly like
+// NEW_PROMPT_ASSIGNMENTS, so it outranks the cache — but not the hard
+// structural excludes.
+//
+// Keyed by sha256-first-16 of the whitespace-normalized text, which is that
+// tool's convention and deliberately NOT the classification cache's sha1-40 of
+// the raw body. Two files, two conventions; do not cross them.
+// ////////////////////////////////////////////////////////////////////////////
+const SLOT_LITERAL_PATH = path.join(
+  __dirname,
+  '..',
+  'data',
+  'slot-literal-allowlist.json'
+);
+let _slotLiterals = null;
+// Test seam: inject an allowlist object (pass null to restore file loading).
+function _setSlotLiteralsForTests(obj) {
+  _slotLiterals = obj === null ? null : buildSlotLiteralIndex(obj);
+}
+function buildSlotLiteralIndex(raw) {
+  const byHash = new Map();
+  for (const [h, v] of Object.entries(raw || {})) {
+    if (v && v.verdict === 'catalogue') byHash.set(h, v);
+  }
+  return byHash;
+}
+function loadSlotLiterals() {
+  if (_slotLiterals) return _slotLiterals;
+  let raw = {};
+  try {
+    raw = JSON.parse(fs.readFileSync(SLOT_LITERAL_PATH, 'utf-8'));
+  } catch {
+    raw = {};
+  }
+  _slotLiterals = buildSlotLiteralIndex(raw);
+  return _slotLiterals;
+}
+// Debug seam: `TWEAKCC_DUMP_CANDIDATES=<path>` writes one JSON line per string
+// node the extractor considers, as {start, end, kind, cacheBody}.
+//
+// It exists because the cache key for a TEMPLATE literal is not the text anyone
+// reading the binary would write down. `cacheBody` is `pieces.join('')` — the
+// source with the IDENTIFIER inside each `${…}` removed — so
+// `${Rt(s,"line")}` is keyed as `${Rt(,"line")}`. A verdict recorded against
+// the obvious form silently never binds: 125 of 128 rows from the 2.1.233
+// local-jsx audit missed for exactly this, and nothing reported an error,
+// because a cache miss just means "fall through to the static gates".
+// Dump the candidates and key against what the extractor actually hashes.
+const CANDIDATE_DUMP_PATH = process.env.TWEAKCC_DUMP_CANDIDATES || null;
+let _candidateDumpFd = null;
+function dumpCandidate(rec) {
+  if (!CANDIDATE_DUMP_PATH) return;
+  if (_candidateDumpFd === null)
+    _candidateDumpFd = fs.openSync(CANDIDATE_DUMP_PATH, 'w');
+  fs.writeSync(_candidateDumpFd, JSON.stringify(rec) + '\n');
+}
+
+const slotNorm = s => s.replace(/\s+/g, ' ').trim();
+const slotHash = s =>
+  crypto.createHash('sha256').update(slotNorm(s)).digest('hex').slice(0, 16);
+function slotLiteralVerdict(text) {
+  if (typeof text !== 'string' || !text) return null;
+  return loadSlotLiterals().get(slotHash(text)) || null;
+}
+// A captured prompt's `pieces` are split at the IDENTIFIER inside each
+// substitution, so a piece keeps the opening of the next expression on its tail
+// and the remainder of the previous one on its head. The tail is NOT always a
+// bare `${`: `${[...gZt()].join(", ")}` splits after `${[...`, which is why
+// stripping only a literal `${` left the agent-namer prompt anonymous. Cut from
+// the last unclosed `${` and drop any leading expression remainder, then try
+// every combination. Anything finer would need the AST back.
+function slotLiteralCandidates(piece) {
+  const out = new Set([piece]);
+  const noOpen = piece.replace(/\$\{[^}]*$/, '');
+  out.add(noOpen);
+  for (const s of [piece, noOpen]) {
+    const noClose = s.replace(/^[^}]*\}/, '');
+    if (noClose !== s) out.add(noClose);
+  }
+  // `pieces` hold RAW source, so a backtick or `$` inside a template literal is
+  // stored escaped. The allowlist hashes the COOKED text, which is what the
+  // model receives. Without undoing those two escapes the REPL shQuote guidance
+  // and the Agent fork semantics stay anonymous — both open on a `\`` .
+  for (const s of [...out]) {
+    const cooked = s.replace(/\\`/g, '`').replace(/\\\$/g, '$');
+    if (cooked !== s) out.add(cooked);
+  }
+  out.delete('');
+  return [...out];
+}
+
 // The CC version of the binary being extracted, set by the CLI entry before
 // extraction. Needed because cache keys exist in two forms for any string
 // containing the version: extraction-time lookups hash RAW content ("2.1.206")
@@ -2920,8 +3070,15 @@ function recordGateCandidate(body, lead) {
 //      structural excludes still win over a 'model' verdict.
 //   3. No verdict -> the static gates decide; a prose-gate-only rejection
 //      that looks like English prose becomes a classification candidate.
-function shouldCapture(text, cacheBody, lead, minLength) {
+function shouldCapture(text, cacheBody, lead, minLength, opts = {}) {
   if (leadShowsDropContext(lead)) return false;
+  // A slot-literal `catalogue` verdict says a human read this exact string at
+  // its emission site and found it renders into a catalogued prompt's slot.
+  // That is a stronger claim than any heuristic below can make, and the same
+  // kind of curated decision NEW_PROMPT_ASSIGNMENTS encodes, so it wins over
+  // the cache and the prose gate alike. Hard structural excludes still win over
+  // it, exactly as they do over a cached 'model'.
+  if (opts.slotLiteral) return !isHardExcluded(text);
   const cls = classifyByCache(cacheBody);
   if (cls) {
     if (isHardExcluded(text)) return false;
@@ -3644,7 +3801,9 @@ function extractStrings(filepath, minLength = 500) {
       // window exists for the nudge-catalog compound rules, whose sibling
       // keys sit beyond a long preceding string value.
       const lead = code.slice(Math.max(0, node.start - 600), node.start);
-      if (shouldCapture(node.value, node.value, lead, minLength)) {
+      const slotLiteral = Boolean(slotLiteralVerdict(node.value));
+      dumpCandidate({ start: node.start, end: node.end, kind: 'string', cacheBody: node.value });
+      if (shouldCapture(node.value, node.value, lead, minLength, { slotLiteral })) {
         stringData.push({
           name: '',
           id: '',
@@ -3654,6 +3813,7 @@ function extractStrings(filepath, minLength = 500) {
           identifierMap: {},
           start: node.start,
           end: node.end,
+          slotLiteral,
         });
       }
     }
@@ -3809,7 +3969,15 @@ function extractStrings(filepath, minLength = 500) {
       // over cache names (applyCacheNames). Gate checks (raw source) use
       // fullContent — the same text pre-2.7.0 validated — while the cache
       // key and prose heuristic use the decoded tbody.
-      if (shouldCapture(fullContent, tbody, lead, minLength)) {
+      // A template's slot literal is one of its QUASIS, not the whole raw
+      // source: `\n- Task list: ${e.taskListPath}` was hashed as its leading
+      // quasi. Any quasi carrying a `catalogue` verdict captures the template,
+      // because the template is the unit that can be overridden.
+      const slotLiteral = (node.quasis || []).some(q =>
+        Boolean(slotLiteralVerdict(q.value.cooked ?? q.value.raw))
+      );
+      dumpCandidate({ start: node.start, end: node.end, kind: 'template', cacheBody: tbody });
+      if (shouldCapture(fullContent, tbody, lead, minLength, { slotLiteral })) {
         stringData.push({
           name: '',
           id: '',
@@ -3819,6 +3987,7 @@ function extractStrings(filepath, minLength = 500) {
           identifierMap: labelEncodedMap,
           start: node.start,
           end: node.end,
+          slotLiteral,
         });
       }
     }
@@ -3862,13 +4031,29 @@ function extractStrings(filepath, minLength = 500) {
       code[item.start - 2] === '$' &&
       code[item.start - 1] === '{';
 
+    // A slot literal is nested inside its parent prompt by definition — that is
+    // what makes it a slot literal — and it rarely starts immediately after
+    // `${`, because the usual shape is a ternary branch: `${cond?`…`:""}`. So
+    // the exemption above misses it and the subset rule eats it. Five of them
+    // (the REPL shQuote guidance, the Agent fork semantics, two SendMessage
+    // sections and the MCP redirect instructions) were captured and then
+    // silently dropped here.
+    //
+    // Exempting by SHAPE was tried before and rejected: relaxing the rule for
+    // nested ternary branches in general added 19 duplicate captures. This
+    // exemption is driven by the curated `catalogue` verdict instead, so it can
+    // only ever admit strings a human has already ruled on one at a time.
     const isSubset =
       !isInterpolated &&
+      !item.slotLiteral &&
       seenRanges.some(
         range => item.start >= range.start && item.end <= range.end
       );
 
     if (!isSubset) {
+      // The flag is internal bookkeeping for the rule above; it must not reach
+      // the JSON, where it would show up as a spurious field on 40-odd prompts.
+      delete item.slotLiteral;
       filteredData.push(item);
       seenRanges.push({ start: item.start, end: item.end });
     }
@@ -3920,6 +4105,47 @@ function applyCacheNames(prompts) {
       p.name = cls.name || '';
       p.description = cls.desc || '';
     }
+  }
+  return prompts;
+}
+
+// Name the slot literals the bypass just rescued. Runs after applyCacheNames
+// for the same reason that one runs after the fuzzy carryover: an established
+// id always beats a new name. Matching is by HASH, never by substring — a slot
+// literal is often a short fragment, and a containment test would happily name
+// an unrelated prompt that merely quotes it.
+function applySlotLiteralNames(prompts) {
+  const lits = loadSlotLiterals();
+  if (!lits.size) return prompts;
+  const named = [];
+  for (const p of prompts) {
+    if (p.id) continue;
+    const pieces = (p.pieces || []).filter(x => typeof x === 'string');
+    // Whole body first (a StringLiteral capture IS the literal), then each
+    // piece, longest first, so a template naming from its most specific quasi.
+    const probes = [pieces.join('')].concat(
+      pieces.slice().sort((a, b) => b.length - a.length)
+    );
+    let hit = null;
+    for (const probe of probes) {
+      for (const cand of slotLiteralCandidates(probe)) {
+        const v = lits.get(slotHash(cand));
+        if (v && v.id) {
+          hit = v;
+          break;
+        }
+      }
+      if (hit) break;
+    }
+    if (hit) {
+      p.id = hit.id;
+      p.name = hit.name || '';
+      p.description = hit.desc || '';
+      named.push(hit.id);
+    }
+  }
+  if (named.length) {
+    console.log(`Named ${named.length} slot-literal capture(s) from the allowlist`);
   }
   return prompts;
 }
@@ -4334,6 +4560,7 @@ if (require.main === module) {
     version
   );
   mergedResult.prompts = applyCacheNames(mergedResult.prompts);
+  mergedResult.prompts = applySlotLiteralNames(mergedResult.prompts);
   mergedResult.prompts = normalizeIdGroups(mergedResult.prompts);
   mergedResult.prompts = disambiguateIdCollisions(
     mergedResult.prompts,
@@ -4506,3 +4733,9 @@ module.exports.mergeWithExisting = mergeWithExisting;
 module.exports.templateKey = templateKey;
 module.exports.sameVarPattern = sameVarPattern;
 module.exports.IDENTICAL_SITE_FLOOR = IDENTICAL_SITE_FLOOR;
+// Test seam: the slot-literal bypass and its naming pass. Both read
+// data/slot-literal-allowlist.json, which is load-bearing for the ids it mints.
+module.exports._setSlotLiteralsForTests = _setSlotLiteralsForTests;
+module.exports.slotLiteralCandidates = slotLiteralCandidates;
+module.exports.slotLiteralVerdict = slotLiteralVerdict;
+module.exports.applySlotLiteralNames = applySlotLiteralNames;

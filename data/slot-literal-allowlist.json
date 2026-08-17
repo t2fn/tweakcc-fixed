@@ -1,0 +1,694 @@
+{
+  "b4c2ab68c83bdabf": {
+    "verdict": "glue",
+    "reason": "fallback label for an OS name",
+    "promptId": "tool-description-chrome-multiple-browsers-none-selected",
+    "label": "TOOL_DESCRIPTION_CHROME_MULTIPLE_BROWSERS_NONE_SELECTED_VAR_1",
+    "text": "unknown OS"
+  },
+  "aa98c6438bea8d18": {
+    "verdict": "glue",
+    "reason": "unit label around a line count",
+    "promptId": "system-reminder-memory-file-partially-loaded",
+    "label": "SYSTEM_REMINDER_MEMORY_FILE_PARTIALLY_LOADED_VAR_0",
+    "text": " lines (limit: "
+  },
+  "94d506ab712156da": {
+    "verdict": "glue",
+    "reason": "noun tail after an interpolated store name",
+    "promptId": "system-prompt-memory-store-index-empty-readonly",
+    "label": "SYSTEM_PROMPT_MEMORY_STORE_INDEX_EMPTY_READONLY_VAR_1",
+    "text": "` memory store"
+  },
+  "8d37f3ad1b204fe0": {
+    "verdict": "glue",
+    "reason": "joiner before an interpolated recipient",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_0",
+    "text": ", shared with "
+  },
+  "b2878320f9f43ebd": {
+    "verdict": "catalogue",
+    "reason": "half of the Glob instruction line; the conditional sibling of the non-embedded wording",
+    "promptId": "agent-prompt-explore",
+    "label": "GLOB_TOOL_NAME",
+    "text": "- Use `find` via ",
+    "id": "agent-prompt-explore-glob-via-bash-line",
+    "name": "Agent Prompt: Explore — file pattern matching tool line",
+    "desc": "The Explore agent's instruction for broad file pattern matching, in the variant that routes `find` through the Bash tool rather than naming a dedicated tool."
+  },
+  "596c2d07e84f9929": {
+    "verdict": "catalogue",
+    "reason": "tail of the same Glob instruction line",
+    "promptId": "agent-prompt-explore",
+    "label": "GLOB_TOOL_NAME",
+    "text": " for broad file pattern matching",
+    "id": "agent-prompt-explore-glob-via-bash-line",
+    "name": "Agent Prompt: Explore — file pattern matching tool line",
+    "desc": "The Explore agent's instruction for broad file pattern matching, in the variant that routes `find` through the Bash tool rather than naming a dedicated tool."
+  },
+  "515dca8b0cd49557": {
+    "verdict": "catalogue",
+    "reason": "half of the Grep instruction line",
+    "promptId": "agent-prompt-explore",
+    "label": "GREP_TOOL_NAME",
+    "text": "- Use `grep` via ",
+    "id": "agent-prompt-explore-grep-via-bash-line",
+    "name": "Agent Prompt: Explore — content search tool line",
+    "desc": "The Explore agent's instruction for searching file contents with regex, in the variant that routes `grep` through the Bash tool rather than naming a dedicated tool."
+  },
+  "b896f1d557c380b1": {
+    "verdict": "catalogue",
+    "reason": "tail of the same Grep instruction line",
+    "promptId": "agent-prompt-explore",
+    "label": "GREP_TOOL_NAME",
+    "text": " for searching file contents with regex",
+    "id": "agent-prompt-explore-grep-via-bash-line",
+    "name": "Agent Prompt: Explore — content search tool line",
+    "desc": "The Explore agent's instruction for searching file contents with regex, in the variant that routes `grep` through the Bash tool rather than naming a dedicated tool."
+  },
+  "3efd56ec20b042f7": {
+    "verdict": "glue",
+    "reason": "names a format token inside a sentence",
+    "promptId": "tool-description-edit-concise",
+    "label": "TOOL_DESCRIPTION_EDIT_CONCISE_VAR_1",
+    "text": "line number + a single tab or `:`"
+  },
+  "0d9cf991783c2510": {
+    "verdict": "glue",
+    "reason": "names a format token inside a sentence",
+    "promptId": "tool-description-edit",
+    "label": "MUST_READ_FIRST_FN",
+    "text": "line number + tab"
+  },
+  "dd523ae454df4333": {
+    "verdict": "catalogue",
+    "reason": "the POSIX recovery command for oversized notebook outputs",
+    "promptId": "tool-result-notebook-outputs-too-large",
+    "label": "TOOL_RESULT_NOTEBOOK_OUTPUTS_TOO_LARGE_VAR_0",
+    "text": " with: cat <notebook_path> | jq '.cells[",
+    "id": "tool-result-notebook-outputs-too-large-posix-recovery",
+    "name": "Tool Result: Notebook outputs too large — POSIX recovery command",
+    "desc": "The `cat | jq` command offered to the model for reading an individual notebook cell whose outputs were too large to return."
+  },
+  "2301a148f33d9796": {
+    "verdict": "catalogue",
+    "reason": "the PowerShell recovery command, same purpose",
+    "promptId": "tool-result-notebook-outputs-too-large",
+    "label": "TOOL_RESULT_NOTEBOOK_OUTPUTS_TOO_LARGE_VAR_0",
+    "text": " with: Get-Content <notebook_path> | ConvertFrom-Json | Select-Object -ExpandProperty cells | Select-Object -Index ",
+    "id": "tool-result-notebook-outputs-too-large-powershell-recovery",
+    "name": "Tool Result: Notebook outputs too large — PowerShell recovery command",
+    "desc": "The Get-Content/ConvertFrom-Json equivalent offered on Windows for reading an individual notebook cell whose outputs were too large to return."
+  },
+  "a23dab90d19b2d53": {
+    "verdict": "catalogue",
+    "reason": "tail of the PowerShell recovery command",
+    "promptId": "tool-result-notebook-outputs-too-large",
+    "label": "TOOL_RESULT_NOTEBOOK_OUTPUTS_TOO_LARGE_VAR_0",
+    "text": " | Select-Object -ExpandProperty outputs",
+    "id": "tool-result-notebook-outputs-too-large-powershell-recovery",
+    "name": "Tool Result: Notebook outputs too large — PowerShell recovery command",
+    "desc": "The Get-Content/ConvertFrom-Json equivalent offered on Windows for reading an individual notebook cell whose outputs were too large to return."
+  },
+  "a04d545c969c6aba": {
+    "verdict": "catalogue",
+    "reason": "states the provenance and persistence of an attached file — changes how the model weighs it",
+    "promptId": "system-reminder-nested-memory-contents",
+    "label": "ATTACHMENT_OBJECT",
+    "text": " (user's auto-memory, persists across conversations)",
+    "id": "system-reminder-nested-memory-attachment-automemory-label",
+    "name": "System Reminder: Attachment is the user's auto-memory",
+    "desc": "The provenance label marking an attached file as the auto-memory that persists across conversations, which is how the model knows to treat it as standing context."
+  },
+  "adac6e27ca102f2e": {
+    "verdict": "catalogue",
+    "reason": "states that the attachment is org policy",
+    "promptId": "system-reminder-nested-memory-contents",
+    "label": "ATTACHMENT_OBJECT",
+    "text": " (organization-managed policy instructions)",
+    "id": "system-reminder-nested-memory-attachment-managed-policy-label",
+    "name": "System Reminder: Attachment is organization-managed policy",
+    "desc": "The provenance label marking an attached instruction file as organization-managed policy rather than user preference."
+  },
+  "bd7c26f5fc392011": {
+    "verdict": "catalogue",
+    "reason": "states that the attachment is the private global instructions",
+    "promptId": "system-reminder-nested-memory-contents",
+    "label": "ATTACHMENT_OBJECT",
+    "text": " (user's private global instructions for all projects)",
+    "id": "system-reminder-nested-memory-attachment-global-instructions-label",
+    "name": "System Reminder: Attachment is the user's private global instructions",
+    "desc": "The provenance label marking an attached file as the user's private global instructions for all projects."
+  },
+  "c9e17418c95048df": {
+    "verdict": "glue",
+    "reason": "command list inside a surrounding constraint",
+    "promptId": "system-reminder-memory-extraction-tool-constraints",
+    "label": "READ_ONLY_SHELL_COMMANDS",
+    "text": "ls/find/cat/stat/wc/head/tail and similar"
+  },
+  "2d79daf56db8084b": {
+    "verdict": "glue",
+    "reason": "command list inside a surrounding constraint",
+    "promptId": "system-reminder-memory-extraction-tool-constraints",
+    "label": "READ_ONLY_SHELL_COMMANDS",
+    "text": "Get-ChildItem/Get-Content/Select-Object -First/-Last and similar"
+  },
+  "176218ef1e7cfd77": {
+    "verdict": "glue",
+    "reason": "fragment of an enumerated noun list",
+    "promptId": "agent-prompt-automemory-apply-memory-types",
+    "label": "AGENT_PROMPT_AUTOMEMORY_APPLY_MEMORY_TYPES_VAR_0",
+    "text": "scope guidance, "
+  },
+  "a39c7c1ef5fb7163": {
+    "verdict": "catalogue",
+    "reason": "a constraint on the name to generate",
+    "promptId": "system-prompt-agent-namer",
+    "label": "PROMPT_VAR_2",
+    "text": "\n\nAvoid these (already taken): ",
+    "id": "system-prompt-agent-namer-avoid-taken-names",
+    "name": "System Prompt: Agent namer — names already taken",
+    "desc": "The constraint listing names already in use, which the generated agent name must avoid."
+  },
+  "5bc599160d671fb4": {
+    "verdict": "glue",
+    "reason": "names a tool inside a surrounding sentence",
+    "promptId": "tool-description-task-when-not-to-use",
+    "label": "TOOL_DESCRIPTION_TASK_WHEN_NOT_TO_USE_VAR_1",
+    "text": "`grep` via the Bash tool"
+  },
+  "72690eb1d6cfcef8": {
+    "verdict": "glue",
+    "reason": "parenthetical tail after a count",
+    "promptId": "data-auto-mode-recon-transcripts-scanned-summary",
+    "label": "DATA_AUTO_MODE_RECON_TRANSCRIPTS_SCANNED_SUMMARY_VAR_1",
+    "text": " skipped as oversized)"
+  },
+  "7c2bf1f26f17d186": {
+    "verdict": "catalogue",
+    "reason": "the unknown-command message the model receives; sentence split by the interpolated name",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": "Unknown command: /",
+    "id": "system-prompt-unknown-slash-command-with-suggestion",
+    "name": "System Prompt: Unknown slash command, with a suggestion",
+    "desc": "The unknown-command message returned to the model, carrying the nearest matching command name as a suggestion."
+  },
+  "1aa647fa84c62a93": {
+    "verdict": "catalogue",
+    "reason": "the did-you-mean half of the same message",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": ". Did you mean /",
+    "id": "system-prompt-unknown-slash-command-with-suggestion",
+    "name": "System Prompt: Unknown slash command, with a suggestion",
+    "desc": "The unknown-command message returned to the model, carrying the nearest matching command name as a suggestion."
+  },
+  "33ce28e37edcbd39": {
+    "verdict": "catalogue",
+    "reason": "tells the model the command needs an interactive terminal",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": " opens an interactive panel and isn't available in this environment. Run it from the Claude Code terminal instead.",
+    "id": "system-prompt-slash-command-needs-interactive-terminal",
+    "name": "System Prompt: Slash command needs an interactive terminal",
+    "desc": "Tells the model the command opens an interactive panel that this environment cannot show, and that it must be run from the Claude Code terminal."
+  },
+  "a9d0334b7644e4ec": {
+    "verdict": "catalogue",
+    "reason": "states the command is unavailable in this session",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": " isn't available in this session.",
+    "id": "system-prompt-slash-command-unavailable-in-session",
+    "name": "System Prompt: Slash command unavailable in this session",
+    "desc": "Tells the model the named command is not available in the current session."
+  },
+  "e2e0038b61336511": {
+    "verdict": "catalogue",
+    "reason": "states the skill is disabled and names the settings fix",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": "\" is disabled via skillOverrides. Remove the override from your settings to run it.",
+    "id": "system-prompt-skill-disabled-via-skill-overrides",
+    "name": "System Prompt: Skill disabled via skillOverrides",
+    "desc": "Tells the model a skill was disabled by a skillOverrides setting and names removing that override as the fix."
+  },
+  "7daf3642552ce1fc": {
+    "verdict": "glue",
+    "reason": "empty-output placeholder",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": "(no content)"
+  },
+  "72622d960a40cea1": {
+    "verdict": "catalogue",
+    "reason": "a seeded instruction the model is asked to carry out",
+    "promptId": "tool-description-statusline-setup-prompt-result",
+    "label": "TOOL_DESCRIPTION_STATUSLINE_SETUP_PROMPT_RESULT_VAR_1",
+    "text": "Configure my statusLine from my shell PS1 configuration",
+    "id": "tool-description-statusline-setup-ps1-example-request",
+    "name": "Tool Description: Statusline setup — PS1 example request",
+    "desc": "The example request the statusline-setup agent is shown, asking it to build a statusLine from the shell PS1 configuration."
+  },
+  "089fa9bee30659a5": {
+    "verdict": "catalogue",
+    "reason": "states the queue is empty — a fact the model reports on",
+    "promptId": "system-reminder-queued-notifications-delivery",
+    "label": "FORMATTED_NOTIFICATIONS",
+    "text": "\n\n0 notifications remain queued.",
+    "id": "system-reminder-queued-notifications-none-remaining",
+    "name": "System Reminder: No notifications remain queued",
+    "desc": "The line telling the model the notification queue is now empty after a delivery."
+  },
+  "8544e45eb284220c": {
+    "verdict": "glue",
+    "reason": "empty-data placeholder",
+    "promptId": "system-prompt-insights-at-a-glance-summary",
+    "label": "AGGREGATED_USAGE_DATA",
+    "text": "None captured"
+  },
+  "e59aa84003767139": {
+    "verdict": "catalogue",
+    "reason": "a parameter constraint the model must satisfy",
+    "promptId": "tool-description-input-constraint-oneof-anyof",
+    "label": "TOOL_DESCRIPTION_INPUT_CONSTRAINT_ONEOF_ANYOF_VAR_0",
+    "text": "Provide parameters for exactly one of",
+    "id": "tool-description-input-constraint-exactly-one-of",
+    "name": "Tool Description: Provide parameters for exactly one of",
+    "desc": "The generated constraint line for a oneOf schema, telling the model to fill exactly one of the listed parameter groups."
+  },
+  "6c13ebdecc48834b": {
+    "verdict": "catalogue",
+    "reason": "the at-least-one variant of the same constraint",
+    "promptId": "tool-description-input-constraint-oneof-anyof",
+    "label": "TOOL_DESCRIPTION_INPUT_CONSTRAINT_ONEOF_ANYOF_VAR_0",
+    "text": "Provide parameters for at least one of",
+    "id": "tool-description-input-constraint-at-least-one-of",
+    "name": "Tool Description: Provide parameters for at least one of",
+    "desc": "The generated constraint line for an anyOf schema, telling the model to fill at least one of the listed parameter groups."
+  },
+  "eb5aeedde3e86de4": {
+    "verdict": "catalogue",
+    "reason": "instructs the model to Read the truncated remainder",
+    "promptId": "tool-result-mcp-task-output-saved-hint",
+    "label": "TOOL_RESULT_MCP_TASK_OUTPUT_SAVED_HINT_VAR_2",
+    "text": "use Read to retrieve the portion truncated above",
+    "id": "tool-result-mcp-task-output-read-truncated-remainder",
+    "name": "Tool Result: MCP task output — read the truncated remainder",
+    "desc": "Tells the model to use Read on the saved output file to retrieve the portion truncated out of the tool result."
+  },
+  "58addaa376302c5b": {
+    "verdict": "glue",
+    "reason": "command list inside a surrounding bullet",
+    "promptId": "tool-description-bash-prefer-dedicated-tools",
+    "label": "READ_ONLY_SEARCHING_BASH_COMMANDS",
+    "text": "`cat`, `head`, `tail`, `sed`, `awk`, or `echo`"
+  },
+  "ddf775a66cb0b972": {
+    "verdict": "glue",
+    "reason": "command list inside a surrounding bullet",
+    "promptId": "tool-description-bash-prefer-dedicated-tools",
+    "label": "READ_ONLY_SEARCHING_BASH_COMMANDS",
+    "text": "`find`, `grep`, `cat`, `head`, `tail`, `sed`, `awk`, or `echo`"
+  },
+  "9ed00b32484245e8": {
+    "verdict": "glue",
+    "reason": "formatting marker for an unanswered option",
+    "promptId": "tool-result-askuserquestion-answered-read-carefully",
+    "label": "TOOL_RESULT_ASKUSERQUESTION_ANSWERED_READ_CAREFULLY_VAR_0",
+    "text": "\"=(no option selected)"
+  },
+  "0c81ec2cec38a6a4": {
+    "verdict": "glue",
+    "reason": "field label before interpolated preview text",
+    "promptId": "tool-result-askuserquestion-answered-read-carefully",
+    "label": "TOOL_RESULT_ASKUSERQUESTION_ANSWERED_READ_CAREFULLY_VAR_0",
+    "text": "selected preview:\n"
+  },
+  "0e460b4ace260ef2": {
+    "verdict": "glue",
+    "reason": "field label before an interpolated path",
+    "promptId": "tool-result-workflow-launched-background",
+    "label": "TOOL_RESULT_WORKFLOW_LAUNCHED_BACKGROUND_VAR_2",
+    "text": "\nTranscript dir: "
+  },
+  "b9ecc616ef8ced2c": {
+    "verdict": "glue",
+    "reason": "field label before an interpolated store list",
+    "promptId": "tool-result-memory-store-read-only",
+    "label": "TOOL_RESULT_MEMORY_STORE_READ_ONLY_VAR_1",
+    "text": " Writable stores: "
+  },
+  "938740c522e6b397": {
+    "verdict": "catalogue",
+    "reason": "adds the teammate-assignment consequence to what the tool does",
+    "promptId": "tool-description-taskcreate",
+    "label": "CONDTIONAL_TEAMMATES_NOTE",
+    "text": " and potentially assigned to teammates",
+    "id": "tool-description-taskcreate-teammate-assignment-note",
+    "name": "Tool Description: TaskCreate — tasks may be assigned to teammates",
+    "desc": "The clause extending what TaskCreate does when task tools are shared with teammates: the task may also be picked up and assigned to one of them."
+  },
+  "03df275183cc74d7": {
+    "verdict": "catalogue",
+    "reason": "documents the id field and the tools that consume it",
+    "promptId": "tool-description-task-list",
+    "label": "TOOL_DESCRIPTION_TASK_LIST_VAR_1",
+    "text": "- **id**: Task identifier (use with TaskGet, TaskUpdate)",
+    "id": "tool-description-task-list-id-field",
+    "name": "Tool Description: TaskList — the id field",
+    "desc": "Documents the id field returned by TaskList and the tools that consume it, TaskGet and TaskUpdate."
+  },
+  "a98b87459e8bf8f8": {
+    "verdict": "catalogue",
+    "reason": "states where the schedule was persisted",
+    "promptId": "tool-result-cron-scheduled-oneshot",
+    "label": "TOOL_RESULT_CRON_SCHEDULED_ONESHOT_VAR_1",
+    "text": "Persisted to .claude/scheduled_tasks.json",
+    "id": "tool-result-cron-scheduled-persisted-location",
+    "name": "Tool Result: Scheduled task persisted",
+    "desc": "Tells the model where a one-shot scheduled task was persisted, so it can reason about the schedule surviving the session."
+  },
+  "2bb7b4f54198e61f": {
+    "verdict": "catalogue",
+    "reason": "explains what next_cursor continues with",
+    "promptId": "tool-result-routine-run-log-event-too-large",
+    "label": "TOOL_RESULT_ROUTINE_RUN_LOG_EVENT_TOO_LARGE_VAR_1",
+    "text": " — next_cursor continues with events older than this page",
+    "id": "tool-result-routine-run-log-next-cursor-note",
+    "name": "Tool Result: Routine run log — what next_cursor continues with",
+    "desc": "Explains that the returned next_cursor continues with events older than the current page, which is what makes paging through a run log correct."
+  },
+  "764d98916132de14": {
+    "verdict": "catalogue",
+    "reason": "names why the peer could not be verified",
+    "promptId": "tool-result-send-message-unverified-peer-approval",
+    "label": "TOOL_RESULT_SEND_MESSAGE_UNVERIFIED_PEER_APPROVAL_VAR_1",
+    "text": "the cloud session list could not be fetched",
+    "id": "tool-result-send-message-cloud-list-unfetchable-reason",
+    "name": "Tool Result: SendMessage — cloud session list could not be fetched",
+    "desc": "The reason clause explaining why a peer could not be verified before sending: the cloud session list was unreachable."
+  },
+  "1477827d48e13d8c": {
+    "verdict": "catalogue",
+    "reason": "the other reason the peer could not be verified",
+    "promptId": "tool-result-send-message-unverified-peer-approval",
+    "label": "TOOL_RESULT_SEND_MESSAGE_UNVERIFIED_PEER_APPROVAL_VAR_1",
+    "text": "the account session list could not be checked",
+    "id": "tool-result-send-message-account-list-unchecked-reason",
+    "name": "Tool Result: SendMessage — account session list could not be checked",
+    "desc": "The reason clause explaining why a peer could not be verified before sending: the account session list could not be checked."
+  },
+  "79f023b6989d7562": {
+    "verdict": "glue",
+    "reason": "joiner before interpolated suggestions",
+    "promptId": "tool-result-send-message-no-agent-reachable",
+    "label": "TOOL_RESULT_SEND_MESSAGE_NO_AGENT_REACHABLE_VAR_1",
+    "text": " Did you mean: "
+  },
+  "b54092e3ab4b4d13": {
+    "verdict": "glue",
+    "reason": "alternative clause tail inside a sentence",
+    "promptId": "tool-result-send-message-send-failed",
+    "label": "TOOL_RESULT_SEND_MESSAGE_SEND_FAILED_VAR_2",
+    "text": " or been archived"
+  },
+  "20a69a3dd0499378": {
+    "verdict": "glue",
+    "reason": "joiner before an interpolated page title",
+    "promptId": "tool-result-artifact-publish-upload-consent-ask",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_UPLOAD_CONSENT_ASK_VAR_1",
+    "text": "to host as the page \""
+  },
+  "7a58d838584417d7": {
+    "verdict": "glue",
+    "reason": "the untitled variant of the same joiner",
+    "promptId": "tool-result-artifact-publish-upload-consent-ask",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_UPLOAD_CONSENT_ASK_VAR_1",
+    "text": "to host as a page"
+  },
+  "3708e8f3a0ae17b9": {
+    "verdict": "catalogue",
+    "reason": "states that share status is unconfirmed — affects the consent decision",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_0",
+    "text": "; its share status could not be confirmed",
+    "id": "tool-result-artifact-publish-share-status-unconfirmed",
+    "name": "Tool Result: Artifact publish — share status unconfirmed",
+    "desc": "Warns that the existing page's share status could not be confirmed, which is what makes the publish consent decision uncertain."
+  },
+  "a47c1a1ea37d39bc": {
+    "verdict": "catalogue",
+    "reason": "states the visibility consequence of publishing",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_0",
+    "text": " (viewers see updates immediately)",
+    "id": "tool-result-artifact-publish-viewers-see-updates",
+    "name": "Tool Result: Artifact publish — viewers see updates immediately",
+    "desc": "States the visibility consequence of publishing over a shared artifact: everyone it is shared with sees the change at once."
+  },
+  "c1ad34616bb89d8c": {
+    "verdict": "catalogue",
+    "reason": "states the pinned-version consequence",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_0",
+    "text": " (viewers see a pinned earlier version)",
+    "id": "tool-result-artifact-publish-viewers-see-pinned-version",
+    "name": "Tool Result: Artifact publish — viewers see a pinned earlier version",
+    "desc": "States that viewers are pinned to an earlier version, so a publish will not be what they see."
+  },
+  "9712cdcbb233ab7e": {
+    "verdict": "catalogue",
+    "reason": "states the private-until-shared consequence",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_0",
+    "text": ", private to you until you share it",
+    "id": "tool-result-artifact-publish-private-until-shared",
+    "name": "Tool Result: Artifact publish — private until shared",
+    "desc": "States that the artifact stays private to the user until they choose to share it."
+  },
+  "986590c740ba1d03": {
+    "verdict": "catalogue",
+    "reason": "states that an existing page will be replaced",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_1",
+    "text": ", replacing the existing page at ",
+    "id": "tool-result-artifact-publish-replacing-existing-page",
+    "name": "Tool Result: Artifact publish — replacing an existing page",
+    "desc": "Warns that the publish will replace the page already at the named address."
+  },
+  "99a8a97950e1f09b": {
+    "verdict": "catalogue",
+    "reason": "the unrecognized-address variant of the replace warning",
+    "promptId": "tool-result-artifact-publish-cowork-user-approval-required",
+    "label": "TOOL_RESULT_ARTIFACT_PUBLISH_COWORK_USER_APPROVAL_REQUIRED_VAR_1",
+    "text": ", replacing an existing page (unrecognized address)",
+    "id": "tool-result-artifact-publish-replacing-unrecognized-address",
+    "name": "Tool Result: Artifact publish — replacing a page at an unrecognized address",
+    "desc": "Warns that the publish will replace an existing page whose address the session does not recognize."
+  },
+  "fb156f422db7d575": {
+    "verdict": "glue",
+    "reason": "missing-value placeholder",
+    "promptId": "data-artifact-write-db-auto-classifier-input",
+    "label": "DATA_ARTIFACT_WRITE_DB_AUTO_CLASSIFIER_INPUT_VAR_5",
+    "text": "(no artifact url)"
+  },
+  "8cd886dfa2d568fe": {
+    "verdict": "glue",
+    "reason": "names two parameters inside a sentence",
+    "promptId": "tool-result-artifact-action-requires-url",
+    "label": null,
+    "text": "`url` and `schema`"
+  },
+  "0c4da63322a0dfa4": {
+    "verdict": "catalogue",
+    "reason": "directs the model to a workflow described earlier",
+    "promptId": "system-reminder-plan-mode-sparse-continuation",
+    "label": "SYSTEM_REMINDER_PLAN_MODE_SPARSE_CONTINUATION_VAR_2",
+    "text": "Follow the plan workflow described earlier.",
+    "id": "system-reminder-plan-mode-follow-plan-workflow",
+    "name": "System Reminder: Follow the plan workflow described earlier",
+    "desc": "The sparse plan-mode continuation, pointing the model back at the plan workflow already described rather than restating it."
+  },
+  "6315c1f948befd3f": {
+    "verdict": "catalogue",
+    "reason": "the terse variant of the same direction",
+    "promptId": "system-reminder-plan-mode-sparse-continuation",
+    "label": "SYSTEM_REMINDER_PLAN_MODE_SPARSE_CONTINUATION_VAR_2",
+    "text": "Follow 5-phase workflow.",
+    "id": "system-reminder-plan-mode-follow-five-phase-workflow",
+    "name": "System Reminder: Follow the 5-phase workflow",
+    "desc": "The terser sparse plan-mode continuation naming the 5-phase workflow."
+  },
+  "c0dabec62341035c": {
+    "verdict": "catalogue",
+    "reason": "the founding case: the task-list resource line, whose sibling branch IS catalogued as system-reminder-team-coordination-task-list-upkeep",
+    "promptId": "system-reminder-team-coordination",
+    "label": "TASK_LIST_RESOURCE_LINE",
+    "text": "\n- Task list: ",
+    "id": "system-reminder-team-coordination-task-list-resource-line",
+    "name": "System Reminder: Team coordination — task list resource line",
+    "desc": "The task-list path listed among the team resources, shown only when task tools are available. Its sibling branch is system-reminder-team-coordination-task-list-upkeep."
+  },
+  "320a955dacf1ae59": {
+    "verdict": "glue",
+    "reason": "names tools inside a surrounding sentence",
+    "promptId": "system-prompt-explore-usage",
+    "label": "SYSTEM_PROMPT_EXPLORE_USAGE_VAR_3",
+    "text": "`find` or `grep` via the "
+  },
+  "fb7d555f1d6fb59a": {
+    "verdict": "glue",
+    "reason": "field label before interpolated directories",
+    "promptId": "system-prompt-env-info-block",
+    "label": "SYSTEM_PROMPT_ENV_INFO_BLOCK_VAR_2",
+    "text": "Additional working directories: "
+  },
+  "aec38f181d44e1e6": {
+    "verdict": "catalogue",
+    "reason": "states the symlink consequence and the action it requires",
+    "promptId": "slash-command-plugin-validate-component-not-regular-file-tail",
+    "label": "SLASH_COMMAND_PLUGIN_VALIDATE_COMPONENT_NOT_REGULAR_FILE_TAIL_VAR_0",
+    "text": " does follow them, so validate the real paths separately.",
+    "id": "slash-command-plugin-validate-symlink-validate-real-paths",
+    "name": "Slash Command: Plugin validate — validate symlink targets separately",
+    "desc": "Tells the model that validation does follow symlinks here, so the real paths behind them have to be validated on their own."
+  },
+  "4e477c7fd52fc3b1": {
+    "verdict": "catalogue",
+    "reason": "states the command is unavailable over Remote Control",
+    "promptId": "system-prompt-local-command-stdout-framing-tag-5",
+    "label": "SYSTEM_PROMPT_LOCAL_COMMAND_STDOUT_FRAMING_TAG_5_VAR_0",
+    "text": " isn't available over Remote Control.",
+    "id": "system-prompt-slash-command-unavailable-over-remote-control",
+    "name": "System Prompt: Slash command unavailable over Remote Control",
+    "desc": "Tells the model the named command cannot run over a Remote Control connection."
+  },
+  "08af0abdeeb28cb4": {
+    "verdict": "catalogue",
+    "reason": "explains that a shell-profile token overrides the new one and must be removed",
+    "promptId": "data-login-success-env-token-warning",
+    "label": "DATA_LOGIN_SUCCESS_ENV_TOKEN_WARNING_VAR_0",
+    "text": "but if that variable is set in your shell profile or a Claude Code settings file, new `claude` sessions will keep using the old token until you remove it there.",
+    "id": "data-login-success-env-token-shell-profile-warning",
+    "name": "Data: Login success — a shell-profile token overrides the new one",
+    "desc": "Warns that a token set in a shell profile or a Claude Code settings file keeps being used by new sessions until it is removed there."
+  },
+  "4d0de5638fa42091": {
+    "verdict": "glue",
+    "reason": "joiner before an interpolated timestamp",
+    "promptId": "system-reminder-memory-project-switch-stale-context-caveat",
+    "label": "SYSTEM_REMINDER_MEMORY_PROJECT_SWITCH_STALE_CONTEXT_CAVEAT_VAR_1",
+    "text": " — most recently "
+  },
+  "af57492bf0b7692d": {
+    "verdict": "catalogue",
+    "reason": "specifies the output date format",
+    "promptId": "system-prompt-nl-datetime-parser-user-context",
+    "label": "SYSTEM_PROMPT_NL_DATETIME_PARSER_USER_CONTEXT_VAR_4",
+    "text": "YYYY-MM-DD (date only, no time)",
+    "id": "system-prompt-nl-datetime-parser-date-only-format",
+    "name": "System Prompt: Datetime parser — date-only output format",
+    "desc": "Specifies the YYYY-MM-DD output format for a parsed date carrying no time."
+  },
+  "72c3001c9c98f242": {
+    "verdict": "catalogue",
+    "reason": "specifies the full date-time output format",
+    "promptId": "system-prompt-nl-datetime-parser-user-context",
+    "label": "SYSTEM_PROMPT_NL_DATETIME_PARSER_USER_CONTEXT_VAR_4",
+    "text": " (full date-time with timezone)",
+    "id": "system-prompt-nl-datetime-parser-full-datetime-format",
+    "name": "System Prompt: Datetime parser — full date-time output format",
+    "desc": "Specifies the full date-time-with-timezone output format for a parsed datetime."
+  },
+  "b36585fb1a238c35": {
+    "verdict": "catalogue",
+    "reason": "enumerates which live-editor capabilities are on",
+    "promptId": "skill-artifact-template-live-editor-capabilities-note",
+    "label": "SKILL_ARTIFACT_TEMPLATE_LIVE_EDITOR_CAPABILITIES_NOTE_VAR_0",
+    "text": "editing, persistence, and commenting are",
+    "id": "skill-artifact-live-editor-capabilities-with-commenting",
+    "name": "Skill: Artifact — live editor capabilities including commenting",
+    "desc": "Enumerates the live-editor capabilities in the build that still ships the in-document commenting layer."
+  },
+  "f6f2c5ef838d2e56": {
+    "verdict": "catalogue",
+    "reason": "the commenting-removed variant of the same enumeration",
+    "promptId": "skill-artifact-template-live-editor-capabilities-note",
+    "label": "SKILL_ARTIFACT_TEMPLATE_LIVE_EDITOR_CAPABILITIES_NOTE_VAR_0",
+    "text": "editing and persistence are",
+    "id": "skill-artifact-live-editor-capabilities-without-commenting",
+    "name": "Skill: Artifact — live editor capabilities without commenting",
+    "desc": "Enumerates the live-editor capabilities in the build where the in-document commenting layer has been removed."
+  },
+  "6c227612f0396f1e": {
+    "verdict": "glue",
+    "reason": "noun phrase naming the task source",
+    "promptId": "skill-dynamic-pacing-loop-execution",
+    "label": "TASK_RUN_LABEL",
+    "text": "the loop.md tasks"
+  },
+  "2b251783e4803535": {
+    "verdict": "glue",
+    "reason": "singular subject of a surrounding sentence",
+    "promptId": "data-cross-session-delivery-notice-delivered",
+    "label": "DATA_CROSS_SESSION_DELIVERY_NOTICE_DELIVERED_VAR_0",
+    "text": "Your message to another session"
+  },
+  "4ce5d58abe2b2202": {
+    "verdict": "glue",
+    "reason": "plural variant of the same subject",
+    "promptId": "data-cross-session-delivery-notice-delivered",
+    "label": "DATA_CROSS_SESSION_DELIVERY_NOTICE_DELIVERED_VAR_0",
+    "text": " of your messages to another session"
+  },
+  "0316b46869918154": {
+    "verdict": "catalogue",
+    "reason": "states the exact return shape a permission callback must produce",
+    "promptId": "data-permission-prompt-tool-invalid-deny",
+    "label": "DATA_PERMISSION_PROMPT_TOOL_INVALID_DENY_VAR_0",
+    "text": "Expected {behavior: 'allow', updatedInput?: object} or {behavior: 'deny', message: string}.",
+    "id": "data-permission-callback-expected-return-shape",
+    "name": "Data: Permission callback — expected return shape",
+    "desc": "States the exact object a permission callback must return, which is what the model is told when it returns something else."
+  },
+  "43c4deec555b4c7e": {
+    "verdict": "glue",
+    "reason": "non-Error fallback filling the interpolated cause in \"Failed to branch conversation: ${a}\"",
+    "promptId": "slash-command-btw-branch-failed",
+    "label": "SLASH_COMMAND_BTW_BRANCH_FAILED_VAR_0",
+    "text": "Unknown error occurred"
+  },
+  "577e449237858c77": {
+    "verdict": "glue",
+    "reason": "fallback noun filling the interpolated terminal name",
+    "promptId": "slash-command-terminal-setup-cannot-run-from-terminal",
+    "label": "SLASH_COMMAND_TERMINAL_SETUP_CANNOT_RUN_FROM_TERMINAL_VAR_0",
+    "text": "your current terminal"
+  },
+  "1818654e91ec4567": {
+    "verdict": "not-a-slot",
+    "reason": "argument to iNl(...) at 18892020, not the value of the slot: the slot holds iNl's RETURN value. Identifier resolution walks the whole declarator init, so call arguments come along with it.",
+    "promptId": "slash-command-resume-session-not-found",
+    "label": "SLASH_COMMAND_RESUME_SESSION_NOT_FOUND_VAR_0",
+    "text": "claude attach <id>"
+  },
+  "bb3ff032daa10c47": {
+    "verdict": "not-a-slot",
+    "reason": "the second argument to the same iNl(...) call at 18892020; same resolution artifact",
+    "promptId": "slash-command-resume-session-not-found",
+    "label": "SLASH_COMMAND_RESUME_SESSION_NOT_FOUND_VAR_0",
+    "text": "Open the background session in this terminal."
+  },
+  "aee19dce4fb96371": {
+    "verdict": "not-a-slot",
+    "reason": "inside a process.stderr.write template at 18893483 — written to the terminal, never to the model, and not part of this prompt's slot",
+    "promptId": "slash-command-resume-session-not-found",
+    "label": "SLASH_COMMAND_RESUME_SESSION_NOT_FOUND_VAR_1",
+    "text": "it crashed repeatedly"
+  }
+}

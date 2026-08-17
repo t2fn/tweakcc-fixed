@@ -68,3 +68,52 @@ describe('writeOutputStyleTurnReminder', () => {
     expect(writeOutputStyleTurnReminder('var a=1;var b=2;')).toBeNull();
   });
 });
+
+describe('frontmatter turn-reminder threading', () => {
+  // The two stock rebuilds that drop the key, shapes from CC 2.1.233.
+  const LOADER =
+    '({filePath:o,frontmatter:i,content:s,source:a,baseDir:l})=>{try{qCt("output-style",i);let u=tY.basename(o).replace(/\\.md$/,""),d=(i.name!=null?String(i.name):void 0)||u,p=Nce(i.description,u)??mKe(s,`x`),f=Nwe(i["keep-coding-instructions"]);return{name:d,description:p,prompt:s.trim(),source:a,baseDir:l,keepCodingInstructions:f}}catch(c){return null}}';
+  const MERGE =
+    'o[u.name]={name:u.name,description:u.description,prompt:u.prompt,source:u.source,keepCodingInstructions:u.keepCodingInstructions,forceForPlugin:u.forceForPlugin}';
+  const FULL = `var a=1;${RENDERER},critical_system_reminder:(e)=>0;${LOADER};${MERGE};var b=2;`;
+
+  it('threads the key through the custom-style loader return', () => {
+    const out = writeOutputStyleTurnReminder(FULL)!;
+    expect(out).toContain(
+      'keepCodingInstructions:f,turnReminder:typeof i["turn-reminder"]==="string"?i["turn-reminder"]:typeof i.turnReminder==="string"?i.turnReminder:typeof i.turnreminder==="string"?i.turnreminder:void 0}'
+    );
+  });
+
+  it('threads the key through the style-table merge', () => {
+    const out = writeOutputStyleTurnReminder(FULL)!;
+    expect(out).toContain(
+      'forceForPlugin:u.forceForPlugin,turnReminder:u.turnReminder}'
+    );
+  });
+
+  it('threads on the renderer-already-patched path too', () => {
+    const once = writeOutputStyleTurnReminder(FULL)!;
+    const rendererOnly = once
+      .replace(
+        /keepCodingInstructions:f,turnReminder:typeof[^}]+\}/,
+        'keepCodingInstructions:f}'
+      )
+      .replace(',turnReminder:u.turnReminder}', '}');
+    const out = writeOutputStyleTurnReminder(rendererOnly)!;
+    expect(out).toContain('turnReminder:typeof i["turn-reminder"]');
+    expect(out).toContain(',turnReminder:u.turnReminder}');
+  });
+
+  it('is idempotent across both threads', () => {
+    const once = writeOutputStyleTurnReminder(FULL)!;
+    const twice = writeOutputStyleTurnReminder(once)!;
+    expect(twice).toBe(once);
+    expect(twice.match(/,turnReminder:u\.turnReminder/g)).toHaveLength(1);
+  });
+
+  it('still patches the renderer when the loader shapes are missing', () => {
+    const out = writeOutputStyleTurnReminder(FILE)!;
+    expect(out).toContain('outputStyleName_tweakcc');
+    expect(out).not.toContain('turnReminder:typeof');
+  });
+});

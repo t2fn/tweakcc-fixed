@@ -605,8 +605,13 @@ export const writeComputeToolsFilter = (
   // `RESOLVE(AGENT,INNER(AGENT,MERGED,STATE.toolPermissionContext,{...}),!1,!0)`
   // instead of `RESOLVE(AGENT,MERGED,!1,!0)`. The cache-guard and cache-object
   // windows also widened to 600 because the guard gained an `ad` key.
+  //
+  // CC 2.1.233 added a THIRD declarator to the opening `let` — the todo-tools
+  // read (`,Nn=pJ()`) that feeds the new `todoTools` cache key — landing between
+  // `REF.current` and the `if(`. The optional declarator list below tolerates
+  // that and any further ones, since Anthropic keeps hanging cache keys here.
   const memoPattern =
-    /([,;{])([$\w]+)=([$\w]+\.useCallback\()\(\)=>\{let ([$\w]+)=([$\w]+)\.getState\(\),([$\w]+)=([$\w]+)\.current;if\(\6!==null&&[\s\S]{0,600}?\)return \6\.result;[\s\S]{0,300}?let ([$\w]+)=[$\w]+\(\4\.toolPermissionContext,\4\.mcp\.tools(?:,\{skillTools:\4\.skillTools(?:,activeAgents:[^{}]*)?\})?\),([$\w]+)=[$\w]+\([$\w]+,\8,\4\.toolPermissionContext\.mode\),([$\w]+)=[$\w]+\([$\w]+\?[$\w]+\([$\w]+,(?:\9|[$\w]+\([$\w]+,\9,[^()]*\)),!1,!0\)\.resolvedTools:\9,\4\.toolPermissionContext\);return \7\.current=\{[\s\S]{0,600}?result:\10\},\10\},\[/;
+    /([,;{])([$\w]+)=([$\w]+\.useCallback\()\(\)=>\{let ([$\w]+)=([$\w]+)\.getState\(\),([$\w]+)=([$\w]+)\.current(?:,[$\w]+=[^;]{0,80})*;if\(\6!==null&&[\s\S]{0,600}?\)return \6\.result;[\s\S]{0,300}?let ([$\w]+)=[$\w]+\(\4\.toolPermissionContext,\4\.mcp\.tools(?:,\{skillTools:\4\.skillTools(?:,activeAgents:[^{}]*)?\})?\),([$\w]+)=[$\w]+\([$\w]+,\8,\4\.toolPermissionContext\.mode\),([$\w]+)=[$\w]+\([$\w]+\?[$\w]+\([$\w]+,(?:\9|[$\w]+\([$\w]+,\9,[^()]*\)),!1,!0\)\.resolvedTools:\9,\4\.toolPermissionContext\);return \7\.current=\{[\s\S]{0,600}?result:\10\},\10\},\[/;
 
   const memoMatch = oldFile.match(memoPattern);
   if (memoMatch && memoMatch.index !== undefined) {
@@ -1668,6 +1673,28 @@ export const addCurrentToolsetAtToolChangeComponentScope = (
 export const findModeChange = (
   fileContents: string
 ): { index: number; modeVar: string; setStateVar: string } | null => {
+  // Method 1 (CC 2.1.233+): the mode change moved out of an inline `if(...)`
+  // into a validated setter, so there is no leading `if(` to anchor on any more:
+  //
+  //   return r((o)=>{let i=o.toolPermissionContext.mode;if(i===e)return o;
+  //     let s=lje(i,e,o.toolPermissionContext);
+  //     return{...o,toolPermissionContext:{...s,mode:e}}}),setImmediate(...),{ok:!0}
+  //
+  // `r` is the setState and `e` the requested mode. Everything before this
+  // `return` has already rejected an unavailable mode, so injecting there runs
+  // only for a mode change that is actually going to happen.
+  const setterPattern =
+    /return ([$\w]+)\(\([$\w]+\)=>\{let ([$\w]+)=[$\w]+\.toolPermissionContext\.mode;if\(\2===([$\w]+)\)return [$\w]+;let ([$\w]+)=[$\w]+\(\2,\3,[$\w]+\.toolPermissionContext\);return\{\.\.\.[$\w]+,toolPermissionContext:\{\.\.\.\4,mode:\3\}\}\}\)/;
+  const setterMatch = fileContents.match(setterPattern);
+  if (setterMatch && setterMatch.index !== undefined) {
+    return {
+      index: setterMatch.index,
+      modeVar: setterMatch[3],
+      setStateVar: setterMatch[1],
+    };
+  }
+
+  // Method 2 (CC <=2.1.232): the mode change was the condition of an `if`.
   const pattern =
     /if\(([$\w]+)\(\([$\w]+\)=>\(\{\.\.\.[$\w]+,toolPermissionContext.{0,200}?mode:([$\w]+)/;
   const match = fileContents.match(pattern);

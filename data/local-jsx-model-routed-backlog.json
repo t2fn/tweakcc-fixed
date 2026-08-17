@@ -1,0 +1,10 @@
+{
+  "note": "CLEARED 2026-08-16. All 246 rows were audited at their emission sites and their verdicts recorded in data/prompt-classification.json: 169 model, 61 glue, 4 ui, 12 already-catalogued. 166 ids landed in prompts-2.1.233.json (three model verdicts collapsed into two shared-text ids). Kept as the record of what was ruled on and why; it is not a worklist any more.",
+  "ccVersion": "2.1.233",
+  "traced": "2026-08-16",
+  "hashConvention": "sha1 of the raw body, full 40 hex (classifyByCache)",
+  "count": 246,
+  "rows": [],
+  "cleared": true,
+  "clearedRows": 246
+}

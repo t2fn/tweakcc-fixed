@@ -41,6 +41,55 @@ import { showDiff } from './index';
 const FALLBACK =
   'Write this reply the way that style describes, including its rules on what to leave out.';
 
+// A custom style can now carry its own reminder in frontmatter
+// (`turn-reminder:`), the same way built-ins carry `turnReminder` in their
+// table entry. Stock CC drops the key twice on the way to the renderer: the
+// custom-style loader rebuilds each entry as {name, description, prompt,
+// source, baseDir, keepCodingInstructions}, and the merge into the style table
+// rebuilds it again with the same fields plus forceForPlugin. Both rebuilds are
+// threaded here. The frontmatter validator only telemetry-logs unknown keys
+// (safeParse, never a throw), so the extra key is safe, and the markdown
+// parser's normalizeKeys means the key may arrive kebab-case, camelCase or
+// lowercased — all three spellings are read.
+const threadCustomStyleTurnReminder = (file: string): string => {
+  let out = file;
+
+  const loaderReturn =
+    /\(\{filePath:([$\w]+),frontmatter:([$\w]+),content:([$\w]+),source:([$\w]+),baseDir:([$\w]+)\}\)=>\{([\s\S]{0,800}?)return\{name:([$\w]+),description:([$\w]+),prompt:\3\.trim\(\),source:\4,baseDir:\5,keepCodingInstructions:([$\w]+)\}/;
+  const loader = out.match(loaderReturn);
+  if (loader && loader.index !== undefined) {
+    const fm = loader[2];
+    const insert =
+      `,turnReminder:typeof ${fm}["turn-reminder"]==="string"?${fm}["turn-reminder"]` +
+      `:typeof ${fm}.turnReminder==="string"?${fm}.turnReminder` +
+      `:typeof ${fm}.turnreminder==="string"?${fm}.turnreminder:void 0`;
+    const end = loader.index + loader[0].length;
+    out = out.slice(0, end - 1) + insert + out.slice(end - 1);
+  } else if (!out.includes('turnReminder:typeof')) {
+    console.error(
+      'patch: outputStyleTurnReminder: custom-style loader shape not found; frontmatter turn-reminder will not thread (fallback reminder still applies)'
+    );
+  }
+
+  const mergeEntry =
+    /([$\w]+)\[([$\w]+)\.name\]=\{name:\2\.name,description:\2\.description,prompt:\2\.prompt,source:\2\.source,keepCodingInstructions:\2\.keepCodingInstructions,forceForPlugin:\2\.forceForPlugin\}/;
+  const merge = out.match(mergeEntry);
+  if (merge && merge.index !== undefined) {
+    const u = merge[2];
+    const end = merge.index + merge[0].length;
+    out =
+      out.slice(0, end - 1) +
+      `,turnReminder:${u}.turnReminder` +
+      out.slice(end - 1);
+  } else if (!/forceForPlugin:[$\w]+\.forceForPlugin,turnReminder:/.test(out)) {
+    console.error(
+      'patch: outputStyleTurnReminder: style-table merge shape not found; frontmatter turn-reminder will not thread (fallback reminder still applies)'
+    );
+  }
+
+  return out;
+};
+
 export const writeOutputStyleTurnReminder = (
   oldFile: string
 ): string | null => {
@@ -53,9 +102,9 @@ export const writeOutputStyleTurnReminder = (
   if (!match || match.index === undefined) {
     if (/\.style\}\.name\?\?|outputStyleName_tweakcc/.test(oldFile)) {
       console.log(
-        'patch: outputStyleTurnReminder: already patched in this build — no-op'
+        'patch: outputStyleTurnReminder: renderer already patched — threading only'
       );
-      return oldFile;
+      return threadCustomStyleTurnReminder(oldFile);
     }
     console.error(
       'patch: outputStyleTurnReminder: failed to find the output-style reminder renderer'
@@ -87,5 +136,5 @@ export const writeOutputStyleTurnReminder = (
     match.index,
     match.index + replacement.length
   );
-  return newFile;
+  return threadCustomStyleTurnReminder(newFile);
 };

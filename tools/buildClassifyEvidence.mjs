@@ -118,6 +118,20 @@ if (!chunkFiles.length) {
   process.exit(2);
 }
 
+// Packets left over from an earlier bump are indistinguishable from this one's:
+// they are well-formed, full of real hashes, and a fan-out aimed at a counted
+// range harvests them as a complete, plausible, wrong verdict set. The chunk
+// writer already clears its own output; this one did not.
+const keep = new Set(
+  chunkFiles.map(f => f.replace('classify-chunk-', 'classify-evidence-'))
+);
+for (const f of fs.readdirSync(outDir)) {
+  if (/^classify-evidence-\d+\.json$/.test(f) && !keep.has(f)) {
+    fs.unlinkSync(path.join(outDir, f));
+    console.log(`removed stale packet from an earlier run: ${f}`);
+  }
+}
+
 let located = 0;
 let total = 0;
 const written = [];

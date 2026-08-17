@@ -734,11 +734,26 @@
   },
   "5fd9456962382c54bb26510ae962e8903c33404f": { "facing": "internal" },
   "bbd70203c88c479c86f80ab98614e028dfcefc67": { "facing": "internal" },
-  "912e588e7193cab1dcc5d473cb4355833b11015c": { "facing": "ui" },
+  "912e588e7193cab1dcc5d473cb4355833b11015c": {
+    "facing": "model",
+    "id": "slash-command-add-dir-not-a-directory",
+    "name": "Slash Command: /add-dir — path is a file, suggests parent",
+    "desc": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the recovery target."
+  },
   "b368a83aaa6c09d2f82cdbf4cc875071ca2c6eea": { "facing": "internal" },
   "7394ffe4e1c2e3e8df5fe4d9493442987247a1d7": { "facing": "internal" },
-  "de41610b3ff3c10d406328b6ecc4a7fd10f26af0": { "facing": "ui" },
-  "65ee4ed585d70dc9df03b698ce50b03638a3ce25": { "facing": "ui" },
+  "de41610b3ff3c10d406328b6ecc4a7fd10f26af0": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-iterm2-native-shift-enter",
+    "name": "Slash Command: /terminal-setup — iTerm2 already supports Shift+Enter",
+    "desc": "Tells the model that no key-binding install happened because the host terminal is iTerm2, which handles Shift+Enter itself, so there is nothing left to configure."
+  },
+  "65ee4ed585d70dc9df03b698ce50b03638a3ce25": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-remote-iterm2-clipboard-note",
+    "name": "Slash Command: /terminal-setup — remote iTerm2 clipboard note for /copy",
+    "desc": "Tells the model the session is running over SSH from an iTerm2 host and that /copy will not reach the local clipboard until a setting is changed on that other machine, which explains later clipboard failures."
+  },
   "fd90d9a45b8514f0e20d4c6dcd0308c4a3251f33": { "facing": "internal" },
   "8405b3b543141ad6d0e499803fd36759bf2e067a": { "facing": "internal" },
   "691796a25c4330b4f698eab333a5f37fb2d6425a": { "facing": "internal" },
@@ -2520,7 +2535,12 @@
   "ef1e6bb79393cf9059a6dd3f808f6d60b2d33b1a": { "facing": "ui" },
   "c58f52f3134d58954d1f099a5f15bcf20ffef60d": { "facing": "ui" },
   "f2a804d6f658ac681eb50fd00d0347679d13188f": { "facing": "ui" },
-  "9674457359d4e3c004503f6ead0e0a6051d71624": { "facing": "ui" },
+  "9674457359d4e3c004503f6ead0e0a6051d71624": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-local-settings-save-failed",
+    "name": "Slash Command: /add-dir — added but persisting failed",
+    "desc": "Tells the model the directory works for now but the settings write failed, with the error text, so it knows the grant will not survive a restart."
+  },
   "386204b19a0a97be87669be85f23d6d36e73cd7a": { "facing": "ui" },
   "e77c95161b635803d1b3894dde7138a9e1cbf881": {
     "facing": "model",
@@ -2584,7 +2604,12 @@
   "c69547e9812b447467a74abd47984664efb783c4": { "facing": "ui" },
   "bb84439e381a82616a97735e1ec1b1c8c7740912": { "facing": "ui" },
   "6b491f002088320e4bd1bdc55a137cbe63db04ce": { "facing": "ui" },
-  "5e9c88c4f85cfbf5311980239a17131f925d98e1": { "facing": "ui" },
+  "5e9c88c4f85cfbf5311980239a17131f925d98e1": {
+    "facing": "model",
+    "id": "slash-command-ide-open-failed",
+    "name": "Slash Command: /ide — launch failed, open manually",
+    "desc": "Tells the model the editor launch exited non-zero and gives the path to open by hand as the fallback."
+  },
   "523a3ff1b7530e32c2a973f1f9ff636babe6b15e": { "facing": "ui" },
   "59e115dfdfb004a158a8cce213428dd445439287": { "facing": "ui" },
   "075a79bbfa2a537803be5627475486776a8fb822": { "facing": "ui" },
@@ -2592,15 +2617,35 @@
   "e0186c9ae544c208170f1256d7cce3707a6483a0": { "facing": "ui" },
   "485c4faebd652e2ef31dabd54ffe7e5d35cf640a": { "facing": "internal" },
   "5014d3557b4688b768242696cdf03babab61cc5d": { "facing": "ui" },
-  "520faa9ed74170ec3f2912184c00e950d371bbf7": { "facing": "ui" },
-  "105a04062a6fdf3a221e65c6d6cabedeb889ba23": { "facing": "ui" },
-  "55ecb83c754107e7cc75b41ddf1c3a47a4ab70da": { "facing": "ui" },
+  "520faa9ed74170ec3f2912184c00e950d371bbf7": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-still-unauthorized",
+    "name": "Slash Command: /mcp — still unauthorized after reconnect",
+    "desc": "Tells the model the browser sign-in did not take effect and that the user must complete it before retrying from /mcp, so it stops assuming the server is usable."
+  },
+  "105a04062a6fdf3a221e65c6d6cabedeb889ba23": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-reconnect-failed-restart",
+    "name": "Slash Command: /mcp — reconnect after auth failed, restart to retry",
+    "desc": "Sibling branch when no reason is available: tells the model the only remaining recovery is restarting Claude Code."
+  },
+  "55ecb83c754107e7cc75b41ddf1c3a47a4ab70da": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnect-failed-restart",
+    "name": "Slash Command: /mcp — reconnect failed after OAuth, restart to retry",
+    "desc": "Sibling branch with no reason available: tells the model restarting Claude Code is the remaining recovery step."
+  },
   "73b3c4ec0b952db4bc8e2491c80b848e8e76b881": { "facing": "ui" },
   "63c1da7cf40919ae866a0f095a4818c6b062b538": { "facing": "ui" },
   "d68d70bd749b72e6c2a21317f420b50e968042a5": { "facing": "ui" },
   "d950c070869789da378d2ea72be255ce651de823": { "facing": "ui" },
   "a7eca1f8763cf12191741e2fc42999f075acc343": { "facing": "ui" },
-  "bee370d0164544c78dd92d55ffd0930db592c4f3": { "facing": "ui" },
+  "bee370d0164544c78dd92d55ffd0930db592c4f3": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-usage",
+    "name": "Slash Command: /plugin eval — usage",
+    "desc": "Teaches the model how /plugin eval is invoked and that each evals/*.md file needs `query` and `should_trigger` frontmatter with at least five recommended, which is what it needs to author or fix eval files."
+  },
   "f328e71c54123036efad03cf47ee53f7c2d1461b": { "facing": "internal" },
   "5e62cb5af8f72d9032829d4353dfea99f8e525f1": { "facing": "ui" },
   "6d96ec8ca9ab5e03241e889ee7bdaa96ca1d11f2": { "facing": "ui" },
@@ -2680,7 +2725,12 @@
   "8e181b256170eb78de4d5a8f983e751397b74756": { "facing": "ui" },
   "65b14c12a20f4f49f80694e2e050caf62e7b30a2": { "facing": "ui" },
   "147fef98a845045f96c7bf1dbd7310becf96413b": { "facing": "ui" },
-  "805154585a995d9e70c05533180b80aa66c7601c": { "facing": "ui" },
+  "805154585a995d9e70c05533180b80aa66c7601c": {
+    "facing": "model",
+    "id": "slash-command-permissions-granted-retry",
+    "name": "Slash Command: /permissions — permission granted, retry allowed",
+    "desc": "Same string as 19642856 on the approve path; one prompt id must cover both byte occurrences or an override would patch only half of them."
+  },
   "85ef93413e6ae1fcf8dd4d5151d103fb355f4788": { "facing": "ui" },
   "301da3dc86dd3b267fc965a42d224c92ea8912ef": { "facing": "ui" },
   "b69d934f751b26b1f54600faf4f655907c9c987e": { "facing": "ui" },
@@ -2710,8 +2760,18 @@
   "39cf65e90019320847d9bbc0bf553e205ff5c414": { "facing": "ui" },
   "39cece372152e6b30a92edb59b665596992a46a0": { "facing": "ui" },
   "a68cf9a424b53a7f0dbf2660cc070da1397656cc": { "facing": "ui" },
-  "2b33e1d658fe009eb8d5ae983bd092d5862377d6": { "facing": "ui" },
-  "246a42df93ede22375715f93225dae47cf1bc2b4": { "facing": "ui" },
+  "2b33e1d658fe009eb8d5ae983bd092d5862377d6": {
+    "facing": "model",
+    "id": "slash-command-advisor-main-model-unsupported-note",
+    "name": "Slash Command: /advisor — main model does not support the advisor",
+    "desc": "Warns the model that the advisor it was just told about will not actually fire under the current main model, so it should not plan around advisor output."
+  },
+  "246a42df93ede22375715f93225dae47cf1bc2b4": {
+    "facing": "model",
+    "id": "slash-command-advisor-weaker-than-main-model-note",
+    "name": "Slash Command: /advisor — advisor weaker than the main model",
+    "desc": "Warns the model the chosen advisor is less capable than the main model so it will never activate, and names the two ways out, which is a recovery step the model can relay."
+  },
   "4830e530684eb4876eefde498f3700453b179077": { "facing": "ui" },
   "72ba85d973e8a2093390d293ed5bd56fa304ff68": { "facing": "ui" },
   "abf24e43e005cb1cfe3a3a3490ab45efc27b2e0e": { "facing": "ui" },
@@ -2728,7 +2788,12 @@
   "790158ef7a3f0188c82f54675ee66619eac34c48": { "facing": "ui" },
   "a34988198098e07ad6741890043cc074506a97b2": { "facing": "ui" },
   "a004a76c0d5262cddccf3fa5cc44e3cdb366126e": { "facing": "ui" },
-  "996c2990e6020659b6db0340e0fa09e1e3f9a2d5": { "facing": "ui" },
+  "996c2990e6020659b6db0340e0fa09e1e3f9a2d5": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-team-upgrade-browser-opened",
+    "name": "Slash Command: /rate-limit-options — team upgrade page opened",
+    "desc": "Tells the model the upgrade page was opened and that /login must be re-run afterwards for the new plan to take effect, which is the step it has to remind the user about."
+  },
   "1e3c67f795b76d258a1cdbc2e7ed14e266eeb720": {
     "facing": "model",
     "id": "system-prompt-statusline-unavailable-safe-mode",
@@ -2756,11 +2821,36 @@
   "be22ccc79248bd27a2263589c7b17179e86dcc0c": { "facing": "ui" },
   "8882d0708fb3c71f5bdcbbf12573765cf9681d93": { "facing": "ui" },
   "3408ed2792394c46222d4bc51a24ef43b5330a8e": { "facing": "ui" },
-  "43ad69ed3574f3afa20129815d1f157b200c968e": { "facing": "ui" },
-  "b282caed39d718613ce3f38d52a957214dfe6351": { "facing": "ui" },
-  "6143a8fb7584d715bf25b0ba8a11911988768f49": { "facing": "ui" },
-  "0447613eba01d3c90a4d6b01b25466b32fc282ad": { "facing": "ui" },
-  "0e43bfd14412f8ee0147b7af08a22c9f3721b06a": { "facing": "ui" },
+  "43ad69ed3574f3afa20129815d1f157b200c968e": {
+    "facing": "model",
+    "id": "slash-command-web-setup-login-failed-visit-web",
+    "name": "Slash Command: /web-setup — not signed in, visit the web app",
+    "desc": "Tells the model the GitHub token import was rejected for lack of a Claude login and names the recovery step (sign in on the web with the GitHub App)."
+  },
+  "b282caed39d718613ce3f38d52a957214dfe6351": {
+    "facing": "model",
+    "id": "slash-command-web-setup-github-token-rejected",
+    "name": "Slash Command: /web-setup — GitHub rejected the token",
+    "desc": "Tells the model GitHub rejected the token and names gh auth login as the fix."
+  },
+  "6143a8fb7584d715bf25b0ba8a11911988768f49": {
+    "facing": "model",
+    "id": "slash-command-web-setup-server-error-retry",
+    "name": "Slash Command: /web-setup — server error, retry later",
+    "desc": "Tells the model the failure was server-side with its HTTP status and that retrying shortly is the right response, rather than changing the request."
+  },
+  "0447613eba01d3c90a4d6b01b25466b32fc282ad": {
+    "facing": "model",
+    "id": "slash-command-web-setup-server-unreachable",
+    "name": "Slash Command: /web-setup — server unreachable",
+    "desc": "Tells the model the server could not be reached and the connection should be checked."
+  },
+  "0e43bfd14412f8ee0147b7af08a22c9f3721b06a": {
+    "facing": "model",
+    "id": "slash-command-web-setup-gh-cli-not-authenticated",
+    "name": "Slash Command: /web-setup — GitHub CLI not authenticated",
+    "desc": "Tells the model `gh` is installed but has no credentials, and names the two ways to fix it before /web-setup can succeed."
+  },
   "7934932e3997fc1a23932b552e7eb7d7de341383": { "facing": "ui" },
   "45ae782655acc5a5cb4941bf4fd9e67517a2355c": { "facing": "ui" },
   "4d9b3e583611b24cb6f1bb8c268783736901d83f": { "facing": "ui" },
@@ -7588,7 +7678,12 @@
   },
   "89b247ccd7002fdc9c26fd9c4b51acfd5c92e144": { "facing": "ui" },
   "af4864a8399c969b360bef6088e926a159673029": { "facing": "internal" },
-  "16e8e0908a3e488f199eb40417dc3e64b3afbe9e": { "facing": "ui" },
+  "16e8e0908a3e488f199eb40417dc3e64b3afbe9e": {
+    "facing": "model",
+    "id": "slash-command-plan-cloud-mode-push-timeout",
+    "name": "Slash Command: /plan — cloud session did not confirm the mode switch",
+    "desc": "Tells the model the user's plan description was dropped en route to the cloud session and instructs how to recover it, so the model does not act as if it received the description."
+  },
   "9afcb456d42abf16a9e88a5ebf0b1f6e37e44b46": { "facing": "ui" },
   "c02413e0bf4c3fb8fd008cc04854420f6938bdcb": {
     "facing": "model",
@@ -7971,7 +8066,12 @@
     "name": "Data: Claude Tag (Claude in Slack) reference",
     "desc": "Offline reference for Claude Tag, Claude Code's org-managed Slack surface, covering what it is, availability, setup, configuration, and how it differs from the earlier Claude in Slack app"
   },
-  "976c60158c57f7bb668d42657e6a606a4d57763e": { "facing": "ui" },
+  "976c60158c57f7bb668d42657e6a606a4d57763e": {
+    "facing": "model",
+    "id": "slash-command-cd-not-a-directory",
+    "name": "Slash Command: /cd — path is a file, suggests its parent",
+    "desc": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the likely intended target."
+  },
   "471c9f3c17cfa3238032afff1808d73661456b6d": { "facing": "ui" },
   "997ab5019fe919a81ee97afb1a400b1f66cf595b": {
     "facing": "model",
@@ -7994,7 +8094,12 @@
   },
   "6ebb52f6e156b33747a0d522c336d775827b05ac": { "facing": "internal" },
   "39b09db3f54a6f4dc592f1b6e121a232e03f0dd0": { "facing": "internal" },
-  "2794aee73fc932c5a8813c7f1d01e59c3e02f20c": { "facing": "ui" },
+  "2794aee73fc932c5a8813c7f1d01e59c3e02f20c": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-cd-disabled-by-rule",
+    "name": "Slash Command: /cd — /cd disabled by a permission rule",
+    "desc": "Tells the model directory changes are switched off by a named permission rule in a named settings source and that the rule must be edited in /permissions before any move is possible."
+  },
   "7031c2c34ce0dc636f9139590d408a54713b0813": {
     "facing": "model",
     "id": "tool-parameter-set_cwd-ok-cwd",
@@ -8414,7 +8519,12 @@
     "name": "Tool Result: MCP servers blocked by managed policy",
     "desc": "tool-result note telling the model the listed MCP servers are blocked by the org's managed policy (administrative block, retrying won't help)"
   },
-  "0edb6dc137f660c8e1ac6256e3bc8ad379efdc8a": { "facing": "ui" },
+  "0edb6dc137f660c8e1ac6256e3bc8ad379efdc8a": {
+    "facing": "model",
+    "id": "slash-command-mcp-no-servers-configured",
+    "name": "Slash Command: /mcp — no servers configured",
+    "desc": "Tells the model no MCP servers are configured and points at claude doctor for config files that failed validation."
+  },
   "d90f66bedf14f01453f8d4e31839b1a6fdcc997d": { "facing": "ui" },
   "a2e18e6fbcb5bbfcfea375fe562df97fd61e8008": { "facing": "internal" },
   "e8d9b2927892874272137a86bf7953956ecb0daa": { "facing": "internal" },
@@ -11426,11 +11536,31 @@
   "65d7824f8a5706cd3d80a4591209d9d6d256c6b6": { "facing": "internal" },
   "ead1988cc5904e499f959e03d788c7baa3ba53b2": { "facing": "internal" },
   "f2f76cfd0fad6c79e2731c4b4cccc476a7a37581": { "facing": "internal" },
-  "75641cae909b8cc1593461613a71c5ea5f6b2ce3": { "facing": "internal" },
-  "b554fb5317c16feaa60aa453a3fed1897f325475": { "facing": "internal" },
+  "75641cae909b8cc1593461613a71c5ea5f6b2ce3": {
+    "facing": "model",
+    "id": "tool-result-workflow-meta-must-be-first-statement",
+    "name": "Tool Result: Workflow script — meta must be the first statement",
+    "desc": "The Workflow tool parse error stating that the `export const meta` block must be the first statement in the script. Returned by validateInput and thrown from call(), so it reaches the model whether or not a slash command is involved."
+  },
+  "b554fb5317c16feaa60aa453a3fed1897f325475": {
+    "facing": "model",
+    "id": "tool-result-workflow-meta-must-be-pure-literal",
+    "name": "Tool Result: Workflow meta must be a pure literal",
+    "desc": "Tells the model the exported meta object may not contain computed expressions, which is the constraint it has to satisfy on the next attempt."
+  },
   "9aa21a514ee81dad2f84106a739741af2a808bb7": { "facing": "internal" },
-  "f19881e925480aef74cf43031d712029106f2670": { "facing": "internal" },
-  "1648824189c0b68dde927171af7a9e1abf29b33f": { "facing": "internal" },
+  "f19881e925480aef74cf43031d712029106f2670": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-parse-error-no-location",
+    "name": "Tool Result: Workflow script parse error (no source location)",
+    "desc": "Reports the parse failure and names the likely causes (TypeScript syntax, broken quoting/escaping) so the model knows what to change; this branch fires when the parser gave no line/column."
+  },
+  "1648824189c0b68dde927171af7a9e1abf29b33f": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-parse-error-with-source-excerpt",
+    "name": "Tool Result: Workflow script parse error with source excerpt",
+    "desc": "Same parse-failure guidance but with the offending source line and a caret, giving the model the exact position to fix; it is the other branch of the same conditional as the no-location form."
+  },
   "5d164f3aa0839382b333ae2830c645e52075f4c2": { "facing": "internal" },
   "9853a6224df4ad12f6990a43f082c52146945c5a": { "facing": "internal" },
   "44a51f066ae907caa03964331063fcc8d1c74975": { "facing": "internal" },
@@ -12987,8 +13117,18 @@
   "477cf77476edcaf1ff21b0c2aeeb4ab8285b3a82": { "facing": "ui" },
   "cf0452657a12d9b2ae1ff057a16a0d31d4d5a68a": { "facing": "ui" },
   "c2a33943ed7e835fc1957ef3759525dad0ca8842": { "facing": "ui" },
-  "9024e257ae09c151320555e4bd54f0ef548b604f": { "facing": "ui" },
-  "b4d30fe2e23893aa01094b9231f8df8b1cd710d9": { "facing": "ui" },
+  "9024e257ae09c151320555e4bd54f0ef548b604f": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-opened-org-billing-url",
+    "name": "Slash Command: /usage-credits — org billing page opened",
+    "desc": "Tells the model a browser was opened on the organization's usage-credit page, so the next step is with the org admin rather than in the session."
+  },
+  "b4d30fe2e23893aa01094b9231f8df8b1cd710d9": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-visit-org-billing-url",
+    "name": "Slash Command: /usage-credits — visit org billing page",
+    "desc": "Fallback when no browser could be opened: gives the model the org usage-credit URL to relay so the user can act on it."
+  },
   "ceff8de37ca2d7464dddb0a7c9ddac24b0d35c54": { "facing": "ui" },
   "e957b46449ee8ee7565c438b12708f10d2e38db9": { "facing": "ui" },
   "2cc9fe0fdc40a5444a5a110ddf33dbdb47badc77": { "facing": "ui" },
@@ -14888,7 +15028,12 @@
   "75b8f9940f68b0626873d79e64fc1b7647ebb15e": { "facing": "internal" },
   "4f9ea388193f1b66aab382640871a41c02fad339": { "facing": "internal" },
   "31ed9f1582eaf125cd043aa1b5c1703a5759479c": { "facing": "internal" },
-  "4bea9a3cc358815d31a65ea7f2263f2342fef0f3": { "facing": "ui" },
+  "4bea9a3cc358815d31a65ea7f2263f2342fef0f3": {
+    "facing": "model",
+    "id": "slash-command-add-dir-cancelled-with-path",
+    "name": "Slash Command: /add-dir — user cancelled the add of a named path",
+    "desc": "Names the specific directory the user declined to add, so the model knows exactly which path stayed inaccessible."
+  },
   "af76c9eb06d563e79133e406ea534da1541d6fe8": { "facing": "ui" },
   "266534e86cd9ea7ea38405d00f5cc5182930363c": { "facing": "ui" },
   "6461eeb0de89362a42cb26bdd3d94f984ec6a504": { "facing": "ui" },
@@ -14962,9 +15107,19 @@
   "1ca51cc89d09be424ad66e9407d0d0aec1ff34c8": { "facing": "ui" },
   "99669e4ce3a26a787ab124e708c94c3ce8b53878": { "facing": "ui" },
   "22038403a26565f4dfea3e0e6c2c879fb0f0b152": { "facing": "internal" },
-  "9e5004d321ef8e5f84817b4fb2053a4b3d82092e": { "facing": "ui" },
+  "9e5004d321ef8e5f84817b4fb2053a4b3d82092e": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-directory-excluded-by-rule",
+    "name": "Slash Command: /cd — target directory excluded by a rule",
+    "desc": "Tells the model this specific directory is excluded by a named rule and gives two ways forward — choose a directory outside the rule, or change the rule — so it can retry sensibly instead of repeating the same move."
+  },
   "3b1499e5106bb42f59d4db5ff255c1018b8e8d29": { "facing": "internal" },
-  "7aaeec2d64fa5d8821ff54ddb08b04185df3ce4e": { "facing": "ui" },
+  "7aaeec2d64fa5d8821ff54ddb08b04185df3ce4e": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-allowed-patterns",
+    "name": "Slash Command: /cd — only listed directory patterns allowed",
+    "desc": "Tells the model the exact allow-list of directory patterns /cd is restricted to, which is the information it needs to pick a legal target on the next attempt."
+  },
   "5ad6683c94ee87bfc17adf8179c27934cd9e95d5": { "facing": "internal" },
   "fceac328c84ad6d27157dc14393dfc1f2e5f83aa": { "facing": "internal" },
   "1cac3fbefada067cfc90388f4c6df376e4d00ee5": { "facing": "internal" },
@@ -14983,8 +15138,18 @@
   "c1a6fb2858ded47a289d20110ccd733cb2139760": { "facing": "internal" },
   "97e0d7a0419bfaef5581cb60e54edab205f70528": { "facing": "internal" },
   "7dbcd5014e0e9751b21696b56911dc4b45a34702": { "facing": "internal" },
-  "b4128dbf34e8af656c50eb46deecf0d58c0af63b": { "facing": "ui" },
-  "9136b13702f99c3014bbfaf4c713ac342bb6e768": { "facing": "ui" },
+  "b4128dbf34e8af656c50eb46deecf0d58c0af63b": {
+    "facing": "model",
+    "id": "slash-command-cd-directory-not-found",
+    "name": "Slash Command: /cd — no directory at that path",
+    "desc": "Tells the model the requested path does not exist, so the working directory is unchanged and the path itself is the thing to correct."
+  },
+  "9136b13702f99c3014bbfaf4c713ac342bb6e768": {
+    "facing": "model",
+    "id": "slash-command-cd-relocate-failed",
+    "name": "Slash Command: /cd — relocation failed, staying put",
+    "desc": "Tells the model the move was attempted and failed, names the two likely causes, and states which directory the session is actually in — the fact it needs to keep using correct paths."
+  },
   "1c0e58875ccd87ead658489ed528ea93b0b3bb21": { "facing": "internal" },
   "b7bba3313dd4b6a891b362191ff7d5374300bcd1": { "facing": "ui" },
   "3b42eb9f0135f3ee589cebc9ece7a9ae08d0542b": { "facing": "ui" },
@@ -15043,7 +15208,12 @@
   "61365df6d0dcdfc9719f9ad952ae9c676b53d981": { "facing": "ui" },
   "0503cb21523bbee59218723841338b120a14efde": { "facing": "ui" },
   "fedc358213a3b5b19aff6645f33d5467dd192d6f": { "facing": "ui" },
-  "486e5bc2176d495713d77a4663712726389bce8e": { "facing": "ui" },
+  "486e5bc2176d495713d77a4663712726389bce8e": {
+    "facing": "model",
+    "id": "slash-command-ide-open-manually",
+    "name": "Slash Command: /ide — no CLI launcher, open manually",
+    "desc": "Tells the model the IDE could not be launched programmatically and gives the path the user must open by hand, so it stops trying to automate the step."
+  },
   "998304c1e014f4dfbb38ca459b0ba9b4b28a167a": { "facing": "ui" },
   "ddbab83b757c8ee2339a905b0d9bb9bae6933901": { "facing": "ui" },
   "b1c5bdaa1da5b096ab869cffa7d9383bd7e3e0ab": { "facing": "ui" },
@@ -15140,11 +15310,26 @@
     "name": "/mcp usage help",
     "desc": "Usage string returned by the /mcp local command for an unrecognized subcommand; injected into the conversation as <local-command-stdout>."
   },
-  "1661ec6f99ca84bbd6d54ed30c66023e2d0f9fd3": { "facing": "ui" },
+  "1661ec6f99ca84bbd6d54ed30c66023e2d0f9fd3": {
+    "facing": "model",
+    "id": "slash-command-mcp-agent-server-auth-success",
+    "name": "Slash Command: /mcp — agent server authenticated, connects on next run",
+    "desc": "Tells the model the agent-scoped MCP server is authenticated but deliberately stays unconnected until the agent runs, so it does not treat the absent tools as a failure."
+  },
   "8d51c56502d51e14584336caf60630c30133fe79": { "facing": "ui" },
   "3281b902706199481104d48f0d0efcd9db444eef": { "facing": "ui" },
-  "888c97f2ebc7b3e43c32faf372ee9714a8540496": { "facing": "ui" },
-  "501dc2cc8d0b3c273409faf36ca49913ff3b0bb1": { "facing": "ui" },
+  "888c97f2ebc7b3e43c32faf372ee9714a8540496": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-reconnect-failed-detail",
+    "name": "Slash Command: /mcp — reconnect after auth failed, with reason",
+    "desc": "Reports that the post-authentication reconnect failed and carries the sanitized failure reason so the model can tell the user what went wrong."
+  },
+  "501dc2cc8d0b3c273409faf36ca49913ff3b0bb1": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-credentials-rejected",
+    "name": "Slash Command: /mcp — new credentials rejected on reconnect",
+    "desc": "Tells the model the fresh OAuth tokens were refused by the server and gives two recovery paths (re-authenticate, or restart), so it does not loop on the same flow."
+  },
   "a5a89d65ca736711f42627de130fb65bd0719843": { "facing": "internal" },
   "41de5ba2cd30bd222462ba20680dd6c1ae0e40fa": { "facing": "internal" },
   "13d4bd657b24995cb2728990ea5f48cd32e1d3e4": { "facing": "internal" },
@@ -15242,9 +15427,19 @@
   "58c14f90cf3b6c63343a24caf68d1707356e676b": { "facing": "ui" },
   "e13d38c349a7227b53ec2247266e1e052a05d630": { "facing": "ui" },
   "b7076734d91cc141bcba4628ea466d66a98c4f4a": { "facing": "ui" },
-  "294fa57a0088d48bb795421e7138582befed6e91": { "facing": "ui" },
+  "294fa57a0088d48bb795421e7138582befed6e91": {
+    "facing": "model",
+    "id": "slash-command-plugin-tag-usage",
+    "name": "Slash Command: /plugin tag — usage",
+    "desc": "The /plugin tag usage text: creating a {name}--v{version} git tag for a plugin, and the flags it accepts."
+  },
   "ede7c9cc77c95f053050bb3f97422782f7626e82": { "facing": "ui" },
-  "a00d24551309d4d774747d7a6319c21b9500c03d": { "facing": "ui" },
+  "a00d24551309d4d774747d7a6319c21b9500c03d": {
+    "facing": "model",
+    "id": "slash-command-plugin-no-plugins-installed",
+    "name": "Slash Command: /plugin — no plugins installed",
+    "desc": "Tells the model no plugins are installed and names /plugin install as the way to add one."
+  },
   "3ef33794f7c66c081036f4d502d5810c847edfda": { "facing": "internal" },
   "b312ee87a7c82de4376edfea8aa5b489b1aba58d": { "facing": "ui" },
   "295ceba3af8a6d6eb6deeaff9a93f73ce3cf0a11": { "facing": "ui" },
@@ -15280,9 +15475,24 @@
     "desc": "Prompt sent to a utility model to grep transcript .jsonl files under scoped directories and find sessions matching a search query."
   },
   "eb0e109e36e3c0343ad8c21f605a7c41a5df48a8": { "facing": "internal" },
-  "07b34c0f09fd2ffc5940e96442da2f7a96d9bb81": { "facing": "ui" },
-  "a96391aac2a376414e3751be1802c24effd45d6d": { "facing": "ui" },
-  "7e908c043ecd4e58a70088e8274df37b606d67ba": { "facing": "ui" },
+  "07b34c0f09fd2ffc5940e96442da2f7a96d9bb81": {
+    "facing": "model",
+    "id": "slash-command-resume-multiple-session-matches",
+    "name": "Slash Command: /resume — multiple sessions matched",
+    "desc": "Tells the model the title was ambiguous and that the interactive picker is the way forward, so it does not retry the same argument."
+  },
+  "a96391aac2a376414e3751be1802c24effd45d6d": {
+    "facing": "model",
+    "id": "slash-command-resume-conversation-from-different-directory",
+    "name": "Slash Command: /resume — conversation is from a different directory",
+    "desc": "Warns that the conversation being resumed was recorded in a different working directory."
+  },
+  "7e908c043ecd4e58a70088e8274df37b606d67ba": {
+    "facing": "model",
+    "id": "slash-command-resume-session-still-running-as-agent",
+    "name": "Slash Command: /resume — session still running as a background agent",
+    "desc": "Tells the model the session cannot be resumed here because it is still running as a background agent, and where to attach or stop it."
+  },
   "ee48ce4f68ad847f7eeb84158af9dc084ad32cf5": { "facing": "ui" },
   "e981c9adf2debc6b08979e33e3d955a79076e3dd": { "facing": "ui" },
   "09d91696f742c77b3dfe930b1d25c058742b7f34": { "facing": "ui" },
@@ -15325,7 +15535,12 @@
   "7ea45d03531df53b15eb6b6e481ffb4107e7f095": { "facing": "ui" },
   "6573d2e1ed3ef52f0d73ae0521c9a47210537d23": { "facing": "ui" },
   "305dad0ec7334e255d1e1986c66339287710008c": { "facing": "ui" },
-  "1c56745ad0c45d69824a6cbab3a264ac4d3103ec": { "facing": "ui" },
+  "1c56745ad0c45d69824a6cbab3a264ac4d3103ec": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-reset-to-auto",
+    "name": "Slash Command: /scroll-speed — reset to auto",
+    "desc": "Tells the model the scroll speed override was deleted from the user settings file and names both the auto value and the file it was removed from."
+  },
   "df11ab9bf12270195e932ef3f4f3110785a79460": { "facing": "ui" },
   "c8ee0a96456ae289a4da68b826a36f66b7e31ef9": { "facing": "internal" },
   "8259d53029998b64a713e2485673a5e19fab0046": { "facing": "ui" },
@@ -15341,13 +15556,48 @@
   "c6e0dad4516a35c4719fa3578bda40c641a9d3c6": { "facing": "ui" },
   "0e8022c87a0b053e0d3e41a6ebf4a08f675423a9": { "facing": "ui" },
   "9d25aef838e863630f28cb2ff837c070568110fc": { "facing": "ui" },
-  "f7c0658b4ead4750f7d896e80b1b4b9bfe66ebc3": { "facing": "ui" },
-  "8a4cdbe78d81e2c23098d14e6894798256f9e904": { "facing": "ui" },
-  "b9dc126e5534bbf40ee31d2d306d1b1ee732d9cb": { "facing": "ui" },
-  "7fa8f09c47796ebf28e5227db640f1f0db1b756f": { "facing": "ui" },
-  "bca3f2e160f6613164c20e546baf4f62038955fd": { "facing": "ui" },
-  "03f727688a136cc8221e9fdf343cf796afb4d016": { "facing": "ui" },
-  "70139165c9e9077b2296bf98f4f107223ce9aecd": { "facing": "ui" },
+  "f7c0658b4ead4750f7d896e80b1b4b9bfe66ebc3": {
+    "facing": "model",
+    "id": "slash-command-plan-cloud-mode-push-rejected",
+    "name": "Slash Command: /plan — cloud session refused the mode switch",
+    "desc": "Tells the model the cloud session rejected plan mode and the user's description was therefore never delivered, so it should not treat the description as received."
+  },
+  "8a4cdbe78d81e2c23098d14e6894798256f9e904": {
+    "facing": "model",
+    "id": "slash-command-plan-open-cloud-workspace-unsupported",
+    "name": "Slash Command: /plan open — plan lives in the cloud workspace",
+    "desc": "Explains that a cloud-workspace plan cannot be opened in a local editor, and what to do instead."
+  },
+  "b9dc126e5534bbf40ee31d2d306d1b1ee732d9cb": {
+    "facing": "model",
+    "id": "slash-command-plan-share-cloud-workspace-unsupported",
+    "name": "Slash Command: /plan share — cannot publish from this machine",
+    "desc": "Explains that a cloud-workspace plan cannot be published from the local machine yet."
+  },
+  "7fa8f09c47796ebf28e5227db640f1f0db1b756f": {
+    "facing": "model",
+    "id": "slash-command-plan-view-needs-newer-runtime",
+    "name": "Slash Command: /plan — viewing needs a newer session runtime",
+    "desc": "Tells the model that viewing plans in cloud sessions requires a newer session runtime than this one."
+  },
+  "bca3f2e160f6613164c20e546baf4f62038955fd": {
+    "facing": "model",
+    "id": "slash-command-plan-cloud-fetch-failed",
+    "name": "Slash Command: /plan — could not fetch from the cloud session",
+    "desc": "Tells the model the plan could not be fetched from the cloud session and the action should be retried."
+  },
+  "03f727688a136cc8221e9fdf343cf796afb4d016": {
+    "facing": "model",
+    "id": "slash-command-plan-publish-unavailable",
+    "name": "Slash Command: /plan — publishing unavailable in this session",
+    "desc": "Tells the model that publishing plans is not available in the current session."
+  },
+  "70139165c9e9077b2296bf98f4f107223ce9aecd": {
+    "facing": "model",
+    "id": "slash-command-plan-publish-failed",
+    "name": "Slash Command: /plan share — publish failed",
+    "desc": "Tells the model the plan could not be published and names retrying or running with --debug as the next steps."
+  },
   "777e2b1290a745b98b994b1281226d60b5b7eaf3": { "facing": "ui" },
   "2568f97d25d1f2f184edf64add582f05a71c8658": { "facing": "ui" },
   "b270ea2d292190ebf7a5057a0f431ae054b5dfd9": { "facing": "ui" },
@@ -15386,14 +15636,34 @@
   "c80ba25e638855d4bb99550d7d6d84df2642486b": { "facing": "ui" },
   "ceee380f722f4c4b02a842f22ec32023762e7641": { "facing": "ui" },
   "e4c1eb106ec911a70f781f5baa3b937c2eb81e56": { "facing": "ui" },
-  "979e753f2a780647cb246dab1cc68da73ff0ec1b": { "facing": "ui" },
-  "7ad80fe822d81668f15d58b1404c8227d71cfb9f": { "facing": "ui" },
+  "979e753f2a780647cb246dab1cc68da73ff0ec1b": {
+    "facing": "model",
+    "id": "slash-command-sandbox-requires-wsl2",
+    "name": "Slash Command: /sandbox — requires WSL2",
+    "desc": "Tells the model sandboxing needs WSL2 and that WSL1 is not supported."
+  },
+  "7ad80fe822d81668f15d58b1404c8227d71cfb9f": {
+    "facing": "model",
+    "id": "slash-command-sandbox-unsupported-platform",
+    "name": "Slash Command: /sandbox — unsupported platform",
+    "desc": "Tells the model sandboxing is only supported on macOS, Linux and WSL2."
+  },
   "1046933c5a3f25c6e82d4c152e7f0153a7e8ecdb": { "facing": "ui" },
   "9b26f6bbe3a0334fcb05d7567a9381d894caa746": { "facing": "ui" },
   "5dc59e24e9282c2b9fafb86cd5d9113ec0eb5ea6": { "facing": "ui" },
   "62267c78d741ea990d9d24c2a742e8a56d939095": { "facing": "ui" },
-  "14914d900e5feb5acaa2fff85ec34c340de5234d": { "facing": "ui" },
-  "4e96e81040c15c116f4be11565a63937f37b7c0d": { "facing": "ui" },
+  "14914d900e5feb5acaa2fff85ec34c340de5234d": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-options",
+    "name": "Slash Command: /advisor — model rejected, valid options listed",
+    "desc": "Tells the model the requested advisor was rejected and enumerates the accepted values, so it can suggest a valid one instead of retrying the same name."
+  },
+  "4e96e81040c15c116f4be11565a63937f37b7c0d": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-options",
+    "name": "Slash Command: /advisor — model rejected, valid options listed",
+    "desc": "Tells the model the requested advisor was rejected and enumerates the accepted values, so it can suggest a valid one instead of retrying the same name."
+  },
   "f813de90d281a11b0245910e8f8879498b8491c1": { "facing": "ui" },
   "a9dc2c04c3ad56fbb0533248c764987596a5aaf7": { "facing": "internal" },
   "9f1aa74f1dae11141a52c84474602bc0b21d1dfc": { "facing": "internal" },
@@ -15460,8 +15730,18 @@
   "e57e591696fa23b01168a18666238180421a5e21": { "facing": "ui" },
   "a798586bf2cfb80c980cda01b3c86777e88332cc": { "facing": "ui" },
   "1af7aa437486a3fab2393ef5eb71f78d9414259b": { "facing": "ui" },
-  "07b8d7ec2cf47975b5df2fd7b6b155cf11c5cccf": { "facing": "ui" },
-  "745679bba5b9b360870c3f61a11a78da6f9b57ac": { "facing": "ui" },
+  "07b8d7ec2cf47975b5df2fd7b6b155cf11c5cccf": {
+    "facing": "model",
+    "id": "tool-result-background-session-persistence-disabled",
+    "name": "Tool Result: Cannot background — session persistence disabled",
+    "desc": "Tells the model /background cannot fork a job because session persistence is off, so the forked job would have nothing to resume."
+  },
+  "745679bba5b9b360870c3f61a11a78da6f9b57ac": {
+    "facing": "model",
+    "id": "tool-result-background-nothing-to-background-yet",
+    "name": "Tool Result: Nothing to background yet",
+    "desc": "Tells the model there is no conversation to fork into a background job until a message has been sent."
+  },
   "0699ba9efe7835584f2e1c31ffa7f333efb0f582": { "facing": "ui" },
   "51e9fb0ce79c7c58960285465198d3f99bb55d06": { "facing": "ui" },
   "09a85ccce8f7587c566ea726edcdb07795e7bc06": { "facing": "ui" },
@@ -15488,8 +15768,18 @@
   "7966e34b0540b1273161613b37378db0fb6800f1": { "facing": "ui" },
   "65f00346cee5f8203a173b2a255976f1aa2d33b1": { "facing": "ui" },
   "30251864612e4b4c48aefe41ff546827937160ed": { "facing": "ui" },
-  "b2409b4bf5d5d38042b8040f4449071149f6326e": { "facing": "ui" },
-  "8983335dc9ecd8dd75476cf128735b25d7824cf5": { "facing": "ui" },
+  "b2409b4bf5d5d38042b8040f4449071149f6326e": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-team-upgrade-browser-failed",
+    "name": "Slash Command: /rate-limit-options — could not open the upgrade page",
+    "desc": "The other arm of the same conditional: gives the model the upgrade URL plus the /login follow-up when no browser could be launched."
+  },
+  "8983335dc9ecd8dd75476cf128735b25d7824cf5": {
+    "facing": "model",
+    "id": "slash-command-effort-auto-level",
+    "name": "Slash Command: /effort — the auto level",
+    "desc": "The /effort usage line describing the auto level, which uses the default effort for the current model."
+  },
   "65b92f265a4ac5e19726f594217c2491fb84bb98": { "facing": "ui" },
   "14f04766fd9f9b30769f019f8e35936a4bd39b70": { "facing": "ui" },
   "79cd9abd3005cf8b721cae4d130ff82917a85a6b": { "facing": "ui" },
@@ -15577,8 +15867,18 @@
   "432075b0abe6f1c7f3a64f257edfea20d08fa251": { "facing": "ui" },
   "5ecc618207b83374a5ca760e406c57bb60d929c0": { "facing": "ui" },
   "c7d58e44b7705cebdbf15eb61ce45e2d54e065d6": { "facing": "ui" },
-  "3d4182b006ce9fa3ec5683cb3b0696dfca3510d5": { "facing": "ui" },
-  "e7bff6603ca4821c8edf8fa3bebfc4cf952cbeca": { "facing": "ui" },
+  "3d4182b006ce9fa3ec5683cb3b0696dfca3510d5": {
+    "facing": "model",
+    "id": "slash-command-web-setup-not-signed-in",
+    "name": "Slash Command: /web-setup — not signed in",
+    "desc": "Tells the model the user is not signed in to Claude and that /login must run first."
+  },
+  "e7bff6603ca4821c8edf8fa3bebfc4cf952cbeca": {
+    "facing": "model",
+    "id": "slash-command-web-setup-gh-cli-not-installed",
+    "name": "Slash Command: /web-setup — GitHub CLI not installed",
+    "desc": "Tells the model setup stopped because the `gh` binary is missing and gives both recovery paths (install and authenticate, or connect GitHub in the browser)."
+  },
   "e26f5b7b5e59b66545dfd0652133ca97d9d21695": {
     "facing": "model",
     "id": "system-prompt-usage-report-session-analysis",
@@ -15648,8 +15948,18 @@
     "name": "Host credentials write denied",
     "desc": "Permission-deny tool result returned to the model when it tries to write the host-managed credentials file."
   },
-  "fe6dad8ee172e149331b4b0ec2a0b55fcc1dcf47": { "facing": "ui" },
-  "4de9378ac3673447029be2594216a8b50dff2e68": { "facing": "ui" },
+  "fe6dad8ee172e149331b4b0ec2a0b55fcc1dcf47": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-original-cwd",
+    "name": "Slash Command: /add-dir — already the current working directory",
+    "desc": "Tells the model the path is the session's original cwd and therefore already readable, so no permission change happened."
+  },
+  "4de9378ac3673447029be2594216a8b50dff2e68": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-added",
+    "name": "Slash Command: /add-dir — already a working directory",
+    "desc": "Tells the model the directory is already in the working-directory set, so the add was a no-op and access was already available."
+  },
   "2df0a2d93b91455a345c9e9ee662999bb6b0911c": { "facing": "ui" },
   "8df3014c94045b504fc78809a0cd4aabe6baec7a": { "facing": "ui" },
   "70e9d52998c2fcb342b50c4ee27600726006382b": { "facing": "internal" },
@@ -18865,7 +19175,12 @@
     "desc": "Tool prompt for refreshing one or all connected MCP servers tool lists and interpreting per-server results"
   },
   "a0c8e3b98bf2faea685feef591e7d1ea7fda5b40": { "facing": "internal" },
-  "3a3a29009c62f9a068e61f81792a492a4126ecfd": { "facing": "ui" },
+  "3a3a29009c62f9a068e61f81792a492a4126ecfd": {
+    "facing": "model",
+    "id": "data-usage-credits-request-notifies-admins",
+    "name": "Data: Usage credits — the request notifies admins",
+    "desc": "Explains that requesting usage credits notifies the organization admins and that the request is reviewed and sent from an interactive session."
+  },
   "738825fc2b7494043112adbc70564b9858044171": { "facing": "internal" },
   "b83ea16a5ff8a161896e5f6dd81bce62bdb66e88": {
     "facing": "model",
@@ -24309,7 +24624,12 @@
   "c42426abe9be365ae579cc4dd37724aa65200e7d": { "facing": "ui" },
   "e27bfa43fda3ac34e82ccf561fe68bf15b7742aa": { "facing": "ui" },
   "3f524c41c64932ff46ab0405b440c6a5b4141f2c": { "facing": "ui" },
-  "326ffe5528be5d9359308061180986680af20085": { "facing": "ui" },
+  "326ffe5528be5d9359308061180986680af20085": {
+    "facing": "model",
+    "id": "slash-command-ide-plugin-installed-restart-required",
+    "name": "Slash Command: /ide — plugin installed, IDE restart required",
+    "desc": "Tells the model the plugin landed at a specific path but will not take effect until the IDE is fully restarted, which is a precondition for anything that depends on the integration."
+  },
   "f74328b410782ca5247277e60ae7347b73d50156": { "facing": "ui" },
   "87b10ba699c1b83407a9da14bc22819d4448b55d": { "facing": "ui" },
   "b4f5493ac974bca473ee2f3a87096309a14f2783": { "facing": "ui" },
@@ -24322,7 +24642,12 @@
   "7a84136f784cd2ca48825fb1feac0832a7b1c3cf": { "facing": "ui" },
   "fad818c98c9b0bc729a0a1c64302eb0bc2656c52": { "facing": "ui" },
   "681d1d446fc51be16c33a2cbecbd213f9ed37fa3": { "facing": "ui" },
-  "7ad9dc8855674f88239f436bbc38b46a7b713b81": { "facing": "ui" },
+  "7ad9dc8855674f88239f436bbc38b46a7b713b81": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-bulk-result",
+    "name": "Slash Command: /mcp enable|disable all — bulk result",
+    "desc": "Conditional tail concatenated onto the same emitted string, reporting the count that could not be changed and pointing at /mcp to check."
+  },
   "5f65707602a73afe9df58d0c86ebc3c4ee969503": { "facing": "ui" },
   "c1a53c18b7779fbbfbbd00078b1c4fb3ba90b8a6": { "facing": "ui" },
   "4531cf97fb2ce31b93c3f2301a7e9043841c03ef": { "facing": "ui" },
@@ -24706,7 +25031,12 @@
     "name": "Tool Result: memory_read document wrapper",
     "desc": "Wrapper the memory_read tool result uses around a fetched memory document — shared-store reference-data header, updated/version line, and the document body."
   },
-  "878c87c9bcade7dc6a7a0dcb021e7205011ace08": { "facing": "ui" },
+  "878c87c9bcade7dc6a7a0dcb021e7205011ace08": {
+    "facing": "model",
+    "id": "slash-command-copy-always-preference-saved",
+    "name": "Slash Command: /copy — always-copy preference saved",
+    "desc": "Tells the model the copyFullResponse setting was persisted and names /config as the way to reverse it, i.e. a state change plus its undo path."
+  },
   "c1f223e6c9811bfcef7799c2d6d4bc1cd1ce2514": {
     "facing": "model",
     "id": "tool-result-memory-write-path-missing",
@@ -27918,7 +28248,12 @@
   "f3c2db795037692f8110865c9ce05f1047fcb88e": { "facing": "ui" },
   "81b923ff3a17386944a92821fecc01dca9621d88": { "facing": "internal" },
   "d38178538b518e3b2c7dbda8d120eab54c1387d4": { "facing": "internal" },
-  "4e2828426e2200d3c40aa81c0566da5ff6c90c00": { "facing": "ui" },
+  "4e2828426e2200d3c40aa81c0566da5ff6c90c00": {
+    "facing": "model",
+    "id": "slash-command-mcp-bulk-reenabled-in-another-session",
+    "name": "Slash Command: /mcp — bulk disable didn't persist, re-enabled elsewhere",
+    "desc": "Tells the model that a `/mcp disable all` silently failed to persist for N servers and gives the enable-then-disable recovery, so it does not report the disable as done."
+  },
   "79f1980d4e7f851598cf1870dbfa896dd6ae026e": {
     "facing": "model",
     "id": "slash-command-mcp-other-session-disabled-reconnect-all",
@@ -30731,10 +31066,20 @@
   "c6b1629a1bf6d4436d927a9dacb91f1eec95d384": { "facing": "internal" },
   "9a939080c4e25fc9da276bbb3b392cebe35c48b8": { "facing": "internal" },
   "f52b2125e222374a173146f52198237b02e391bd": { "facing": "ui" },
-  "abb4d7636991fa026784e78ae294351401ca3245": { "facing": "ui" },
+  "abb4d7636991fa026784e78ae294351401ca3245": {
+    "facing": "model",
+    "id": "data-fork-restricted-launch-flags-list",
+    "name": "Data: Fork — restricted launch flags",
+    "desc": "Names the launch restrictions a forked session would not inherit: a custom system prompt, a tool allowlist, or restricted settings."
+  },
   "effe6675e057b98e60e0b3076149861f4084a074": { "facing": "ui" },
   "a1965f508d1765d01a7500513c19a7abc9be9233": { "facing": "ui" },
-  "b1db67cdc71d57680dd9a15c8105c72100b4cf9c": { "facing": "ui" },
+  "b1db67cdc71d57680dd9a15c8105c72100b4cf9c": {
+    "facing": "model",
+    "id": "slash-command-advisor-fable-needs-usage-credits",
+    "name": "Slash Command: /advisor — Fable 5 advisor needs usage credits",
+    "desc": "Tells the model the advisor was not set because Fable 5 bills to usage credits that are not enabled, and gives the exact command that fixes it."
+  },
   "123f5e661420a0ae488ed85ec3cdb5c2f95f677e": { "facing": "ui" },
   "17c16ab6cb3b834bc1fbfeba29120e01cb87a433": { "facing": "ui" },
   "1fd044f6b538a828bcf8575ee5ffcc206e07c613": { "facing": "ui" },
@@ -30745,7 +31090,12 @@
   "9e2b7b19f11e3a3693de2e2cd105b5d30099b441": { "facing": "ui" },
   "e419eafdc7130cd7dd0136976bb98470938b34eb": { "facing": "ui" },
   "21610254bdedeed238d783e58268d0bfc12fc76a": { "facing": "ui" },
-  "902896e42275917f0d7334146b599a9662615c2e": { "facing": "ui" },
+  "902896e42275917f0d7334146b599a9662615c2e": {
+    "facing": "model",
+    "id": "data-fork-blocked-restricted-launch-flags",
+    "name": "Data: Fork blocked — session started with restricting launch flags",
+    "desc": "Tells the model why forking is refused (the copy would drop the parent's safety restrictions) and gives the two ways forward, so it does not retry /fork blindly."
+  },
   "e63ca8c9be95057f8ce637677ae5875d1af7474a": { "facing": "ui" },
   "ca4454bebef5ae4b495637660e37b55c1801e457": { "facing": "internal" },
   "7d5a6f5c46a2157fed36ed091c79da2da06e421e": { "facing": "internal" },
@@ -30896,5 +31246,1987 @@
   },
   "374eda6005cf31d43906c632317b6ff0cecc2cdf": { "facing": "ui" },
   "86222f89030f0e115df7bcc86747ff4e00abce09": { "facing": "ui" },
-  "919337a3765b3ee5f9504db5e1ddcb6a39feee92": { "facing": "ui" }
+  "919337a3765b3ee5f9504db5e1ddcb6a39feee92": { "facing": "ui" },
+  "92e4f43b1d2473a03ffd1b9d75f17a7a5008ade2": {
+    "facing": "model",
+    "id": "system-reminder-team-coordination-task-list-upkeep",
+    "name": "System Reminder: Team coordination task-list upkeep",
+    "desc": "Conditional clause interpolated into the Team Coordination system-reminder when the teammate has task-list tools, telling it to check the task list, create tasks when work should be divided, and mark tasks resolved"
+  },
+  "4132dc0d7b0dd1168d41f263aa76e9251db48b94": { "facing": "ui" },
+  "15a38b16894c6667fb240cf98821e1397401edaa": {
+    "facing": "model",
+    "id": "skill-claude-code-docs-plugin-eval",
+    "name": "Skill: Claude Code docs plugin-eval reference",
+    "desc": "Full offline reference file shipped as references/plugin-eval.md in the claude-code docs skill, covering claude plugin eval, plugin eval init, case format, graders, flags, results JSON, sandbox internals, CI and /skill-doctor"
+  },
+  "a20f52899d8a4d7a85920b84f87a72c3a15bcb8e": {
+    "facing": "model",
+    "id": "skill-claude-code-docs-plugin-eval-quickref",
+    "name": "Skill: Claude Code docs plugin-eval quick reference",
+    "desc": "Quick-reference file shipped as references/plugin-eval-quickref.md and also inlined into the docs skill prompt, orienting the model on claude plugin eval, plugin eval init and /skill-doctor availability"
+  },
+  "3d165a18f21ba06f8cb35351c0852fe354aadb4a": {
+    "facing": "model",
+    "id": "system-prompt-plugin-eval-enabled-session-status",
+    "name": "System Prompt: Plugin eval enabled-session status",
+    "desc": "Announces that plugin eval is enabled in the current session and explains how clients that cannot receive the organization rollout can set the enablement variable without relying on project settings"
+  },
+  "85d8ea392568b344d3a5ee05abc88022a63f7adf": {
+    "facing": "model",
+    "id": "system-prompt-plugin-eval-not-enabled-session-status",
+    "name": "System Prompt: Plugin eval not-enabled session status",
+    "desc": "Tells the model that claude plugin eval is gated off in this session, to say so plainly rather than claim the command does not exist, and not to guess enablement variable names"
+  },
+  "bcdfe2d6f98d4cd12233e4253f89bb39cd8a5843": {
+    "facing": "model",
+    "id": "skill-artifact-pr-review-html-template",
+    "name": "Skill: Artifact PR review HTML template",
+    "desc": "HTML body-fragment template the Artifact PR-review skill gives the model, with escaping rules for untrusted PR strings, design tokens, slot markers and the baked decisions script"
+  },
+  "a442cbf9933690d95b852d8593b3fa08696fe93e": { "facing": "ui" },
+  "46932bed563730d9fe77197b700b7d42df97ce36": { "facing": "ui" },
+  "ca3ab01d6f1ab70491e56c7654eb66a32fff485c": { "facing": "ui" },
+  "35eb2b440023ad8ee2be05df232fe476583da7cf": { "facing": "ui" },
+  "0812364ce48ec51ba6f28abf7ac6df8ed71b89bf": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-patch-failed-withheld-tail",
+    "name": "Data: Task notification artifact auto-edit patch failed withheld tail",
+    "desc": "Standalone clause used when the explanatory reply was withheld, telling the session that a requested automatic edit could not be applied to the artifact's current source, that the artifact was not changed, and that it should read the thread and make the change itself"
+  },
+  "fd7446e449affe83742700b2c2f58f534067d029": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-refused-reply-withheld",
+    "name": "Data: Task notification artifact auto-edit refused and reply withheld",
+    "desc": "Task-notification detail for the case where a requested automatic artifact edit was refused and the explanatory reply was also withheld, telling the session to read the thread and make the change itself"
+  },
+  "f5741fa8bbcc8b5092070a82c252a43e0ed5fe5f": { "facing": "ui" },
+  "a6069a8fd382eda833c813327ff2ec0cb3e654b1": {
+    "facing": "model",
+    "id": "tool-result-artifact-reply-duplicate-standing-reply",
+    "name": "Tool Result: Artifact reply refused as duplicate of standing reply",
+    "desc": "Artifact tool result explaining that the reply was not posted because a Claude reply already stands after every \"sent to Claude\" request on the thread, and that acknowledge_duplicate: true is needed for a genuinely new follow-up"
+  },
+  "d8e1015028eaea3ae0abe574d5651b3b259904e9": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-acknowledge-duplicate",
+    "name": "Tool Parameter: Artifact acknowledge_duplicate",
+    "desc": "Schema description for the Artifact tool acknowledge_duplicate parameter, permitting a reply when one already stands and warning that it is only for a deliberate follow-up that adds something new"
+  },
+  "6f4078f00d314bed28d90205b2f83997945c2147": { "facing": "ui" },
+  "142267510442a069506e88fe5641d947c2adb684": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edited-reply-failed-acknowledgement-tail",
+    "name": "Data: Task notification artifact auto-edit landed but summary reply failed with acknowledgement standing",
+    "desc": "Tail of the auto-edit task notification for when the artifact was changed but the summary reply failed to post and only the session acknowledgement stands, instructing it to post the promised summary with acknowledge_duplicate: true or revert"
+  },
+  "c97ec2af04e067ef30a8e39e9f4a2367c2c3574e": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replied-followup-withheld",
+    "name": "Data: Task notification artifact promised follow-up reply withheld",
+    "desc": "Task-notification detail stating that the promised follow-up reply to an artifact comment thread was withheld and the acknowledgement stands as this session's reply, so the session should review the thread and make any requested change itself"
+  },
+  "9b5e65d99eafd0dea2bfecf2d11c225ebed3c175": {
+    "facing": "model",
+    "id": "data-artifact-watch-startup-current-artifact-of-interest",
+    "name": "Data: Artifact watch startup current artifact of interest",
+    "desc": "Meta message injected when the session was started with claude --watch-artifact, naming the watched artifact as the current artifact of interest and telling the model to re-read it before editing or republishing"
+  },
+  "58ba72b10535ac17e46d2668e71c2d1585496fe6": {
+    "facing": "model",
+    "id": "data-artifact-watch-not-carried-into-session",
+    "name": "Data: Artifact watch not carried into this session",
+    "desc": "Meta message correcting the model when an earlier transcript contains a claude --watch-artifact meta message that does not apply to the current session, telling it that it is not watching that artifact"
+  },
+  "dc017ad99774866ac8d9ddb1705e17a63b028825": { "facing": "internal" },
+  "3c858f192f925376d1600d89577c94a02bf0428c": {
+    "facing": "model",
+    "id": "system-prompt-skill-doctor-available-session-status",
+    "name": "System Prompt: /skill-doctor available session status",
+    "desc": "States that /skill-doctor is available in this session, injected into the availability line of the embedded plugin-eval reference in the claude-code docs skill prompt"
+  },
+  "944613d46245660110bcdd870ef71fa24fedb81e": {
+    "facing": "model",
+    "id": "system-prompt-skill-doctor-not-available-session-status",
+    "name": "System Prompt: /skill-doctor not-available session status",
+    "desc": "States that /skill-doctor is not available in this session (early access) and that the model may describe it but must not tell the user to run it"
+  },
+  "df19bca4e80d0e985c307d957d60c59c7bfe6668": {
+    "facing": "model",
+    "id": "system-prompt-plugin-eval-embedded-reference-wrapper",
+    "name": "System Prompt: Plugin eval embedded offline reference wrapper",
+    "desc": "Wrapper block that heads the embedded offline reference in the claude-code docs skill prompt, stating the current session's plugin eval and /skill-doctor status before the quick-reference body"
+  },
+  "8b90ba64f8ebe6c3dac844f7ed79d0c67497fc03": { "facing": "ui" },
+  "84a3ca60b3572466ad3f03811b6cda622cc58f4f": {
+    "facing": "model",
+    "id": "data-poll-event-delivery-chunked",
+    "name": "Data: Poll event delivery chunked notice",
+    "desc": "System-tagged line appended to a poll-event delivery telling the model that more queued events follow in the next delivery, oldest first, and that nothing was dropped"
+  },
+  "34e7d43b05f8a07bfec0d10c7869bfb4c5dd0905": { "facing": "ui" },
+  "71007b48fa9bba77010b5b61fdd387836530b6a9": { "facing": "internal" },
+  "c46af53d998aeb1548f719afa39170646dbdfbd1": { "facing": "ui" },
+  "275f58e2738655a583c4d69b9d851e7aa0a7f604": { "facing": "ui" },
+  "b5d48c2be896645a3a9b0055c7f9729030195927": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-react-stop-body",
+    "name": "Data: Task notification artifact auto-reply stopped body",
+    "desc": "Body of the task notification emitted when artifact auto-reply subscriptions stop, joining the per-artifact discard records with the re-arm note"
+  },
+  "7bbce2173e5f54141ed06e38f67ece8e40f7d1f1": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-react-stop-republish-note",
+    "name": "Data: Task notification artifact auto-reply re-arm note",
+    "desc": "Note inside the auto-reply-stopped task notification explaining that a future publish re-arms the subscriptions and that the session should not republish just to re-enable auto-replies"
+  },
+  "2e9815791ae6c05c2dbeb30e1c7dafca7cdef4ea": { "facing": "internal" },
+  "01eae68a8b9e17dd048df50ba5e25f0ddf1616cc": { "facing": "internal" },
+  "ddd780a614234560ffbee915cf4200ef122a8f10": { "facing": "ui" },
+  "820c450e039b539a17a8b63a77a45e9fc1b6ded2": { "facing": "ui" },
+  "84174631003ae9e9c52aa843ae9ae208153ad83a": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-reply-withheld-lead",
+    "name": "Data: Task notification artifact auto-reply withheld lead",
+    "desc": "Lead sentence of the task notification reporting that the auto-reply to an artifact comment thread was withheld, naming the thread, the artifact and the withholding reason"
+  },
+  "4426a3ac9414d0251b3efe957dd8243201aefbf9": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-noop-withheld-tail",
+    "name": "Data: Task notification artifact auto-edit no-op withheld tail",
+    "desc": "Tail of the withheld-reply task notification stating that the artifact already matches the requested change so it was not modified, and that the session should review the thread if the request meant something else"
+  },
+  "c7e85789b723ff48f4ee976c056d60f2df52d1a8": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edited-summary-reply-lead",
+    "name": "Data: Task notification artifact auto-edited with summary reply lead",
+    "desc": "Lead of the task notification reporting that the session auto-edited an artifact in response to a comment thread and posted a summary reply"
+  },
+  "69ad49cff57b713d6411e48687930d8a65f564a4": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edited-unresolved-thread-tail",
+    "name": "Data: Task notification artifact auto-edited unresolved thread tail",
+    "desc": "Tail appended to the auto-edited notification when the thread may still be open, telling the session to check the comments, resolve the thread if the change is right, and not to post another reply"
+  },
+  "8da0f749aed45a99ce554c01df9cdd0222ea219e": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replied-resolved-thread-tail",
+    "name": "Data: Task notification artifact acknowledgement on resolved thread tail",
+    "desc": "Tail appended to the acknowledgement-only auto-reply notification when the thread is already resolved, telling the session not to post another reply and not to reply merely to confirm no change was needed"
+  },
+  "79bf2163c9f28203ab4aa9cd937d35fdd57b7df1": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-posted-reply-standing-tail",
+    "name": "Data: Task notification artifact auto-posted reply already standing tail",
+    "desc": "Shared tail telling the session that the auto-posted reply is already in the thread and it must not post another because the commenter can see it"
+  },
+  "969ebf7dbe94d58d588d1c6b0b063f76660652a0": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-thread-resolve-after-acting-tail",
+    "name": "Data: Task notification artifact resolve thread after acting tail",
+    "desc": "Second half of the auto-posted-reply tail, telling the session to resolve the thread with the Artifact tool once it has finished acting and when to leave it open"
+  },
+  "70ad84cc55a41b2b8562cca9176d5166fd2a453e": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-no-confirmation-reply-tail",
+    "name": "Data: Task notification artifact no confirmation-only reply tail",
+    "desc": "Tail telling the session not to reply merely to confirm that no change was needed because the standing reply already covers it"
+  },
+  "02163bd8c6f7427b20c98ab872b89e4b629da149": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-act-then-reply-and-resolve-tail",
+    "name": "Data: Task notification artifact act then reply and resolve tail",
+    "desc": "Tail instructing the session, once it has acted on an artifact comment thread, to check the thread first, post a brief reply saying what it did unless one already stands, and resolve the thread"
+  },
+  "0492c83d0ab10610d3841f791ad6dacaa0a1d739": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-resolve-after-promised-reply-tail",
+    "name": "Data: Task notification artifact resolve after promised reply tail",
+    "desc": "Tail instructing the session to resolve the artifact comment thread once the promised reply is posted, and when to leave it open instead"
+  },
+  "6bab147857b2bc0d0f3c811c118906ed30791da7": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-live-updates-monitor-description",
+    "name": "Data: Artifact live-updates monitor task description",
+    "desc": "Description of the ambient websocket monitor task for artifact live updates, naming the artifact and how the watch was armed, which is echoed to the model in every monitor task notification for that task"
+  },
+  "f9a5d01e0ef5d474702ba813c70509d4bfa0c020": { "facing": "internal" },
+  "1468781dcdbf1efa5ce6a4cafbf89d3523b6067c": { "facing": "ui" },
+  "ac6758ab5729392db6b8b7897e1bb7deba87ded8": { "facing": "ui" },
+  "dbac115365d05e9ba9a7ca9d59e28e0ffaac7e6c": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-terminal-native-shift-enter",
+    "name": "Slash Command: /terminal-setup — this terminal supports Shift+Enter natively",
+    "desc": "Tells the model the named terminal (Ghostty/Kitty/Warp/WezTerm/Windows Terminal) needs no setup, so a follow-up install attempt would be pointless."
+  },
+  "69309c255f9bf055be23e0046e9d28144b7aa871": { "facing": "ui" },
+  "dcf501311933d9fdb54c36264b8e7e17d8157d9e": { "facing": "ui" },
+  "ad05fef71ef213103d52b5c9dcbeaeee4dabec81": { "facing": "ui" },
+  "762bcb544b9e8dc439fad15826635bb4a689face": { "facing": "ui" },
+  "b42d294a4922f6579ff2d41c05bef5c8141d9fbb": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-parse-failed-empty-metadata",
+    "name": "Plugin validate: frontmatter parse failed, empty metadata",
+    "desc": "Consequence clause appended when a skill/command frontmatter fails to parse: the component loads with every frontmatter field silently dropped."
+  },
+  "726d4fe061cefeb759f4330fbb1b87e788177d4e": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-parse-failed-agent-not-loaded-tail",
+    "name": "Plugin validate: project agent does not load (tail)",
+    "desc": "Tail half of that clause: with no frontmatter name the file is treated as a co-located reference document and skipped."
+  },
+  "6206ac4202ee7be12b89d703dbf158be5324ced1": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-parse-failed-agent-not-loaded-lead",
+    "name": "Plugin validate: project agent does not load (lead)",
+    "desc": "Lead half of the consequence clause for a project agent whose frontmatter failed to parse."
+  },
+  "e4921eae33db6a27843336dda3adb0cbc6100689": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-parse-failed-agent-name-from-filename",
+    "name": "Plugin validate: agent name falls back to the filename",
+    "desc": "Consequence clause for a non-project agent whose frontmatter failed to parse: the name comes from the filename and every other field is dropped."
+  },
+  "4080f2294dcd84cef71a548b6b4108d88662cb08": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-not-mapping",
+    "name": "Plugin validate: frontmatter is not a YAML mapping",
+    "desc": "Error pushed by the /plugin validate frontmatter checker when the parsed YAML is not a key/value mapping."
+  },
+  "3ba0371d0ca4d49823f8002cce9ada2c6409a19d": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-shell-invalid-value",
+    "name": "Plugin validate: invalid shell value",
+    "desc": "Error emitted when a skill/command frontmatter `shell:` is neither bash nor powershell."
+  },
+  "3f0d9a2fe49ffccdbec1ffbcc48a5398237e4999": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-hooks-not-regular-file",
+    "name": "Plugin validate: hooks.json is not a regular file",
+    "desc": "Warning emitted when hooks.json is a symlink, FIFO or directory and was therefore not read."
+  },
+  "4c1171fd6c8ed12211cee064401af3449038622f": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-component-dir-symlink-warning-tail",
+    "name": "Plugin validate: component directory symlink warning tail",
+    "desc": "Tail of the warning saying component directories are not followed through symlinks and must be validated at their real path."
+  },
+  "de98b51797b1b2a86ed733a3d03c3e6ed61af441": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-component-not-regular-file-tail",
+    "name": "Plugin validate: component path not a regular file",
+    "desc": "Tail of the warning counting components skipped because the path is not a regular file."
+  },
+  "6600531fa1c85400544141d5875a0e948784ad3f": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-files-over-size-cap",
+    "name": "Plugin validate: files past the size cap",
+    "desc": "Warning counting component files that exceeded the read size cap and were not validated."
+  },
+  "84acc32819055431e30d88550645d8e1ae689585": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-enclosing-claude-dir-symlink",
+    "name": "Plugin validate: enclosing .claude is a symlink",
+    "desc": "Lead sentence of the error saying the enclosing .claude directory is a symlink so nothing was validated."
+  },
+  "d222ffb51e6186b1c78710cc8f8d9c0729272c63": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-component-dirs-not-followed",
+    "name": "Plugin validate: component dirs are not followed",
+    "desc": "Error telling the caller to pass the real directory because component dirs are read without following symlinks."
+  },
+  "2c821b5dbb601e27722eee14b5964e6244df562b": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-claude-dir-symlink-warning-tail",
+    "name": "Plugin validate: .claude symlink warning tail",
+    "desc": "Tail half of the warning that a symlinked .claude directory must be validated at its real path."
+  },
+  "7348cfeb592a4c537152bc92b82c6e5616f45154": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-claude-dir-symlink-warning",
+    "name": "Plugin validate: .claude directory is a symlink",
+    "desc": "Full warning emitted when the .claude directory is a symlink and nothing under it was validated."
+  },
+  "6b29b6d3018509820c4409b4870a393e7d047839": { "facing": "ui" },
+  "c27361350e87ebedfe0e811d7167813a0d31a201": { "facing": "ui" },
+  "6febc252ed8de6291acbb1caa1f71e67654efe88": { "facing": "ui" },
+  "6726090a27ba27ab75cfab9c479e97eeb9753542": { "facing": "ui" },
+  "c4fe446fbd89424ba0fda17ddb4fe80d42c99181": { "facing": "ui" },
+  "f3358e4e46998e99000f5aae0b6b574e32c3617b": { "facing": "ui" },
+  "db2baa3fcae475538d0c10696300dffea41b87db": { "facing": "ui" },
+  "94453b00f63ef775f488bcf7ebfdc1ade318dd10": { "facing": "ui" },
+  "66ffdb2e470f20377dae1eeed67e2bbf8fa77924": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-usage",
+    "name": "/plugin validate usage",
+    "desc": "Usage text returned when /plugin validate is invoked without a path."
+  },
+  "6ead9a353417a5ef31a3d5ebb0a78f8f3592e719": { "facing": "ui" },
+  "13f52fe42074fd93273433bdb79d1cf13a9decfc": { "facing": "ui" },
+  "5a9daea19f76bf65542568cd2e8d1fd95ef02bec": { "facing": "ui" },
+  "6c893cc60ea0ea0f4c8c4bd88cb18654e30e74ad": { "facing": "ui" },
+  "b4fa068cfffb1bebf2ee87b487701ae98ea10d92": { "facing": "ui" },
+  "569102aa48aac3b3bc962c2c1a82ec601f335c54": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-reply-esc-stopped-body",
+    "name": "Artifact auto-reply stopped on Esc: notification body",
+    "desc": "Body wrapper of the task notification emitted when Esc stops artifact auto-reply subscriptions; carries the re-arm note."
+  },
+  "2bf2cb8e490ae0bf80a6412a677ab8acc014db26": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-reply-stopped-rearm-note",
+    "name": "Artifact auto-reply re-arm note",
+    "desc": "Tells Claude that a future publish re-arms stopped auto-replies and not to republish just to re-enable them."
+  },
+  "984ee89eb26de2e9cfa546d0635a2fadc3acf395": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-stop-disclosure-body",
+    "name": "Artifact auto-replies stop disclosure body",
+    "desc": "Composed body of the task notification sent when the kill-all-agents gesture disarms artifact auto-replies."
+  },
+  "bde01c8da0120cf4b5dc5864c96435c0e289e091": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-disarmed-session",
+    "name": "Artifact auto-replies disarmed for the session",
+    "desc": "Task-notification line telling Claude auto-replies stay disarmed for the rest of this session."
+  },
+  "f2b013e5ff2502717e0835b04b9c16bf1b8374f6": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-none-active-to-stop",
+    "name": "No artifact subscription was active to stop",
+    "desc": "Task-notification line for the kill-agents gesture when no auto-reply subscription was active."
+  },
+  "e393bd8a24e3df1c98a58b291aff8f149e0de3cb": {
+    "facing": "model",
+    "id": "skill-artifact-template-live-editor-capabilities-note",
+    "name": "Live-editor template capabilities note",
+    "desc": "Live-editor variant of the artifact template's \"needs more than static HTML\" section appended to the doc/sheet/slides SKILL.md."
+  },
+  "3fccba46724dd6b86cd0e07a82e0538cb3be64db": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-cli-subcommands",
+    "name": "claude-code skill: plugin CLI subcommand list header",
+    "desc": "Header of the `claude plugin` CLI subcommand listing injected into the claude-code skill's Current Build section."
+  },
+  "f5d0c3be4aff4c00efb80f0ff0e99e21184c8975": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-eval-reference",
+    "name": "claude-code skill: plugin eval reference pointer",
+    "desc": "Instruction pointing Claude at references/plugin-eval-quickref.md and plugin-eval.md for any plugin-eval or /skill-doctor question."
+  },
+  "460c60c7fb73f911e09e9324a305793ca3f76553": { "facing": "ui" },
+  "164acefd65e26ae784e0e77f615e69cd99dbe303": { "facing": "ui" },
+  "e836d5c3a58e3f2846d172c3af86a629eb0084f6": {
+    "facing": "model",
+    "id": "data-artifact-watch-not-restarted-tail",
+    "name": "Artifact watch could not be restarted",
+    "desc": "Tail of the meta message telling Claude a previous artifact watch did not carry over and is not active."
+  },
+  "a1bbf68a873b7d80bb3a4d7e5f1182404a69dd21": { "facing": "ui" },
+  "b35f8a5b691d8b6dc155f741c7aea91ba5e63005": { "facing": "ui" },
+  "4bfe8302a148e1527c3f0d0307159a7caeaeca3b": { "facing": "ui" },
+  "ec19570eb13fac41b9835aa7474e82db5d7f15ef": { "facing": "ui" },
+  "3d4661083ac3f1ca3c186cd3878897be5a51cebb": { "facing": "ui" },
+  "7f8a8cf69baa7c939a27a57ed56263803f0f119b": { "facing": "ui" },
+  "aa0f6219ae5b5762847da2da92056e3398aa7e28": { "facing": "ui" },
+  "ca37e46a37e5113d314d2529a8a3e6d31096bbc5": { "facing": "ui" },
+  "cbe4bd40b269e921d5d99c7262bd449e0bbb063a": { "facing": "ui" },
+  "dd2a763c5d70136401b9eb6c8c71d281c6e4f4ea": { "facing": "ui" },
+  "a420e46c3e6db1adb300ea87ff22edbc6ad3cbec": { "facing": "ui" },
+  "5af5930a1e95122bab4fde250bcb44146604697d": { "facing": "ui" },
+  "c7aedade7b7b9aed53953ee2970cf2ddb182c2ac": { "facing": "internal" },
+  "3bff8ec075652c8286f2dc6a875b9499f4b510a4": { "facing": "internal" },
+  "4472f606b026c0397446913a40c0894966f5870c": { "facing": "internal" },
+  "13c4d610a9c3448e12ffbac2408abfe8fbd23fc3": { "facing": "ui" },
+  "45b7f5f345020cbfa0b0f438f3f57c9d1dda62ac": { "facing": "internal" },
+  "f0f202ddf4a5538afaf62b3047c40294c3ddb464": { "facing": "internal" },
+  "a28b1f9889255f075bd23796149ea0ebd91008e5": { "facing": "internal" },
+  "61510511f867cd39519f227cef88b8d81697dd16": { "facing": "ui" },
+  "ce4d50d6fd35655b83a51f33cf2b5fc58fb8fa8e": { "facing": "ui" },
+  "a790cb8c0801c072f2b48bf19bbe3206f72e7d0a": { "facing": "ui" },
+  "ef7d6a847ca29e79a3b805576edb59dd2fc47f74": { "facing": "ui" },
+  "89646370d0ad545b7448412b97aea1e95286fd18": { "facing": "ui" },
+  "90a90d1283196cfaf562309e8cf951344e5af917": { "facing": "internal" },
+  "c41e4581def32b91bd8d884f59f03a818da98783": { "facing": "internal" },
+  "f22a38386193f6af491eb804638d2e8391961776": { "facing": "internal" },
+  "2393acc0b2089b1886ae27c84cdb41bfe725a0d0": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-claude-dir-symlink-warning-lead",
+    "name": "Plugin validate: .claude symlink warning (lead)",
+    "desc": "Lead half of the warning that a symlinked .claude directory was not followed, so nothing under it was validated."
+  },
+  "65f1354f7e602134a3bf010fdc401c44cb638bef": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-frontmatter-parse-failed-agent-not-loaded-lead",
+    "name": "Plugin validate: project agent does not load (lead)",
+    "desc": "Lead half of the consequence clause for a project agent whose frontmatter failed to parse."
+  },
+  "d137d7c8d3d5ab021e12e691f2ae8428ba718bd4": { "facing": "ui" },
+  "66afb649147082bb612dd709a819aaf610f18701": {
+    "facing": "model",
+    "id": "slash-command-mcp-server-disabled-enable-first",
+    "name": "Slash Command: /mcp — server is disabled, enable it first",
+    "desc": "Tells the model the named MCP server cannot be reconnected because it is disabled and that the fix is `/mcp enable` first, so it retries the right action instead of the same one."
+  },
+  "a853c9cb682b94e949ed954f8f52ced00e2f0150": {
+    "facing": "model",
+    "id": "slash-command-mcp-bulk-reenabled-in-another-session",
+    "name": "Slash Command: /mcp — bulk disable didn't persist, re-enabled elsewhere",
+    "desc": "Tells the model that a `/mcp disable all` silently failed to persist for N servers and gives the enable-then-disable recovery, so it does not report the disable as done."
+  },
+  "3a12b09e6907ca00635e734964fc07c1a714ca4f": {
+    "facing": "model",
+    "id": "slash-command-mcp-bulk-reenabled-in-another-session",
+    "name": "Slash Command: /mcp — bulk disable didn't persist, re-enabled elsewhere",
+    "desc": "Conditional tail concatenated onto the same emitted string, stating how many servers did stay disabled."
+  },
+  "373e1fd613f29297bda49b5c942ffa345921b5de": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-threw",
+    "name": "Slash Command: /mcp — reconnect threw an error",
+    "desc": "Reports that the reconnect attempt for a named server raised an exception and carries the sanitized reason, so the model knows the server is still down and why."
+  },
+  "4410021e3a6cb998da584710d421189cdbabc367": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-threw",
+    "name": "Slash Command: /mcp — enable/disable threw an error",
+    "desc": "Reports that enabling or disabling a named MCP server failed with an exception and carries the sanitized reason, so the model does not treat the toggle as applied."
+  },
+  "e7d1c50e26271e88d14ba0a8c4efe51d42d38b99": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-connected",
+    "name": "Slash Command: /mcp — claude.ai auth succeeded and server connected",
+    "desc": "Confirms the named MCP server is now authenticated and connected, so the model can go ahead and use its tools."
+  },
+  "286818b053b52ce1b11749eab33744f0ea29a872": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-still-unauthorized",
+    "name": "Slash Command: /mcp — still unauthorized after reconnect",
+    "desc": "Tells the model the browser sign-in did not take effect and that the user must complete it before retrying from /mcp, so it stops assuming the server is usable."
+  },
+  "6d2eef6d43d78a5b500346231f0ee00ec7a2ac29": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-reconnect-failed-detail",
+    "name": "Slash Command: /mcp — reconnect after auth failed, with reason",
+    "desc": "Reports that the post-authentication reconnect failed and carries the sanitized failure reason so the model can tell the user what went wrong."
+  },
+  "dd2fb0f202ea7d2ed855b0f36da6df6b32eadcc7": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-reconnect-failed-restart",
+    "name": "Slash Command: /mcp — reconnect after auth failed, restart to retry",
+    "desc": "Sibling branch when no reason is available: tells the model the only remaining recovery is restarting Claude Code."
+  },
+  "a2ab347a4f9f922a5d3beecf045683af27ad3979": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-disconnected",
+    "name": "Slash Command: /mcp — claude.ai credentials cleared, server disconnected",
+    "desc": "Tells the model the server's cached auth was cleared and it is now disconnected, so its tools are no longer available this session."
+  },
+  "ca153b604a45d97f9741ecd7e5ac1d48c9a1044c": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnected",
+    "name": "Slash Command: /mcp — OAuth succeeded and server reconnected",
+    "desc": "Confirms the OAuth flow completed and a previously authenticated server is connected again, so the model can use its tools."
+  },
+  "cee55d109760593e552ae26353dbdb3b80fe5bb8": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-credentials-rejected",
+    "name": "Slash Command: /mcp — new credentials rejected on reconnect",
+    "desc": "Tells the model the fresh OAuth tokens were refused by the server and gives two recovery paths (re-authenticate, or restart), so it does not loop on the same flow."
+  },
+  "0ca0b0c24acd870709f894089ce5ffbced18fae3": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnect-failed-detail",
+    "name": "Slash Command: /mcp — reconnect failed after OAuth, with reason",
+    "desc": "Reports that authentication succeeded but the reconnect failed, carrying the sanitized reason so the model can distinguish an auth problem from a transport problem."
+  },
+  "8da662bda5a59db051c12c290490193183f6a3e7": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnect-failed-restart",
+    "name": "Slash Command: /mcp — reconnect failed after OAuth, restart to retry",
+    "desc": "Sibling branch with no reason available: tells the model restarting Claude Code is the remaining recovery step."
+  },
+  "6632d7c08353642d9a637c06d59e655595748242": {
+    "facing": "model",
+    "id": "slash-command-mcp-auth-cleared",
+    "name": "Slash Command: /mcp — stored authentication cleared",
+    "desc": "Tells the model the server's stored OAuth tokens were revoked and cleared, so the server now needs authentication before its tools work again."
+  },
+  "45cfef62cb458caa55812b913ef8ea6c0b539a45": {
+    "facing": "model",
+    "id": "slash-command-mcp-agent-server-auth-success",
+    "name": "Slash Command: /mcp — agent server authenticated, connects on next run",
+    "desc": "Tells the model the agent-scoped MCP server is authenticated but deliberately stays unconnected until the agent runs, so it does not treat the absent tools as a failure."
+  },
+  "821d6dcb051f193f495664dc323978d97d9c23c0": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-server-not-found",
+    "name": "Slash Command: /mcp reconnect — no such server",
+    "desc": "Tells the model the server name it passed to /mcp reconnect is not configured at all, so retrying the same name is pointless."
+  },
+  "ab6ad8fb9727eb8de3d50024f59b9194dbc415a1": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-success",
+    "name": "Slash Command: /mcp reconnect — reconnected",
+    "desc": "Confirms the named server is connected again, so the model can resume calling its tools."
+  },
+  "af52df166e2a63bb395da7c296b518a0b84c0cd7": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-needs-auth-terminal",
+    "name": "Slash Command: /mcp reconnect — needs authentication, use /mcp",
+    "desc": "Sibling of the background-session branch: tells the model the server needs authentication and that /mcp is the way to do it, so it stops retrying reconnect."
+  },
+  "6f971a62a9858e10b036ccc972ae8feaa3244b74": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-failed",
+    "name": "Slash Command: /mcp reconnect — reconnect failed",
+    "desc": "Tells the model the server ended up cached/pending/failed/disabled rather than connected, so its tools are still unavailable."
+  },
+  "dc74ff0df1723009deae21fce3b79dec0e4fac75": { "facing": "ui" },
+  "b98ff094e6872c0e03a5eb6ba34aacb8444e4641": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-all-already-in-state",
+    "name": "Slash Command: /mcp enable|disable all — nothing to change",
+    "desc": "Tells the model every configured MCP server is already in the requested state, so the command was a no-op and no retry is needed."
+  },
+  "8397b9aac557ac829d4a98f4ca30be3a8173df32": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-server-not-found",
+    "name": "Slash Command: /mcp enable|disable — no such server",
+    "desc": "Tells the model the named server is not configured, so the enable/disable it asked for could not be targeted at all."
+  },
+  "20f861d4e81e5f4b0aa6661acd36abd32ed141be": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-pending-approval",
+    "name": "Slash Command: /mcp enable|disable — server is pending approval",
+    "desc": "Tells the model the server cannot be toggled until the user approves it via /mcp, naming the blocking step rather than a generic failure."
+  },
+  "676765ef582d12126d0dc365fd38ea65fc12b47c": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-already-in-state",
+    "name": "Slash Command: /mcp enable|disable — server already in that state",
+    "desc": "Tells the model the single named server was already enabled/disabled, so nothing changed."
+  },
+  "bc56f9aaa173f30c684ec8f2bfecd2a1671a0462": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-result",
+    "name": "Slash Command: /mcp enable|disable — server toggled",
+    "desc": "Confirms the named server was actually enabled or disabled, which tells the model whether that server's tools are now in play."
+  },
+  "cda321bc2265379827e77c7a3974db66ea2f4d63": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-bulk-result",
+    "name": "Slash Command: /mcp enable|disable all — bulk result",
+    "desc": "Reports how many MCP servers were enabled or disabled, how many could not be changed, and how to inspect the rest, so the model knows the toggle only partly landed."
+  },
+  "341fd710febe3961013911ba192063a7cde9227a": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-bulk-result",
+    "name": "Slash Command: /mcp enable|disable all — bulk result",
+    "desc": "Conditional tail concatenated onto the same emitted string, reporting the count that could not be changed and pointing at /mcp to check."
+  },
+  "66891103e7b72671fd4b5eb513ca91ccca8a7795": { "facing": "ui" },
+  "8bfc340b42d8428ba79ae1d2a0d68868f3aa2639": { "facing": "ui" },
+  "8e86c534d22a7a8859e109601b6888ff8ed62cf1": { "facing": "ui" },
+  "f0592f838b6fd845c13639950845fd061a6cefe1": { "facing": "ui" },
+  "0fbc679d9943f5b7d2c50bb8a0869149725c8db6": { "facing": "ui" },
+  "f094f514cb3238961b247d28331a1dc3362bbac9": { "facing": "ui" },
+  "8bcbecc8ec28584548f5bb7617a47de9a6b29a3c": { "facing": "ui" },
+  "d6d094ac3f879d4d17f00ba7f75baae12cfffb08": { "facing": "ui" },
+  "1a40e4e167c51bf15e33c07e3c9aa42e9c324291": {
+    "facing": "model",
+    "id": "slash-command-context-remote-unavailable",
+    "name": "Slash Command: /context — not available over a remote connection",
+    "desc": "Tells the model that context-usage figures cannot be obtained on this remote session, so it should not expect or wait for numbers before answering."
+  },
+  "7dcc563ca6bc79a2e05f7678687c309731bdeb59": {
+    "facing": "model",
+    "id": "slash-command-context-remote-fetch-failed",
+    "name": "Slash Command: /context — remote fetch failed",
+    "desc": "Reports that the remote control-channel request for context usage threw, so the model knows the figures are missing because of a transport failure rather than because usage is zero."
+  },
+  "3ae53f28fbeee6096c4d3a670bd62054131a5164": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-usage",
+    "name": "Slash Command: /plugin eval — usage",
+    "desc": "Teaches the model how /plugin eval is invoked and that each evals/*.md file needs `query` and `should_trigger` frontmatter with at least five recommended, which is what it needs to author or fix eval files."
+  },
+  "3279caca69c5e944f630eaaf966b2d9027bb79d4": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-failed",
+    "name": "Slash Command: /plugin eval — evaluation failed",
+    "desc": "States the trigger-evaluation run failed, which tells the model the reported per-case results are the actionable ones and the skill needs fixing."
+  },
+  "bf58b8da0db2dc7adaa3cefa466b1b33be841afd": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-pending-model-integration",
+    "name": "Slash Command: /plugin eval — queries validated, trigger tests pending",
+    "desc": "Tells the model the eval files parsed but no trigger test actually ran because model evaluation is not wired up yet, so a green-looking run is not evidence the skill triggers."
+  },
+  "aee7b0581405732a52d85438240e6f52806b2596": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-passed",
+    "name": "Slash Command: /plugin eval — evaluation passed",
+    "desc": "States every trigger test passed, so the model can stop iterating on the skill's description."
+  },
+  "e08e661d01f9700106e3a5acedd41ee35b87494e": { "facing": "ui" },
+  "2445fd2616286008764acbae7e3f7722715ace91": {
+    "facing": "model",
+    "id": "slash-command-plugin-tag-unexpected-argument",
+    "name": "Slash Command: /plugin tag — unexpected argument",
+    "desc": "Tells the model the tag command rejected an argument it did not recognise and reprints the usage, so it retries with a valid flag instead of assuming the tag was created."
+  },
+  "c418de8acf41e3f27a7d690ed7625cb849178714": { "facing": "ui" },
+  "292e0c2c7ee30f353dad7275ae4c6c27ec0ed993": { "facing": "ui" },
+  "c1c3e354d8d819d83b5961e14f71fc72038ca241": { "facing": "ui" },
+  "db6c388a64c6b4f7c3e7ba67cce76ffc086e5b42": { "facing": "ui" },
+  "c427ffd1de4bb698341448e937df7f235e4e6b7d": { "facing": "ui" },
+  "7325716f975bff1e9346f4639011e78866ddb6ae": { "facing": "ui" },
+  "fb255aaf0127da7298c111de5793582f7e131459": { "facing": "ui" },
+  "a845ba1722e1d63db1a48a7e19a9998dbfa05f5a": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-unexpected-error",
+    "name": "Slash Command: /plugin validate — validation crashed",
+    "desc": "Distinguishes a crash of the validator itself from a manifest that failed validation, so the model does not report the plugin as invalid when the run never completed."
+  },
+  "0d83f740ea90ca128fda350f103921e0572696fc": {
+    "facing": "model",
+    "id": "slash-command-plugin-marketplace-list-none-configured",
+    "name": "Slash Command: /plugin marketplace list — none configured",
+    "desc": "States that no marketplaces exist at all, which is the fact the model needs before suggesting an install or an add step."
+  },
+  "c1655ccde94a86ca9fcb027e1626cd51c10e33d8": { "facing": "ui" },
+  "650ece27dd22d3e77dd64b3d1288240583ad7f73": {
+    "facing": "model",
+    "id": "slash-command-plugin-marketplace-list-load-error",
+    "name": "Slash Command: /plugin marketplace list — load failed",
+    "desc": "Tells the model the marketplace registry could not be read, so an empty result must not be read as 'no marketplaces'."
+  },
+  "a4bf95f1cc85fedfa0d8b8b6984d8c2308af2a97": { "facing": "ui" },
+  "555dd9ae1a5d91e6c6f16bcf4bfec397c37e12f2": {
+    "facing": "model",
+    "id": "slash-command-plugin-list-none-match-filter",
+    "name": "Slash Command: /plugin list — no plugins match the filter",
+    "desc": "Tells the model that plugins are installed but none match the enabled/disabled filter that was asked for, which is different from having no plugins at all."
+  },
+  "6e4222f37267458df336ed12c1a952a1bfcdfedc": {
+    "facing": "model",
+    "id": "slash-command-add-dir-empty-path",
+    "name": "Slash Command: /add-dir — no path given",
+    "desc": "Tells the model the /add-dir invocation supplied no argument, so the directory was not added and a path must be provided before retrying."
+  },
+  "d1d06e722a3905d7ced7403533c2347374b05713": {
+    "facing": "model",
+    "id": "slash-command-add-dir-path-not-found",
+    "name": "Slash Command: /add-dir — path not found",
+    "desc": "Reports to the model that the requested directory does not exist on disk, so any plan that assumed that path is now accessible is invalid."
+  },
+  "790a541757af41a2212b31ccffb936087ffd714d": {
+    "facing": "model",
+    "id": "slash-command-add-dir-not-a-directory",
+    "name": "Slash Command: /add-dir — path is a file, suggests parent",
+    "desc": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the recovery target."
+  },
+  "dfa7fe827818b1943788768c504a0492ddd84fee": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-original-cwd",
+    "name": "Slash Command: /add-dir — already the current working directory",
+    "desc": "Tells the model the path is the session's original cwd and therefore already readable, so no permission change happened."
+  },
+  "739f42aff17bf31093104bbb18f48c0f57dc1602": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-added",
+    "name": "Slash Command: /add-dir — already a working directory",
+    "desc": "Tells the model the directory is already in the working-directory set, so the add was a no-op and access was already available."
+  },
+  "b05a7a4d4b6a7dfa83263b3d8660bac7d584a9d6": { "facing": "ui" },
+  "6f057522af60979bfaf0d255a9b1e6147523fbe3": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-accessible-within-parent",
+    "name": "Slash Command: /add-dir — already covered by an existing working directory",
+    "desc": "Tells the model the path is already reachable because an ancestor is a working directory, naming that ancestor so it knows the effective access boundary."
+  },
+  "421f50dcbc4a94146eb2212f4985a86cf6806036": { "facing": "ui" },
+  "f63707005693672a313723fcacb64f977d67e580": {
+    "facing": "model",
+    "id": "slash-command-model-fast-mode-on-suffix",
+    "name": "Slash Command: /model — fast mode turned on",
+    "desc": "Tells the model that fast mode is now active for the session, a runtime state change that affects latency/quality expectations it may be asked about."
+  },
+  "7d1c82bfc3ed2fd6f3f90a5443c5f07c0033a227": {
+    "facing": "model",
+    "id": "slash-command-model-draws-from-usage-credits-suffix",
+    "name": "Slash Command: /model — selected model bills usage credits",
+    "desc": "Warns that the chosen model draws on paid usage credits, a cost consequence of the switch that the model may need to relay."
+  },
+  "9535840005b48ae85850cccfad39e2730729f5d3": {
+    "facing": "model",
+    "id": "slash-command-model-fast-mode-off-suffix",
+    "name": "Slash Command: /model — fast mode turned off",
+    "desc": "Tells the model fast mode was switched off as a side effect of the model change, the sibling state fact to the fast-mode-on notice."
+  },
+  "7bdc8d488d221bcefb0fd1285a691e6d3a9dd035": { "facing": "ui" },
+  "f9b52f619e2dc3c9ee28d155aba791c67d7210e2": { "facing": "ui" },
+  "39a4b6c25bfb37c5fc677c14d3c286c907b2c271": {
+    "facing": "model",
+    "id": "slash-command-model-status-session-override",
+    "name": "Slash Command: /model — session model overridden by plan mode",
+    "desc": "Tells the model that a plan-mode session override is in force and separates the model actually running from the configured base model, so it does not misreport which model is active."
+  },
+  "8bc38b5abb62179a7275a4937d230315b41d0da6": { "facing": "ui" },
+  "aff80265dc452836bf366a98c2da5f447a708cb0": {
+    "facing": "model",
+    "id": "slash-command-model-status-current",
+    "name": "Slash Command: /model — current model status line",
+    "desc": "States which model is running right now, with the previous model and effort appended, so the model can answer accurately about its own identity and configuration."
+  },
+  "a157bdf7e4a78fdb603e13767e4ecb75da280be3": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-saved-to-local-settings",
+    "name": "Slash Command: /add-dir — added and persisted to local settings",
+    "desc": "Tells the model the directory is now readable AND persisted to local settings, so the grant survives beyond this session."
+  },
+  "1fd9505b2d4f5bafe3c0dc0519f9369badd8b877": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-local-settings-save-failed",
+    "name": "Slash Command: /add-dir — added but persisting failed",
+    "desc": "Tells the model the directory works for now but the settings write failed, with the error text, so it knows the grant will not survive a restart."
+  },
+  "e5fd9aa24c9417e7332e6f25936ae2a6ec8f1524": { "facing": "ui" },
+  "a824c6d54acd1bb3480b9874a55facaaa8e9f562": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-for-session",
+    "name": "Slash Command: /add-dir — added for this session only",
+    "desc": "Tells the model the directory is readable but only for the current session, bounding how long the access lasts."
+  },
+  "3ac7ef4987bd7a1dbec2c7522f60db87c4bfb032": { "facing": "ui" },
+  "c40e50e9980bd55255605911539eae0817d4edc3": {
+    "facing": "model",
+    "id": "slash-command-add-dir-cancelled",
+    "name": "Slash Command: /add-dir — user cancelled the add",
+    "desc": "Tells the model the user declined the directory-add prompt, so no new path became readable and it must not assume the access it requested exists."
+  },
+  "0697818b4ef5e0b7723c3815d47857c763c42718": {
+    "facing": "model",
+    "id": "slash-command-add-dir-cancelled-with-path",
+    "name": "Slash Command: /add-dir — user cancelled the add of a named path",
+    "desc": "Names the specific directory the user declined to add, so the model knows exactly which path stayed inaccessible."
+  },
+  "af736aa7d760b2c0ebb9de4a3a51594c8928b6dc": {
+    "facing": "model",
+    "id": "slash-command-model-set",
+    "name": "Slash Command: /model — model switched",
+    "desc": "Tells the model which model is now in use and whether the change was saved as the new default or applies to this session only."
+  },
+  "c79846c706232a6eee120d0b1f7ab9b18a5c31ac": {
+    "facing": "model",
+    "id": "slash-command-model-set",
+    "name": "Slash Command: /model — model switched",
+    "desc": "Same prompt as sha1 af736aa7… — this is the true arm of the ternary embedded in that one template literal, not a separate string; it states the switch was persisted as the default for future sessions."
+  },
+  "d4a6e355825567656a24baff5d348f8c61de1bdb": { "facing": "ui" },
+  "b68dafe55e0456dfc21070c70ebf864bbf71aa3e": {
+    "facing": "model",
+    "id": "slash-command-model-reset-to-workspace-default",
+    "name": "Slash Command: /model — reset to the workspace default (cloud session)",
+    "desc": "Tells the model that its per-session pin was cleared and the workspace default now applies, so it should not claim a specific pinned model."
+  },
+  "8f726c39198b3a3b32b61c94168ebc24251c9a76": {
+    "facing": "model",
+    "id": "slash-command-model-set-remote",
+    "name": "Slash Command: /model — model switched in a cloud session",
+    "desc": "Confirms to the model which model the remote/cloud session was switched to, the sibling branch of the workspace-default reset notice."
+  },
+  "86bb28c345080ffcc3a7163349a3f4dd1c718473": { "facing": "ui" },
+  "2c669ecde99847b58caf359616bcb8b14c7dba10": {
+    "facing": "model",
+    "id": "slash-command-branch-created-resume-hint",
+    "name": "Slash Command: /branch — branch created, resume with /resume",
+    "desc": "Tells the model the conversation was forked into a new session and names the exact command that returns to it, so a later request to go back has a concrete recovery step."
+  },
+  "4ae66824410719d7d6a563ea53a93092a5657a37": { "facing": "ui" },
+  "e7e88464fa97ba55685298bc82db9b5eb807fc71": {
+    "facing": "model",
+    "id": "slash-command-branch-failed",
+    "name": "Slash Command: /branch — branching failed",
+    "desc": "Tells the model the branch was not created and surfaces the underlying error, so it does not proceed as if a new session exists."
+  },
+  "524d4e3fb5632ffb3e6a88679ab8515b23fdaf17": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-cd-disabled-by-rule",
+    "name": "Slash Command: /cd — /cd disabled by a permission rule",
+    "desc": "Tells the model directory changes are switched off by a named permission rule in a named settings source and that the rule must be edited in /permissions before any move is possible."
+  },
+  "c0bcc589f17101002fc1046a3a36539be4c75f9f": { "facing": "ui" },
+  "92f513f4a8da86d66112163704dcbb2040aac0a2": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-directory-excluded-by-rule",
+    "name": "Slash Command: /cd — target directory excluded by a rule",
+    "desc": "Tells the model this specific directory is excluded by a named rule and gives two ways forward — choose a directory outside the rule, or change the rule — so it can retry sensibly instead of repeating the same move."
+  },
+  "b9c4dc84c77fcc66f2d2f3bf98239a6e3dc10a2a": { "facing": "ui" },
+  "bdbd6cded2e211537abb67d828b5c08c412a9a56": {
+    "facing": "model",
+    "id": "slash-command-cd-blocked-allowed-patterns",
+    "name": "Slash Command: /cd — only listed directory patterns allowed",
+    "desc": "Tells the model the exact allow-list of directory patterns /cd is restricted to, which is the information it needs to pick a legal target on the next attempt."
+  },
+  "ea7a6d933a95406625e7a5e588a5e114ddada3e6": { "facing": "ui" },
+  "111601a77b6b0ccfc6072b2ee059414499b0d8fe": {
+    "facing": "model",
+    "id": "slash-command-cd-usage",
+    "name": "Slash Command: /cd — usage when no path given",
+    "desc": "Tells the model /cd was invoked without its required path argument and states the correct invocation form."
+  },
+  "4e537529d03d808b4d01170fc4a249effcfa0d07": {
+    "facing": "model",
+    "id": "slash-command-cd-directory-not-found",
+    "name": "Slash Command: /cd — no directory at that path",
+    "desc": "Tells the model the requested path does not exist, so the working directory is unchanged and the path itself is the thing to correct."
+  },
+  "29436dd4d57acf2a768e917df87b1cc1b87ae1e1": {
+    "facing": "model",
+    "id": "slash-command-cd-not-a-directory",
+    "name": "Slash Command: /cd — path is a file, suggests its parent",
+    "desc": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the likely intended target."
+  },
+  "76055f98e44abbf6cdc660a8bb8a687eeeda700c": {
+    "facing": "model",
+    "id": "slash-command-cd-already-in-directory",
+    "name": "Slash Command: /cd — already in that directory",
+    "desc": "Tells the model the move was a no-op because the session is already there, so it does not treat the directory as newly changed."
+  },
+  "31f0f8a55837ce6510b4e126b60e838edaf5a810": {
+    "facing": "model",
+    "id": "slash-command-cd-relocate-failed",
+    "name": "Slash Command: /cd — relocation failed, staying put",
+    "desc": "Tells the model the move was attempted and failed, names the two likely causes, and states which directory the session is actually in — the fact it needs to keep using correct paths."
+  },
+  "c16ae400b02f34a8fd38fa55572051bbb07e79c7": {
+    "facing": "model",
+    "id": "slash-command-cd-trust-declined-staying",
+    "name": "Slash Command: /cd — trust prompt declined, staying put",
+    "desc": "Tells the model the user declined to trust the new directory so the session's working directory is unchanged, naming the directory still in effect."
+  },
+  "eb34aeac269a6316f8569eead01eacd6fcb681e2": {
+    "facing": "model",
+    "id": "slash-command-ide-no-ide-selected",
+    "name": "Slash Command: /ide — no IDE selected",
+    "desc": "Tells the model the open-in-IDE action ended without a target, so nothing was opened."
+  },
+  "e9dcab01106c5669eeb6473787c1e88c42f05a7d": {
+    "facing": "model",
+    "id": "slash-command-ide-open-manually",
+    "name": "Slash Command: /ide — no CLI launcher, open manually",
+    "desc": "Tells the model the IDE could not be launched programmatically and gives the path the user must open by hand, so it stops trying to automate the step."
+  },
+  "c346a84c5c4327172ed1482d3c881cb9a78fd3bf": {
+    "facing": "model",
+    "id": "slash-command-ide-opened-project",
+    "name": "Slash Command: /ide — project or worktree opened",
+    "desc": "Tells the model the directory was successfully opened in the named editor, and whether it was the worktree or the project."
+  },
+  "d025a75baa9f531fea23a880f3d71fc43570fd2a": {
+    "facing": "model",
+    "id": "slash-command-ide-open-failed",
+    "name": "Slash Command: /ide — launch failed, open manually",
+    "desc": "Tells the model the editor launch exited non-zero and gives the path to open by hand as the fallback."
+  },
+  "54a167ed35c2203e16b206d42ed143534d5db70b": {
+    "facing": "model",
+    "id": "slash-command-ide-no-extension-ides-detected",
+    "name": "Slash Command: /ide — no IDE with the extension found",
+    "desc": "Tells the model there is no editor on the machine carrying the Claude Code extension, so IDE integration is unavailable rather than merely unselected."
+  },
+  "8a54e0301237bff315bc27df0ce2a79e4d497831": {
+    "facing": "model",
+    "id": "slash-command-ide-plugin-installed-restart-required",
+    "name": "Slash Command: /ide — plugin installed, IDE restart required",
+    "desc": "Tells the model the plugin landed at a specific path but will not take effect until the IDE is fully restarted, which is a precondition for anything that depends on the integration."
+  },
+  "3f89cb0c41ddf7294ec4a2e3bd40ac2fb5823628": {
+    "facing": "model",
+    "id": "slash-command-ide-extension-installed",
+    "name": "Slash Command: /ide — extension installed",
+    "desc": "Tells the model the Claude Code extension was installed and where, so IDE integration can be assumed available."
+  },
+  "f0d350d0d7eb414e9dc0f631c258b20b1e68a8e4": {
+    "facing": "model",
+    "id": "slash-command-ide-connected",
+    "name": "Slash Command: /ide — connected to the IDE",
+    "desc": "Tells the model the IDE MCP connection is live and names the editor, so IDE-backed capabilities can be relied on."
+  },
+  "dcc474c1c5f8a24fa30e1c2b573ead9919464c4f": {
+    "facing": "model",
+    "id": "slash-command-ide-connect-failed",
+    "name": "Slash Command: /ide — connection to the IDE failed",
+    "desc": "Tells the model the IDE connection attempt failed, so IDE-backed capabilities are not available."
+  },
+  "997ccbd70303464d9bbf828397f635e34ea7e595": {
+    "facing": "model",
+    "id": "slash-command-ide-connect-timed-out",
+    "name": "Slash Command: /ide — connection timed out",
+    "desc": "Tells the model the IDE never answered within the timeout, distinguishing a hung handshake from an outright failure."
+  },
+  "e175e49db831e148ec8adc575e0391107dd485ca": {
+    "facing": "model",
+    "id": "slash-command-ide-connect-unavailable",
+    "name": "Slash Command: /ide — cannot connect, no dynamic MCP config",
+    "desc": "Tells the model the IDE connection could not even be attempted because the session has no dynamic MCP config hook, so retrying /ide will not help."
+  },
+  "473a1437e02d4335e3ddf5dd74711f02cf66061e": {
+    "facing": "model",
+    "id": "slash-command-ide-disconnected",
+    "name": "Slash Command: /ide — disconnected from the IDE",
+    "desc": "Tells the model the IDE MCP connection was torn down, so IDE-backed capabilities are no longer available."
+  },
+  "4fa397c114070da3f940cc0d56d36d62d5279089": { "facing": "ui" },
+  "49f98415862824c84f7b751a701fc74bfacff7ce": { "facing": "ui" },
+  "8ef523cb9e56fd9d6df7b0ac1e18016d969b94ce": { "facing": "ui" },
+  "fa6b37111a454bbb483871edcca93ff141199bd0": { "facing": "ui" },
+  "f5d9eee0af950b7c22ab6321c3eae0f46ef0534d": { "facing": "ui" },
+  "4a4304b0922f415d9d2617c16641dba4b62c3e2c": {
+    "facing": "model",
+    "id": "slash-command-advisor-no-control-channel",
+    "name": "Slash Command: /advisor — client cannot change the advisor",
+    "desc": "Tells the model the advisor setting was left untouched because this client has no control channel, so it should not assume the requested advisor is now active."
+  },
+  "481d77ff1db784339be376a59b2b3064865d2eb1": { "facing": "ui" },
+  "ae4da2a71bdb2697c92ee02640186575d67a77a7": {
+    "facing": "model",
+    "id": "slash-command-advisor-disabled",
+    "name": "Slash Command: /advisor — advisor turned off",
+    "desc": "Tells the model no advisor model is in play any more, and whether the change is session-scoped, so it stops expecting reviewer-model iterations."
+  },
+  "b0f4e0c911667a31aca13bb22afa98aedfe6fa01": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-options",
+    "name": "Slash Command: /advisor — model rejected, valid options listed",
+    "desc": "Tells the model the requested advisor was rejected and enumerates the accepted values, so it can suggest a valid one instead of retrying the same name."
+  },
+  "65e5842b199acdaf9612a6e5dfeb3792c988ced0": {
+    "facing": "model",
+    "id": "slash-command-advisor-set",
+    "name": "Slash Command: /advisor — advisor model selected",
+    "desc": "Tells the model which reviewer model is now consulted and whether the setting is session-scoped, which changes what it can expect from the advisor tool."
+  },
+  "5ee02b26e6038d1cd16f416205de1e202b34f9b5": {
+    "facing": "model",
+    "id": "slash-command-advisor-main-model-unsupported-note",
+    "name": "Slash Command: /advisor — main model does not support the advisor",
+    "desc": "Warns the model that the advisor it was just told about will not actually fire under the current main model, so it should not plan around advisor output."
+  },
+  "5cb4f1ee49fe545c87ff1e94571500529ab3b71d": {
+    "facing": "model",
+    "id": "slash-command-advisor-weaker-than-main-model-note",
+    "name": "Slash Command: /advisor — advisor weaker than the main model",
+    "desc": "Warns the model the chosen advisor is less capable than the main model so it will never activate, and names the two ways out, which is a recovery step the model can relay."
+  },
+  "791bca09a76b49d4d03f1e804855fbde417e0789": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-validation-error",
+    "name": "Slash Command: /advisor — model string failed validation",
+    "desc": "Tells the model the advisor argument never validated and surfaces the validator's reason, so it knows the setting is unchanged and why."
+  },
+  "66bdd349fb01b463cb4febc6ac8bbbb34dfd29e7": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-options",
+    "name": "Slash Command: /advisor — model rejected, valid options listed",
+    "desc": "Tells the model the requested advisor was rejected and enumerates the accepted values, so it can suggest a valid one instead of retrying the same name."
+  },
+  "efdcb16a1b58e2ad25fe694d77a8b7ef32cad140": {
+    "facing": "model",
+    "id": "slash-command-advisor-fable-needs-usage-credits",
+    "name": "Slash Command: /advisor — Fable 5 advisor needs usage credits",
+    "desc": "Tells the model the advisor was not set because Fable 5 bills to usage credits that are not enabled, and gives the exact command that fixes it."
+  },
+  "c17c5adc3554edf58606ba0decda1d3ae6e1fb27": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-continuing",
+    "name": "Slash Command: /usage-credits — continuing on usage credits",
+    "desc": "Tells the model the session is now billing to usage credits rather than being blocked on a limit, so it can carry on with the work it was stopped on."
+  },
+  "860b3f01484eca37f3a139d0d2764d73a5abb2e7": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-no-payment-method",
+    "name": "Slash Command: /usage-credits — no card on file",
+    "desc": "Tells the model the purchase could not proceed because no payment method exists and names the URL where the user adds one — a fact plus the recovery step."
+  },
+  "160319b1888298358b06bfde5a05397054d83f15": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-opening-billing-page",
+    "name": "Slash Command: /usage-credits — opening the billing page",
+    "desc": "Tells the model the user was handed off to the browser billing page, so the credit state may change out-of-band and nothing was settled in-session."
+  },
+  "130e20bfb8ee95771920c876f0c630cfdc70489c": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-monthly-limit-unlimited",
+    "name": "Slash Command: /usage-credits — monthly limit removed",
+    "desc": "Tells the model the monthly spend cap is gone, so it should not treat budget exhaustion as an imminent constraint."
+  },
+  "26fd6b48fac6d78b0b4f6783a4105239ae922119": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-monthly-limit-updated",
+    "name": "Slash Command: /usage-credits — monthly limit changed",
+    "desc": "Tells the model the new monthly spend cap, which is the budget constraint it is working under for the rest of the month."
+  },
+  "6b886748c84604e064ff9c0249a09e45d7bc15f2": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-purchase-succeeded",
+    "name": "Slash Command: /usage-credits — credits added",
+    "desc": "Tells the model a credit purchase completed and how much was added, so it knows the previous quota block is cleared."
+  },
+  "f2745fbc5432ebbe785f4b2a3be2ddb1307f50cb": {
+    "facing": "model",
+    "id": "slash-command-plan-mode-enabled",
+    "name": "Slash Command: /plan — plan mode turned on",
+    "desc": "Tells the model the tool permission mode switched to plan, which changes what it is allowed to execute for the rest of the turn."
+  },
+  "67d5eabab6052f247a3c6c58051567124ab74353": {
+    "facing": "model",
+    "id": "slash-command-plan-already-in-plan-mode",
+    "name": "Slash Command: /plan — already in plan mode",
+    "desc": "Tells the model the mode was already plan so nothing changed, which distinguishes a no-op from a fresh switch."
+  },
+  "c6a31f5d1b39f2c460a010e344e77746fdd414e6": {
+    "facing": "model",
+    "id": "slash-command-plan-cloud-mode-push-timeout",
+    "name": "Slash Command: /plan — cloud session did not confirm the mode switch",
+    "desc": "Tells the model the user's plan description was dropped en route to the cloud session and instructs how to recover it, so the model does not act as if it received the description."
+  },
+  "8aeaf9fa529dc3f2ca51e643b6caf85030bad634": {
+    "facing": "model",
+    "id": "slash-command-plan-cloud-mode-push-rejected",
+    "name": "Slash Command: /plan — cloud session refused the mode switch",
+    "desc": "Tells the model the cloud session rejected plan mode and the user's description was therefore never delivered, so it should not treat the description as received."
+  },
+  "bbe4f7aa504648095ca3163f927d288e9b96768f": {
+    "facing": "model",
+    "id": "slash-command-plan-no-plan-written-yet",
+    "name": "Slash Command: /plan — in plan mode with no plan yet",
+    "desc": "Tells the model there is no plan file to show yet, so a request to view the plan returned nothing rather than failing."
+  },
+  "a657df34408aca5996e495a5e261be9273a86d22": {
+    "facing": "model",
+    "id": "slash-command-plan-opened-in-editor",
+    "name": "Slash Command: /plan open — plan opened in the editor",
+    "desc": "Tells the model the plan file was handed to an external editor at a named path, so the plan may change out-of-band and the path is where it lives."
+  },
+  "d20b7bf9a0d8eb6b320c82f3b2ca59f29811e373": {
+    "facing": "model",
+    "id": "slash-command-plan-published-artifact-url",
+    "name": "Slash Command: /plan share — plan published",
+    "desc": "Tells the model the plan was published as an artifact and gives its URL, which the model may need to reference or repeat back to the user."
+  },
+  "7ff52a6d74775b288353ccf2ae0a601dbd3ea97a": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-iterm2-native-shift-enter",
+    "name": "Slash Command: /terminal-setup — iTerm2 already supports Shift+Enter",
+    "desc": "Tells the model that no key-binding install happened because the host terminal is iTerm2, which handles Shift+Enter itself, so there is nothing left to configure."
+  },
+  "8309690e9985f89feb005b5b6a7925b18a824aa2": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-terminal-native-shift-enter",
+    "name": "Slash Command: /terminal-setup — this terminal supports Shift+Enter natively",
+    "desc": "Tells the model the named terminal (Ghostty/Kitty/Warp/WezTerm/Windows Terminal) needs no setup, so a follow-up install attempt would be pointless."
+  },
+  "6a37f2c58c3eeedbfdc7694e1a3fa7ce42067bc6": { "facing": "ui" },
+  "78e76dcc4509f2d099b7e6732c2a758e7d4ccfb8": { "facing": "ui" },
+  "7433a9e703efb44c4f4bf2799ff1b58d4f67be29": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-remote-iterm2-clipboard-note",
+    "name": "Slash Command: /terminal-setup — remote iTerm2 clipboard note for /copy",
+    "desc": "Tells the model the session is running over SSH from an iTerm2 host and that /copy will not reach the local clipboard until a setting is changed on that other machine, which explains later clipboard failures."
+  },
+  "54709d970af59fe3b2de51d2f409a0cc56744037": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-cannot-run-from-terminal",
+    "name": "Slash Command: /terminal-setup — cannot run from this terminal",
+    "desc": "Tells the model the shortcut install was refused because of where it is running, and gives the workaround (backslash+return works now; re-run outside tmux/screen in a listed terminal), so the model does not report success or retry blindly."
+  },
+  "cb199a0fe22ff9216580e4ce3e4188b0ff79c22b": {
+    "facing": "model",
+    "id": "slash-command-copy-always-preference-saved",
+    "name": "Slash Command: /copy — always-copy preference saved",
+    "desc": "Tells the model the copyFullResponse setting was persisted and names /config as the way to reverse it, i.e. a state change plus its undo path."
+  },
+  "4091df86bbaa0b14809c4ef2f33ceec41dbc8d38": {
+    "facing": "model",
+    "id": "slash-command-copy-written-to-file",
+    "name": "Slash Command: /copy — content written to a file",
+    "desc": "Tells the model the selected response or code block was saved to disk at the named path, which the model may then read or reference."
+  },
+  "6ff175a974a910b7b3ac303081cbade89ebee37d": {
+    "facing": "model",
+    "id": "slash-command-copy-file-write-failed",
+    "name": "Slash Command: /copy — file write failed",
+    "desc": "Tells the model the write-to-file shortcut failed and carries the underlying error, so the model knows no file exists and why."
+  },
+  "28e1cecd3ea7566d168694ad399c0c6ac29d1cdc": {
+    "facing": "model",
+    "id": "slash-command-copy-no-assistant-message",
+    "name": "Slash Command: /copy — no assistant message to copy",
+    "desc": "Tells the model the transcript contains no assistant message, so nothing was copied and a retry would fail the same way."
+  },
+  "1e54deca9d0eb16e0a28a8a8b3f94b873a54059e": {
+    "facing": "model",
+    "id": "slash-command-copy-invalid-index-usage",
+    "name": "Slash Command: /copy — invalid index, usage line",
+    "desc": "Tells the model the argument was not a positive integer and states the accepted form, so a retry can be well-formed."
+  },
+  "2658ec2868d78992b831d95d3cca96e4d9ac5d4a": {
+    "facing": "model",
+    "id": "slash-command-copy-index-out-of-range",
+    "name": "Slash Command: /copy — index beyond available messages",
+    "desc": "Tells the model how many assistant messages actually exist so it can pick a valid index instead of repeating an out-of-range one."
+  },
+  "a7a23a815888ad677a285b0008a2da83f0056f6a": {
+    "facing": "model",
+    "id": "slash-command-resume-session-not-found",
+    "name": "Slash Command: /resume — session not found",
+    "desc": "Tells the model the requested session id or title matched nothing, so no resume happened."
+  },
+  "ee805bfe79f53c192930bbcf856a99849224147f": {
+    "facing": "model",
+    "id": "slash-command-resume-multiple-session-matches",
+    "name": "Slash Command: /resume — multiple sessions matched",
+    "desc": "Tells the model the title was ambiguous and that the interactive picker is the way forward, so it does not retry the same argument."
+  },
+  "4436fc947dd795667c10179ab23e587eee1ec473": {
+    "facing": "model",
+    "id": "slash-command-resume-failed-to-load-conversations",
+    "name": "Slash Command: /resume — failed to load conversations",
+    "desc": "Tells the model the session list could not be read, so the picker showed nothing and the failure is on the storage side rather than the query."
+  },
+  "f2f6866dec108dfe87e75aace311c7cd404e404e": {
+    "facing": "model",
+    "id": "slash-command-resume-failed-to-resume-conversation",
+    "name": "Slash Command: /resume — failed to resume conversation",
+    "desc": "Tells the model the picked session could not be restored, so the conversation context it expected is not present."
+  },
+  "7c48d83070bcefa97afb5613780fb068084b69f8": { "facing": "ui" },
+  "3933f209e62988ab3f3c25ea381ae04215e96b32": { "facing": "ui" },
+  "93750dac48b7c0b8ce9ff01398a7a92c5554e1a6": {
+    "facing": "model",
+    "id": "slash-command-resume-command-copied-to-clipboard",
+    "name": "Slash Command: /resume — command copied to clipboard",
+    "desc": "Tells the model the resume command is already on the clipboard, so it need not repeat it for the user to copy."
+  },
+  "f94bfe3f2e3153f43f57d84e51c619b08982234c": {
+    "facing": "model",
+    "id": "slash-command-resume-resume-threw",
+    "name": "Slash Command: /resume — resume threw an error",
+    "desc": "Tells the model the resume handler raised, and carries the error text, so it knows the old transcript was not loaded and why."
+  },
+  "f3f83aff39ad12620537946f435d7da67ebd5efe": {
+    "facing": "model",
+    "id": "slash-command-resume-no-conversations-found",
+    "name": "Slash Command: /resume — no conversations found",
+    "desc": "Tells the model there is no prior session on disk to resume, so retrying with a different argument will not help."
+  },
+  "3cc97f43ec408466ed27d0c7b16427819dce433e": { "facing": "ui" },
+  "7c94040772b773fca185a3070feaaaa4a1597ba8": {
+    "facing": "model",
+    "id": "slash-command-web-setup-login-failed-visit-web",
+    "name": "Slash Command: /web-setup — not signed in, visit the web app",
+    "desc": "Tells the model the GitHub token import was rejected for lack of a Claude login and names the recovery step (sign in on the web with the GitHub App)."
+  },
+  "07fbf5a67f4fa29beb84f8ba4443d0a66b1bb0e2": {
+    "facing": "model",
+    "id": "slash-command-web-setup-server-error-retry",
+    "name": "Slash Command: /web-setup — server error, retry later",
+    "desc": "Tells the model the failure was server-side with its HTTP status and that retrying shortly is the right response, rather than changing the request."
+  },
+  "3f17e4248a50a93a979ad49ea0fd4221160cbd8c": { "facing": "ui" },
+  "b6588a8d3b108b00bd8928e7308cb5d32bd281a6": {
+    "facing": "model",
+    "id": "slash-command-web-setup-gh-cli-not-installed",
+    "name": "Slash Command: /web-setup — GitHub CLI not installed",
+    "desc": "Tells the model setup stopped because the `gh` binary is missing and gives both recovery paths (install and authenticate, or connect GitHub in the browser)."
+  },
+  "a403af2e77341a0f82846e521b4e048a067d90d1": {
+    "facing": "model",
+    "id": "slash-command-web-setup-gh-cli-not-authenticated",
+    "name": "Slash Command: /web-setup — GitHub CLI not authenticated",
+    "desc": "Tells the model `gh` is installed but has no credentials, and names the two ways to fix it before /web-setup can succeed."
+  },
+  "ed331e57b942304a38cb18e29b10b7fde05e3d2b": {
+    "facing": "model",
+    "id": "slash-command-web-setup-connected-and-opened",
+    "name": "Slash Command: /web-setup — connected as user, web app opened",
+    "desc": "Tells the model the GitHub token import succeeded, under which GitHub username, and that a browser was opened at the Claude web URL — the end state the model should report."
+  },
+  "5b00cbe4f5137a003d8e139b896c24fd7c9517b4": { "facing": "ui" },
+  "6eb85dae5133e6fcef99855d5ed5beba664a7144": { "facing": "ui" },
+  "5695138d52445bfe672ad60940ce8eceae767017": { "facing": "ui" },
+  "8f846145b726c8fec999a3bf1a01fe31c65f798d": { "facing": "ui" },
+  "7aefe24c08f87f4cdc7d6b0317719a4a801a6449": { "facing": "ui" },
+  "02bb0c2a5721601c613e29f56dcbd0d46369b51e": {
+    "facing": "model",
+    "id": "slash-command-fast-mode-enabled",
+    "name": "Slash Command: /fast — fast mode turned on",
+    "desc": "Tells the model the session just switched to fast mode, optionally naming the model it was switched to and the per-Mtok rate, so it knows its own execution mode and cost profile changed mid-session."
+  },
+  "a988847de9cf5ac404d80661cc86949409e492cb": {
+    "facing": "model",
+    "id": "slash-command-fast-mode-disabled",
+    "name": "Slash Command: /fast — fast mode turned off",
+    "desc": "Tells the model fast mode was switched off for the session, the sibling branch of the enable message and the counterpart state fact."
+  },
+  "e4185799c27da57059d197b84ec95afca5e26eb1": {
+    "facing": "model",
+    "id": "slash-command-fast-mode-unavailable",
+    "name": "Slash Command: /fast — fast mode not available",
+    "desc": "Tells the model the requested fast mode could not be enabled at all on this account or build, so it should not assume the mode change took effect."
+  },
+  "42453334a1eda103771da8abb4651f59b3fa4ea9": { "facing": "ui" },
+  "b7c718a51ba369112f101f8e2e4cb4c217671acd": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-cancelled",
+    "name": "Slash Command: /install-github-app — cancelled by the user",
+    "desc": "Tells the model the GitHub App installation flow was abandoned rather than completed, so it should not proceed as though workflows or credentials now exist."
+  },
+  "5fdfa4c878a692fcc4d938d5347898c28c0c14d6": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-installed",
+    "name": "Slash Command: /install-github-app — app installed",
+    "desc": "Tells the model the GitHub App itself was installed (app-only path, no workflow file), so repository automation is authorised but no Actions workflow was added."
+  },
+  "17339d89b334759245484dadb3c604f0ec8af5b8": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-actions-setup-complete",
+    "name": "Slash Command: /install-github-app — Actions setup complete",
+    "desc": "Tells the model the full GitHub Actions setup finished, meaning a workflow file and credentials are now in place in the repo."
+  },
+  "fc9fdfcc2bc8ba92028c685dafa535afc9968c6c": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-install-error",
+    "name": "Slash Command: /install-github-app — install failed with an error",
+    "desc": "Gives the model the specific installation error plus the manual-setup doc URL, which is the recovery step it should hand the user."
+  },
+  "9a2ea9f49954bb3656423fffd6d90fcac6cca6f8": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-install-failed",
+    "name": "Slash Command: /install-github-app — install failed without an error",
+    "desc": "Tells the model the installation failed with no captured error and points at the manual-setup docs, the fallback arm of the same result ternary."
+  },
+  "ecfefebba8f989b3666970ecec541a682dcb9e9e": {
+    "facing": "model",
+    "id": "slash-command-remote-env-not-found",
+    "name": "Slash Command: /remote-env — selected environment not found",
+    "desc": "Tells the model the environment the user picked no longer exists in the fetched pool, so no default was written and the selection must be redone."
+  },
+  "532647b9e2db5d13788ce1cd667d9d406506bbf9": {
+    "facing": "model",
+    "id": "slash-command-remote-env-default-overridden-note",
+    "name": "Slash Command: /remote-env — a settings layer pins a different environment",
+    "desc": "Warns the model that a higher-precedence settings file still pins a different environment id, so the default it was just told about will not actually be used."
+  },
+  "b092d1839bc73ed6680033f136b24f46d9b43961": {
+    "facing": "model",
+    "id": "slash-command-remote-env-default-set",
+    "name": "Slash Command: /remote-env — default environment set",
+    "desc": "Tells the model which remote or self-hosted environment is now the session default and by which id, so later remote work is attributed to the right target."
+  },
+  "6f3efc3cbe351ce382cd0846f90f2b9b1c987491": {
+    "facing": "model",
+    "id": "slash-command-sandbox-unsandboxed-fallback-allowed",
+    "name": "Slash Command: /sandbox — unsandboxed fallback allowed",
+    "desc": "Tells the model that bash commands may now escape the sandbox when needed, which changes what it can safely attempt without asking."
+  },
+  "805054bea4645b37681ee9f122b315738e7789b2": {
+    "facing": "model",
+    "id": "slash-command-sandbox-strict-mode",
+    "name": "Slash Command: /sandbox — strict sandbox mode",
+    "desc": "Tells the model every command must run inside the sandbox unless listed in excludedCommands, and names that setting as the only escape hatch."
+  },
+  "d8f985302830c5cf23e31fc407dd0e423bf3d7c0": {
+    "facing": "model",
+    "id": "slash-command-sandbox-enabled-auto-allow",
+    "name": "Slash Command: /sandbox — sandboxed with auto-allow for bash",
+    "desc": "Tells the model bash now runs sandboxed and is auto-approved, so it can run commands without permission prompts inside that boundary."
+  },
+  "d282622cfb2e1cd0a06f3c3238ed5eef395c15ec": {
+    "facing": "model",
+    "id": "slash-command-sandbox-enabled-regular-permissions",
+    "name": "Slash Command: /sandbox — sandboxed with regular permissions",
+    "desc": "Tells the model bash is sandboxed but still subject to the normal permission prompts, a different operating constraint from the auto-allow arm."
+  },
+  "c7926f89a241b45b42fb93a22368d51731943a23": {
+    "facing": "model",
+    "id": "slash-command-sandbox-enabled",
+    "name": "Slash Command: /sandbox — sandbox enabled",
+    "desc": "Tells the model the sandbox is on, used on builds where auto-allow is unsupported so no permission nuance can be stated."
+  },
+  "ae6a3493f68401c46eca5e9e2099ae42275055a2": {
+    "facing": "model",
+    "id": "slash-command-sandbox-disabled",
+    "name": "Slash Command: /sandbox — sandbox disabled",
+    "desc": "Tells the model commands now run unsandboxed, removing the containment it may otherwise assume when deciding what is safe to run."
+  },
+  "511088dcf93c9debd4f50c0340bceb1ea9d73b71": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-unchanged",
+    "name": "Slash Command: /scroll-speed — cancelled, nothing changed",
+    "desc": "Tells the model the scroll-speed picker was dismissed and the previous value restored, so no settings write happened."
+  },
+  "cc098125d9cdcb97afd59982d0ac262f5761453a": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-save-failed",
+    "name": "Slash Command: /scroll-speed — could not save",
+    "desc": "Gives the model the settings-write error that prevented the scroll speed from being persisted, so it can explain why the change did not stick."
+  },
+  "27759816342bba713370b4dccc2f54a641e47ffe": { "facing": "ui" },
+  "6e8b90a82d618397c027da7cdce6cf29765a3c1b": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-reset-to-auto",
+    "name": "Slash Command: /scroll-speed — reset to auto",
+    "desc": "Tells the model the scroll speed override was deleted from the user settings file and names both the auto value and the file it was removed from."
+  },
+  "68a80fc3f46fe8c29690b709b1e7a993ae7a3fb7": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-set",
+    "name": "Slash Command: /scroll-speed — new speed saved",
+    "desc": "Tells the model the chosen scroll speed was written to the user settings file, the sibling arm of the reset message."
+  },
+  "480f0f2decc31c67c6664dcf05e6ff547581cb21": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-exceeds-size-limit",
+    "name": "Tool Result: Workflow script exceeds the byte limit",
+    "desc": "Tells the model its workflow script was rejected for size, so the fix is to shrink the script rather than retry it unchanged."
+  },
+  "ece08cf33ddcd524ffdc368d1af364083f2a3ae8": {
+    "facing": "model",
+    "id": "tool-result-workflow-meta-must-be-pure-literal",
+    "name": "Tool Result: Workflow meta must be a pure literal",
+    "desc": "Tells the model the exported meta object may not contain computed expressions, which is the constraint it has to satisfy on the next attempt."
+  },
+  "10b2b99ecdbf44e9ce19607afa13c5ca7b38d4d2": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-parse-error-no-location",
+    "name": "Tool Result: Workflow script parse error (no source location)",
+    "desc": "Reports the parse failure and names the likely causes (TypeScript syntax, broken quoting/escaping) so the model knows what to change; this branch fires when the parser gave no line/column."
+  },
+  "9799aab3430cfdef11b93e0c769b6b7e7d91f523": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-parse-error-with-source-excerpt",
+    "name": "Tool Result: Workflow script parse error with source excerpt",
+    "desc": "Same parse-failure guidance but with the offending source line and a caret, giving the model the exact position to fix; it is the other branch of the same conditional as the no-location form."
+  },
+  "8f9395c0aec362fce03d5703ea105cd9ed609d77": {
+    "facing": "model",
+    "id": "slash-command-effort-usage-header",
+    "name": "Slash Command: /effort — usage line and level list header",
+    "desc": "States the accepted /effort arguments, which the model sees verbatim as local-command-stdout and repeats back when the user asks how to change effort."
+  },
+  "63c313c3dc46e3dd3dd1256f07f232ce821dd861": { "facing": "ui" },
+  "08b975ecf36c3f4068352c7a7ffedc4cce25e457": {
+    "facing": "model",
+    "id": "slash-command-effort-ultracode-level",
+    "name": "Slash Command: /effort — ultracode level description",
+    "desc": "Tells the model what the ultracode level actually does (xhigh plus dynamic workflow orchestration, session-scoped), which is the one line in the listing that describes a behavior change rather than a label."
+  },
+  "867fde557dc12e992afd4c9e91eb43e4feb1f8b6": { "facing": "ui" },
+  "847abf331b994a7493f7267e87b01301ac9b68f1": { "facing": "ui" },
+  "e851d732e1317f22e098771ee62ee4f560bdc5a6": { "facing": "ui" },
+  "72418505d4f70fb909432d7a2fb380f840f8a723": { "facing": "ui" },
+  "3df306b5aaba0ededec62ea1f6c073d4b56028a7": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-admin-request-cancelled",
+    "name": "Slash Command: /usage-credits — admin request cancelled",
+    "desc": "Tells the model the user backed out of the admin credit request, so no approval is pending and the usage limit still stands; the counterpart of the catalogued slash-command-usage-credits-admin-request-sent."
+  },
+  "0c3a224eff9768fdcb68bc28a68cdb5e9326653b": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-opened-org-billing-url",
+    "name": "Slash Command: /usage-credits — org billing page opened",
+    "desc": "Tells the model a browser was opened on the organization's usage-credit page, so the next step is with the org admin rather than in the session."
+  },
+  "150afa39ff5cec45861c4d4206ffe53bf058082f": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-visit-org-billing-url",
+    "name": "Slash Command: /usage-credits — visit org billing page",
+    "desc": "Fallback when no browser could be opened: gives the model the org usage-credit URL to relay so the user can act on it."
+  },
+  "ea2e162c3848ac1599536ca7ec4b6eeb79131008": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-visit-billing-url",
+    "name": "Slash Command: /usage-credits — visit personal billing page",
+    "desc": "Non-org variant of the same fallback, telling the model where usage credits are managed for a personal account."
+  },
+  "2d8506925ce94b977170ba1ee7ebb75d95b0b561": {
+    "facing": "model",
+    "id": "data-fork-blocked-restricted-launch-flags",
+    "name": "Data: Fork blocked — session started with restricting launch flags",
+    "desc": "Tells the model why forking is refused (the copy would drop the parent's safety restrictions) and gives the two ways forward, so it does not retry /fork blindly."
+  },
+  "1bd25b7464a594a98b6b10b6107cf234cf8f5202": {
+    "facing": "model",
+    "id": "slash-command-moved-to-config-redirect",
+    "name": "Slash Command: /vim and /output-style moved into /config",
+    "desc": "Tells the model the invoked command no longer exists on its own and names the /config tab that replaced it, which is what it must relay to the user."
+  },
+  "a1a3b37dd8c3e886e874b390722160b9c978af0b": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-team-upgrade-browser-opened",
+    "name": "Slash Command: /rate-limit-options — team upgrade page opened",
+    "desc": "Tells the model the upgrade page was opened and that /login must be re-run afterwards for the new plan to take effect, which is the step it has to remind the user about."
+  },
+  "54940b9bb8c1609aaebe32db3809217dc5146af8": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-team-upgrade-browser-failed",
+    "name": "Slash Command: /rate-limit-options — could not open the upgrade page",
+    "desc": "The other arm of the same conditional: gives the model the upgrade URL plus the /login follow-up when no browser could be launched."
+  },
+  "0216d5fb9a0ec7855d539aceaf7f362c7f4f33b3": { "facing": "ui" },
+  "0856a076f2d41238081a8d331c9daeadf7b96a9f": { "facing": "ui" },
+  "d864c24f76b3885724317cc5c2ad1d07c2b03367": { "facing": "ui" },
+  "c0ff72010454683537234ac066b56c79b3a66614": { "facing": "ui" },
+  "eea4c52c7cb47b3df1f64b06f998c723082b942b": {
+    "facing": "model",
+    "id": "slash-command-extra-usage-renamed-to-usage-credits",
+    "name": "Slash Command: /extra-usage — renamed to /usage-credits",
+    "desc": "Tells the model the invoked command no longer exists under that name and that /usage-credits is the current one, so it does not keep referring the user to a dead command."
+  },
+  "f69cec0c03455cbcbe1f6835619c18bacd6889a2": {
+    "facing": "model",
+    "id": "slash-command-btw-fork-failed",
+    "name": "Slash Command: /btw — fork failed",
+    "desc": "Reports that the requested side-question fork never started and carries the underlying error, so the model explains the failure instead of assuming a subagent is running."
+  },
+  "e06a09192417c1e94bb83fb9c7c62640727f56a7": {
+    "facing": "model",
+    "id": "slash-command-btw-branch-failed",
+    "name": "Slash Command: /btw — conversation branch failed",
+    "desc": "Reports that branching the conversation for the side question failed and gives the error, so the model knows the side question was never asked."
+  },
+  "579d9303d9d760394ecd65d597961fcdeff1d43f": {
+    "facing": "model",
+    "id": "slash-command-export-succeeded",
+    "name": "Slash Command: /export — conversation written to file",
+    "desc": "Confirms the export completed and names the file it landed in, which is the only way the model learns that path exists."
+  },
+  "8734b933d3c595ee4b652a467562d343e6da8dec": {
+    "facing": "model",
+    "id": "slash-command-export-failed",
+    "name": "Slash Command: /export — export failed",
+    "desc": "Tells the model the export never wrote a file and why, so it does not go on to reference a nonexistent path."
+  },
+  "330a30c8edaaab7188495bf96ebc67623ce535ab": { "facing": "ui" },
+  "f4d4abf6c1436b7fc41b01f30f9d28510ab9caf5": { "facing": "ui" },
+  "8f690b0826a1b4dfb2180c14a8686d38d017fb70": { "facing": "ui" },
+  "965ce6ea74d58f1f431a3f18eff253c2dcca84f5": {
+    "facing": "model",
+    "id": "slash-command-permissions-granted-retry",
+    "name": "Slash Command: /permissions — permission granted, retry allowed",
+    "desc": "Names the rules the user just approved and tells the model it may re-run the previously denied commands, which is the recovery step that resumes the blocked work."
+  },
+  "91776e1b083fe69e5dce699e33bc6550db8ec443": {
+    "facing": "model",
+    "id": "slash-command-permissions-granted-retry",
+    "name": "Slash Command: /permissions — permission granted, retry allowed",
+    "desc": "Same string as 19642856 on the approve path; one prompt id must cover both byte occurrences or an override would patch only half of them."
+  },
+  "905677eca9112d2ea373549e3bc220875e42557a": { "facing": "ui" },
+  "eaa2a5b51f8516b3fdf4b9e21cd090e58fc57abb": {
+    "facing": "model",
+    "id": "slash-command-privacy-settings-manage-link",
+    "name": "Slash Command: /privacy-settings — manage settings on the web",
+    "desc": "Tells the model the privacy settings could not be shown or changed in the terminal and where the user has to go instead, which is the recovery step it should relay."
+  },
+  "7e22e6f945dc717499a94b1319abb549f3726f4a": {
+    "facing": "model",
+    "id": "slash-command-wellbeing-unavailable",
+    "name": "Slash Command: /wellbeing — not available in this build",
+    "desc": "Tells the model the wellbeing settings feature is compiled out of this build, so it reports the constraint rather than retrying or inventing settings."
+  },
+  "558453439cfdb2f37dac3c28f189ebf6aa9f6adc": { "facing": "ui" },
+  "c52463d95f511101289525a1c7343f4594da3529": {
+    "facing": "model",
+    "id": "slash-command-mcp-server-disabled-enable-first",
+    "name": "Slash Command: /mcp — server is disabled, enable it first",
+    "desc": "Tells the model the named MCP server cannot be reconnected because it is disabled and that the fix is `/mcp enable` first, so it retries the right action instead of the same one."
+  },
+  "4ad146b110ff48613dd8e7adca4c5a8be59a2f4c": {
+    "facing": "model",
+    "id": "slash-command-mcp-bulk-reenabled-in-another-session",
+    "name": "Slash Command: /mcp — bulk disable didn't persist, re-enabled elsewhere",
+    "desc": "Conditional tail concatenated onto the same emitted string, stating how many servers did stay disabled."
+  },
+  "d54a9bba6249655fb852091016250632ada0ccca": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-threw",
+    "name": "Slash Command: /mcp — reconnect threw an error",
+    "desc": "Reports that the reconnect attempt for a named server raised an exception and carries the sanitized reason, so the model knows the server is still down and why."
+  },
+  "728e7b11f9d60ad6693cca7ae59cd4d8064aaa98": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-threw",
+    "name": "Slash Command: /mcp — enable/disable threw an error",
+    "desc": "Reports that enabling or disabling a named MCP server failed with an exception and carries the sanitized reason, so the model does not treat the toggle as applied."
+  },
+  "3e7727c824535315574fcb29cea3e5966a1022ec": {
+    "facing": "model",
+    "id": "slash-command-mcp-claudeai-auth-connected",
+    "name": "Slash Command: /mcp — claude.ai auth succeeded and server connected",
+    "desc": "Confirms the named MCP server is now authenticated and connected, so the model can go ahead and use its tools."
+  },
+  "4326ee754a99803c77ea053b5b3ffe2ea841e608": {
+    "facing": "model",
+    "id": "slash-command-disconnected-from-target",
+    "name": "Slash Command: disconnected from a named target",
+    "desc": "Confirms a disconnect from the named MCP server or IDE; one string emitted by both /mcp and /ide."
+  },
+  "7b42810feca8c9f9abe5cf667519d29ec2ae4fb4": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnected",
+    "name": "Slash Command: /mcp — OAuth succeeded and server reconnected",
+    "desc": "Confirms the OAuth flow completed and a previously authenticated server is connected again, so the model can use its tools."
+  },
+  "5e895ba9c50bd400c6fc655ea2177a72cb62a0c7": {
+    "facing": "model",
+    "id": "slash-command-mcp-oauth-reconnect-failed-detail",
+    "name": "Slash Command: /mcp — reconnect failed after OAuth, with reason",
+    "desc": "Reports that authentication succeeded but the reconnect failed, carrying the sanitized reason so the model can distinguish an auth problem from a transport problem."
+  },
+  "ed49021fada8edc4805a98490f9a3eec2f5a8239": {
+    "facing": "model",
+    "id": "slash-command-mcp-auth-cleared",
+    "name": "Slash Command: /mcp — stored authentication cleared",
+    "desc": "Tells the model the server's stored OAuth tokens were revoked and cleared, so the server now needs authentication before its tools work again."
+  },
+  "1aff488202d09849491a9746969c48ac8925c820": {
+    "facing": "model",
+    "id": "slash-command-mcp-server-not-found",
+    "name": "Slash Command: /mcp — server not found",
+    "desc": "Tells the model the named MCP server does not exist, so the reconnect or enable/disable it was asked for cannot proceed."
+  },
+  "386c0d9ce407bd2876468ce6267034d4099ddfa3": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-success",
+    "name": "Slash Command: /mcp reconnect — reconnected",
+    "desc": "Confirms the named server is connected again, so the model can resume calling its tools."
+  },
+  "405b0c80407ff5cb8dca7c5e39b382bff4361d37": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-needs-auth-terminal",
+    "name": "Slash Command: /mcp reconnect — needs authentication, use /mcp",
+    "desc": "Sibling of the background-session branch: tells the model the server needs authentication and that /mcp is the way to do it, so it stops retrying reconnect."
+  },
+  "8e2926d20d4ef3d8c8164586484f09c337b6aebe": {
+    "facing": "model",
+    "id": "slash-command-mcp-reconnect-failed",
+    "name": "Slash Command: /mcp reconnect — reconnect failed",
+    "desc": "Tells the model the server ended up cached/pending/failed/disabled rather than connected, so its tools are still unavailable."
+  },
+  "da44934be820e34fa06c5a06d26266213a421a48": { "facing": "ui" },
+  "38f11504b6d6fb006822d7f17c709a17d5a38baa": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-all-already-in-state",
+    "name": "Slash Command: /mcp enable|disable all — nothing to change",
+    "desc": "Tells the model every configured MCP server is already in the requested state, so the command was a no-op and no retry is needed."
+  },
+  "9d1984418630b5f77ad8ed4dd242f44b0a2260d7": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-pending-approval",
+    "name": "Slash Command: /mcp enable|disable — server is pending approval",
+    "desc": "Tells the model the server cannot be toggled until the user approves it via /mcp, naming the blocking step rather than a generic failure."
+  },
+  "e682433a4982adbcc2104dfc81f2a04a83a7b0ec": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-already-in-state",
+    "name": "Slash Command: /mcp enable|disable — server already in that state",
+    "desc": "Tells the model the single named server was already enabled/disabled, so nothing changed."
+  },
+  "2558039324ad171a3afa01611fcf69408a814653": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-result",
+    "name": "Slash Command: /mcp enable|disable — server toggled",
+    "desc": "Confirms the named server was actually enabled or disabled, which tells the model whether that server's tools are now in play."
+  },
+  "aa243108fe24bd4381b681a7c4b0f202abe3258c": {
+    "facing": "model",
+    "id": "slash-command-mcp-toggle-bulk-result",
+    "name": "Slash Command: /mcp enable|disable all — bulk result",
+    "desc": "Reports how many MCP servers were enabled or disabled, how many could not be changed, and how to inspect the rest, so the model knows the toggle only partly landed."
+  },
+  "ffc0ccd8d8eaf410b1634e3a7c1eaea97c687d28": { "facing": "ui" },
+  "6d7040a10a4c9c6ec0b609aed78109540cddde39": { "facing": "ui" },
+  "28c210576f2d84ffbf800b4e7f03bbdf0f21db6d": { "facing": "ui" },
+  "f2844c07b3b0f8da58f7437cd3e72822dead40df": { "facing": "ui" },
+  "7f50eeef43c713093a79c4e4f7013be693a811bb": {
+    "facing": "model",
+    "id": "slash-command-context-remote-fetch-failed",
+    "name": "Slash Command: /context — remote fetch failed",
+    "desc": "Reports that the remote control-channel request for context usage threw, so the model knows the figures are missing because of a transport failure rather than because usage is zero."
+  },
+  "8693048627f3c37e9eb1894d3c915ac4c664e9f2": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-failed",
+    "name": "Slash Command: /plugin eval — evaluation failed",
+    "desc": "States the trigger-evaluation run failed, which tells the model the reported per-case results are the actionable ones and the skill needs fixing."
+  },
+  "afaf20ed56d503979f66ffa3ed56efe999979bf8": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-pending-model-integration",
+    "name": "Slash Command: /plugin eval — queries validated, trigger tests pending",
+    "desc": "Tells the model the eval files parsed but no trigger test actually ran because model evaluation is not wired up yet, so a green-looking run is not evidence the skill triggers."
+  },
+  "1b620d238bc37e91b89d988044b45c5d0e3ef3ee": {
+    "facing": "model",
+    "id": "slash-command-plugin-eval-outcome-passed",
+    "name": "Slash Command: /plugin eval — evaluation passed",
+    "desc": "States every trigger test passed, so the model can stop iterating on the skill's description."
+  },
+  "7bb3feb49c6b9a3db997cc3ad4400139b909f86d": { "facing": "ui" },
+  "6e44c3bccccc720885f08f9ddce3c4011d6f2b89": {
+    "facing": "model",
+    "id": "slash-command-plugin-tag-unexpected-argument",
+    "name": "Slash Command: /plugin tag — unexpected argument",
+    "desc": "Tells the model the tag command rejected an argument it did not recognise and reprints the usage, so it retries with a valid flag instead of assuming the tag was created."
+  },
+  "39c2ecb064a16131228931f735a96a6d403df73e": { "facing": "ui" },
+  "b2bcf9024e77a61615186a9e6bbb29af11e0dead": { "facing": "ui" },
+  "af3baed1d094833ce7e7c4a05c02fae0b45ad034": { "facing": "ui" },
+  "44149096fbfdba8939f28efb15022aabdd3930e3": { "facing": "ui" },
+  "f43361aff2ae9128ec79d61fca5ff06a4339a0e8": { "facing": "ui" },
+  "9724d4d14fceb56058aef1ae1bda74f016fa8a02": { "facing": "ui" },
+  "11165fa4fb526ead86fd7387207d51b5af390f46": {
+    "facing": "model",
+    "id": "slash-command-plugin-validate-unexpected-error",
+    "name": "Slash Command: /plugin validate — validation crashed",
+    "desc": "Distinguishes a crash of the validator itself from a manifest that failed validation, so the model does not report the plugin as invalid when the run never completed."
+  },
+  "4ff2a0f26bf2dca1c06b409ffb243b3374630916": { "facing": "ui" },
+  "0a93ff37ac3a07a17caf404c0fa25e5d3f38cbd1": {
+    "facing": "model",
+    "id": "slash-command-plugin-marketplace-list-load-error",
+    "name": "Slash Command: /plugin marketplace list — load failed",
+    "desc": "Tells the model the marketplace registry could not be read, so an empty result must not be read as 'no marketplaces'."
+  },
+  "f9713162ae70387a7d184624bb0078f17ca7d357": {
+    "facing": "model",
+    "id": "slash-command-plugin-list-none-match-filter",
+    "name": "Slash Command: /plugin list — no plugins match the filter",
+    "desc": "Tells the model that plugins are installed but none match the enabled/disabled filter that was asked for, which is different from having no plugins at all."
+  },
+  "1c1d7db516e351c93449f32ba6293983f6d80d78": {
+    "facing": "model",
+    "id": "slash-command-add-dir-path-not-found",
+    "name": "Slash Command: /add-dir — path not found",
+    "desc": "Reports to the model that the requested directory does not exist on disk, so any plan that assumed that path is now accessible is invalid."
+  },
+  "609d2b6b452ce452781de11446e482fdb5bf57ab": {
+    "facing": "model",
+    "id": "slash-command-add-dir-already-accessible-within-parent",
+    "name": "Slash Command: /add-dir — already covered by an existing working directory",
+    "desc": "Tells the model the path is already reachable because an ancestor is a working directory, naming that ancestor so it knows the effective access boundary."
+  },
+  "f65182acef9e834102ebee9f34ab09496428d601": { "facing": "ui" },
+  "0f6753ee27c7bbd6c657cf02fb1a8bb8b65828c7": { "facing": "ui" },
+  "1d31896a9b7ecea70a04e904880bdc79e3b321f2": {
+    "facing": "model",
+    "id": "slash-command-model-status-session-override",
+    "name": "Slash Command: /model — session model overridden by plan mode",
+    "desc": "Tells the model that a plan-mode session override is in force and separates the model actually running from the configured base model, so it does not misreport which model is active."
+  },
+  "10f3e244422cf06efa9a9ca6f875d04ad2bed325": { "facing": "ui" },
+  "1059070e49451484da0ee8ee4b19a8fc80715926": {
+    "facing": "model",
+    "id": "slash-command-model-status-current",
+    "name": "Slash Command: /model — current model status line",
+    "desc": "States which model is running right now, with the previous model and effort appended, so the model can answer accurately about its own identity and configuration."
+  },
+  "d8da05e7a142dfd272fd7367327f092fbfbdbc3d": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-saved-to-local-settings",
+    "name": "Slash Command: /add-dir — added and persisted to local settings",
+    "desc": "Tells the model the directory is now readable AND persisted to local settings, so the grant survives beyond this session."
+  },
+  "7609308f645efb2bc879b89a571e5b8b288d7939": {
+    "facing": "model",
+    "id": "slash-command-add-dir-added-for-session",
+    "name": "Slash Command: /add-dir — added for this session only",
+    "desc": "Tells the model the directory is readable but only for the current session, bounding how long the access lasts."
+  },
+  "1761343173c17c116395158ec5eabaeb8177c3e5": { "facing": "ui" },
+  "d7615205d47983962f3e159cd606cd762fd06c06": {
+    "facing": "model",
+    "id": "slash-command-model-set",
+    "name": "Slash Command: /model — model switched",
+    "desc": "Tells the model which model is now in use and whether the change was saved as the new default or applies to this session only."
+  },
+  "9802afb0f10c5a6f5af69e5837e54522d417a329": { "facing": "ui" },
+  "e05cedec55d2d624c140610f7cc2dfcdecbe117b": {
+    "facing": "model",
+    "id": "slash-command-model-set-remote",
+    "name": "Slash Command: /model — model switched in a cloud session",
+    "desc": "Confirms to the model which model the remote/cloud session was switched to, the sibling branch of the workspace-default reset notice."
+  },
+  "6c60d6b9a03ce3bed20efe76b778596e843eb3c6": { "facing": "ui" },
+  "501ff0f60065eb43859c7b0dad92887fb53a36fb": {
+    "facing": "model",
+    "id": "slash-command-branch-created-resume-hint",
+    "name": "Slash Command: /branch — branch created, resume with /resume",
+    "desc": "Tells the model the conversation was forked into a new session and names the exact command that returns to it, so a later request to go back has a concrete recovery step."
+  },
+  "00b142343795a5ba9d79ee2dcceac6ca68a7cc19": {
+    "facing": "model",
+    "id": "slash-command-branch-failed",
+    "name": "Slash Command: /branch — branching failed",
+    "desc": "Tells the model the branch was not created and surfaces the underlying error, so it does not proceed as if a new session exists."
+  },
+  "2b69460f62c22fc270b142de51c68b97371cf9be": {
+    "facing": "model",
+    "id": "slash-command-cd-already-in-directory",
+    "name": "Slash Command: /cd — already in that directory",
+    "desc": "Tells the model the move was a no-op because the session is already there, so it does not treat the directory as newly changed."
+  },
+  "3ce9b92b0404dbe7e6d138b00b58d9091be27f00": {
+    "facing": "model",
+    "id": "slash-command-cd-trust-declined-staying",
+    "name": "Slash Command: /cd — trust prompt declined, staying put",
+    "desc": "Tells the model the user declined to trust the new directory so the session's working directory is unchanged, naming the directory still in effect."
+  },
+  "8674918ceacb4c4228f77de1b07c593ee3a35cbe": {
+    "facing": "model",
+    "id": "slash-command-ide-opened-project",
+    "name": "Slash Command: /ide — project or worktree opened",
+    "desc": "Tells the model the directory was successfully opened in the named editor, and whether it was the worktree or the project."
+  },
+  "cd66e82f908a2c7fc28919d44da7ef7c89a4a1d0": {
+    "facing": "model",
+    "id": "slash-command-ide-extension-installed",
+    "name": "Slash Command: /ide — extension installed",
+    "desc": "Tells the model the Claude Code extension was installed and where, so IDE integration can be assumed available."
+  },
+  "e674e7dd762d280f03575c70a02d2b04ac08f236": {
+    "facing": "model",
+    "id": "slash-command-ide-connected",
+    "name": "Slash Command: /ide — connected to the IDE",
+    "desc": "Tells the model the IDE MCP connection is live and names the editor, so IDE-backed capabilities can be relied on."
+  },
+  "cbc01a08728221e7c54e4d6f0aba7585a192ce4d": {
+    "facing": "model",
+    "id": "slash-command-ide-connect-failed",
+    "name": "Slash Command: /ide — connection to the IDE failed",
+    "desc": "Tells the model the IDE connection attempt failed, so IDE-backed capabilities are not available."
+  },
+  "004aac19ab4ac04190b3803a454d81952f2df39e": {
+    "facing": "model",
+    "id": "slash-command-ide-connect-timed-out",
+    "name": "Slash Command: /ide — connection timed out",
+    "desc": "Tells the model the IDE never answered within the timeout, distinguishing a hung handshake from an outright failure."
+  },
+  "28e202e2e9d29bc3d805c792ae8ea057bf5d90de": { "facing": "ui" },
+  "bef656c0ab890ee19c1a4180e5bcfa6692f9c026": { "facing": "ui" },
+  "e7690e274bf8783687f12106435922540dda210a": { "facing": "ui" },
+  "33b7a833b4afcc910fe440628eead1784258c46d": {
+    "facing": "model",
+    "id": "slash-command-advisor-disabled",
+    "name": "Slash Command: /advisor — advisor turned off",
+    "desc": "Tells the model no advisor model is in play any more, and whether the change is session-scoped, so it stops expecting reviewer-model iterations."
+  },
+  "ff2302bd40ff9ab0be3932973bd87464803a5c1c": {
+    "facing": "model",
+    "id": "slash-command-advisor-set",
+    "name": "Slash Command: /advisor — advisor model selected",
+    "desc": "Tells the model which reviewer model is now consulted and whether the setting is session-scoped, which changes what it can expect from the advisor tool."
+  },
+  "7721cbf78da67a12e977a42249045241a1e0cb36": {
+    "facing": "model",
+    "id": "slash-command-advisor-invalid-model-validation-error",
+    "name": "Slash Command: /advisor — model string failed validation",
+    "desc": "Tells the model the advisor argument never validated and surfaces the validator's reason, so it knows the setting is unchanged and why."
+  },
+  "f3336488fef7298d2a6a22d19c1a0bf04a0ecd7f": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-no-payment-method",
+    "name": "Slash Command: /usage-credits — no card on file",
+    "desc": "Tells the model the purchase could not proceed because no payment method exists and names the URL where the user adds one — a fact plus the recovery step."
+  },
+  "8d848d8c3a1eff5ba4e76d5543184da8d1df74b6": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-opening-billing-page",
+    "name": "Slash Command: /usage-credits — opening the billing page",
+    "desc": "Tells the model the user was handed off to the browser billing page, so the credit state may change out-of-band and nothing was settled in-session."
+  },
+  "8f560915f4327628dabf6dd8e10abd5c5aff1b27": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-monthly-limit-updated",
+    "name": "Slash Command: /usage-credits — monthly limit changed",
+    "desc": "Tells the model the new monthly spend cap, which is the budget constraint it is working under for the rest of the month."
+  },
+  "2657b6fe02af782aff2db30937173171a3a70dcf": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-purchase-succeeded",
+    "name": "Slash Command: /usage-credits — credits added",
+    "desc": "Tells the model a credit purchase completed and how much was added, so it knows the previous quota block is cleared."
+  },
+  "7d0f87017d238e4d411f5e2a2d1417ce98741471": {
+    "facing": "model",
+    "id": "slash-command-plan-opened-in-editor",
+    "name": "Slash Command: /plan open — plan opened in the editor",
+    "desc": "Tells the model the plan file was handed to an external editor at a named path, so the plan may change out-of-band and the path is where it lives."
+  },
+  "f4babbd8e72bc6e1edc4c32a5b8cd2c1ba4c690b": {
+    "facing": "model",
+    "id": "slash-command-plan-published-artifact-url",
+    "name": "Slash Command: /plan share — plan published",
+    "desc": "Tells the model the plan was published as an artifact and gives its URL, which the model may need to reference or repeat back to the user."
+  },
+  "d2b1d821a7b4f74f874e7109bdab52d499c9f003": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-cannot-run-from-terminal",
+    "name": "Slash Command: /terminal-setup — cannot run from this terminal",
+    "desc": "Tells the model the shortcut install was refused because of where it is running, and gives the workaround (backslash+return works now; re-run outside tmux/screen in a listed terminal), so the model does not report success or retry blindly."
+  },
+  "9a93c2683c527238550125a34fecc22a4d7639d3": {
+    "facing": "model",
+    "id": "slash-command-copy-written-to-file",
+    "name": "Slash Command: /copy — content written to a file",
+    "desc": "Tells the model the selected response or code block was saved to disk at the named path, which the model may then read or reference."
+  },
+  "f1fb9d23676963308484f702c9e5a74774e48c72": {
+    "facing": "model",
+    "id": "slash-command-copy-file-write-failed",
+    "name": "Slash Command: /copy — file write failed",
+    "desc": "Tells the model the write-to-file shortcut failed and carries the underlying error, so the model knows no file exists and why."
+  },
+  "606ef4289a04e8f87f5b4e54fe7a0429acf95ad0": {
+    "facing": "model",
+    "id": "slash-command-copy-invalid-index-usage",
+    "name": "Slash Command: /copy — invalid index, usage line",
+    "desc": "Tells the model the argument was not a positive integer and states the accepted form, so a retry can be well-formed."
+  },
+  "673b37cd1d842c39d9a7bdfb102186673c0ce955": {
+    "facing": "model",
+    "id": "slash-command-copy-index-out-of-range",
+    "name": "Slash Command: /copy — index beyond available messages",
+    "desc": "Tells the model how many assistant messages actually exist so it can pick a valid index instead of repeating an out-of-range one."
+  },
+  "1fece75f618775ae96803e82c6cccbfa8f2b06d9": {
+    "facing": "model",
+    "id": "slash-command-resume-session-not-found",
+    "name": "Slash Command: /resume — session not found",
+    "desc": "Tells the model the requested session id or title matched nothing, so no resume happened."
+  },
+  "2acadda7e6511ffb25d82d5b0d5376519a96f892": { "facing": "ui" },
+  "80d165c7dbd30d8a270b5ed59bac83cf3f1d439a": {
+    "facing": "model",
+    "id": "slash-command-resume-resume-threw",
+    "name": "Slash Command: /resume — resume threw an error",
+    "desc": "Tells the model the resume handler raised, and carries the error text, so it knows the old transcript was not loaded and why."
+  },
+  "b37e19b8a28baf4e8084f480465a9c2946687d08": { "facing": "ui" },
+  "c6d4bc3363855dec33e0345678863a54df0bad9c": { "facing": "ui" },
+  "7ad8dd13f62f0a67d8db912ff427b087328c2917": {
+    "facing": "model",
+    "id": "slash-command-web-setup-connected-and-opened",
+    "name": "Slash Command: /web-setup — connected as user, web app opened",
+    "desc": "Tells the model the GitHub token import succeeded, under which GitHub username, and that a browser was opened at the Claude web URL — the end state the model should report."
+  },
+  "866053d7320fb27560adf5e6ae2a774a3e5b93c9": { "facing": "ui" },
+  "7e090deee5729965dce14a5d6bb4cfb496d1bcb6": { "facing": "ui" },
+  "f87f57754dca7c54bc302a21095e9a59cd161f1e": {
+    "facing": "model",
+    "id": "slash-command-fast-mode-enabled",
+    "name": "Slash Command: /fast — fast mode turned on",
+    "desc": "Tells the model the session just switched to fast mode, optionally naming the model it was switched to and the per-Mtok rate, so it knows its own execution mode and cost profile changed mid-session."
+  },
+  "7ac25624003a31d70e5f7755cd73fe6b339ec8e6": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-install-error",
+    "name": "Slash Command: /install-github-app — install failed with an error",
+    "desc": "Gives the model the specific installation error plus the manual-setup doc URL, which is the recovery step it should hand the user."
+  },
+  "25df81eb1a25babae22069cd97f2a713333f84fe": {
+    "facing": "model",
+    "id": "slash-command-install-github-app-install-failed",
+    "name": "Slash Command: /install-github-app — install failed without an error",
+    "desc": "Tells the model the installation failed with no captured error and points at the manual-setup docs, the fallback arm of the same result ternary."
+  },
+  "d14988c19f5c88d8f64406f3b1823be4468aa90b": {
+    "facing": "model",
+    "id": "slash-command-remote-env-default-overridden-note",
+    "name": "Slash Command: /remote-env — a settings layer pins a different environment",
+    "desc": "Warns the model that a higher-precedence settings file still pins a different environment id, so the default it was just told about will not actually be used."
+  },
+  "8ffd22af29769b7bbfce9522e6c88c0e54209266": {
+    "facing": "model",
+    "id": "slash-command-remote-env-default-set",
+    "name": "Slash Command: /remote-env — default environment set",
+    "desc": "Tells the model which remote or self-hosted environment is now the session default and by which id, so later remote work is attributed to the right target."
+  },
+  "53ea234fb44f3ead9c343b4101b9b7e165d29601": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-save-failed",
+    "name": "Slash Command: /scroll-speed — could not save",
+    "desc": "Gives the model the settings-write error that prevented the scroll speed from being persisted, so it can explain why the change did not stick."
+  },
+  "ff831151d442013dd630f422483725eddd6c24a0": { "facing": "ui" },
+  "5053c21ccd0655d1011fd15b2458d81acb88afc9": {
+    "facing": "model",
+    "id": "slash-command-scroll-speed-set",
+    "name": "Slash Command: /scroll-speed — new speed saved",
+    "desc": "Tells the model the chosen scroll speed was written to the user settings file, the sibling arm of the reset message."
+  },
+  "8ae3e28355e09e817d1a4a5c785a8e83a395bfbe": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-exceeds-size-limit",
+    "name": "Tool Result: Workflow script exceeds the byte limit",
+    "desc": "Tells the model its workflow script was rejected for size, so the fix is to shrink the script rather than retry it unchanged."
+  },
+  "62a97ed035b77c35e37b8a321211d314f8f50cf2": {
+    "facing": "model",
+    "id": "slash-command-effort-usage-header",
+    "name": "Slash Command: /effort — usage line and level list header",
+    "desc": "States the accepted /effort arguments, which the model sees verbatim as local-command-stdout and repeats back when the user asks how to change effort."
+  },
+  "04acf8156be9543b6b2e7b6bd54d46ad96587a29": { "facing": "ui" },
+  "65062a29ea110f9c8651bf6905e0f256f64ed1e1": { "facing": "ui" },
+  "edb216f69973cb9b92e47f8c0d772812ffc48980": { "facing": "ui" },
+  "6c7f1b73276ae5eb3640d978ce3b6dfde8559751": { "facing": "ui" },
+  "df996c7d9381e6ee11a863109b6a123f94e42c75": {
+    "facing": "model",
+    "id": "slash-command-usage-credits-visit-billing-url",
+    "name": "Slash Command: /usage-credits — visit personal billing page",
+    "desc": "Non-org variant of the same fallback, telling the model where usage credits are managed for a personal account."
+  },
+  "5e7452b7d9aa5a0ab52f6586fc3ad6ec74c51ed2": {
+    "facing": "model",
+    "id": "slash-command-moved-to-config-redirect",
+    "name": "Slash Command: /vim and /output-style moved into /config",
+    "desc": "Tells the model the invoked command no longer exists on its own and names the /config tab that replaced it, which is what it must relay to the user."
+  },
+  "9d2d0d19ddf693e758be2980fc9dd0b85c197985": { "facing": "ui" },
+  "15b4bea119d2d7d90a5ab4d2041f0a7eaec38b36": { "facing": "ui" },
+  "235a7f6b9a31ed933c0a57cbe9b3317b456873f5": { "facing": "ui" },
+  "516453b79d24b1b39cad58fa95aca54bc6cddf70": {
+    "facing": "model",
+    "id": "slash-command-btw-fork-failed",
+    "name": "Slash Command: /btw — fork failed",
+    "desc": "Reports that the requested side-question fork never started and carries the underlying error, so the model explains the failure instead of assuming a subagent is running."
+  },
+  "8fb9c9b23e7fb411570959e35dccc351e6a82067": {
+    "facing": "model",
+    "id": "slash-command-btw-branch-failed",
+    "name": "Slash Command: /btw — conversation branch failed",
+    "desc": "Reports that branching the conversation for the side question failed and gives the error, so the model knows the side question was never asked."
+  },
+  "e5b96d2602cc4e08776f8946bb0361185bc6e8a1": {
+    "facing": "model",
+    "id": "slash-command-export-succeeded",
+    "name": "Slash Command: /export — conversation written to file",
+    "desc": "Confirms the export completed and names the file it landed in, which is the only way the model learns that path exists."
+  },
+  "cd98dafb146e27643de37255d38f83c94e4be8c9": {
+    "facing": "model",
+    "id": "slash-command-export-failed",
+    "name": "Slash Command: /export — export failed",
+    "desc": "Tells the model the export never wrote a file and why, so it does not go on to reference a nonexistent path."
+  },
+  "bca5484859eda34afc421e0e0a7c622654b61eef": { "facing": "ui" },
+  "8fa2d4f3568920ce2b1ef88108f8a250482f9cfa": { "facing": "ui" },
+  "73a34666489538e9fa0dd29b692b4a995f5aaa05": { "facing": "ui" }
 }

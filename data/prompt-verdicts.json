@@ -6252,5 +6252,2020 @@
     "verdict": "pristine-keep",
     "version": "2.1.228",
     "why": "This is operation-specific runtime feedback: it explains that a Write failed because a Read deny rule covers the file. The Edit analogue cannot substitute for the Write result."
+  },
+  "slash-command-plugin-validate-claude-dir-symlink-warning-lead": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique, load-bearing, slop-free literal error text for a conditional /plugin validate path that costs zero when the command is not run."
+  },
+  "slash-command-plugin-validate-claude-dir-symlink-warning-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct site, distinct subject; the 73% surface overlap is boilerplate phrasing, not coverage. Mechanics text must stay verbatim."
+  },
+  "slash-command-plugin-validate-component-dir-symlink-warning-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique site with a unique plugin/project conditional; no carrier exists."
+  },
+  "slash-command-plugin-validate-component-dirs-not-followed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the 'pass the real directory instead' remediation; conditional and free when /plugin validate is not used."
+  },
+  "slash-command-plugin-validate-component-not-regular-file-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct emission site carrying its own skipped-component count; shared parenthetical is not coverage."
+  },
+  "slash-command-plugin-validate-enclosing-claude-dir-symlink": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Shortest possible statement of a unique condition; nothing to trim and no carrier."
+  },
+  "slash-command-plugin-validate-files-over-size-cap": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Pure mechanics with a runtime cap and eight positional variable slots; unique in the corpus."
+  },
+  "slash-command-plugin-validate-frontmatter-not-mapping": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of a validation-gate error message with a live type-discrimination expression."
+  },
+  "slash-command-plugin-validate-frontmatter-parse-failed-agent-name-from-filename": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique agent-specific failure semantics; the doctor skill's superficially similar sentence is about skills and a different fallback."
+  },
+  "slash-command-plugin-validate-frontmatter-parse-failed-agent-not-loaded-lead": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the project-agent hard-failure outcome that no other prompt states; also a sentence fragment that cannot survive partial edits."
+  },
+  "slash-command-plugin-validate-frontmatter-parse-failed-agent-not-loaded-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the co-located-reference-document classification rule; a fragment that must stay verbatim to complete its sentence."
+  },
+  "slash-command-plugin-validate-frontmatter-parse-failed-empty-metadata": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique validator output for the loads-with-empty-metadata outcome, with a live variable slot; conditional on /plugin validate so it costs nothing when unused."
+  },
+  "data-artifact-watch-not-carried-into-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique conditional runtime notice with a frozen flag literal, a state correction, and a remedy; nothing in the corpus conveys it and there is nothing non-mechanical to cut."
+  },
+  "data-artifact-watch-not-restarted-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Frozen fragment, already minimal, and its only near-sibling reports a different failure mode."
+  },
+  "data-artifact-watch-startup-current-artifact-of-interest": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique ordering contract plus three variable bindings; wholly mechanics."
+  },
+  "data-poll-event-delivery-chunked": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct channel, distinct guarantee (chunking + nothing dropped) that no sibling states."
+  },
+  "data-task-notification-artifact-act-then-reply-and-resolve-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the check-then-reply-then-resolve sequence with its duplicate guard; the similar tails are alternates that omit those steps."
+  },
+  "data-task-notification-artifact-auto-edit-noop-withheld-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Alternate-branch text, not duplicated text; carries a next-action sentence its near-twin does not have."
+  },
+  "data-task-notification-artifact-auto-edit-patch-failed-withheld-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Mutually exclusive branch of the patch-failed pair; wiping it silences the reply-withheld path."
+  },
+  "data-task-notification-artifact-auto-edit-refused-reply-withheld": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only message for the refused-edit + withheld-reply combination, and it binds three identifier slots."
+  },
+  "data-task-notification-artifact-auto-edited-reply-failed-acknowledgement-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the acknowledgement-stands recovery path and the pre-emptive acknowledge_duplicate instruction for it."
+  },
+  "data-task-notification-artifact-auto-edited-summary-reply-lead": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Success-branch lead of a three-way fork; the other two arms report failure and withholding."
+  },
+  "data-task-notification-artifact-auto-posted-reply-standing-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Alternate branch with its own interpolated slot and reason clause; the similar tails fire in different thread states."
+  },
+  "data-task-notification-artifact-auto-react-stop-body": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Structural joiner for the discard records plus the re-arm contract; its 0.71 twin is the Esc-stop path with a different wrapper."
+  },
+  "data-task-notification-artifact-auto-replied-followup-withheld": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Branch-exclusive notification: unique runtime slots plus the only instruction to review and act in a path where no sibling notice is emitted at all. No slop to remove."
+  },
+  "data-task-notification-artifact-auto-replied-resolved-thread-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Branch-exclusive: carries the resolved-thread state fact plus the do-not-double-post and no-confirmation-reply contracts, and is the sole carrier of both in its branch."
+  },
+  "data-task-notification-artifact-auto-reply-esc-stopped-body": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Site-exclusive re-arm/disarm mechanics for the Esc path; the closest sibling is a different notification that omits the kill-all-agents clause."
+  },
+  "data-task-notification-artifact-auto-reply-withheld-lead": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the withheld state and reason for the auto-edit reply path; already one minimal sentence."
+  },
+  "data-task-notification-artifact-no-confirmation-reply-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Same words, different emission sites, no co-emission in the branches that matter — this fragment is the only copy on the withheld paths."
+  },
+  "data-task-notification-artifact-resolve-after-promised-reply-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "One arm of a two-arm ternary; the sibling tails encode different preconditions and post-conditions, so no carrier covers this text."
+  },
+  "data-task-notification-artifact-thread-resolve-after-acting-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Branch-exclusive, and its leave-open condition is the only one written for the case where an auto-posted reply already stands."
+  },
+  "skill-artifact-template-live-editor-capabilities-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Load-bearing splice text with a live variable slot and no carrier; nothing in it is slop."
+  },
+  "skill-claude-code-docs-plugin-eval-quickref": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The always-embedded orientation half of a deliberate two-tier reference, and the only copy of these facts that is in context without a file read."
+  },
+  "skill-claude-code-help-plugin-cli-subcommands": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Structural label with a runtime slot plus one non-inferable mechanic; other prompts reference it rather than repeat it."
+  },
+  "system-reminder-token-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "This id is already fully owned by the system-reminders mechanism and must not get a maintained-set file. src/systemPromptSync.ts (loadShadowSet + syncPrompt, ~line 934) skips any id in the shadow set, with the comment that auto-creating it 'would just resurrect the dead duplicate every apply'; src/patches/systemPrompts.ts:499 likewise filters shadowed prompts out of the named-prompt pass. The reminder is therefore already suppressed (empty shadow body = no telemetry leak into context, per that file's own frontmatter, ccVersion 2.1.141). The correct stage-2 action is no action: no file exists in any of the four sets (opus-5, opus-4-8, fable-5, opus-4-7), and none should be created. Recording this as wipe-merge would incorrectly instruct stage 2 to write a duplicate empty override in the set and reintroduce a second control point for the same string."
+  },
+  "tool-parameter-artifact-acknowledge-duplicate": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Both checks come back clean: unique, load-bearing, no removable slop. Every sentence is frozen under the tripwire (restrictive quantifiers, the 'sent to Claude' sentinel, the acknowledge_duplicate parameter name) or states the validation gate itself. The deployed opus-5 file is already verbatim pristine at ccVersion 2.1.233, so pristine-keep means no change to disk."
+  },
+  "tool-result-artifact-reply-duplicate-standing-reply": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique error-path contract with no slop: the comment id interpolation, the discarded-draft state, the read-before-resend ordering and the exact recovery parameter all appear only here. Every sentence trips the frozen tripwire, so nothing can be rewritten or compressed, and nothing is redundant enough to delete outright. The deployed opus-5 file is already verbatim pristine at ccVersion 2.1.233, so pristine-keep means no change to disk."
+  },
+  "slash-command-plugin-validate-hooks-not-regular-file": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the hooks.json-specific validate warning; every word is frozen (filename + enumeration) and no sibling conveys it. Both checks pass, so pristine-keep is the correct outcome. Deployed body already equals pristine."
+  },
+  "slash-command-plugin-validate-shell-invalid-value": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique validation error carrying the exact accepted enum and the truncation cap. No overlap anywhere in the corpus, no slop. Deployed body already equals pristine."
+  },
+  "slash-command-plugin-validate-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the /plugin validate usage text and of the directory-resolution contract; user-facing CLI help where a rewrite would change printed output. Both checks pass. Deployed body already equals pristine."
+  },
+  "system-prompt-plugin-eval-embedded-reference-wrapper": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Structural carrier for three interpolations plus the section header — deleting or reordering it would strand the status strings and the reference body. Unique, load-bearing, and the single caps word is not worth a rewrite of a load-bearing wrapper."
+  },
+  "system-prompt-skill-doctor-available-session-status": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of a session-specific availability fact that the conditional rules in the quickref depend on to resolve. Unique, load-bearing, no slop."
+  },
+  "system-prompt-skill-doctor-not-available-session-status": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Both checks pass: the availability fact has no carrier, and the do-not clause is frozen mechanics whose only near-carrier requires inference. Splitting at the semicolon is barred by the tripwire, so keep the sentence whole."
+  },
+  "system-reminder-agent-mention": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Already trimmed at the shadow; the maintained set must stay empty for this id. Creating any file — trimmed or wiped — would resurrect a duplicate that the sync layer exists to suppress. Stage 2 should take no action."
+  },
+  "system-reminder-compact-file-reference": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Shadowed and already trimmed; the set file's absence is the correct state. Any stage-2 write here would resurrect a duplicate the sync layer deliberately skips."
+  },
+  "system-reminder-plan-file-reference": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Shadowed and already trimmed. The set file's absence is correct; writing one would resurrect a duplicate on every apply. Stage 2 should take no action."
+  },
+  "skill-claude-code-help-plugin-eval-reference": {
+    "verdict": "wipe-merge",
+    "version": "2.1.233",
+    "why": "Every claim — read the quickref then the matching section of references/plugin-eval.md, the /skill-doctor scope, 'offline floor', 'no public docs page yet' — is already in skill-claude-code-docs-config-guide, which is SKILL_PROMPT (Zlg) and is joined with this '# Current Build' line by z8w(), so the carrier is co-delivered in the same rendered prompt. Verified at the binary, and stage 3 confirmed all four quotes verbatim in the deployed carrier. Wiped in all four sets."
+  },
+  "system-reminder-team-coordination-task-list-upkeep": {
+    "verdict": "wipe-merge",
+    "version": "2.1.233",
+    "why": "The call-TaskList-after-finishing loop, the create-a-task-when-blocked-or-divided rule and the mark-resolved rule are each carried at equal or greater precision by the co-delivered task tool descriptions (task-update, tasklist-teammate-workflow, taskcreate, task-completed-call-tasklist). The string carries no number, path, enum, tool identifier or ordering word. The parent slot ${TASK_LIST_COORDINATION_INSTRUCTIONS} still occurs in system-reminder-team-coordination, so the empty body leaves clean text. Residual accepted: 'periodically' was the only mid-work polling cadence cue; every carrier is event-anchored. Wiped in all four sets."
+  },
+  "skill-claude-code-docs-plugin-eval": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Trim REFUTED by stage 3 and reverted to pristine. The proposed deletion of the trailing '## Answering style' section left the file's own section map still naming it, a false in-body cross-reference; two clauses (the question-to-section routing cues and 'do not quote internal flag names', which guards a hidden --interview alias the body does carry) had no retained equivalent. Conditional reference file, so pristine costs nothing until read."
+  },
+  "system-prompt-plugin-eval-enabled-session-status": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Trim REFUTED by stage 3 and reverted to pristine. The cited carrier (the quickref) is inlined only at the HIb() site; at the j8w()/z8w() Current Build site the status renders with no inline quickref, and `settings.local.json` appears in no always-rendered text. The cut would have dropped a trust boundary — project-scoped settings are untrusted pre-workspace-trust, so a committed enablement value silently leaves the command gated off."
+  },
+  "system-prompt-plugin-eval-not-enabled-session-status": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Trim REFUTED by stage 3 and reverted to pristine. One cited carrier (skill-claude-code-help-plugin-eval-reference) was wiped to an empty body in the same round, so it covers nothing, and the claimed quickref co-location does not exist — the target has an empty identifierMap. This is an always-injected Current Build line while every surviving carrier lives in a skill file that renders only when the claude-code skill fires."
+  },
+  "tool-result-artifact-data-island-validated-header": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique emission site for read_page_data validated entries; the header is the only thing telling the model which schema/url/version the rows belong to. Rewriting would break the frozen slot layout."
+  },
+  "tool-result-artifact-decisions-island-absent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only string that distinguishes 'no decisions' from 'wrong page type' for the workshop decisions island; nothing else in the corpus says it."
+  },
+  "tool-result-artifact-deleted-or-no-access": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct failure cause for artifact update; the model needs both branches to decide between re-publishing new and asking the user for access."
+  },
+  "tool-result-artifact-env-mismatch": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct env-mismatch site with its own var pair; frozen (env enum slots)."
+  },
+  "tool-result-artifact-favicon-emoji": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only place stating the favicon argument's accepted encoding; the example is the disambiguator."
+  },
+  "tool-result-artifact-file-binary-needs-buffer": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique type contract for binary file content in the artifact file map."
+  },
+  "tool-result-artifact-file-exceeds-per-file-size-limit": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Per-file cap with the binary base64 sub-clause; six frozen slots, unique in corpus."
+  },
+  "tool-result-artifact-file-json-wire-size-limit": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct request-level limit; five frozen slots."
+  },
+  "tool-result-artifact-file-unreadable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only string reporting unreadable source files during an artifact publish, and it carries the list of offending paths."
+  },
+  "tool-result-artifact-files-changed-to-symlink": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique TOCTOU symlink-swap report with the retry instruction; security-relevant, must stay verbatim."
+  },
+  "tool-result-artifact-files-index-html-reserved": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only statement of the reserved-path rule and the exact remediation (move content to `html`, drop the mapping)."
+  },
+  "tool-result-artifact-files-map-empty": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique empty-map validation error."
+  },
+  "tool-result-artifact-files-network-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct gate with its own var pair; the sandbox boundary statement must stay verbatim."
+  },
+  "tool-result-artifact-files-not-regular-file": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique file-type gate for the artifact file map; two sites share one pristine body."
+  },
+  "tool-result-artifact-files-outside-working-dir": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct source-path sandbox gate; verbatim retention required for the boundary claim."
+  },
+  "tool-result-artifact-files-path-absolute": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only statement that published paths are artifact-root-relative; easy to confuse with the source-side rule, so it must stay explicit."
+  },
+  "tool-result-artifact-files-path-backslash": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique cross-platform path-separator contract."
+  },
+  "tool-result-artifact-files-path-dot-segments": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique published-path normalization gate."
+  },
+  "tool-result-artifact-files-path-empty": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique empty-key gate, distinct from the empty-map gate."
+  },
+  "tool-result-artifact-files-path-illegal-url-chars": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only place naming the three rejected URL characters."
+  },
+  "tool-result-agent-mcp-required-missing": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Every clause is mechanics — enumeration of server lists, the \"none\" sentinel, the /mcp command name — so the tripwire freezes the whole string, and it is the only text emitted at this failure site."
+  },
+  "tool-result-agent-name-invalid": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Restrictive quantifier (\"only\"), a two-plus enumeration of allowed characters, and a numeric cap (64) — frozen verbatim-or-delete, and load-bearing since it is the only statement of the Agent name schema."
+  },
+  "tool-result-agent-output-check-tool": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Contains a tool-name parameter, so it is frozen; deleting it would leave the agent-status result with no pointer to where the output is readable."
+  },
+  "tool-result-agent-output-file": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Carries a filesystem path variable and an ordering imperative — frozen mechanics, and the only text telling the model where a completed agent's result lives."
+  },
+  "tool-result-agent-resume-forked-skill-scoping-mismatch": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The distinguishing fact is \"does not match its task record\", which neither sibling states; wiping it would make three separate resume failures indistinguishable to the model."
+  },
+  "tool-result-agent-stopped-by-user": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The sibling's text never reaches the model on the resume path, so its wording is not coverage at this emission point; the \"only ... if the user explicitly asks\" restrictive quantifier is frozen."
+  },
+  "tool-result-agent-type-denied": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Rule name, rule argument and \".source\" are enum/parameter mechanics the model needs to fix the permission — frozen and unique across all 3 emission sites."
+  },
+  "tool-result-agent-worktree-isolation-guard": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Path-canonical mechanics plus the corrective instruction, frozen. Note the active opus-5 file keeps the ${VAR_2(...dir.canonical, ...worktree.canonical, ...)} call that fable-5 drops — keeping opus-5 as-is preserves the binary's hint payload."
+  },
+  "tool-result-ambiguous-agent-id": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Two-item enumeration plus the literal \"name@team\" identifier format — frozen mechanics, and the only text that tells the model how to re-address the call."
+  },
+  "tool-result-archive-extract-unvalidatable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Security/approval reason string; the enumeration and the redirection mechanism are frozen, and cutting it would strip the justification the user sees when approving."
+  },
+  "tool-result-artifact-action-requires-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Parameter name (`url`), enum action values and a two-item recovery enumeration — frozen; the tool-description carriers are not emitted at the rejection point."
+  },
+  "tool-result-artifact-capability-change-hint": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Literal parameter payload `capabilities: {}` and the change-vs-clear distinction are frozen mechanics not stated anywhere else in the corpus."
+  },
+  "tool-result-artifact-capability-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains why a publish silently carried no capabilities this session; no sibling conveys it and there is no bloat."
+  },
+  "tool-result-artifact-clear-grants-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Ordering word (\"until\") plus the security-relevant fact that grants remain live before the clear lands; as a fragment it cannot be reworded without breaking the composed sentence."
+  },
+  "tool-result-artifact-composed-review-mermaid-lane-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Routing contract with a named lane, frozen; it is the only text explaining why a mermaid-carrying review page was rejected as raw HTML."
+  },
+  "tool-result-artifact-composed-review-publishing-not-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "\"do not retry here; a new session is required once it is enabled\" is a do-not guarding a runtime gate — mechanics, frozen. Present in opus-5 and opus-4-8; absent from fable-5 and opus-4-7, which is a set-coverage matter, not a reason to cut."
+  },
+  "tool-result-artifact-composed-review-publishing-turned-off": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Every clause is a runtime-gate contract with an ordering word and a time threshold; the do-not caps retry rate, so it stays verbatim. Cost is zero unless an operator flips the switch mid-session."
+  },
+  "tool-result-artifact-contract-pin-yanked": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Echoes the live pin value and names the literal parameter value 'latest' plus its semantic consequence — frozen; the trailing clause is a fragment that continues into the capability-declaration branch."
+  },
+  "tool-result-artifact-contract-unreachable-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Mid-sentence fragment ending in an em dash — any rewrite breaks the assembled error string; the retry condition is ordering mechanics."
+  },
+  "tool-result-artifact-data-island-absent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Interpolated schema name, URL and version plus a two-item cause enumeration — frozen mechanics that keep the model from re-reading the same page."
+  },
+  "tool-result-artifact-files-path-reserved-thumbnail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the _thumb.html/_thumb.img reserved-name rejection; it is the error contract for that check. Frozen anyway: names a parameter (`files`) and a sentinel (reserved thumbnail path)."
+  },
+  "tool-result-artifact-files-publish-blocked-read-rule-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Second half of one runtime sentence split by an interpolation; it pairs with tool-result-artifact-files-publish-blocked-read-rule-prefix. Cutting it truncates the emitted message mid-sentence and removes the remediation."
+  },
+  "tool-result-artifact-files-publish-blocked-read-rule-prefix": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Opening half of the files-publish-blocked ArtifactInputError, completed by the -fragment id. Distinct code site from the deny-rule variants; wiping it leaves that path with no message."
+  },
+  "tool-result-artifact-files-resolves-network-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct validation branch (realpath-resolved vs literal path); wiping it silences that check. Frozen sentence — no rewrite permitted."
+  },
+  "tool-result-artifact-files-resolves-outside-working-dir": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Continuation half of the outside-working-directory error; it carries the symlink hint and the containment rule. Frozen ('only', working-directory path constraint)."
+  },
+  "tool-result-artifact-files-shape-invalid": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the shape-rejection message; it names the two accepted shapes (enumeration of two items → frozen)."
+  },
+  "tool-result-artifact-files-tilde-not-expanded": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique mechanics — the fact that `~` is not expanded is not inferable and appears nowhere else in the corpus. Frozen (sentinel `~`, enumeration of two path forms)."
+  },
+  "tool-result-artifact-files-total-size-exceeded": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Runtime cap message with a computed threshold. Frozen: numeric threshold, parameter name, and a 'may total at most' limit clause."
+  },
+  "tool-result-artifact-files-unsafe-symlink": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the files-level unsafe-symlink error. Frozen: three-item enumeration, `..` sentinel, security/containment contract."
+  },
+  "tool-result-artifact-fix-declaration-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Middle fragment of a runtime republish error; deleting it truncates the emitted sentence and loses the 'upgrading will not help' signal that stops a wasted retry loop."
+  },
+  "tool-result-artifact-gc-loop-missing-content": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Fragment of the anti-retry-loop error; it is the only thing that tells the model the harness already stopped retrying. Cutting it invites an infinite republish loop."
+  },
+  "tool-result-artifact-html-preamble": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique truncation caveat — without it the model treats a partial HTML dump as complete. Ordering word ('follows') plus a state contract; frozen."
+  },
+  "tool-result-artifact-interaction-schema-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The available-schemas enumeration is the recovery path — it is the only place the model learns which schema names are registered. Frozen: enum listing, `(none)` sentinel, parameter name."
+  },
+  "tool-result-artifact-json-escaping-inflation-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains a non-obvious size failure the model cannot infer from the byte count it sees. Frozen: three-item enumeration."
+  },
+  "tool-result-artifact-label-too-long": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Overlap is real but the overlapping sentence is frozen (numeric threshold 60, parameter name `label`), so it is verbatim-or-delete — and deleting it leaves an error message that no longer says what failed, breaking the error contract. Keep whole."
+  },
+  "tool-result-artifact-list-count-header": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Output-shape string with three scope branches and an ordering contract. Frozen: enum values (\"shared\"/\"all\"/mine), ordering word, and it is the header the listing rows are read against."
+  },
+  "tool-result-artifact-list-empty-truncated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct branch of the listing result. Its unique signal — that a zero-result window does not mean zero artifacts, and where the older ones live — is the only thing preventing a false 'you have none' report."
+  },
+  "tool-result-artifact-list-extra-params-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Validation-error contract. Frozen throughout: restrictive quantifier 'only', two-item parameter enumeration, the literal action value \"list\", and parameter names `limit`/`scope`/`action`."
+  },
+  "tool-result-artifact-list-truncation-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the limit ceiling (50) and of the recency-based windowing behaviour. Frozen: numeric threshold, parameter name `limit`."
+  },
+  "tool-result-artifact-publish-needs-contract": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of this publish failure's cause and remedy; conditional (fires only on this error), so it costs nothing when off."
+  },
+  "tool-result-artifact-publish-reads-blocked": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole deny reason returned at this permission gate; wiping it would blank the model's explanation of why publishing was refused."
+  },
+  "tool-result-artifact-republished-by-another-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the concurrent-republish staleness signal, and it binds three runtime vars; wiping would drop the version number and the workshop read path."
+  },
+  "tool-result-artifact-root-network-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole text at its validation gate, with the parameter name and the working-directory contract."
+  },
+  "tool-result-artifact-root-not-a-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Minimal, unique, frozen (names `root`)."
+  },
+  "tool-result-artifact-root-outside-workdir": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique remedy at a unique gate; frozen (parameter name, path contract)."
+  },
+  "tool-result-artifact-root-relocated-since-approval": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Half of a single TOCTOU security message — deleting it would leave the emitted error a truncated sentence."
+  },
+  "tool-result-artifact-root-relocated-since-approval-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Second half of the same approval-time-of-check message; frozen (ordering words 'between approval and publishing')."
+  },
+  "tool-result-artifact-root-resolves-network-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct security check (post-realpath) with its own message; unique in the corpus."
+  },
+  "tool-result-artifact-root-symlink-unresolvable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the root-symlink resolution contract and its remedy; frozen enumeration must stay verbatim."
+  },
+  "tool-result-artifact-shared-version-pinned": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only publish-time warning that an update is invisible to viewers, and the only string naming the remediation surface."
+  },
+  "tool-result-artifact-stored-capability": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Carries live state (the stored declaration) the model cannot otherwise see; the generic rule elsewhere is not a substitute for the value."
+  },
+  "tool-result-artifact-supporting-file-carries-review-machinery": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique guard message; the 'nothing was published' contract prevents the model assuming partial publication."
+  },
+  "tool-result-artifact-supporting-file-nul-byte": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the NUL-byte encoding contract at this validation gate."
+  },
+  "tool-result-artifact-supporting-file-utf16-bom": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of this encoding requirement as an emitted error."
+  },
+  "tool-result-artifact-too-large-highlight-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique number and unique cause — without it the model cannot tell why the page exceeded the cap."
+  },
+  "tool-result-artifact-too-large-mermaid-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique number/trigger pair that explains an otherwise inexplicable size overrun."
+  },
+  "tool-result-artifact-too-many-servers-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Deleting it would leave the too-many-servers error a truncated sentence; the fragment is the only text at its splice point."
+  },
+  "tool-result-artifact-live-subscription-artifact-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique failure cause for one mutually exclusive branch of the live-subscribe skip switch; nothing in the corpus emits this text, and only one branch fires per call so the shared 'Live subscription: skipped' prefix is not duplication."
+  },
+  "tool-result-artifact-live-subscription-cancelled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of this abort branch; contains the ordering fact 'before the connection opened' (ordering word, frozen) that distinguishes it from ws-open-error."
+  },
+  "tool-result-artifact-live-subscription-control-plane-override": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique environment-configuration cause; no carrier anywhere states it."
+  },
+  "tool-result-artifact-live-subscription-invalid-slug": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the malformed-URL branch — a distinct, non-inferable cause (the URL is not a nameable artifact rather than a missing one)."
+  },
+  "tool-result-artifact-live-subscription-no-credential": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique server-side cause naming the live-channel credential; distinguishes an authorization gap from a transport failure."
+  },
+  "tool-result-artifact-live-subscription-read-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique transient-read-failure branch; the enumeration and the retry advice are the parts that differentiate it from the permanent skips, and the enumeration is frozen."
+  },
+  "tool-result-artifact-live-subscription-remote-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique runtime status for the remote-session branch; the 'do not hold the watch' clause guards a runtime capability boundary and stays verbatim if retained."
+  },
+  "tool-result-artifact-live-subscription-session-context": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique eligibility contract; both enumerations are frozen and non-inferable."
+  },
+  "tool-result-artifact-live-subscription-watch-cap": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Cap value, slot-occupancy enumeration, and the recovery ordering are all unique and frozen; nothing to cut."
+  },
+  "tool-result-artifact-live-subscription-ws-open-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the transport-failure branch; the environment qualifier is the non-inferable part."
+  },
+  "tool-result-artifact-manifest-connector-merge-warning": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique failure-mode contract with a runtime error tag; rewriting would break both the tag and the variable bindings."
+  },
+  "tool-result-artifact-multi-file-publish-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique server-rejection branch with a state fact (extra files not published) and two remedies; the five ${VAR} slices (including .slice(0,200)) are load-bearing plumbing."
+  },
+  "tool-result-artifact-multifile-not-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sentence fragment composed into a surrounding error string — trimming it would break the composed sentence, and the state fact is the only copy at this site."
+  },
+  "tool-result-artifact-no-inline-content-steer": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique parameter contract naming the `content` parameter — a parameter name, frozen — and it is the steer that redirects a wrong call."
+  },
+  "tool-result-artifact-no-version-not-committed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique 200-without-version branch; the retry instruction carries its own slug ${VAR} binding and the 'not treating it as success' clause is the outcome contract."
+  },
+  "tool-result-artifact-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the plain artifact-not-found error at its site; nothing to cut."
+  },
+  "tool-result-artifact-oversized-tools-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Editing a spliced fragment risks breaking the composed sentence, and the shared tail clause is not duplication in cost terms since only one site emits per error."
+  },
+  "tool-result-artifact-partial-inline-files-created": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Unique mid-sentence error fragment naming the slug to republish to; nothing to cut without breaking the concatenated sentence."
+  },
+  "tool-result-artifact-pin-readback-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the readback-failure branch and of the retry-vs-latest decision for it; the yanked-pin sibling does not cover an unreadable pin."
+  },
+  "tool-result-artifact-pr-review-body-network-element": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of this publish-time validation reason, interpolated into the ArtifactInputError; a security contract (blocked element classes on review pages)."
+  },
+  "tool-result-artifact-pr-review-body-title-element": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the title-element validation reason; each enumerated failure mode is a distinct check the model must distinguish."
+  },
+  "tool-result-artifact-pr-review-decisions-acted-without-resolve": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the acted-provenance gate plus the id that failed it; the skill teaches the mechanism, not this constraint."
+  },
+  "tool-result-artifact-pr-review-decisions-island-shape": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the island-shape validation reason; wiping it would interpolate an empty reason into the ArtifactInputError."
+  },
+  "tool-result-artifact-pr-review-decisions-item-state": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of this validation reason; it is what tells the model which of the several island checks rejected the publish."
+  },
+  "tool-result-artifact-pr-review-decisions-state-not-a-concern": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct validation branch; collapsing it into the sibling would make two different failures indistinguishable to the model."
+  },
+  "tool-result-artifact-pr-review-decisions-state-unknown-id": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct validation branch, sole carrier."
+  },
+  "tool-result-artifact-pr-review-head-moved": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the head-moved identity mismatch and of the reviewed SHA it prints; the trailing 'but ' concatenates into the sibling fragment, so any edit breaks the sentence."
+  },
+  "tool-result-artifact-pr-review-head-moved-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the remediation and of the current-head coordinates; the 'step 1' back-reference is an ordering contract."
+  },
+  "tool-result-artifact-pr-review-identity-from-invocation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the rule that the invocation, not the model-authored payload, fixes the review target — a trust/authority contract the model cannot infer."
+  },
+  "tool-result-artifact-pr-review-no-skill-invocation-in-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the gate and of the exact remediation command; this is also what makes the skill's presence in context a precondition for the other pr_review errors."
+  },
+  "tool-result-artifact-pr-review-republish-cli-version-drift": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinct branch; the shared tail is not concurrent duplication, and deleting it would leave the error with no reason. The parenthetical is the only place the model learns old-page decisions survive and the fresh page starts open."
+  },
+  "tool-result-artifact-pr-review-script-injection": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of a security validation reason plus the only list of what trips it; without the enumeration the model cannot locate the offending construct."
+  },
+  "tool-result-artifact-pr-review-target-unresolvable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Only copy of the invocation-time target-resolution contract, the gh-auth diagnostic, and the do-not-retry conclusion."
+  },
+  "tool-result-artifact-public-read-not-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier; distinguishes a capability-not-enabled failure from a permission denial, which changes whether the model retries or asks the user."
+  },
+  "tool-result-artifact-publish-conflict-lead": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole carrier of the publish-conflict diagnosis and the re-read instruction; the dangling paren makes it uneditable without breaking the sentence."
+  },
+  "tool-result-artifact-publish-conflict-merge-tail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sole closing fragment of the publish-conflict message; deleting it would leave an unbalanced paren and no remediation."
+  },
+  "tool-result-artifact-publish-update-instructions": {
+    "verdict": "wipe-merge",
+    "version": "2.1.233",
+    "why": "Full coverage by two deployed carriers that ship with the tool itself; the fragment adds no fact and repeats on every publish."
+  },
+  "tool-result-artifact-list-empty-not-proof-shared": {
+    "verdict": "trim",
+    "version": "2.1.233",
+    "why": "Partial overlap: the conclusion is carried by an always-present sibling, the mechanism is unique. The sentence trips no tripwire item — no restrictive quantifier from the list, no enumeration, no number, no path/enum/tool name, no ordering word — so it is trimmable."
+  },
+  "tool-result-artifact-live-subscription-arming": {
+    "verdict": "trim",
+    "version": "2.1.233",
+    "why": "Unique fact = 'the live watch is arming in the background' (status the model cannot infer). The notify semantics are stated verbatim in the Artifact action parameter description and again in the attach note, so that clause is a restatement. Head clause has no frozen tokens removed; the deleted span carries no quantifier, enumeration, number, path, tag, or ordering word, so the tripwire does not freeze it."
+  },
+  "tool-result-artifact-live-subscription-egress-denied": {
+    "verdict": "trim",
+    "version": "2.1.233",
+    "why": "Keep the unique cause ('network egress to the claude.ai edge is denied by policy' — names a policy gate and the claude.ai edge, frozen verbatim). Cut the consequence clause: it is covered by the tool parameter and carries no quantifier, enumeration, number, path, error tag, or ordering word, so it is not frozen."
+  },
+  "tool-result-artifact-live-subscription-flag-off": {
+    "verdict": "trim",
+    "version": "2.1.233",
+    "why": "Keep the cause verbatim — it names the live-subscribe feature flag and locates it in this session's cached config (flag name + location, frozen). Cut only the duplicated consequence clause, which contains no frozen token."
+  },
+  "tool-result-artifact-pr-review-decisions-omitted-writer-decision": {
+    "verdict": "trim",
+    "version": "2.1.233",
+    "why": "The identification of the omitted item is unique and stays; the remediation sentence is duplicated by the skill that must be in context for this error to fire at all (a composed pr_review republish only happens inside the skill flow, per tool-result-artifact-pr-review-no-skill-invocation-in-session). The fable-5 and opus-4-7 sets already carry exactly this trim; opus-5 and opus-4-8 were left at pristine."
+  },
+  "tool-result-artifact-supporting-file-contenttype-not-servable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Trim REFUTED by stage 3 and reverted to pristine. The deleted sentence's claim that a SERVED supporting file does not hand the viewer a file to keep is carried nowhere else — a corpus-wide grep for 'served file' hits only this prompt. The cited carrier covers only downloads the page starts itself (<a download>, script-driven saves), never the supporting-file serving path."
+  },
+  "system-reminder-queued-notifications-none-remaining": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "One sentence stating the queue is now empty. The model reports queue state to the user; nothing else says it is zero."
+  },
+  "system-prompt-agent-namer-avoid-taken-names": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "A hard constraint on the generated name. Removing it produces duplicate agent names."
+  },
+  "system-reminder-team-coordination-task-list-resource-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The task-list path, listed among team resources. Its sibling branch (…-task-list-upkeep) tells the model to use the list; without this line it has no path to use."
+  },
+  "tool-result-routine-run-log-next-cursor-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Defines the direction next_cursor pages in. Paging is wrong without it and no other prompt states the direction."
+  },
+  "system-reminder-nested-memory-attachment-managed-policy-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Marks an attachment as org policy rather than user preference, which changes how much weight it carries. Three words, no redundancy."
+  },
+  "system-reminder-nested-memory-attachment-automemory-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Marks an attachment as the persisting auto-memory. The persistence claim is the part the model acts on."
+  },
+  "system-reminder-nested-memory-attachment-global-instructions-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Marks an attachment as the private global instructions for all projects, which is what makes them apply outside this repo."
+  },
+  "tool-description-taskcreate-teammate-assignment-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Extends what TaskCreate does when task tools are shared. Six words, and it is the only statement that a created task can be picked up by someone else."
+  },
+  "slash-command-plugin-validate-symlink-validate-real-paths": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States that validation follows symlinks, so the real paths need validating separately. Without it the model reports a partial validation as complete."
+  },
+  "tool-description-task-list-id-field": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Documents the id field and names the two tools that consume it. The field is unusable without knowing what accepts it."
+  },
+  "slash-command-effort-auto-level": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "One line of the /effort usage text describing the auto level. Dropping it leaves an option undocumented."
+  },
+  "agent-prompt-explore-glob-via-bash-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The Explore agent's file-pattern instruction in the Bash-routed variant. It names the tool to use; there is no fallback instruction."
+  },
+  "agent-prompt-explore-grep-via-bash-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The Explore agent's content-search instruction in the Bash-routed variant. Same: it names the tool."
+  },
+  "agent-prompt-explore-glob-dedicated-tool-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The dedicated-tool variant of the same instruction, used when a Glob tool is exposed."
+  },
+  "agent-prompt-explore-grep-dedicated-tool-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The dedicated-tool variant of the same instruction, used when a Grep tool is exposed."
+  },
+  "tool-result-artifact-publish-private-until-shared": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the visibility outcome the model is asking consent about. The consent question is meaningless without the outcome."
+  },
+  "tool-result-artifact-publish-replacing-unrecognized-address": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns that an existing page will be replaced at an address the session cannot identify — the riskier of the two replace warnings."
+  },
+  "tool-result-artifact-publish-replacing-existing-page": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns that a named existing page will be replaced. Destructive-action detail, minimum length."
+  },
+  "tool-result-artifact-publish-viewers-see-pinned-version": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States that viewers are pinned to an earlier version, so publishing will not change what they see."
+  },
+  "tool-result-artifact-publish-viewers-see-updates": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States that everyone shared with sees the change immediately. This is the consequence the consent turns on."
+  },
+  "tool-result-artifact-publish-share-status-unconfirmed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Flags that share status is unknown, which is the reason the consent decision is uncertain rather than routine."
+  },
+  "system-prompt-slash-command-unavailable-over-remote-control": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the command cannot run over Remote Control, in the form that also names the consumed token."
+  },
+  "system-prompt-slash-command-unavailable-over-remote-control-bare": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The same refusal without the consumed-token clause. Both branches exist in the binary; each is minimal."
+  },
+  "system-prompt-slash-command-needs-interactive-terminal": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains that the command needs an interactive panel and names where to run it. Without the second clause the model has no recovery."
+  },
+  "system-prompt-slash-command-unavailable-in-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the command is unavailable here. Five words, no alternative wording available."
+  },
+  "tool-result-workflow-meta-must-be-first-statement": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The exact structural rule a workflow script must satisfy. Returned by the Workflow tool validateInput and thrown from call(), so the model sees it as a fixable error; dropping it leaves a retry loop with no rule."
+  },
+  "tool-result-notebook-outputs-too-large-posix-recovery": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The literal command for reading the cell whose outputs were withheld. It is the entire recovery path on POSIX."
+  },
+  "tool-result-notebook-outputs-too-large-powershell-recovery": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The Windows equivalent of the same recovery command. Long only because PowerShell is."
+  },
+  "data-fork-restricted-launch-flags-list": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names the launch restrictions a fork would not inherit, which is the reason the fork is refused."
+  },
+  "data-login-success-env-token-shell-profile-warning": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains why a fresh login can appear not to take effect. Without it the model has no account of the contradiction the user will report."
+  },
+  "tool-result-background-session-persistence-disabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the cause of the refusal, not just the refusal, so the model can tell the user what to change."
+  },
+  "tool-description-statusline-setup-ps1-example-request": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The example request the statusline-setup agent works from. It is the task statement, not decoration."
+  },
+  "slash-command-plan-cloud-fetch-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "A transient-failure message that names retrying as the response. Minimal."
+  },
+  "slash-command-plan-publish-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names two next steps (retry, --debug) for a failed publish. Both are actionable and neither is stated elsewhere."
+  },
+  "slash-command-web-setup-server-unreachable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinguishes a connectivity failure from an auth failure, which changes what the model tells the user to check."
+  },
+  "skill-artifact-live-editor-capabilities-without-commenting": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Enumerates the live-editor capabilities in the build with commenting removed. Four words; the enumeration IS the content."
+  },
+  "skill-artifact-live-editor-capabilities-with-commenting": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The same enumeration for the build that still ships commenting."
+  },
+  "slash-command-sandbox-unsupported-platform": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names the supported platforms, which is what makes the refusal actionable."
+  },
+  "slash-command-sandbox-requires-wsl2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinguishes WSL2 from WSL1 — the specific distinction the user needs to act on."
+  },
+  "data-permission-callback-expected-return-shape": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the exact object a permission callback must return. It is a schema; there is nothing to trim without breaking it."
+  },
+  "system-reminder-plan-mode-follow-five-phase-workflow": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The terse sparse-continuation pointer. Already the shortest form of its instruction."
+  },
+  "system-reminder-plan-mode-follow-plan-workflow": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The sparse plan-mode continuation. It deliberately points back rather than restating the workflow, which is the trim already made upstream."
+  },
+  "slash-command-web-setup-github-token-rejected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names gh auth login as the fix for a rejected token. The fix is the useful half."
+  },
+  "slash-command-mcp-no-servers-configured": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Three distinct recovery paths (claude doctor for silently-invalid config, the CLI help, the docs). The doctor clause is the non-obvious one: it covers config that exists but failed validation, which otherwise looks identical to no config."
+  },
+  "slash-command-plugin-no-plugins-installed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the empty state and the command that fixes it."
+  },
+  "slash-command-web-setup-not-signed-in": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names /login as the prerequisite. Seven words."
+  },
+  "tool-result-background-nothing-to-background-yet": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains that there is nothing to fork yet and what makes one available."
+  },
+  "tool-result-cron-scheduled-persisted-location": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names where the schedule was written, which is how the model reasons about it surviving the session."
+  },
+  "tool-description-input-constraint-at-least-one-of": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The generated anyOf constraint line. Removing it makes the parameter groups look independent."
+  },
+  "tool-description-input-constraint-exactly-one-of": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The generated oneOf constraint line, and the stricter of the pair."
+  },
+  "slash-command-plan-publish-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the capability is absent in this session rather than broken, which is a different thing to tell the user."
+  },
+  "data-usage-credits-request-notifies-admins": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Discloses that the request notifies org admins before it is sent. A consent fact; removing it hides a side effect from the user."
+  },
+  "system-prompt-skill-disabled-via-skill-overrides": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names both the cause (a skillOverrides entry) and the fix (remove it). Neither is inferable from the other."
+  },
+  "slash-command-resume-session-still-running-as-agent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Explains why the resume is refused and gives the two ways out (attach, or stop it there first)."
+  },
+  "tool-result-send-message-account-list-unchecked-reason": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The reason clause behind an unverified peer. It distinguishes \"could not check\" from \"checked and absent\"."
+  },
+  "tool-result-send-message-cloud-list-unfetchable-reason": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The other reason clause for the same unverified-peer message."
+  },
+  "slash-command-plan-open-cloud-workspace-unsupported": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the limitation and both alternatives (view via /plan, revise by asking or via the approval dialog). The alternatives are the actionable part."
+  },
+  "slash-command-plan-share-cloud-workspace-unsupported": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the limitation and the one workable path. Already minimal."
+  },
+  "slash-command-resume-conversation-from-different-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns that the resumed conversation came from elsewhere, which the model needs before trusting its paths."
+  },
+  "system-prompt-unknown-slash-command-no-suggestion": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The bare unknown-command message. Three words plus the name."
+  },
+  "system-prompt-unknown-slash-command-with-suggestion": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The same message carrying a near-match suggestion, which is the recovery path."
+  },
+  "slash-command-plugin-tag-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The /plugin tag usage block: the tag format it produces, what it validates, and the pointer to the CLI for the flags this surface does not accept. Each line answers a different question."
+  },
+  "tool-result-mcp-task-output-read-truncated-remainder": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names Read as the way to recover the truncated remainder. Without it the truncation is a dead end."
+  },
+  "slash-command-plan-view-needs-newer-runtime": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Attributes the failure to the session runtime rather than the plan, which changes what the user is told to do."
+  },
+  "system-prompt-nl-datetime-parser-date-only-format": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The required output format for a date with no time. A format spec; nothing to trim."
+  },
+  "system-prompt-nl-datetime-parser-full-datetime-format": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The required output format for a full date-time with timezone."
+  },
+  "slash-command-plugin-eval-outcome-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the trigger-evaluation run failed, which tells the model the reported per-case results are the actionable ones and the skill needs fixing. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-eval-outcome-pending-model-integration": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the eval files parsed but no trigger test actually ran because model evaluation is not wired up yet, so a green-looking run is not evidence the skill triggers. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-eval-outcome-passed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States every trigger test passed, so the model can stop iterating on the skill's description. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-weaker-than-main-model-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns the model the chosen advisor is less capable than the main model so it will never activate, and names the two ways out, which is a recovery step the model can relay. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-main-model-unsupported-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns the model that the advisor it was just told about will not actually fire under the current main model, so it should not plan around advisor output. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-remote-env-default-overridden-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns the model that a higher-precedence settings file still pins a different environment id, so the default it was just told about will not actually be used. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-draws-from-usage-credits-suffix": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Warns that the chosen model draws on paid usage credits, a cost consequence of the switch that the model may need to relay. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-fast-mode-off-suffix": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model fast mode was switched off as a side effect of the model change, the sibling state fact to the fast-mode-on notice. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-fast-mode-on-suffix": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that fast mode is now active for the session, a runtime state change that affects latency/quality expectations it may be asked about. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-bulk-result": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Conditional tail concatenated onto the same emitted string, reporting the count that could not be changed and pointing at /mcp to check. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-set-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The saved-as-default arm of the /model confirmation, captured separately from the sentence it sits inside; it is what tells the model the choice persists beyond this session. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-bulk-reenabled-in-another-session-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The tail of the bulk-disable warning, stating how many of the servers did stay disabled — the part that says the operation was partial rather than failed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-effort-ultracode-level": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model what the ultracode level actually does (xhigh plus dynamic workflow orchestration, session-scoped), which is the one line in the listing that describes a behavior change rather than a label. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-server-disabled-enable-first": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the named MCP server cannot be reconnected because it is disabled and that the fix is `/mcp enable` first, so it retries the right action instead of the same one. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-command-copied-to-clipboard": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the resume command is already on the clipboard, so it need not repeat it for the user to copy. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-moved-to-config-redirect": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the invoked command no longer exists on its own and names the /config tab that replaced it, which is what it must relay to the user. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-extra-usage-renamed-to-usage-credits": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the invoked command no longer exists under that name and that /usage-credits is the current one, so it does not keep referring the user to a dead command. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-disabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model commands now run unsandboxed, removing the containment it may otherwise assume when deciding what is safe to run. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the sandbox is on, used on builds where auto-allow is unsupported so no permission nuance can be stated. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-enabled-auto-allow": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model bash now runs sandboxed and is auto-approved, so it can run commands without permission prompts inside that boundary. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-enabled-regular-permissions": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model bash is sandboxed but still subject to the normal permission prompts, a different operating constraint from the auto-allow arm. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-strict-mode": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model every command must run inside the sandbox unless listed in excludedCommands, and names that setting as the only escape hatch. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-sandbox-unsandboxed-fallback-allowed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that bash commands may now escape the sandbox when needed, which changes what it can safely attempt without asking. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-bulk-result-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The bulk enable/disable result line, naming the direction and the count of servers affected. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-not-a-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the recovery target. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-not-a-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the path resolved to a file rather than a directory and names the parent directory as the likely intended target. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-tag-unexpected-argument": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the tag command rejected an argument it did not recognise and reprints the usage, so it retries with a valid flag instead of assuming the tag was created. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-validate-unexpected-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Distinguishes a crash of the validator itself from a manifest that failed validation, so the model does not report the plugin as invalid when the run never completed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-invalid-model-options-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The second emission site of the invalid-advisor message, whose text differs from its sibling by the model-name formatter it interpolates. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-always-preference-saved": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the copyFullResponse setting was persisted and names /config as the way to reverse it, i.e. a state change plus its undo path. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-invalid-model-options": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the requested advisor was rejected and enumerates the accepted values, so it can suggest a valid one instead of retrying the same name. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-fast-mode-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the session just switched to fast mode, optionally naming the model it was switched to and the per-Mtok rate, so it knows its own execution mode and cost profile changed mid-session. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-already-accessible-within-parent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the path is already reachable because an ancestor is a working directory, naming that ancestor so it knows the effective access boundary. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-already-added": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the directory is already in the working-directory set, so the add was a no-op and access was already available. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-already-original-cwd": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the path is the session's original cwd and therefore already readable, so no permission change happened. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-bulk-reenabled-in-another-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Conditional tail concatenated onto the same emitted string, stating how many servers did stay disabled. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-reconnect-needs-auth-terminal": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sibling of the background-session branch: tells the model the server needs authentication and that /mcp is the way to do it, so it stops retrying reconnect. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-fable-needs-usage-credits": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the advisor was not set because Fable 5 bills to usage credits that are not enabled, and gives the exact command that fixes it. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-terminal-setup-remote-iterm2-clipboard-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the session is running over SSH from an iTerm2 host and that /copy will not reach the local clipboard until a setting is changed on that other machine, which explains later clipboard failures. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-terminal-setup-iterm2-native-shift-enter": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that no key-binding install happened because the host terminal is iTerm2, which handles Shift+Enter itself, so there is nothing left to configure. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-added-saved-to-local-settings": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the directory is now readable AND persisted to local settings, so the grant survives beyond this session. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-added-for-session": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the directory is readable but only for the current session, bounding how long the access lasts. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-added-local-settings-save-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the directory works for now but the settings write failed, with the error text, so it knows the grant will not survive a restart. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-purchase-succeeded": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model a credit purchase completed and how much was added, so it knows the previous quota block is cleared. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-disabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model no advisor model is in play any more, and whether the change is session-scoped, so it stops expecting reviewer-model iterations. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-set": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model which reviewer model is now consulted and whether the setting is session-scoped, which changes what it can expect from the advisor tool. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-all-already-in-state": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model every configured MCP server is already in the requested state, so the command was a no-op and no retry is needed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-already-in-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the move was a no-op because the session is already there, so it does not treat the directory as newly changed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-already-in-plan-mode": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the mode was already plan so nothing changed, which distinguishes a no-op from a fresh switch. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-no-plan-written-yet": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model there is no plan file to show yet, so a request to view the plan returned nothing rather than failing. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-auth-cleared": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the server's stored OAuth tokens were revoked and cleared, so the server now needs authentication before its tools work again. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-agent-server-auth-success": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the agent-scoped MCP server is authenticated but deliberately stays unconnected until the agent runs, so it does not treat the absent tools as a failure. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-claudeai-auth-connected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms the named MCP server is now authenticated and connected, so the model can go ahead and use its tools. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-oauth-reconnected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms the OAuth flow completed and a previously authenticated server is connected again, so the model can use its tools. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-branch-created-resume-hint": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the conversation was forked into a new session and names the exact command that returns to it, so a later request to go back has a concrete recovery step. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "data-fork-blocked-restricted-launch-flags": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model why forking is refused (the copy would drop the parent's safety restrictions) and gives the two ways forward, so it does not retry /fork blindly. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-blocked-allowed-patterns": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the exact allow-list of directory patterns /cd is restricted to, which is the information it needs to pick a legal target on the next attempt. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-blocked-cd-disabled-by-rule": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model directory changes are switched off by a named permission rule in a named settings source and that the rule must be edited in /permissions before any move is possible. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-blocked-directory-excluded-by-rule": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model this specific directory is excluded by a named rule and gives two ways forward — choose a directory outside the rule, or change the rule — so it can retry sensibly instead of repeating the same move. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-web-setup-connected-and-opened": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the GitHub token import succeeded, under which GitHub username, and that a browser was opened at the Claude web URL — the end state the model should report. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-connected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the IDE MCP connection is live and names the editor, so IDE-backed capabilities can be relied on. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-connect-timed-out": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the IDE never answered within the timeout, distinguishing a hung handshake from an outright failure. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-context-remote-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that context-usage figures cannot be obtained on this remote session, so it should not expect or wait for numbers before answering. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-continuing": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the session is now billing to usage credits rather than being blocked on a limit, so it can carry on with the work it was stopped on. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-export-succeeded": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms the export completed and names the file it landed in, which is the only way the model learns that path exists. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-rate-limit-team-upgrade-browser-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "The other arm of the same conditional: gives the model the upgrade URL plus the /login follow-up when no browser could be launched. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-context-remote-fetch-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that the remote control-channel request for context usage threw, so the model knows the figures are missing because of a transport failure rather than because usage is zero. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-directory-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the requested path does not exist, so the working directory is unchanged and the path itself is the thing to correct. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-install-github-app-install-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Gives the model the specific installation error plus the manual-setup doc URL, which is the recovery step it should hand the user. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-relocate-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the move was attempted and failed, names the two likely causes, and states which directory the session is actually in — the fact it needs to keep using correct paths. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-scroll-speed-save-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Gives the model the settings-write error that prevented the scroll speed from being persisted, so it can explain why the change did not stick. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-status-session-override": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that a plan-mode session override is in force and separates the model actually running from the configured base model, so it does not misreport which model is active. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-status-current": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States which model is running right now, with the previous model and effort appended, so the model can answer accurately about its own identity and configuration. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-cancelled-with-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Names the specific directory the user declined to add, so the model knows exactly which path stayed inaccessible. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-cancelled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the user declined the directory-add prompt, so no new path became readable and it must not assume the access it requested exists. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-disconnected-from-target": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms a disconnect from the named MCP server or IDE. One string emitted by two commands, so one id covers both sites. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-mode-enabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the tool permission mode switched to plan, which changes what it is allowed to execute for the rest of the turn. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-cloud-mode-push-timeout": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the user's plan description was dropped en route to the cloud session and instructs how to recover it, so the model does not act as if it received the description. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-connect-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the IDE connection could not even be attempted because the session has no dynamic MCP config hook, so retrying /ide will not help. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-marketplace-list-load-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the marketplace registry could not be read, so an empty result must not be read as 'no marketplaces'. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-reconnect-threw": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that the reconnect attempt for a named server raised an exception and carries the sanitized reason, so the model knows the server is still down and why. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-remote-env-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the environment the user picked no longer exists in the fetched pool, so no default was written and the selection must be redone. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-threw": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that enabling or disabling a named MCP server failed with an exception and carries the sanitized reason, so the model does not treat the toggle as applied. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-btw-branch-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that branching the conversation for the side question failed and gives the error, so the model knows the side question was never asked. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-branch-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the branch was not created and surfaces the underlying error, so it does not proceed as if a new session exists. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-connect-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the IDE connection attempt failed, so IDE-backed capabilities are not available. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-export-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the export never wrote a file and why, so it does not go on to reference a nonexistent path. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-btw-fork-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that the requested side-question fork never started and carries the underlying error, so the model explains the failure instead of assuming a subagent is running. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-failed-to-load-conversations": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the session list could not be read, so the picker showed nothing and the failure is on the storage side rather than the query. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-open-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the editor launch exited non-zero and gives the path to open by hand as the fallback. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-reconnect-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the server ended up cached/pending/failed/disabled rather than connected, so its tools are still unavailable. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-failed-to-resume-conversation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the picked session could not be restored, so the conversation context it expected is not present. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-resume-threw": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the resume handler raised, and carries the error text, so it knows the old transcript was not loaded and why. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-file-write-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the write-to-file shortcut failed and carries the underlying error, so the model knows no file exists and why. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-fast-mode-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the requested fast mode could not be enabled at all on this account or build, so it should not assume the mode change took effect. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-fast-mode-disabled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model fast mode was switched off for the session, the sibling branch of the enable message and the counterpart state fact. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-multiple-session-matches": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the title was ambiguous and that the interactive picker is the way forward, so it does not retry the same argument. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-install-github-app-actions-setup-complete": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the full GitHub Actions setup finished, meaning a workflow file and credentials are now in place in the repo. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-install-github-app-install-failed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the installation failed with no captured error and points at the manual-setup docs, the fallback arm of the same result ternary. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-install-github-app-installed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the GitHub App itself was installed (app-only path, no workflow file), so repository automation is authorised but no Actions workflow was added. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-web-setup-gh-cli-not-authenticated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model `gh` is installed but has no credentials, and names the two ways to fix it before /web-setup can succeed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-web-setup-gh-cli-not-installed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model setup stopped because the `gh` binary is missing and gives both recovery paths (install and authenticate, or connect GitHub in the browser). One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-oauth-credentials-rejected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the fresh OAuth tokens were refused by the server and gives two recovery paths (re-authenticate, or restart), so it does not loop on the same flow. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-oauth-reconnect-failed-detail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that authentication succeeded but the reconnect failed, carrying the sanitized reason so the model can distinguish an auth problem from a transport problem. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-oauth-reconnect-failed-restart": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sibling branch with no reason available: tells the model restarting Claude Code is the remaining recovery step. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-install-github-app-cancelled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the GitHub App installation flow was abandoned rather than completed, so it should not proceed as though workflows or credentials now exist. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-extension-installed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the Claude Code extension was installed and where, so IDE integration can be assumed available. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-plugin-installed-restart-required": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the plugin landed at a specific path but will not take effect until the IDE is fully restarted, which is a precondition for anything that depends on the integration. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-invalid-model-validation-error": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the advisor argument never validated and surfaces the validator's reason, so it knows the setting is unchanged and why. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-web-setup-login-failed-visit-web": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the GitHub token import was rejected for lack of a Claude login and names the recovery step (sign in on the web with the GitHub App). One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-result": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms the named server was actually enabled or disabled, which tells the model whether that server's tools are now in play. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-already-in-state": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the single named server was already enabled/disabled, so nothing changed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-toggle-pending-approval": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the server cannot be toggled until the user approves it via /mcp, naming the blocking step rather than a generic failure. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-server-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the named MCP server does not exist, so the reconnect or enable/disable it was asked for cannot proceed. Emitted from two sites with identical text. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "tool-result-workflow-meta-must-be-pure-literal": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the exported meta object may not contain computed expressions, which is the constraint it has to satisfy on the next attempt. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-monthly-limit-unlimited": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the monthly spend cap is gone, so it should not treat budget exhaustion as an imminent constraint. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-monthly-limit-updated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the new monthly spend cap, which is the budget constraint it is working under for the rest of the month. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-list-none-match-filter": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that plugins are installed but none match the enabled/disabled filter that was asked for, which is different from having no plugins at all. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-no-assistant-message": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the transcript contains no assistant message, so nothing was copied and a retry would fail the same way. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-no-payment-method": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the purchase could not proceed because no payment method exists and names the URL where the user adds one — a fact plus the recovery step. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-no-conversations-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model there is no prior session on disk to resume, so retrying with a different argument will not help. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-no-ide-selected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the open-in-IDE action ended without a target, so nothing was opened. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-no-extension-ides-detected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model there is no editor on the machine carrying the Claude Code extension, so IDE integration is unavailable rather than merely unselected. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-marketplace-list-none-configured": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States that no marketplaces exist at all, which is the fact the model needs before suggesting an install or an add step. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-admin-request-cancelled": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the user backed out of the admin credit request, so no approval is pending and the usage limit still stands; the counterpart of the catalogued slash-command-usage-credits-admin-request-sent. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-index-out-of-range": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model how many assistant messages actually exist so it can pick a valid index instead of repeating an out-of-range one. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-opened-project": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the directory was successfully opened in the named editor, and whether it was the worktree or the project. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-opened-org-billing-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model a browser was opened on the organization's usage-credit page, so the next step is with the org admin rather than in the session. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-opened-in-editor": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the plan file was handed to an external editor at a named path, so the plan may change out-of-band and the path is where it lives. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-opening-billing-page": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the user was handed off to the browser billing page, so the credit state may change out-of-band and nothing was settled in-session. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-rate-limit-team-upgrade-browser-opened": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the upgrade page was opened and that /login must be re-run afterwards for the new plan to take effect, which is the step it has to remind the user about. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-path-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports to the model that the requested directory does not exist on disk, so any plan that assumed that path is now accessible is invalid. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-permissions-granted-retry": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Same string as 19642856 on the approve path; one prompt id must cover both byte occurrences or an override would patch only half of them. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-ide-open-manually": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the IDE could not be launched programmatically and gives the path the user must open by hand, so it stops trying to automate the step. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-add-dir-empty-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the /add-dir invocation supplied no argument, so the directory was not added and a path must be provided before retrying. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-published-artifact-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the plan was published as an artifact and gives its URL, which the model may need to reference or repeat back to the user. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-reset-to-workspace-default": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model that its per-session pin was cleared and the workspace default now applies, so it should not claim a specific pinned model. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-privacy-settings-manage-link": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the privacy settings could not be shown or changed in the terminal and where the user has to go instead, which is the recovery step it should relay. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "tool-result-workflow-script-exceeds-size-limit": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model its workflow script was rejected for size, so the fix is to shrink the script rather than retry it unchanged. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "tool-result-workflow-script-parse-error-with-source-excerpt": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Same parse-failure guidance but with the offending source line and a caret, giving the model the exact position to fix; it is the other branch of the same conditional as the no-location form. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "tool-result-workflow-script-parse-error-no-location": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports the parse failure and names the likely causes (TypeScript syntax, broken quoting/escaping) so the model knows what to change; this branch fires when the parser gave no line/column. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-scroll-speed-reset-to-auto": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the scroll speed override was deleted from the user settings file and names both the auto value and the file it was removed from. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-scroll-speed-set": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the chosen scroll speed was written to the user settings file, the sibling arm of the reset message. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-scroll-speed-unchanged": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the scroll-speed picker was dismissed and the previous value restored, so no settings write happened. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-web-setup-server-error-retry": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the failure was server-side with its HTTP status and that retrying shortly is the right response, rather than changing the request. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-resume-session-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the requested session id or title matched nothing, so no resume happened. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-remote-env-default-set": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model which remote or self-hosted environment is now the session default and by which id, so later remote work is attributed to the right target. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-set-remote": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms to the model which model the remote/cloud session was switched to, the sibling branch of the workspace-default reset notice. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-model-set": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Same prompt as sha1 af736aa7… — this is the true arm of the ternary embedded in that one template literal, not a separate string; it states the switch was persisted as the default for future sessions. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-terminal-setup-terminal-native-shift-enter": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the named terminal (Ghostty/Kitty/Warp/WezTerm/Windows Terminal) needs no setup, so a follow-up install attempt would be pointless. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-trust-declined-staying": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the user declined to trust the new directory so the session's working directory is unchanged, naming the directory still in effect. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-reconnect-success": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Confirms the named server is connected again, so the model can resume calling its tools. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-terminal-setup-cannot-run-from-terminal": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the shortcut install was refused because of where it is running, and gives the workaround (backslash+return works now; re-run outside tmux/screen in a listed terminal), so the model does not report success or retry blindly. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-advisor-no-control-channel": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the advisor setting was left untouched because this client has no control channel, so it should not assume the requested advisor is now active. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plan-cloud-mode-push-rejected": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the cloud session rejected plan mode and the user's description was therefore never delivered, so it should not treat the description as received. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-claudeai-auth-reconnect-failed-detail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Reports that the post-authentication reconnect failed and carries the sanitized failure reason so the model can tell the user what went wrong. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-claudeai-auth-reconnect-failed-restart": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Sibling branch when no reason is available: tells the model the only remaining recovery is restarting Claude Code. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-mcp-claudeai-auth-still-unauthorized": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the browser sign-in did not take effect and that the user must complete it before retrying from /mcp, so it stops assuming the server is usable. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-cd-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model /cd was invoked without its required path argument and states the correct invocation form. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-invalid-index-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the argument was not a positive integer and states the accepted form, so a retry can be well-formed. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-effort-usage-header": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "States the accepted /effort arguments, which the model sees verbatim as local-command-stdout and repeats back when the user asks how to change effort. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-plugin-eval-usage": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Teaches the model how /plugin eval is invoked and that each evals/*.md file needs `query` and `should_trigger` frontmatter with at least five recommended, which is what it needs to author or fix eval files. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-visit-org-billing-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Fallback when no browser could be opened: gives the model the org usage-credit URL to relay so the user can act on it. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-usage-credits-visit-billing-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Non-org variant of the same fallback, telling the model where usage credits are managed for a personal account. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-wellbeing-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the wellbeing settings feature is compiled out of this build, so it reports the constraint rather than retrying or inventing settings. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-copy-written-to-file": {
+    "verdict": "pristine-keep",
+    "version": "2.1.233",
+    "why": "Tells the model the selected response or code block was saved to disk at the named path, which the model may then read or reference. One line carrying a single fact; nothing to trim and no other prompt supplies it."
   }
 }

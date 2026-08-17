@@ -103,6 +103,43 @@ export const writeStatuslineUpdateThrottle = (
   const pattern =
     /(,([$\w]+)=([$\w]+(?:\.default)?)\.useCallback.{0,1000}statusLineText.{0,200}?),([$\w]+)=([$\w.]+\(\(\)=>(\2\(([$\w]+)\)),300\)|[$\w]+\(\(\)=>\{\2\(\)\},300\)|[$\w]+\(\2,300\)|.{0,100}\{[$\w]+\.current=void 0,\2\(\)\},300\)\},\[\2\]\)|[$\w]+\.useCallback\(\(\)=>\{if\([$\w]+\.current!==void 0\)clearTimeout\([$\w]+\.current\);[$\w]+\.current=setTimeout\(\([$\w]+,[$\w]+\)=>\{[$\w]+\.current=void 0,[$\w]+\(\)\},300,[$\w]+,\2\)\},\[\2\]\)|\3\.useCallback\(\(\)=>\{.{0,200}setTimeout\(\([$\w]+,[$\w]+\)=>\{[$\w]+\.current=void 0,[$\w]+\(\)\},300,[$\w]+,\2\)\},\[\2\]\))/;
 
+  // Method 1 (CC 2.1.233+): the whole statusline scheduler moved out of the
+  // component and into a class (`new znc({session, getMessages, setTimeout,
+  // initialText, execute, ...})`), so there is no `useCallback` and no
+  // `statusLineText` in scope any more. The flawed debounce is now one private
+  // method:
+  //
+  //   #_(){this.#a?.(),this.#a=this.#e.setTimeout(()=>{this.#a=null,this.#T()},M0w)}
+  //
+  // Each call cancels the pending timer and starts a new one — a trailing-edge
+  // debounce, so a burst of messages starves the status line until the burst
+  // stops. `#a` holds the DISPOSER returned by `#e.setTimeout` (`#h()` calls it
+  // on unsubscribe), which is why both rewrites below keep the pending timer in
+  // that same field: the class's own teardown then cancels ours, with no extra
+  // field to leak.
+  const classPattern =
+    /(#[$\w]+)\(\)\{this\.(#[$\w]+)\?\.\(\),this\.\2=this\.(#[$\w]+)\.setTimeout\(\(\)=>\{this\.\2=null,this\.(#[$\w]+)\(\)\},[$\w]+\)\}/;
+  const classMatch = oldFile.match(classPattern);
+  if (classMatch && classMatch.index !== undefined) {
+    const [whole, method, pending, env, refresh] = classMatch;
+    const n = Number(intervalMs);
+    const ms = Number.isFinite(n) && n >= 0 ? Math.trunc(n) : 300;
+    // Both modes guard on the pending field, so a call arriving while a tick is
+    // scheduled is dropped rather than pushing the update further out.
+    const body = useFixedInterval
+      ? // Fixed rate: the first call installs a self-rearming timer and every
+        // later call is a no-op, so updates land every ms regardless of traffic.
+        `${method}(){if(this.${pending})return;let t=()=>{this.${pending}=this.${env}.setTimeout(t,${ms}),this.${refresh}()};this.${pending}=this.${env}.setTimeout(t,${ms})}`
+      : // Throttle: fire as soon as ms has elapsed since the last update, so a
+        // steady stream updates at a fixed cadence instead of never.
+        `${method}(){if(this.${pending})return;let d=Math.max(0,${ms}-(Date.now()-(this.tccLastStatusline||0)));this.${pending}=this.${env}.setTimeout(()=>{this.${pending}=null,this.tccLastStatusline=Date.now(),this.${refresh}()},d)}`;
+    const start = classMatch.index;
+    const end = start + whole.length;
+    const out = oldFile.slice(0, start) + body + oldFile.slice(end);
+    showDiff(oldFile, out, body, start, end);
+    return out;
+  }
+
   const match = oldFile.match(pattern);
 
   if (!match || match.index === undefined) {

@@ -15,8 +15,23 @@ import path from 'node:path';
 // silently ungreppable inside Claude Code — two separate searches during the CC
 // 2.1.211 bump came back falsely empty and nearly caused real work to be skipped.
 // Keep source ASCII/UTF-8 text-clean; write NUL as the `\x00` escape.
-const ROOTS = ['src', 'tools'];
-const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'target']);
+// `data` and `.claude/skills` are in scope for the same reason src and tools
+// are, and the case for them is stronger: the showtime driver and the skill
+// files are read almost exclusively BY an agent working inside Claude Code, so
+// one NUL there makes the very file that documents the pipeline silently
+// ungreppable. Added 2026-08-16 after three stray NULs landed in a new
+// tools/ file — they could as easily have landed in the driver, which nothing
+// would have caught.
+const ROOTS = ['src', 'tools', 'data', '.claude/skills', 'skills'];
+const SKIP_DIRS = new Set([
+  'node_modules',
+  'dist',
+  '.git',
+  'target',
+  // Agent/Workflow isolation checks out repo copies here; their scratch files
+  // are not ours to police and would double every scan.
+  'worktrees',
+]);
 const EXTS = new Set(['.ts', '.tsx', '.js', '.mjs', '.cjs', '.json', '.md']);
 
 function walk(dir: string, out: string[] = []): string[] {
