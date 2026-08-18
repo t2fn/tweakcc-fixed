@@ -1545,45 +1545,34 @@ function repackELFSection(
 
     const pageSize = elfBinary.pageSize();
     const newContentSize = BigInt(newSectionData.length);
-    const oldBunFileOffset = BigInt(bunSection.fileOffset);
+    // Place the rebuilt .bun right after the writable segment when that segment
+    // is the topmost LOAD, instead of at LIEF's nextVirtualAddress() — which
+    // rounds to a coarse boundary and pads the file with ~427 MB of zeroes,
+    // since the extended PT_LOAD has to cover the whole span contiguously.
+    const loadSegments = elfBinary.segments().filter(s => s.type === 'LOAD');
+    const topmostLoadEnd = loadSegments.reduce((max, s) => {
+      const end = BigInt(s.virtualAddress) + BigInt(s.virtualSize);
+      return end > max ? end : max;
+    }, 0n);
 
-    // PR #27: avoid the ~427 MB padding that LIEF's nextVirtualAddress()
-    // introduces. If no other ALLOC section sits at or after .bun's current
-    // vaddr, reuse the original file offset / virtual address so the writable
-    // PT_LOAD doesn't have to grow. Only fall back to nextVirtualAddress when a
-    // conflicting ALLOC section is present.
-    const SHF_ALLOC = 0x2n;
-    const allocSectionAtOrAfterBun = elfBinary
-      .sections()
-      .some(
-        s =>
-          s.name !== '.bun' &&
-          (BigInt(s.flags) & SHF_ALLOC) !== 0n &&
-          BigInt(s.virtualAddress) >= oldBunSectionVaddr
-      );
+    const placement = computeBunSectionPlacement({
+      rwVirtualAddress: BigInt(rwSegment.virtualAddress),
+      rwVirtualSize: BigInt(rwSegment.virtualSize),
+      rwFileOffset: BigInt(rwSegment.fileOffset),
+      rwFileSize: BigInt(rwSegment.fileSize),
+      topmostLoadEnd,
+      nextVirtualAddress: BigInt(elfBinary.nextVirtualAddress()),
+      newContentSize,
+      pageSize: BigInt(pageSize),
+    });
+    const { newVaddr, newFileOffset, extensionSize, compact } = placement;
 
-    let newVaddr: bigint;
-    let newFileOffset: bigint;
-    if (allocSectionAtOrAfterBun) {
-      newVaddr = alignBigInt(elfBinary.nextVirtualAddress(), pageSize);
-      const offsetInSegment = newVaddr - BigInt(rwSegment.virtualAddress);
-      newFileOffset = BigInt(rwSegment.fileOffset) + offsetInSegment;
-    } else {
-      newVaddr = oldBunSectionVaddr;
-      newFileOffset = oldBunFileOffset;
-    }
-
-    const extensionSize = allocSectionAtOrAfterBun
-      ? newFileOffset -
-        BigInt(rwSegment.fileOffset) -
-        BigInt(rwSegment.fileSize) +
-        newContentSize
-      : 0n;
     debug(
-      `repackELFSection: ${allocSectionAtOrAfterBun ? 'fallback' : 'compact'} placement, extension=${extensionSize.toString()}`
+      `repackELFSection: ${compact ? 'compact' : 'fallback'} placement ` +
+        `(topmost LOAD ends at 0x${topmostLoadEnd.toString(16)})`
     );
 
-    if (extensionSize < 0n && allocSectionAtOrAfterBun) {
+    if (extensionSize < 0n) {
       throw new Error(
         'New .bun location overlaps existing writable ELF segment'
       );
@@ -1600,10 +1589,17 @@ function repackELFSection(
       }
     }
 
+    // Set content first (this may update LIEF's internal size tracking)
+    bunSection.content = newSectionData;
+
+    // Then explicitly set the size to match our calculated value
+    // This ensures LIEF knows the exact size including the header
+    if (bunSection.size !== newContentSize) {
+      bunSection.size = newContentSize;
+    }
+
     bunSection.fileOffset = newFileOffset;
     bunSection.virtualAddress = newVaddr;
-    bunSection.content = newSectionData;
-    bunSection.size = newContentSize;
 
     const vaddrPatch = Buffer.alloc(8);
     vaddrPatch.writeBigUInt64LE(newVaddr);
