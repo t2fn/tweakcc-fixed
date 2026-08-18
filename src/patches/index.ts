@@ -77,6 +77,7 @@ import { writeTableFormat } from './tableFormat';
 import { writeConversationTitle } from './conversationTitle';
 import { writeHideStartupBanner } from './hideStartupBanner';
 import { writeHideCtrlGToEdit } from './hideCtrlGToEdit';
+import { writeIgnoreWhitespaceEdit } from './ignoreWhitespaceEdit';
 import { writeHideStartupClawd } from './hideStartupClawd';
 import { writeIncreaseFileReadLimit } from './increaseFileReadLimit';
 import { writeSuppressLineNumbers } from './suppressLineNumbers';
@@ -578,11 +579,12 @@ const PATCH_DEFINITIONS = [
       'Enable /voice command for speech-to-text input (hold Space to record)',
   },
   {
-    id: 'channels-mode',
-    name: 'Channels mode',
+    id: 'ignore-whitespace-edit',
+    name: 'Ignore whitespace in edit tool',
     group: PatchGroup.FEATURES,
     description:
-      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
+      'Add ignore_whitespace parameter to the edit tool for matching lines with different leading/trailing whitespace',
+    modelFacing: true,
   },
   {
     id: 'suppress-deferred-tools',
@@ -599,6 +601,13 @@ const PATCH_DEFINITIONS = [
     description:
       'Inject the claudeMd / userEmail / currentDate <system-reminder> only on the first API call per conversation (re-fires after /clear). Default: ON. Toggle OFF for vanilla CC per-turn injection.',
     modelFacing: true,
+  },
+  {
+    id: 'channels-mode',
+    name: 'Channels mode',
+    group: PatchGroup.FEATURES,
+    description:
+      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
   },
 ] as const;
 
@@ -1308,6 +1317,10 @@ export const applyCustomization = async (
     'channels-mode': {
       fn: c => writeChannelsMode(c),
       condition: !!config.settings.misc?.enableChannelsMode,
+    },
+    'ignore-whitespace-edit': {
+      fn: c => writeIgnoreWhitespaceEdit(c),
+      condition: true, // Always apply this patch
     },
     'suppress-deferred-tools': {
       fn: c => writeSuppressDeferredTools(c),
