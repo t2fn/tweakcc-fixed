@@ -33228,5 +33228,1718 @@
   },
   "bca5484859eda34afc421e0e0a7c622654b61eef": { "facing": "ui" },
   "8fa2d4f3568920ce2b1ef88108f8a250482f9cfa": { "facing": "ui" },
-  "73a34666489538e9fa0dd29b692b4a995f5aaa05": { "facing": "ui" }
+  "73a34666489538e9fa0dd29b692b4a995f5aaa05": { "facing": "ui" },
+  "3e6e923532e57cf0d4284ac8f75c4075f4b3b683": { "facing": "internal" },
+  "1d2495188684475ff80332e284440cedcd102cd1": {
+    "facing": "model",
+    "id": "system-reminder-large-pdf-read-guidance",
+    "name": "System Reminder: Large PDF read guidance",
+    "desc": "Injected note telling the model a @-mentioned PDF is too large to read whole and must be read with the Read tool's pages parameter"
+  },
+  "e92b2d7b517a2a6437ac7c53a788a4a324020422": { "facing": "internal" },
+  "fea759b041b856037e409ec2bc51910215bd7fe8": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-asset-id",
+    "name": "Tool Parameter: Artifact asset_id",
+    "desc": "Artifact tool input-schema description for asset_id, the 32-hex asset identifier used by read_asset and delete_asset"
+  },
+  "ea900c6dec80866ca8d3c558efeb64861a47ea31": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-asset-out-dir",
+    "name": "Tool Parameter: Artifact out_dir",
+    "desc": "Artifact tool input-schema description for out_dir, the directory read_asset saves the fetched asset into"
+  },
+  "8a53d5436bcb8b2a987e8939778fdd4273cc8b06": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-plan-mode-no-consent",
+    "name": "Tool Result: Artifact resume-replies blocked in plan mode",
+    "desc": "Permission denial telling the model that resuming artifact auto-replies from plan mode has no consent surface and must be raised with the user instead"
+  },
+  "bd3fa4bf1013a77c06d719a0efd246a11bc485a1": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-consent-ask-disclosure",
+    "name": "Tool Result: Artifact resume-replies consent disclosure",
+    "desc": "Consent-ask disclosure appended to the artifact resume-replies permission prompt, explaining that resuming re-arms the live watch and unattended public replies"
+  },
+  "389c46021dccb89e22ad44e2da1f9a06dabf017d": { "facing": "internal" },
+  "6d04d16ba56738cd306fdf3e49702f51aa5875af": { "facing": "internal" },
+  "961873a4c53ccdfd7248cd5494f46deb1ad564c7": { "facing": "internal" },
+  "f1e2bdacc4fbe415cd81d0babdb70ef951c8b146": { "facing": "internal" },
+  "dc18117dc9e6acf16e483828a1acf5d281b3c972": { "facing": "internal" },
+  "e3c0241092876535a7e9a2e0997a71d64b273f02": { "facing": "internal" },
+  "2e155140ad5491d6fe65e27338c5a521d349fd77": { "facing": "internal" },
+  "8cb4d7e190938a3e24ba35c1f9156a60705705ea": {
+    "facing": "model",
+    "id": "agent-prompt-narration-status-line-format",
+    "name": "Agent Prompt: Narration status-line format",
+    "desc": "Opening line of the narration prompt telling the model to answer with at most the two status lines, no markdown and no tools"
+  },
+  "1b925cb78619da754c5dfc4295764a691206c0db": {
+    "facing": "model",
+    "id": "tool-result-artifact-unwatch-stopped",
+    "name": "Tool Result: Artifact unwatch stopped",
+    "desc": "Artifact tool result reporting that the session stopped watching an artifact and should not re-watch it unbidden"
+  },
+  "8b9629f047c4e34950f5e92c468003ad2b9b1174": {
+    "facing": "model",
+    "id": "agent-prompt-narration-sub-goal-definition",
+    "name": "Agent Prompt: Narration sub-goal definition",
+    "desc": "Narration prompt rule defining sub-goals as user-facing outcomes rather than mechanics, with a contrasting example"
+  },
+  "092166e12c261eb1788249666cea155476900bf0": { "facing": "internal" },
+  "171c7b9fac4e0df543ee4dd46ea724109b6650f2": { "facing": "internal" },
+  "409b30624ba4ebd22fe2b09e62628be7bb9e88ef": { "facing": "internal" },
+  "343d8f67e6b554d1f371988da14e968023db8a94": { "facing": "internal" },
+  "00d395f3b8d9ad95618ec033f2738e1e6dee3262": { "facing": "internal" },
+  "70de28d9d973c380d4834af418503e3685215a77": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-live-subscribe-spawn-failed",
+    "name": "Data: Task notification — artifact auto-replies stopped after fork spawn failure",
+    "desc": "Task-notification body telling the model that the background session failed to spawn so artifact comment auto-replies stopped and republishing re-enables them"
+  },
+  "9e523ebd5e55714ebc8b2bd193015c34b3a554b0": { "facing": "internal" },
+  "516355531a1771770d1d9db13abbd37583acd02f": { "facing": "internal" },
+  "03f51614f3248a3a8171a3adcca4dac6885b102d": { "facing": "internal" },
+  "8767db4305d4173c9c21c7bbcaaf7f872e28e5ed": { "facing": "internal" },
+  "5492cfd3d0d5508cdbfdc69fd7652910f145af19": {
+    "facing": "model",
+    "id": "agent-prompt-narration-next-line-rule",
+    "name": "Agent Prompt: Narration next-line rule",
+    "desc": "Narration prompt rule restricting the next: line to a step the conversation already states, otherwise replying with the now: line alone"
+  },
+  "cb171a5cd8401f6dd381c4344d1f0683a4a12929": { "facing": "internal" },
+  "49e73aa03d23e65cec2277695bf62718bfd779d4": {
+    "facing": "model",
+    "id": "tool-result-send-message-permission-handler-changed-recipient",
+    "name": "Tool Result: SendMessage recipient changed by permission handler",
+    "desc": "SendMessage failure text stating the permission handler rewrote the recipient after the send resolved, so nothing was sent"
+  },
+  "4d5f5a4c1cc134885fb0ef422d58ceddcd88b5e8": { "facing": "internal" },
+  "b1faf19e7282cd3079bc25d6c54f24761e2e4674": { "facing": "internal" },
+  "eedef723a57ea13c7473c18e0f90465d438ce73b": { "facing": "internal" },
+  "c3482d425d286c3a70a8513c45a0c47d4cee8045": { "facing": "internal" },
+  "d7757e542ed4b4ee2970b01e1e7145016ae50fc2": { "facing": "internal" },
+  "d35b8b08d851440154bb6041bce9a033764af962": { "facing": "internal" },
+  "f2f87e1dbafa0c3681f00a04e6cf51f8778b27dc": { "facing": "internal" },
+  "c8ffd5e7b7563b5597a911e15e79eb6f30f2d0b5": { "facing": "internal" },
+  "de03ec84547619d7dbfeff50b99184ab7205dc08": {
+    "facing": "model",
+    "id": "system-prompt-audio-file-transcription-note",
+    "name": "System Prompt: Audio file transcription note",
+    "desc": "Injected note telling the model an @-mentioned audio file was transcribed by speech-to-text and the transcript below is its spoken content"
+  },
+  "879ed6ec7f931cd111a545aa354a51142e7818da": {
+    "facing": "model",
+    "id": "system-reminder-file-opened-in-ide",
+    "name": "System Reminder: File opened in IDE",
+    "desc": "Notification that the user opened a file in the IDE, flagged as possibly unrelated to the current task"
+  },
+  "6f94d347beb6a44a92b2c5e039907e81b4e7e67e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-egress-blocked",
+    "name": "Tool Result: Artifact asset read blocked by network allowlist",
+    "desc": "Artifact read_asset failure explaining the environment's network allowlist blocks the frame host so the asset cannot be fetched, and which domain to allow"
+  },
+  "ae86239eba50e27357b3594770e033329345773a": {
+    "facing": "model",
+    "id": "tool-result-artifact-eval-stub-url-restriction",
+    "name": "Tool Result: Artifact eval-stub url restriction",
+    "desc": "Artifact tool refusal in eval-stub mode stating url may only name an artifact this run published, and to omit url to publish fresh"
+  },
+  "65d159589e101c480948bd417ff7862c2ae1042d": { "facing": "internal" },
+  "6014a9aeba7eb19e79e46e978f8b5fc4dd0c75c8": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-upload-unavailable",
+    "name": "Tool Result: Artifact publish upload unavailable",
+    "desc": "Artifact publish failure stating the supporting-file upload was unavailable, the publish did not complete, and which slug to retry publishing to"
+  },
+  "43822d93e0cdb7c5a3786c7168316152e3123778": { "facing": "internal" },
+  "c10423d8bc1edffe284ba750ee8399ba90d95be9": { "facing": "internal" },
+  "eaa854e9589b351b05071846369a1821ee0282f0": { "facing": "internal" },
+  "cdfcbfe0eb3dcda014b564d696c32884cd9b0985": { "facing": "internal" },
+  "f6e4652229667e9a8e5c5d9d865a6cb81a133903": { "facing": "internal" },
+  "2f5721e0529cf6eb650bc64f58ecdf2e98640512": {
+    "facing": "model",
+    "id": "agent-prompt-session-title-and-branch-generation",
+    "name": "Agent Prompt: Session title and branch generation",
+    "desc": "Agent prompt for generating a succinct session title and git branch name from a coding-session description"
+  },
+  "404c59163fb611b7fe8c15edd6da01727ea005be": {
+    "facing": "model",
+    "id": "agent-prompt-eval-criterion-grader",
+    "name": "Agent Prompt: Eval criterion grader",
+    "desc": "Judge prompt asking the model to grade a coding agent's output against a stated criterion"
+  },
+  "2e239dd836274ad2bf573c476f02f45ff9019daa": {
+    "facing": "model",
+    "id": "agent-prompt-coding-session-title-generator",
+    "name": "Agent Prompt: Coding session title generator",
+    "desc": "System prompt for naming a coding session with a short noun-phrase title drawn from untrusted session content"
+  },
+  "79dd59d90325759a7ca5bb9f4cc132050aa5c66d": { "facing": "ui" },
+  "1f9e9a625ac499e63573379f978d72defb45ce71": { "facing": "ui" },
+  "a6ba07bb394c1df06359519a01c517875cc09adb": {
+    "facing": "model",
+    "id": "data-usage-limit-early-availability-auto-continue-prompt",
+    "name": "Data: Usage available early auto-continue prompt",
+    "desc": "Auto-continuation prompt injected when claude.ai usage becomes available before the limit reset, telling the model to resume the interrupted task without redoing finished work"
+  },
+  "a3ec2423dc94b4a5fb396d20222629c85937c1f1": {
+    "facing": "model",
+    "id": "data-usage-limit-reset-auto-continue-prompt",
+    "name": "Data: Usage limit reset auto-continue prompt",
+    "desc": "Auto-continuation prompt injected when the claude.ai usage limit resets, telling the model to continue the interrupted task without repeating completed work"
+  },
+  "b14bfe69c9d850d6b7ad46a1f1907bf4fde77115": { "facing": "ui" },
+  "ef5f08721a22ce37b0a368b90e7e38cbf7d5b974": { "facing": "ui" },
+  "8cb6481bacdbef83c93eed1957c6abb17d0f466a": { "facing": "ui" },
+  "615bc9f1679c5421b6e7bac516a78fe7fce59dac": { "facing": "ui" },
+  "76a40ff5ba54882b27f595752d39f07fc95426a7": { "facing": "internal" },
+  "e52b9c36e836bec7ca859e5892d66c42ecd06859": { "facing": "internal" },
+  "21ed608dfed6f1322596c1419f0b919c7189c1c1": { "facing": "internal" },
+  "e888b869602b67e3e52f9d5733f54fb7c6e30871": { "facing": "internal" },
+  "e07361404ec129ff20141a16f56bc6a1782e25c2": { "facing": "internal" },
+  "aac7980f7e2b3d9df2ca3706c973e0a32ade881a": { "facing": "internal" },
+  "dcb64f68b9d73bba867e37a5e50399b0232e6e23": { "facing": "internal" },
+  "d9dccf9a18d4606984d384c826948fb8efe523b5": { "facing": "internal" },
+  "e5eda56a1806333010088e875a1b2375e4fc63d5": { "facing": "internal" },
+  "c708f1de83b9c39ecc80282c2e34e0efac05ed6b": { "facing": "internal" },
+  "1b303a784eabd6e380874bba724df192166689f0": { "facing": "internal" },
+  "e8a57311216dbf1cab80ab2fd6c70cf19999a493": { "facing": "internal" },
+  "59eae63543300372904551aa9c61d8347fd2d6a1": { "facing": "internal" },
+  "5338dd1e702cb2b887983488027b48a24af9ffde": {
+    "facing": "model",
+    "id": "tool-result-send-message-remote-control-unreachable-elevated-refusal",
+    "name": "SendMessage remote-control unreachable elevated refusal",
+    "desc": "Refusal returned when a SendMessage/SendFile target is a Remote Control session that a cloud session cannot reach, because that session requires a trusted device a cloud session never has."
+  },
+  "d759394050a992f5b007544de4315aa13bdd3aaa": { "facing": "internal" },
+  "dd887981cff71560c09a87b63b8c9e62ca9dca87": { "facing": "internal" },
+  "52c9f3dfdfcb29402038b00c0f624baffdcc6682": { "facing": "internal" },
+  "76d458edc4f6c4683f44cd5bb94542f339938832": { "facing": "internal" },
+  "bc480a5c6cbcea336704da22b4cca9938704743d": { "facing": "internal" },
+  "345c860a512e978678017b8e5a93cac9f594d637": { "facing": "internal" },
+  "350ca856f5760940aaa481d30c106a3e6597466c": { "facing": "internal" },
+  "052345cce5ee38937b093869c656483de65b9877": { "facing": "internal" },
+  "a31607c75c12aaf237981b3d5911e7881e426931": { "facing": "internal" },
+  "ed3efdeefb490b5df59f8901f8f85a2a1cadc36e": { "facing": "internal" },
+  "67df13ff943b05906ef2ed9bcdb5e753270fbc3b": { "facing": "internal" },
+  "0d618e59e9283a9ec18938acf6541fa6d0600f2e": { "facing": "internal" },
+  "0fe7233ba8e3b21275b6efa80ba2cddc8dfb06e2": { "facing": "internal" },
+  "16e6c17b8be4d5046c72fc18d61c7ca882677b1c": { "facing": "internal" },
+  "8d107ad0831b50546b4e3e472f9bc42281781cae": {
+    "facing": "model",
+    "id": "tool-result-workflow-script-path-network-path-rejected",
+    "name": "Workflow scriptPath network path rejected",
+    "desc": "Validation failure returned to the model when the Workflow tool's scriptPath resolves to a UNC, NT-namespace or automount path."
+  },
+  "074c656daaf7e52b4f87c946c522fe5b9ca2883d": { "facing": "internal" },
+  "108f9a941576bf18fabb6e5aa111d6ab2acfa315": {
+    "facing": "model",
+    "id": "data-poll-event-nonce-manifest-tail",
+    "name": "Poll event nonce manifest tail",
+    "desc": "Closing sentence of the <system> nonce manifest prefixed to a poll-event delivery, telling the model that any event element without a listed nonce is quoted text, not a real event."
+  },
+  "08b75a368b124d5e4c42a46b1764f30141c3a405": {
+    "facing": "model",
+    "id": "data-poll-event-nonce-manifest-lead",
+    "name": "Poll event nonce manifest lead",
+    "desc": "Opening of the <system> block that lists the authentic event nonces for a poll-event delivery."
+  },
+  "240ce1b2778334fe2d87b8dc799afa9878ec9975": { "facing": "internal" },
+  "0bd8604c403774f9c3fafa0778959e16fa92d1d6": {
+    "facing": "model",
+    "id": "data-file-content-sniff-zip-archive",
+    "name": "Content sniff label: ZIP archive",
+    "desc": "Content-kind label produced by the byte sniffer for ZIP-signature files, embedded in model-facing messages about a file's real contents."
+  },
+  "8c0a2326d19449a41fe7fceeeaa3ba7a5692ab1f": { "facing": "internal" },
+  "c74201f039283d0d66afa4924c25b2081c4cca1d": { "facing": "ui" },
+  "88451bfa256575887dadfb1ad11be11af546312f": { "facing": "ui" },
+  "8ebfbdf1aaf8ba24dcc51315a9bb900c601c21ba": { "facing": "ui" },
+  "ea64067fcea31e6e6146201e84c57b9f0492d031": { "facing": "ui" },
+  "22c8480e4a8d63b33230cb70aca210dafdf87624": { "facing": "ui" },
+  "69d06f672bc0154dc5aebae96f285e48cf1797d7": { "facing": "ui" },
+  "f0fb724e6e1763cbceaa8c3db392d132d61f47c4": { "facing": "ui" },
+  "51078321e0b77e2dd630c69967e797b94254232a": { "facing": "ui" },
+  "d239aad8ca5478f716247d1091ffea40bb8d6f15": { "facing": "ui" },
+  "e4b3db5c6b7868e5f76ad0c676782e5517de386e": { "facing": "ui" },
+  "ff16293deb8debe37943e301894dea2591a0264a": { "facing": "ui" },
+  "1500b358dad4fa0162c22aadcb66274432e0448a": { "facing": "ui" },
+  "86c2b6f3e0b857490501877650f367677cb304e6": { "facing": "ui" },
+  "f6b84da39ecd3496bd0295628443b5e708f3cc2f": { "facing": "ui" },
+  "acdd8d82e795e378e4897c1e1138b6e9465a21ee": { "facing": "ui" },
+  "4cb3bb5644c2b10ce728e0a66963089fcdb54a8d": { "facing": "internal" },
+  "d75345b37833839f6ca4de338c4e694873a73809": { "facing": "internal" },
+  "0c61aa1e78a21c45d7d7e67569e7c9d72af66cab": { "facing": "internal" },
+  "ade0eec57d5e25b592de96a527a65a754d893730": { "facing": "internal" },
+  "b9bb58a905fcac5432ef9dcff741f5c8439d1cda": { "facing": "internal" },
+  "6f5b012e4bb496050054bd87b30eca67c8998677": {
+    "facing": "model",
+    "id": "tool-result-artifact-foreign-ownership-approval-note",
+    "name": "Artifact foreign-ownership approval note",
+    "desc": "Sentence appended to artifact database/asset permission prompts warning that the artifact belongs to someone else and what approving will do."
+  },
+  "8523fec3c546f92c0ebdecd66e80d496e3d71ba6": {
+    "facing": "model",
+    "id": "tool-result-artifact-deploy-slug-mismatch-not-adopted",
+    "name": "Artifact deploy answered for a different artifact",
+    "desc": "Publish failure reason returned when the deploy server's response targets a different artifact slug than the one being published, so the answer was discarded."
+  },
+  "3b4521e9c5e037aaba84b38dd686f193a0a7cb2d": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-slug-reserved-retry-note",
+    "name": "Artifact publish slug-reserved retry note",
+    "desc": "Suffix appended to artifact publish failures telling the model a slug was already reserved and to retry against that slug instead of publishing fresh."
+  },
+  "69911ff658b036f60aa2f74d8d0a14c5c76e6ae3": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-upload-failed-retry-slug-tail",
+    "name": "Artifact publish upload-failed retry tail",
+    "desc": "Tail appended to a post-preflight upload failure telling the model the publish did not complete and to retry to the reserved slug."
+  },
+  "ff79a8cecd50832711cc39d4f7416c2ab89c9ced": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-outcome-unknown-tail",
+    "name": "Artifact publish outcome-unknown tail",
+    "desc": "Wrapper for indeterminate publish outcomes, warning the model the page may have published and to check the artifact list before republishing."
+  },
+  "0bfced828fcad642d4548b55605fa47b9f289a3f": {
+    "facing": "model",
+    "id": "tool-description-artifact-assets-guidance",
+    "name": "Tool description: Artifact assets guidance",
+    "desc": "Artifact-tool description fragment describing the upload_asset/list_assets/read_asset/delete_asset actions, appended when the assets capability is available"
+  },
+  "44b45d1b769b0b64109a1ecf95b99af9f63aa178": { "facing": "ui" },
+  "fbd69bab93a7f2b5729c5d46f877c2e645dcdbe2": {
+    "facing": "model",
+    "id": "tool-result-artifact-comments-posted-by-artifact-label-note",
+    "name": "Tool result: Artifact comments posted-by-artifact label note",
+    "desc": "Conditional clause in the ARTIFACT COMMENTS tool-result header explaining what a \"posted by the artifact\" attribution label means and how to act on it"
+  },
+  "144061d658c1b6eadfe0fe302969a7003b54eac5": {
+    "facing": "model",
+    "id": "skill-artifact-capabilities-call-contract-unextracted",
+    "name": "Skill: Artifact capabilities call contract unextracted",
+    "desc": "Fallback Call-contract section of the artifact-capabilities skill used when the served mcp type definitions could not be extracted for the invocation"
+  },
+  "941e7964f52b1f04e03824a06a4ab4e51d05c66b": {
+    "facing": "model",
+    "id": "skill-claude-guide-detected-language-readme",
+    "name": "Skill: Claude guide detected language readme",
+    "desc": "Detected-Language section of the Claude API guide skill that inlines the language's claude-api/README.md as a <doc> block"
+  },
+  "1346ba44f1eba335d5f2c8497c2bb16773cb200f": {
+    "facing": "model",
+    "id": "skill-claude-guide-unavailable-reference-fallback",
+    "name": "Skill: Claude guide unavailable reference fallback",
+    "desc": "Provides the Claude guide skill with an embedded live-sources reference and fallback instructions when its reference files cannot be written to disk"
+  },
+  "89d495fea1d969db9b1f31259765a4f622f46a65": {
+    "facing": "model",
+    "id": "skill-artifact-pr-review-html-template",
+    "name": "Skill: Artifact PR review HTML template",
+    "desc": "Full HTML body-fragment template with slot comments and design tokens that the artifact PR-review skill hands the model to fill in"
+  },
+  "8168b05f9d370698ff58118d1bef8854c8443c58": { "facing": "ui" },
+  "48dcad75a70de645c1475d92f5f3836c43d23d4d": {
+    "facing": "model",
+    "id": "system-prompt-system-reminder-framing-tag",
+    "name": "System prompt: System reminder framing tag",
+    "desc": "The wrapper template that encloses injected reminder content in <\\system-reminder> tags before it reaches the model"
+  },
+  "ff0588ab50d774e9ad0f057338a9274605f6a9a0": { "facing": "internal" },
+  "cfa5ec29a22af947cb93e031b3b59dcf7fdc3eb3": { "facing": "ui" },
+  "38aed7a7e1338b5c4daa4099352ec95544e3c6ba": { "facing": "ui" },
+  "da4a8041654ec41a1cdd01bd068b0f53a8a7eaf5": { "facing": "ui" },
+  "a4cf021a77a4501cb4f0adb4c21bc04b3e1f3b0b": {
+    "facing": "model",
+    "id": "agent-prompt-eval-judge-image-focus-intro",
+    "name": "Agent prompt: Eval judge image focus intro",
+    "desc": "Prefix of the eval judge's user message when the graded agent output is an attached image rather than text"
+  },
+  "ed18d537399703450c0f4fe9ec5f96fd50d3c226": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-list-composition",
+    "name": "Tool result: Artifact asset list composition",
+    "desc": "Line-joining template that assembles the list_assets tool result from its usage header, page listing and continuation footer"
+  },
+  "976d2b6bebc7b75d998f93af44984485f61dab3b": { "facing": "internal" },
+  "1a461474f58adc502e90f3160e3ee97572f8dfd5": { "facing": "internal" },
+  "c76fb77d61472c07920153701b439245af3e25cb": { "facing": "internal" },
+  "b41dfe6399682f379b3fd3c3cb82440b45144f5d": { "facing": "internal" },
+  "12d506343ff253ea5546465977a8d64825b6c56e": { "facing": "internal" },
+  "73160b93f54a9330837b385ef1a7f20e9ab2f060": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-saved",
+    "name": "Tool result: Artifact asset read saved",
+    "desc": "Confirms an artifact asset was saved to a local file and flags its content as viewer-supplied data"
+  },
+  "2789996ccc8efe945efe05016f9c642112c53c2e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-uploaded",
+    "name": "Tool result: Artifact asset uploaded",
+    "desc": "Confirms an asset upload and tells the model how to reference the stored file from the page and database"
+  },
+  "456fb7bb4ff913afd0c9dbdee67ca43880a2b19a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-plan-mode-no-consent-surface",
+    "name": "Tool result: Artifact asset upload plan mode no consent surface",
+    "desc": "Permission denial telling the model that a plan-mode asset upload has no consent surface and must not be retried this session"
+  },
+  "3c26140e3ca6595880da544f87c43be7af77e794": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-resumed",
+    "name": "Tool result: Artifact resume replies resumed",
+    "desc": "Reports that auto-replies were re-armed on an artifact and what still has to happen before they are live"
+  },
+  "d37475bbeb2fae37c7c34ef6fb3933310aaad703": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-already-connecting",
+    "name": "Tool result: Artifact resume replies already connecting",
+    "desc": "Reports that a resume could not attach because a reconnect for the artifact is already mid-boot"
+  },
+  "5c5f27c9f68748b10ae804d841a8b0b73de63ffc": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-stale-consent",
+    "name": "Tool result: Artifact resume replies stale consent",
+    "desc": "Reports that the approval did not cover the recorded stop, so auto-replies stayed off"
+  },
+  "faa3fd1a2f8ae6ee7d1a4a0c7218aa184390b9a6": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-interrupted",
+    "name": "Tool result: Artifact resume replies interrupted",
+    "desc": "Reports that the resume request was interrupted before the live watch connected, leaving the stop in place"
+  },
+  "1333f794849dcedb6bb534595772be76449cc1af": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-stopped-again",
+    "name": "Tool result: Artifact resume replies stopped again",
+    "desc": "Reports that the user stopped auto-replies again while the resume was connecting"
+  },
+  "d0d21d96b10273337490840a5d466a7d81280262": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-stop-latched",
+    "name": "Tool result: Artifact resume replies stop latched",
+    "desc": "Reports that a watch stop landed outside the approval's coverage, so the stop stays in place"
+  },
+  "16c6fb896270670a0801b4d79d783ca33e2d8140": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-options-auto-continue-cancelled",
+    "name": "Slash command: Rate limit options auto continue cancelled",
+    "desc": "Reports that the armed automatic continue was cancelled and how to arm it again"
+  },
+  "87b3ab8d0460c768bab30348e1411b103b738152": { "facing": "ui" },
+  "674334ab8b192eadd009f6bd3f3b2731a41c85ad": { "facing": "ui" },
+  "287582840c3f26c6b045e670211720701af20aed": {
+    "facing": "model",
+    "id": "slash-command-update-refused-comment-monitor",
+    "name": "Slash command: Update refused comment monitor",
+    "desc": "Refuses a restart/update while the artifact comment monitor is auto-replying and says how to stop it"
+  },
+  "16d0ef9236392cfa82cbd6dca9703d07ecab97f6": {
+    "facing": "model",
+    "id": "slash-command-update-refused-uncarriable-restrictions",
+    "name": "Slash command: Update refused uncarriable restrictions",
+    "desc": "Refuses an in-session version switch because the session carries restrictions a restart cannot preserve"
+  },
+  "0be678ff25eb4a6b6efb1ddd5ada120026e0812f": { "facing": "ui" },
+  "c8c9f39875ca4691a32a0cbc862a96356a596375": { "facing": "internal" },
+  "8304c751c743122eee1955c03f4150a74a6cc488": { "facing": "internal" },
+  "5feef9a6495c5ddce50524abab94d02d5312a137": {
+    "facing": "model",
+    "id": "slash-command-rate-limit-options-auto-continue-armed",
+    "name": "Slash command: Rate limit options auto continue armed",
+    "desc": "Confirms the session will continue automatically after the rate limit resets and how to cancel the wait"
+  },
+  "a69312974e572fb5d340feeaab460d7a21023d96": {
+    "facing": "model",
+    "id": "tool-result-powershell-windows-sandbox-exclusion-no-prompt",
+    "name": "Tool result: PowerShell Windows sandbox exclusion no prompt",
+    "desc": "Blocks a Windows PowerShell command whose sandbox exclusion cannot apply because no permission prompt is available"
+  },
+  "dc5e3dc23fa3fae27bf5712a1456c383f9723ee9": { "facing": "internal" },
+  "4ca05bc38578bf51b6116a522605269320a2d9a0": { "facing": "internal" },
+  "d13cb6d4751c2071e17d7c6311bda5736ddd5745": { "facing": "internal" },
+  "1171077051aa248c290fce93496230a394834be8": { "facing": "internal" },
+  "b07f094590fb048032d2ad4d0aacfeeaa4a812ab": { "facing": "internal" },
+  "8b1f3b100388e2cc65afad74cdd60c0a074a8976": { "facing": "internal" },
+  "95e5a010b8d00fb0ff0584d770a03ac6f854fa95": { "facing": "internal" },
+  "d70e082c7be17972602bbf69a20e2f10198c2f90": {
+    "facing": "model",
+    "id": "system-reminder-goal-checkin-background-work-running",
+    "name": "System reminder: Goal check-in background work running",
+    "desc": "Injected check-in telling the model its active goal's evaluation is deferred while the listed background work runs, and to check on that work"
+  },
+  "fb07014e34fdfe816a4462a96c07e8e4c6096683": { "facing": "ui" },
+  "1a0b5a94e0178451f0325d980f1ed0c7fd0e0346": { "facing": "internal" },
+  "047ca4a80b3e1e1902a7b225277f956a053b0067": { "facing": "internal" },
+  "884b64eca9734e0a513606040c941d1202a29e7b": { "facing": "internal" },
+  "e6a8ebb66ca7a60172ffe96dfd31a3500d923287": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-assets-after",
+    "name": "Tool parameter: Artifact assets after",
+    "desc": "Schema description of the Artifact tool's `after` parameter for paging through list_assets results"
+  },
+  "a8b319baf5135db5a071dd6666b2208279a44cac": {
+    "facing": "model",
+    "id": "tool-result-artifact-live-subscription-stop-latched",
+    "name": "Tool result: Artifact live subscription stop latched",
+    "desc": "Explains that live watching was stopped earlier in the session, so the subscription was skipped and must not be retried unprompted"
+  },
+  "e28b9d5140921392bce099cf83b9404377efd773": { "facing": "internal" },
+  "0f654106e55ce8699ad55f90ec0c92c490260c9e": {
+    "facing": "model",
+    "id": "tool-result-send-message-attachments-desktop-only",
+    "name": "Tool result: Send message attachments desktop only",
+    "desc": "Tells the model which attachments never reached Remote Control viewers and to explain that to the user"
+  },
+  "1e990335ceafb7c9fa834ac9d8355c093da89a11": {
+    "facing": "model",
+    "id": "tool-result-artifact-multi-file-publish-unavailable",
+    "name": "Tool result: Artifact multi-file publish unavailable",
+    "desc": "Reports that the server or proxy rejected a multi-file publish and that the extra files were not published"
+  },
+  "aa802338fe01e5fd136f6dfc636c4036e1a02e39": {
+    "facing": "model",
+    "id": "agent-prompt-narration-next-line-format",
+    "name": "Agent prompt: Narration next line format",
+    "desc": "Instructs the narration model how to phrase the optional `next:` status line"
+  },
+  "db6d3e379cb6c45cbbe8a3848492c83e1b936af0": {
+    "facing": "model",
+    "id": "system-reminder-edited-file-changed-since-read",
+    "name": "System reminder: Edited file changed since read",
+    "desc": "Tells the model a file changed on disk since its last read and to treat the new state as deliberate rather than reverting it"
+  },
+  "9f1f900d97ea6f4e93a4306a4399ef4b5a63b17c": {
+    "facing": "model",
+    "id": "agent-prompt-narration-now-line-format",
+    "name": "Agent prompt: Narration now line format",
+    "desc": "Instructs the narration model how to phrase the required `now:` status line"
+  },
+  "1f101a734051b1c75207d439a3faa3fa8e285f1f": { "facing": "internal" },
+  "e0cf3e71c9d84b8d86e238955fe5699fe9d9cedc": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-cowork-no-consent-surface",
+    "name": "Artifact asset upload denied — no Cowork consent surface",
+    "desc": "Deny message returned when upload_asset runs in a Cowork frame with no approval card available."
+  },
+  "ae8c61f2bd77a83ce71e28b7b452eef3228c9fb9": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-source-description",
+    "name": "Artifact asset upload source description",
+    "desc": "Composed phrase naming the local file and its risk qualifiers, used in the upload ask message and its decisionReason."
+  },
+  "5ec46860edcdb23c9a15a5bad1e251cbdf9a534a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-symlink-outside-read-paths-qualifier",
+    "name": "Asset upload symlink-escape qualifier",
+    "desc": "Parenthetical appended to the upload source description when the path resolves through a symlink outside the allowed read paths."
+  },
+  "3c769689879a66e3aab35ef19f15be733a259831": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-path-spelling-qualifier",
+    "name": "Asset upload path-spelling qualifier",
+    "desc": "Parenthetical appended to the upload source description when the path spelling can name a different file than it appears to."
+  },
+  "ec1a778f257d12d825cfff021e4bdebc37f69b94": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-hard-link-qualifier",
+    "name": "Asset upload hard-link qualifier",
+    "desc": "Parenthetical appended to the upload source description when the file is hard-linked elsewhere on the machine."
+  },
+  "879facca2246c92a33dc2195375331a2eb383a92": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-session-approval-scope",
+    "name": "Asset upload session approval scope",
+    "desc": "Tail of the upload ask message stating that approval covers further uploads to this artifact for the session."
+  },
+  "b170f849b0a8278c811e6b778dd6915ea49db588": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-plan-mode-user-approval-required",
+    "name": "Asset upload plan-mode approval reason",
+    "desc": "safetyCheck decisionReason marking a plan-mode asset upload as not auto-classifier approvable."
+  },
+  "d727d75758b6500e18a4af9e3c58a4ed2303473a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-cowork-user-approval-required",
+    "name": "Asset upload Cowork approval reason",
+    "desc": "safetyCheck decisionReason marking a Cowork-session asset upload as not auto-classifier approvable."
+  },
+  "0ccdfce7ae9d29a96f4ef10cffd0d9968be51f85": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-path-spelling-user-approval-required",
+    "name": "Asset upload path-spelling approval reason",
+    "desc": "safetyCheck decisionReason when the upload path's spelling can name a different file than it appears to."
+  },
+  "82ec7bb327bbb14946c672951742973f0229af2e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-symlink-resolution-user-approval-required",
+    "name": "Asset upload symlink-resolution approval reason",
+    "desc": "safetyCheck decisionReason when the classifier sees only the path spelling, not where the symlink resolves."
+  },
+  "521c3da6dcb6e619fe1564c51dde60e7031bf68e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-outside-read-paths-user-approval-required",
+    "name": "Asset upload outside-read-paths approval reason",
+    "desc": "safetyCheck decisionReason when the uploaded file lies outside the session's allowed read paths."
+  },
+  "79f4e4df3aaf4b62d99df0e5524bd8318f4c06e8": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-hard-link-user-approval-required",
+    "name": "Asset upload hard-link approval reason",
+    "desc": "safetyCheck decisionReason when the uploaded file is reachable under other path names."
+  },
+  "f0090e645ed2ace0f270d8e278521a5793e9e361": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-loadable-by-viewers-reason",
+    "name": "Asset upload default decision reason",
+    "desc": "Fallback type:\"other\" decisionReason for an asset upload, stating the file becomes loadable by every artifact viewer."
+  },
+  "425efe1f786a795fbe6a5c4bd4a2015342591488": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-session-approval-scope-reason-tail",
+    "name": "Asset upload approval-scope reason tail",
+    "desc": "Conditional clause inside the default upload decisionReason noting approval covers further uploads this session."
+  },
+  "567eeac88627d3e456a6e1483969c3dc3f35182a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-invalid-url",
+    "name": "Asset read/list URL not an artifact URL",
+    "desc": "Deny message when list_assets or read_asset is given a URL that does not parse as an artifact URL."
+  },
+  "ace492cd95903b1cb1c416476a538fa0713ebbbc": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-requires-asset-id-and-out-dir",
+    "name": "Asset read requires asset_id and out_dir",
+    "desc": "Deny message when read_asset lacks a valid asset_id or a local out_dir."
+  },
+  "4a5355415adba790a105ffa7d1777dbf65c9fb26": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-no-consent-surface",
+    "name": "Asset read denied — no consent surface",
+    "desc": "Deny message for a first read of another person's artifact assets in plan mode or a Cowork frame."
+  },
+  "8e1ebca2017f11c5df2f1a953e0206289a75896e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-action-description",
+    "name": "Asset read action description",
+    "desc": "Verb phrase describing a read_asset save, interpolated into the permission ask message and its fallback decisionReason."
+  },
+  "e5d115220c2ba5417e34a4a4a020babaef3960cf": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-list-action-description",
+    "name": "Asset list action description",
+    "desc": "Verb phrase describing a list_assets call, interpolated into the permission ask message and its fallback decisionReason."
+  },
+  "98c69473de80510762f60052d15556a8e47c625b": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-conversation-approval-scope",
+    "name": "Asset read conversation approval scope",
+    "desc": "Tail of the asset read/list ask message stating approval covers this artifact's asset reads for the conversation."
+  },
+  "6126ee209c6ec01c6aa8c9b7872a9925283a8417": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-plan-mode-user-approval-required",
+    "name": "Asset read plan-mode approval reason",
+    "desc": "safetyCheck decisionReason for a first plan-mode read of another person's artifact assets."
+  },
+  "876fc4d044a7610bc0994ac0014ba2b4bac1d1c3": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-outside-working-paths-user-approval-required",
+    "name": "Asset save outside working paths reason",
+    "desc": "safetyCheck decisionReason when read_asset would write the downloaded asset outside the allowed working paths."
+  },
+  "e15ca57cc5601dd1add3b41c7cee0b75ed2bc6d9": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-invalid-url",
+    "name": "Asset delete URL not an artifact URL",
+    "desc": "Deny message when delete_asset is given a URL that does not parse as an artifact URL."
+  },
+  "a96b1c0ca6636d5a3de80615337f9a98316595a3": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-requires-asset-id",
+    "name": "Asset delete requires asset_id",
+    "desc": "Deny message when delete_asset is called without a valid 32-hex asset id."
+  },
+  "712fc923def5641aebd57836710c5d005d4223b9": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-no-consent-surface",
+    "name": "Asset delete denied — no consent surface",
+    "desc": "Deny message when delete_asset runs in plan mode or a Cowork frame with no approval card available."
+  },
+  "1925fb46917fd5eb3bd4dbbbf915fcdb7df37d00": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-action-description",
+    "name": "Asset delete action description",
+    "desc": "Verb phrase describing an irreversible asset delete, used in the ask message and its safetyCheck reason."
+  },
+  "f5814276ee2069ba91df47ffc387b552605364c4": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-user-approval-required",
+    "name": "Asset delete approval reason",
+    "desc": "safetyCheck decisionReason on the delete_asset ask stating approval must come from the user, not the auto-permission classifier."
+  },
+  "8690d22d765e83aff9910631d688c07890e7042f": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-device-namespace-path",
+    "name": "Publish source is a device/NT-namespace path",
+    "desc": "Deny message when the publish file_path uses a device- or NT-namespace spelling."
+  },
+  "d0b57384233dbe0b0dde4e52124fe57fed8a02ff": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-source-unverifiable",
+    "name": "Publish source cannot be verified",
+    "desc": "Deny message when the publish source path cannot be safely verified and must be given by its resolved path."
+  },
+  "2377a7953a962416e7a3a2de28d26979d463f936": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-source-unverified-qualifier",
+    "name": "Publish source unverified qualifier",
+    "desc": "Parenthetical appended to the published file's name in the publish ask message when its target could not be verified."
+  },
+  "dddbd01e59873e7c3c4f339c1c130a89041a9793": {
+    "facing": "model",
+    "id": "tool-result-artifact-publish-source-mismatch-user-approval-required",
+    "name": "Publish source mismatch approval reason",
+    "desc": "safetyCheck decisionReason requiring the full consent dialog when the publish source does not verifiably match its spelling."
+  },
+  "93993f494af6a194cb2ad7343851001a32b013a7": {
+    "facing": "model",
+    "id": "data-artifact-upload-asset-auto-classifier-input",
+    "name": "Upload-asset auto-classifier input",
+    "desc": "One-line summary of an upload_asset call handed to the auto-permission classifier model."
+  },
+  "d4313374173c5177170570c5e517c2e28fa52358": {
+    "facing": "model",
+    "id": "data-artifact-delete-asset-auto-classifier-input",
+    "name": "Delete-asset auto-classifier input",
+    "desc": "One-line summary of a delete_asset call handed to the auto-permission classifier model."
+  },
+  "5736b56507834dc74f12bbd651ecee82b5358c77": {
+    "facing": "model",
+    "id": "data-artifact-read-asset-auto-classifier-input",
+    "name": "Read-asset auto-classifier input",
+    "desc": "One-line summary of a read_asset call handed to the auto-permission classifier model."
+  },
+  "68b323993ed5b4fbf33c554e517e37e7225c1fdc": {
+    "facing": "model",
+    "id": "data-artifact-resume-watch-auto-classifier-input",
+    "name": "Resume-watch auto-classifier input",
+    "desc": "One-line summary handed to the auto-permission classifier when a watch is re-requested after being stopped this session."
+  },
+  "dd0263a4dfe70e48151ad422f09408029956d7ec": {
+    "facing": "model",
+    "id": "tool-description-artifact-upload-asset",
+    "name": "Artifact upload_asset action description",
+    "desc": "Dynamic tool description for the Artifact tool's upload_asset action, including its approval-scope clause."
+  },
+  "120169f47c1e7bc20b4230d3a4df4ae198666746": {
+    "facing": "model",
+    "id": "tool-description-artifact-upload-asset-session-approval-scope",
+    "name": "upload_asset description approval-scope clause",
+    "desc": "Clause in the upload_asset tool description stating approval covers further uploads except linked or out-of-path files."
+  },
+  "ea8fb5eaa20f3cd6d0cee7aaadf303daef7a2728": {
+    "facing": "model",
+    "id": "tool-description-artifact-delete-asset",
+    "name": "Artifact delete_asset action description",
+    "desc": "Dynamic tool description for the Artifact tool's delete_asset action."
+  },
+  "69d584b6b8436447d3e24eda0b7dab18262dfc1d": {
+    "facing": "model",
+    "id": "tool-description-artifact-read-asset",
+    "name": "Artifact read_asset action description",
+    "desc": "Dynamic tool description for the Artifact tool's read_asset action."
+  },
+  "03ffdfee86feda53df8868b01dd0072068fb81d7": {
+    "facing": "model",
+    "id": "tool-description-artifact-list-assets",
+    "name": "Artifact list_assets action description",
+    "desc": "Dynamic tool description for the Artifact tool's list_assets action."
+  },
+  "cdb48cea4ab48c5ba05389cddf1bdc24ff329137": {
+    "facing": "model",
+    "id": "tool-result-artifact-upload-asset-requires-url",
+    "name": "upload_asset requires url",
+    "desc": "Input-validation error returned to the model when upload_asset is called without the artifact's claude.ai URL."
+  },
+  "76060646d81a1eab5e37ce3e167b8c42982af213": {
+    "facing": "model",
+    "id": "tool-result-artifact-upload-asset-requires-file-path",
+    "name": "upload_asset requires file_path",
+    "desc": "Input-validation error returned to the model when upload_asset is called without file_path."
+  },
+  "e73ae97e575a5a107acd618e1009b0bc4af7874f": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-action-requires-asset-id",
+    "name": "Asset action requires asset_id",
+    "desc": "Input-validation error returned to the model when read_asset or delete_asset omits asset_id."
+  },
+  "1cc60824f387126d6d02e448dcbb98a75b55bcdb": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-id-format",
+    "name": "asset_id format error",
+    "desc": "Input-validation error stating asset_id must be the 32 lowercase hex characters following \"_blob/\"."
+  },
+  "b2b078cb2c47567b64eb5334750ee7bbe4a4cbaf": {
+    "facing": "model",
+    "id": "tool-result-artifact-list-assets-after-cursor-format",
+    "name": "list_assets after-cursor format error",
+    "desc": "Input-validation error stating `after` must be the `next` value copied from a previous list_assets result."
+  },
+  "730b6ccafc3af7c9ca0ac91c1afab5be6ae652aa": {
+    "facing": "model",
+    "id": "tool-result-artifact-read-asset-out-dir-must-be-local",
+    "name": "read_asset out_dir must be local",
+    "desc": "Input-validation error when read_asset's out_dir names a network path or cannot be resolved."
+  },
+  "2e2c14f1fd42fca70d6c47166861512ec52febf3": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-rail-skipped-tail",
+    "name": "Durable wake rail skipped tail",
+    "desc": "Tail appended to the watch tool result explaining why the remote session's durable wake rail was skipped."
+  },
+  "f24205f96f8d06f90bd94ab558ef82d13e96d70b": {
+    "facing": "model",
+    "id": "tool-result-artifact-durable-wake-stop-latched-reason",
+    "name": "Durable wake stop-latched reason",
+    "desc": "Reason fragment stating the artifact's watch was stopped earlier this session and must not be retried."
+  },
+  "ce78f17dc55b43491a263b3e99f9e4542c02f18a": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-remote-session-unsupported",
+    "name": "Artifact watch unsupported in remote sessions",
+    "desc": "Tool result explaining that watching an artifact is not supported from a remote session and how the user can watch it locally."
+  },
+  "a7ecf4e143ab8a0fbd21444672d6b25551b2f19a": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-session-disarmed",
+    "name": "Auto-replies not resumed — session disarmed",
+    "desc": "resume_replies tool result when auto-replies are disarmed for the whole session by the kill-all-agents gesture."
+  },
+  "0ca2d946f630632859815cd8f6fe1a34da9d8520": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-remote-session",
+    "name": "Auto-replies not resumed — remote session",
+    "desc": "resume_replies tool result directing a remote session to re-register a durable watch subscription instead."
+  },
+  "829c3030efc5c79acacfebc07f2c2b19520fefa2": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-no-stop-recorded",
+    "name": "Auto-replies not resumed — no stop recorded",
+    "desc": "resume_replies tool result when no auto-reply stop is recorded for the artifact in this session."
+  },
+  "9ef3f676ca2850cda73ba5747bcb8ab87a6278b6": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-not-enabled",
+    "name": "Auto-replies not resumed — not enabled",
+    "desc": "resume_replies tool result when the session never opted into automatic comment replies."
+  },
+  "d8f5130534a5be8831b626af37979c43391e9712": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-generic-failure",
+    "name": "Auto-replies not resumed — generic failure",
+    "desc": "Fallback resume_replies tool result reporting the raw outcome and reason when the live watch could not be re-armed."
+  },
+  "19da514de716998718b88226018fad4ce180d573": {
+    "facing": "model",
+    "id": "tool-result-artifact-watches-list-live-item",
+    "name": "Artifact watches list live-watch item",
+    "desc": "Per-artifact line in the watches tool result for a live (non-durable) watch, including connection and auto-reply state."
+  },
+  "24aebf8c174baef45d2bfc4eac89fc127a176429": {
+    "facing": "model",
+    "id": "tool-result-artifact-watches-list-auto-replies-stopped",
+    "name": "Watches list auto-replies stopped fragment",
+    "desc": "State fragment appended to a watches-list line when auto-replies are stopped for that artifact."
+  },
+  "3ebcf436fd185dc4c08c1234627b211116acfad9": {
+    "facing": "model",
+    "id": "tool-result-artifact-watches-list-auto-replies-disarmed",
+    "name": "Watches list auto-replies disarmed fragment",
+    "desc": "State fragment appended to a watches-list line when auto-replies are disarmed for the session."
+  },
+  "9ec22e2d25712524293684f50316aeb87b8e6084": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-list-usage-header",
+    "name": "Asset list usage header",
+    "desc": "Header line of the list_assets tool result reporting file count and byte/file quota usage."
+  },
+  "ff9bfef43a8f2418b68a792cf2f3003af65eeba3": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-list-page-body",
+    "name": "Asset list page body",
+    "desc": "Body of the list_assets tool result introducing the page of asset rows and how to reference, read, or delete them."
+  },
+  "23a5b9583ab4bdb866cca36b4d59f6251e2db4f7": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-deleted",
+    "name": "Artifact asset deleted",
+    "desc": "Tool result confirming an asset was deleted and warning that references to it will now fail to load."
+  },
+  "df0f0b20ef7c71939734b6f64bc8ef551b5c0210": {
+    "facing": "model",
+    "id": "data-goal-checkin-background-work-no-longer-running",
+    "name": "Goal check-in — background work no longer running",
+    "desc": "Goal check-in text injected as a meta user message when the deferred goal evaluation resumes because the background work that blocked it has stopped."
+  },
+  "0ebca7ed531a204806c8240b1be271f4e7f27fa6": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-resumed-summary",
+    "name": "Artifact auto-replies resumed — notification summary",
+    "desc": "Summary line of the task notification telling Claude that auto-replies on an Artifact were resumed by a resume_replies request."
+  },
+  "6bb87925f2a33cc6c99fe58df9e7a95b22f73e62": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-reply-kill-all-gesture-clause",
+    "name": "Auto-reply stop disclosure — kill-all gesture clause",
+    "desc": "Optional clause appended to the artifact auto-reply stop-disclosure notification body telling Claude the kill-all-agents gesture disarms auto-replies session-wide."
+  },
+  "31957c554fd6930f7dbc259cca674969bf411074": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-react-stop-body",
+    "name": "Artifact auto-react stop — notification body",
+    "desc": "Body wrapper of the task notification emitted when artifact auto-reply subscriptions are stopped; carries the discard records, the re-arm note and the optional kill-all gesture clause."
+  },
+  "b3d2edd7dfdf7ca2ec7dba4b1b31668592132ca5": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-reply-rearm-note",
+    "name": "Auto-reply stop disclosure — re-arm note",
+    "desc": "Sentence in the artifact auto-reply stop notification telling Claude a future publish re-arms the subscription and not to republish just to re-enable auto-replies."
+  },
+  "b11b121a128fd29d118dfed07c15bb8f7185cb6c": { "facing": "internal" },
+  "e2be968ee7f2fdfd2152dca8d7b3132b7189232e": { "facing": "internal" },
+  "d2206b22ac8651703028263782594eed269bb3c8": { "facing": "internal" },
+  "5839d4c388fda440f1a3b9302d69e95cafd2da76": { "facing": "internal" },
+  "e163555ceb34348c4efd650f3ddc4d2cb7a5d192": {
+    "facing": "model",
+    "id": "tool-result-sendmessage-attachments-desktop-only-tail",
+    "name": "Message attachments desktop-only — tail",
+    "desc": "Tail of the message tool result instructing Claude to tell the user that attachments not relayed to Remote Control are only visible in the desktop app."
+  },
+  "fcccdc0a2c51bd8ebaf84f13abe0d525c2af1838": {
+    "facing": "model",
+    "id": "tool-result-repl-async-cancelled-before-start",
+    "name": "Async REPL eval cancelled before start",
+    "desc": "Settle text reported for an async REPL eval that was still queued when the dispatching turn aborted, so its script never ran."
+  },
+  "0a73cbad34040a7f9083bf706604476c0a3ca435": { "facing": "internal" },
+  "d6d7124557636a7a04734b1973317c2d6fc7df82": {
+    "facing": "model",
+    "id": "tool-result-repl-async-settle-output-truncated",
+    "name": "Async REPL settle output truncated",
+    "desc": "Marker appended to an async REPL settle whose output exceeded the byte budget, telling Claude to print less or write large output to a file."
+  },
+  "ac68b92cd142c2dcb62b26e72520f5930e29d0ef": {
+    "facing": "model",
+    "id": "tool-result-repl-async-dispatch-queue-depth-cap",
+    "name": "Async REPL dispatch rejected — queue depth cap",
+    "desc": "REPL tool result returned when too many async evals are already queued or running, telling Claude to wait for their settles before dispatching more."
+  },
+  "9499866875c0ebebb391e513039654494eea1ea8": {
+    "facing": "model",
+    "id": "tool-result-repl-async-dispatched-queued-behind",
+    "name": "Async REPL dispatched — queued behind",
+    "desc": "REPL tool result for an async dispatch that is queued behind other evals, telling Claude its outcome arrives later as a repl-eval poll event and not to re-issue the code."
+  },
+  "39278ea659c52063979cae1f173b1ebd8a9e5624": {
+    "facing": "model",
+    "id": "tool-result-repl-async-dispatched",
+    "name": "Async REPL dispatched",
+    "desc": "REPL tool result for an async dispatch with an empty queue, telling Claude the script is queued and its outcome arrives later as a repl-eval poll event."
+  },
+  "024d9ca8a99710725042c03c356c7ad7f3907334": {
+    "facing": "model",
+    "id": "tool-result-sendfile-files-desktop-only",
+    "name": "Sent files desktop-only — lead",
+    "desc": "Lead of the SendUserFile tool result listing files that were not relayed to Remote Control viewers and are visible only in the desktop app."
+  },
+  "90d64bf8064a104e2bc5aa74de6ac0aad95adc90": {
+    "facing": "model",
+    "id": "tool-result-sendfile-files-desktop-only-tail",
+    "name": "Sent files desktop-only — tail",
+    "desc": "Tail of the SendUserFile tool result instructing Claude to tell the user the files are only visible in the desktop app, and why."
+  },
+  "76943cb157c9988e04603dfea22ac6ea11870f15": {
+    "facing": "model",
+    "id": "tool-result-send-message-cloud-approval-required",
+    "name": "Cross-machine send needs approval — isolatePeerMachines",
+    "desc": "Result returned to Claude when a cross-session send was denied at the permission phase under isolatePeerMachines, stating nothing was sent; now shared by SendMessage and SendFile."
+  },
+  "a09283c62b5a844b517382e0bdbc235229b46c56": {
+    "facing": "model",
+    "id": "tool-result-sendfile-permission-narrowed-input",
+    "name": "Permission handler narrowed the input",
+    "desc": "Result returned to Claude when the permission handler rewrote a peer-send input into a shape the tool does not accept, so nothing was sent; now shared by SendMessage and SendFile."
+  },
+  "026429ba2f9d9127bc1777847e4815481ce4ab74": {
+    "facing": "model",
+    "id": "tool-result-send-message-permission-non-text-message",
+    "name": "Permission handler rewrote message to non-text",
+    "desc": "Result returned to Claude when the permission handler turned the peer-send message into a structured non-text form that cannot be sent, so nothing was sent."
+  },
+  "6b22afade4a40af4e7eeb2fab3a6db1f9c3c5b4b": { "facing": "internal" },
+  "849daa3491656a541f715808e8b3068ee8a5ff8d": {
+    "facing": "model",
+    "id": "tool-result-send-message-local-session-identity-notes",
+    "name": "SendMessage local session identity notes",
+    "desc": "Parenthetical identity notes appended to the SendMessage result when the local recipient is also on Remote Control, has a remote namesake claimed locally, or the session search was truncated."
+  },
+  "cef70db2b6decfe5d015f0a29f45b998a3a2e64e": {
+    "facing": "model",
+    "id": "tool-result-send-message-remote-session-identity-notes",
+    "name": "SendMessage remote session identity notes",
+    "desc": "Parenthetical identity notes appended to the SendMessage result for a Remote Control or cloud recipient when a same-named session is registered locally or the search was truncated."
+  },
+  "bfd36edc187ff3640d92398bf6065c8ec50fec75": {
+    "facing": "model",
+    "id": "tool-result-send-message-search-truncated-namesake-note",
+    "name": "Session list truncated — namesake note",
+    "desc": "Clause appended to SendMessage identity notes warning Claude that a same-named session beyond the truncated search would not have been seen."
+  },
+  "44791ccac61dc6e715f8a4d872951ba704a416ab": {
+    "facing": "model",
+    "id": "tool-result-send-message-search-truncated-name-may-exist",
+    "name": "Session list truncated — name may exist",
+    "desc": "Note appended to the SendMessage and SendFile unreachable-recipient tool results warning Claude the session list was truncated so a session by that name may exist beyond what was searched."
+  },
+  "370e9b8e01b1537b5e8b3ad30f7450b0645ec834": { "facing": "ui" },
+  "f2a72d33aba07076d5f94a408c44808f237cfe71": { "facing": "internal" },
+  "b9399d61e52cf5a283415ea79b6f2d0df4b2523b": { "facing": "internal" },
+  "a89301b1f3216d447b36b021b519e24bd71c997d": { "facing": "internal" },
+  "39b735b5f1fc0be68b480663d2f4bc334425d701": { "facing": "internal" },
+  "6288d8fa794da2548b23f2c0a67a2d922e00ce61": {
+    "facing": "model",
+    "id": "tool-result-agent-resume-forked-skill-sync-disabled",
+    "name": "Forked-skill resume vetoed — skills sync disabled",
+    "desc": "Refusal text returned to Claude when an agent that ran as a forked account-synced skill cannot be resumed because skills sync is turned off or denied by policy."
+  },
+  "b9fdba94a016bce7c6f61e19230e15aecf1d0124": {
+    "facing": "model",
+    "id": "tool-result-send-message-no-name-reply-by-address-note",
+    "name": "Sender has no name — reply by address note",
+    "desc": "Note appended to a successful SendMessage result telling Claude the sending session has no name yet, so the receiver can answer only by the address on the message."
+  },
+  "d48ed2999468728eaf7495b868872225e7894ae8": {
+    "facing": "model",
+    "id": "tool-result-send-message-unresolved-destination-approval",
+    "name": "Send approval — destination unresolved",
+    "desc": "Permission ask message for a SendMessage whose destination could not be resolved, so it is unknown whether the name is a session on another machine."
+  },
+  "e3385e66d21f63a453a36ae17ef6df62b9981789": {
+    "facing": "model",
+    "id": "tool-result-send-message-bridge-sent-one-way",
+    "name": "Bridge message sent one-way",
+    "desc": "SendMessage success result for a bridge (Remote Control) address send, noting the send was one-way so the receiver cannot address a reply to this session."
+  },
+  "349ad2ac5eca0433244ce8d954f08aad63df7f40": {
+    "facing": "model",
+    "id": "tool-result-send-message-no-agent-reachable",
+    "name": "No agent by that name is reachable",
+    "desc": "SendMessage failure result telling Claude no agent with the given name is reachable, with the availability, truncation and spelling notes appended."
+  },
+  "df847d561e5897b009c0e9cf366e8d96ffc60345": { "facing": "ui" },
+  "99f20ca3ddd87841899619c31e12fe293659800f": { "facing": "ui" },
+  "b89471748946ad947b9a478cb04da98741e171bc": { "facing": "ui" },
+  "e49b975bc586162eb176abd2a26cc80f53690fca": {
+    "facing": "model",
+    "id": "tool-result-send-message-oneway-note",
+    "name": "One-way remote-control note",
+    "desc": "Clause appended to the SendMessage success result stating the send was one-way, so the receiver cannot address a reply to this session."
+  },
+  "9c3e79e39937f96b5fc6f95949fb8f6d6af28334": { "facing": "ui" },
+  "d51fa444e46faf3a17dc3f2cd6b1f843192aece1": { "facing": "ui" },
+  "4fea9e65fc5ad0e50f065812a5c70e94b4172e24": { "facing": "ui" },
+  "c9dc9084c416d7b7fdd677efb6914e806dbd531a": {
+    "facing": "model",
+    "id": "tool-result-sendfile-isolate-peer-approval-prompt",
+    "name": "File send approval — isolatePeerMachines",
+    "desc": "Permission ask message shown for a cross-session file transfer under isolatePeerMachines, including the cross-machine egress disclosure."
+  },
+  "f26b517806428530c8d6eb33cf612004f6d05a44": {
+    "facing": "model",
+    "id": "tool-result-sendfile-cross-machine-egress-disclosure",
+    "name": "File transfer cross-machine egress disclosure",
+    "desc": "Disclosure embedded in the file-transfer approval message stating the file contents travel via Anthropic's servers when the recipient is a Remote Control or cloud session."
+  },
+  "509318de021d89c63dc3b7e5e36b752022a6c89e": {
+    "facing": "model",
+    "id": "tool-result-sendfile-send-files-approval-prompt",
+    "name": "Send files approval prompt",
+    "desc": "Base permission ask message for a cross-session file transfer, naming the file count and recipient plus the egress disclosure."
+  },
+  "8f84a8612380a542cd9dd37493e44f73f28bac88": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-reply-relay-request-unknown",
+    "name": "Comment reply outcome unknown — relay request failed",
+    "desc": "Artifact tool error telling Claude a comment reply may or may not have posted because the relay request failed, and to re-read the comments before retrying."
+  },
+  "98207f8e7ce9e09c452ac1dd48eac574c87f375a": {
+    "facing": "model",
+    "id": "tool-result-artifact-comment-reply-relay-http-unknown",
+    "name": "Comment reply outcome unknown — relay HTTP error",
+    "desc": "Artifact tool error telling Claude a comment reply may or may not have posted after a relay HTTP failure, and to re-read the comments before retrying."
+  },
+  "41ed479ecc76045cdc7e7d39b31fca72fe034ae0": {
+    "facing": "model",
+    "id": "tool-result-artifact-db-write-relay-request-unknown",
+    "name": "Artifact db write outcome unknown — relay request failed",
+    "desc": "Artifact tool error telling Claude an artifact db write may have applied despite a failed relay request, and to read back before retrying."
+  },
+  "a38a1c34d37ba32f210cf21f5d7603d28810cfec": {
+    "facing": "model",
+    "id": "tool-result-artifact-db-write-relay-http-unknown",
+    "name": "Artifact db write outcome unknown — relay HTTP error",
+    "desc": "Artifact tool error telling Claude an artifact db write may have applied despite a relay HTTP failure, and to read back before retrying."
+  },
+  "445a688d3d79decc34b492ec57e5d9bdbfe3d186": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-hard-link",
+    "name": "Asset upload refused — hard-linked file",
+    "desc": "Artifact asset-upload refusal telling Claude the file_path is one of several hard links and to copy the file to a fresh path and upload the copy."
+  },
+  "72755e2b3156dcd974925330837a15bc3d6ee557": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-route-unrouted",
+    "name": "Asset route not served on this path",
+    "desc": "Detail returned for an unrouted 404 on an artifact asset call, telling Claude nothing changed and to retry later."
+  },
+  "c499c6c66ab4d678a1d5d1d502d851fc582b388c": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-invalid-request",
+    "name": "Asset call failed — invalid request",
+    "desc": "Artifact asset error arm for an invalid_request code, defaulting to a message that the server could not accept the request as shaped."
+  },
+  "8b2381d6e67c5049cd364aa5fa3e9e04bb1490af": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-too-large",
+    "name": "Asset call failed — too large",
+    "desc": "Artifact asset error arm for a too_large code, telling Claude the server or an intermediary rejected the file and to compress or split it."
+  },
+  "8d2d2b72e3cc4496479700367d5bc3edfa78eb3d": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-quota-or-state",
+    "name": "Asset call failed — quota or state",
+    "desc": "Artifact asset error arm for a quota_or_state code, selecting the upload or non-upload explanation of why the Artifact has no usable asset store."
+  },
+  "cee7584abd48d8f7b8b835a974b520834de4692e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-quota-or-state-detail",
+    "name": "Artifact cannot take uploads right now",
+    "desc": "Upload-lane default detail for the quota_or_state asset error, listing the live-document, unpublished, retired, deleting and quota causes."
+  },
+  "0f60ce4c53d76d9afd9ca53cd64c604946f4dbbe": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-no-store-detail",
+    "name": "Artifact has no asset store right now",
+    "desc": "Non-upload default detail for the quota_or_state asset error, listing the live-document, unpublished, retired and deleting causes."
+  },
+  "ae74064beecfefdab1d1febe687c8b3a70940d7d": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-capability-not-declared",
+    "name": "Asset call failed — assets capability not declared",
+    "desc": "Artifact asset error telling Claude the published version does not declare the assets capability and to republish with assets: {} before retrying."
+  },
+  "048e9c82610c6e5564086d14f3723156a4969b05": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-store-unavailable",
+    "name": "Asset call failed — store unavailable",
+    "desc": "Artifact asset error arm for a store_unavailable code, defaulting to a retry-once-after-a-short-wait message."
+  },
+  "4d0d3ae4ac61fc9ccdd2589777e089609905556a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-store-unavailable-detail",
+    "name": "Asset store unavailable — retry detail",
+    "desc": "Default detail of the store_unavailable asset error, adding for uploads that a timed-out upload may already be stored and a duplicate costs only quota."
+  },
+  "d9c9f7ba27ccf94a6fb4c9aa321f7548d0992852": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-store-unavailable-upload-duplicate-note",
+    "name": "Tool Result: Artifact asset store unavailable — upload duplicate note",
+    "desc": "Upload-only clause appended to the Artifact asset 'store_unavailable' error telling the model a timed-out upload may already be stored and a retry only costs quota."
+  },
+  "2c22a4b33858e389e6c04d86ec9d85773573a58c": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upstream-error",
+    "name": "Tool Result: Artifact asset upstream error",
+    "desc": "Artifact asset error for an unparseable/unexpected server answer, with the optional detail in parentheses."
+  },
+  "393bccb12c41b32341b1914d446a1288a435f00e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-not-found",
+    "name": "Tool Result: Artifact asset target not found",
+    "desc": "Artifact asset error stating the artifact or its asset store is not addressable and that absence and no-access are deliberately indistinguishable."
+  },
+  "861a3538e19d70642fe4a7645bbb8da4d8f941bf": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-not-writer",
+    "name": "Tool Result: Artifact asset writer required",
+    "desc": "Artifact asset error telling the model the account can open but not edit the artifact, so it cannot perform the asset verb."
+  },
+  "1229f4d554f7b50aec6112017a2cc06e66744c5d": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-credential-rejected",
+    "name": "Tool Result: Artifact asset credential rejected",
+    "desc": "Artifact asset error saying the server refused the session credential at the asset door and that this is an integration fault to report."
+  },
+  "8b7b3ac009b35fedc97bb65718c6928170520021": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-policy-denied",
+    "name": "Tool Result: Artifact asset policy denied",
+    "desc": "Artifact asset error for an organization artifact-policy block, defaulting to a generic policy sentence when the server gives no detail."
+  },
+  "786439205bbce3399c22d6b09a6dd314992938b5": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-unavailable-to-account",
+    "name": "Tool Result: Artifact assets unavailable to account",
+    "desc": "Artifact asset error stating artifact assets are not available to this account."
+  },
+  "e18ef46c4cad4d7e4435293fefed79dc06278837": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-store-no-gateway-route",
+    "name": "Tool Result: Artifact asset store unreachable from this process",
+    "desc": "Detail for the asset-store 'relay_unavailable' failure: a remote process without a gateway route cannot reach the asset store and retrying will not help."
+  },
+  "6268b4c41e2c1e811244dd5ec290d81cd9d93a7e": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-request-failed",
+    "name": "Tool Result: Artifact asset upload request failed in transit",
+    "desc": "Upload-branch detail for the asset 'request_error' failure, telling the model one retry is safe because a duplicate only costs quota."
+  },
+  "1b115997a1e4bac75fb2475aada39708ce57c953": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-malformed-echo",
+    "name": "Tool Result: Artifact asset upload malformed echo",
+    "desc": "Error returned when the upload reply fails schema/size validation: the upload probably succeeded, retry at most once."
+  },
+  "296ac2a1641d4b0b8df1c83cb14525c91abc4416": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-no-gateway-route",
+    "name": "Tool Result: Artifact content unreachable from this process",
+    "desc": "Detail for the asset-read 'relay_unavailable' failure: this process has no gateway route to artifact content."
+  },
+  "77c2cd45175ca7682f622e7bee43c557cec6bddf": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-public-reader-tokenless",
+    "name": "Tool Result: Artifact asset read as public reader",
+    "desc": "Error explaining that the artifact is served to this session as a public (non-member) reader, so its assets cannot be read."
+  },
+  "463adda4ee8d5e7649b2f527e5e3931acd75401f": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-content-unreachable",
+    "name": "Tool Result: Artifact content unreachable from this session",
+    "desc": "Relay-fetch failure message naming the underlying reason code when the gateway GET of the asset blob does not succeed."
+  },
+  "546b09477dc8bd153d48cbb7988857b31ab6b2cf": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-content-egress-denied",
+    "name": "Tool Result: Artifact content fetch denied by egress proxy",
+    "desc": "Error reporting that the environment's egress proxy refused the direct claudeusercontent.com asset fetch, with HTTP status and proxy detail."
+  },
+  "ef60d347edf07399a16d6541182d86facabe261f": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-content-fetch-failed",
+    "name": "Tool Result: Artifact content fetch failed or exceeded size limit",
+    "desc": "Error for a transport failure, timeout, or over-limit response while fetching artifact asset content."
+  },
+  "f024b5930a1f24bbffde30f154aa7697b4b9b562": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-not-found-cloud-mount",
+    "name": "Tool Result: Artifact asset not found through cloud session mount",
+    "desc": "404 message for the relayed cloud-session read: either no asset has that id or asset reads are not enabled for the session; a writer can tell which with list_assets."
+  },
+  "0e9a7ffb3b5f8b0dd8d3fa952a4af360c702209a": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-not-found",
+    "name": "Tool Result: Artifact asset id not found",
+    "desc": "404 message for a direct asset read: no asset with that id in the artifact, possibly deleted; a writer can check with list_assets."
+  },
+  "ab137d01f8def5ffdebf77bfbd385d7292863ac3": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-refused-cloud-mount",
+    "name": "Tool Result: Artifact asset read refused by cloud mount",
+    "desc": "401/403 message for the relayed read: asset reads may not be enabled for the session, or the artifact was unshared or taken down."
+  },
+  "f791eed89f3544d19bae6bff71ff0f958724ef19": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-content-unexpected-status",
+    "name": "Tool Result: Artifact content host unexpected status",
+    "desc": "Error for any other non-200 answer from the artifact content host, naming the HTTP status."
+  },
+  "537ccd751bde7faa2d9adb10091ca700623360b1": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-file-changed-since-approval",
+    "name": "Tool Result: Artifact asset upload file changed since approval",
+    "desc": "Preflight error (RZe) telling the model the approved file_path no longer names the same file and the upload must be retried so it is re-checked."
+  },
+  "9601fc2dc648da91606ded5c8ce5b7ee44b05e44": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-symlink-outside-read-scope",
+    "name": "Tool Result: Artifact asset upload via unapproved symlink",
+    "desc": "Preflight error (Myf) telling the model file_path resolves through a symlink into a path this session may not read, and to upload the resolved path or copy the file first."
+  },
+  "f8e3e1873a7fc057349fbc609899002e2d253b4b": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-no-file-identity",
+    "name": "Tool Result: Artifact asset upload volume has no file identity",
+    "desc": "Preflight error (J3a) for volumes that report no usable file identity, so the approved file cannot be distinguished from a replacement."
+  },
+  "730ad46cfcb6c7660a9c4138911a600775dacb66": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-network-path",
+    "name": "Tool Result: Artifact asset upload rejects network paths",
+    "desc": "Error ($bi) stating upload_asset reads only local files and that UNC/automount/device paths must be copied to local disk first."
+  },
+  "b2d05f4ef3534881e77c9085f7d1d471cce72bcf": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-outcome-unknown",
+    "name": "Data: Task notification for artifact auto-edit with unknown outcome",
+    "desc": "Task-notification detail telling the agent an auto-edit reply was posted but the publish outcome is UNKNOWN, so the artifact and thread need review."
+  },
+  "887b82e023c49ab812791b3d3aac03242aaee5b2": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-edit-outcome-unknown-answered-elsewhere",
+    "name": "Data: Task notification for artifact auto-edit with unknown outcome and withheld note",
+    "desc": "Task-notification detail for the same unknown-outcome auto-edit when the follow-up thread note was withheld, naming the withholding reason."
+  },
+  "10b685a56d6aff2bded20cb9050201878493b619": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-summoning-rows-guidance",
+    "name": "System Prompt: Artifact Comment Summoning Rows Guidance",
+    "desc": "Clause added to the artifact comment-thread responder prompt when summoning comments exist, distinguishing '[human, sent to you]' (and artifact-posted) rows from plain '[human]' viewer chatter."
+  },
+  "98c97383fba5307ae4a4ec6bfccdd128ad8379bf": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-summoning-rows-artifact-posted-head",
+    "name": "System Prompt: Artifact comment summoning rows — artifact-posted head",
+    "desc": "Conditional fragment adding the '[human, posted by the artifact, sent to you]' head to the summoning-row guidance when artifact-posted comments are enabled."
+  },
+  "bc3438414bcdd21157065322330801366c6b51f8": { "facing": "ui" },
+  "17f32d8c65b8d5662f712e54b17d69370ce32295": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-watch-resume-stop-latched-reason",
+    "name": "Data: Task notification reason — resumed artifact watch stayed stopped",
+    "desc": "Reason text for the watch-ended task notification when a resumed watch could not connect and the earlier stop latch keeps auto-replies off."
+  },
+  "c77ef6edfb64eb46cf2d465e2866d382c5dc2965": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-watch-resume-stop-latched-tail",
+    "name": "Data: Task notification tail — call resume_replies again only if asked",
+    "desc": "Closing instruction of the same watch-ended notification, telling the model to inform the user and only re-call resume_replies if they still want auto-replies."
+  },
+  "be6ffe908e5002ca8894b216471d3f483aec575f": {
+    "facing": "model",
+    "id": "system-reminder-artifact-watch-ended",
+    "name": "System Reminder: Artifact watch ended",
+    "desc": "Event injected when an Artifact watch terminates: the session will no longer hear republishes, plus a per-case tail telling it whether to watch again."
+  },
+  "a540d25221d8c30a996982d69ef4f28f19ed6365": {
+    "facing": "model",
+    "id": "system-reminder-artifact-watch-ended-body",
+    "name": "System Reminder: Artifact watch ended (event text)",
+    "desc": "Inner sentence of the watch-ended event, naming the artifact url, the end reason, and the follow-up tail."
+  },
+  "2603329a75cf3bec2ead12e400ab350a3dbfaa33": {
+    "facing": "model",
+    "id": "tool-result-artifact-live-subscription-remote-unsupported",
+    "name": "Tool Result: Artifact Live Subscription Not Supported (Remote)",
+    "desc": "Publish/watch status line saying live subscriptions are not supported yet from remote sessions and the artifact (and comments) must be re-read on request."
+  },
+  "bcf4bd49b9994d83a9401b4d4e4959f1740a1ffe": {
+    "facing": "model",
+    "id": "data-artifact-live-subscription-monitor-label",
+    "name": "Data: Artifact watch monitor description",
+    "desc": "Background-monitor description for an artifact live subscription; echoed to the model through the Monitor task registry (task lists and the restart system-reminder)."
+  },
+  "1b6784ee753c51aa691e7c8f4295051b91fd03d6": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-rearmed",
+    "name": "Data: Task notification for re-armed artifact auto-replies",
+    "desc": "Task notification telling the agent auto-replies on an artifact were resumed or re-enabled after a stop, naming which stop it was and how to disarm again."
+  },
+  "f25e473ddf4d368353e307cf81277780d666cc38": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-rearmed-interrupt-cause",
+    "name": "Data: Artifact auto-reply stop cause — user interrupt",
+    "desc": "Cause fragment naming a user interrupt (Ctrl+C or Stop) as why the artifact auto-replies had been stopped."
+  },
+  "e1d14b5a86e75479f92296e1b9fad184435e6230": {
+    "facing": "model",
+    "id": "data-task-notification-artifact-auto-replies-rearmed-disarm-hint",
+    "name": "Data: Artifact auto-replies re-armed disarm hint",
+    "desc": "Trailing sentence (E8S) of the re-armed auto-replies notification explaining how to stop them again for one artifact or for the whole session."
+  },
+  "cee748aaa9536d052eb8b45323fc08ba317e33e9": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-watch-remote-unsupported",
+    "name": "Tool parameter: Artifact action — watch/unwatch/status (remote unsupported)",
+    "desc": "Remote-session branch of the action-parameter addendum describing that watch/unwatch/status subscriptions are not supported from a remote session."
+  },
+  "ac39f644f03e5e1192ed2ee5a45f87d34e6f9ddb": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-resume-replies-remote-unsupported",
+    "name": "Tool parameter: Artifact action — resume_replies unsupported remotely",
+    "desc": "Conditional clause of the remote action description saying resume_replies is unavailable from a remote session and should be explained rather than called."
+  },
+  "fdd8c4c6bff0d1e93bf59bd5790ce7b3725a3a11": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-assets",
+    "name": "Tool parameter: Artifact action — asset actions",
+    "desc": "Action-parameter addendum describing upload_asset, list_assets, read_asset, and delete_asset and their required fields."
+  },
+  "a2233b6855aa7d84ebb11d0a61acf9e90cfa46b0": {
+    "facing": "model",
+    "id": "tool-description-artifact-comments-remote-no-watch",
+    "name": "Tool Description: Artifact comments not watchable from remote session",
+    "desc": "Sentence added to the Artifact tool's comments guidance stating comment watching is unsupported remotely and suggesting `claude --watch-artifact <url>` locally."
+  },
+  "ef4cfbb296aa23f458ac33a76e8d08ad6500ac3b": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-file-path-upload-asset",
+    "name": "Tool Parameter: Artifact file path — upload_asset use",
+    "desc": "Clause appended to the file_path parameter description explaining its meaning for the upload_asset action."
+  },
+  "a146b106382a394240bac43d7ff794d7ea692917": {
+    "facing": "model",
+    "id": "tool-result-artifact-eval-stub-publish-only",
+    "name": "Tool Result: Artifact eval stub allows publishing only",
+    "desc": "Validation/refusal message telling the model that in an eval run only the default publish action exists — list, comments, replies, watches, db writes, asset uploads and live docs are unavailable."
+  },
+  "f38b4b0080e8e26d2341ad6bc0562f8476959f93": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-denied-remote-session",
+    "name": "Tool Result: resume_replies denied in remote session",
+    "desc": "Permission-decision message returned by checkPermissions for the Artifact tool's resume_replies action; the deny path sends it to the model as the tool result. Permission denial telling the model resume_replies is a live-session action and that a remote session should re-register with action \"watch\"."
+  },
+  "ab8b22921c03871f8a76be430b66ad77d6534af1": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-denied-session-disarmed",
+    "name": "Tool Result: resume_replies denied — session-wide disarm",
+    "desc": "Permission-decision message returned by checkPermissions for the Artifact tool's resume_replies action; the deny path sends it to the model as the tool result. Permission denial saying the kill-all-agents gesture disarmed auto-replies for the whole session and a resume cannot reverse it."
+  },
+  "655e4452d301333a024c8927986e17e6ca753c6f": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-not-opted-in",
+    "name": "Tool Result: resume_replies denied — session never opted in",
+    "desc": "Permission denial explaining the session never opted into automatic comment replies, so a resume has nothing to re-enable."
+  },
+  "6efa7eb99e55151afee4538f3176a548a4b0d46e": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-wrong-session-type",
+    "name": "Tool Result: resume_replies denied — session cannot hold the watch",
+    "desc": "Permission denial saying this session type cannot hold the live watch a resume needs and that the user can resume from an interactive session."
+  },
+  "460a2207954029e7bb05d5bcece85693a543ec51": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-denied-no-stop-recorded",
+    "name": "Tool Result: resume_replies denied — no stop recorded",
+    "desc": "Permission-decision message returned by checkPermissions for the Artifact tool's resume_replies action; the deny path sends it to the model as the tool result. Permission denial stating no auto-reply stop is recorded for this artifact in this session, so there is nothing to resume."
+  },
+  "2d87251f77624f012d5b123ab2c22e3e8efeef14": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-cowork-no-consent-surface",
+    "name": "Tool Result: resume_replies denied — Cowork has no approval card",
+    "desc": "Permission denial telling the model a Cowork session cannot show the approval card the resume needs, so it must not retry."
+  },
+  "7d72424e26e1a48f3470662bb0d2a875a683f1dc": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-cowork-deny-reason",
+    "name": "Tool Result: resume_replies Cowork denial reason",
+    "desc": "Decision reason attached to the Cowork resume denial: reversing a user stop needs the user's approval, not the auto-permission classifier."
+  },
+  "d0fd0317b6ff22e67749184a40eb96baeddf41ba": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-swept-stop-fragment",
+    "name": "Tool Result: resume_replies stop-cause fragment (interrupt sweep)",
+    "desc": "Fragment naming the interrupt sweep as the stop being reversed, inserted into the resume_replies approval reason."
+  },
+  "8301908a21e1b74fbbb90913bc283e389bde74c2": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-ask-killed",
+    "name": "Tool Result: resume_replies approval prompt (killed watch)",
+    "desc": "Approval prompt shown when the auto-replies were stopped by killing the live-updates task; on decline it is returned to the model as the tool result."
+  },
+  "aa71ec37f1618c89c0c0d502957cdbad7583692d": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-ask-swept",
+    "name": "Tool Result: resume_replies approval prompt (interrupted session)",
+    "desc": "Approval prompt variant for auto-replies that stopped when the user interrupted the session with Ctrl+C or Stop."
+  },
+  "839ea3ba3fbedd66ab55f4711e750cf2bc4aa502": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-plan-mode-approval-reason",
+    "name": "Tool Result: resume_replies plan-mode approval reason",
+    "desc": "Decision reason for the resume_replies ask in plan mode: approval must come from the user, not the auto-permission classifier."
+  },
+  "2fc0e66d522669ccca3acdff9bcdf27aaf96534a": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-cowork-approval-reason",
+    "name": "Tool Result: resume_replies Cowork approval reason",
+    "desc": "Decision reason for the resume_replies ask in a Cowork session: approval must come from the user, not the auto-permission classifier."
+  },
+  "1f5cac1963c70a3c9310b6c2e1f24853292a327d": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-session-approval-reason",
+    "name": "Tool Result: resume_replies session-scoped approval reason",
+    "desc": "Default decision reason for the resume_replies ask, stating the approval re-arms unattended public replies for the rest of the session."
+  },
+  "1a36ac08969999ba9f672bc39187f89d03893306": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-relatch-permission-ask",
+    "name": "Tool Result: Artifact re-watch after deliberate stop approval prompt",
+    "desc": "Approval prompt for re-watching an artifact whose watch was deliberately stopped earlier in the session; returned to the model if declined."
+  },
+  "d532a42fe8790ee5f5b3e4c4b217c374c467bd97": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-invalid-url",
+    "name": "Tool Result: Artifact asset upload url unparseable",
+    "desc": "Permission denial telling the model the supplied url is not an artifact url it can upload an asset to and to use the url from a list or publish result."
+  },
+  "09580ba9f8eb79be0179d6f09db7f85785924ca7": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-read-disabled",
+    "name": "Tool Result: Artifact asset upload blocked by disabled read",
+    "desc": "Permission denial stating that uploading an asset reads file contents and that reading is disabled by rule."
+  },
+  "3dfe4f17bf14fb78d544c1781e231568a2a86994": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-upload-read-denied-symlink",
+    "name": "Tool Result: Artifact asset upload read denied through symlink",
+    "desc": "Permission denial explaining the upload path resolves through a symlink into a path a Read deny rule covers."
+  },
+  "f1a9470ecebc873db6e92c939dbd39f81aa10eb2": { "facing": "ui" },
+  "c668e2e0fc2c39aba1d98dcc9062b908ea424bcb": { "facing": "ui" },
+  "4bb0fedd850d16e417501cff0afc7b04cd1c18bb": {
+    "facing": "model",
+    "id": "data-session-notice-content-truncated",
+    "name": "Session notice content truncated marker",
+    "desc": "Marker appended to a cross-session session_notice body when the CLI byte-caps it, inside the <event kind=\"session-notice\"> element delivered to the model."
+  },
+  "91f3c4b0353d7b0df13f4ce96132fc8ec2d693db": { "facing": "internal" },
+  "921df146fdd4adeedf655a519f7050fd697f7f7b": { "facing": "internal" },
+  "1258f08484bc21052db6b1647620de05cf544ef7": { "facing": "internal" },
+  "0d9d98fc2608f38dbd12885257e1698bef93284b": { "facing": "ui" },
+  "b6cbabc3365cdfc0ae96fb6f02560e5fb531bcc2": {
+    "facing": "model",
+    "id": "agent-prompt-eval-llm-grader-agent-output",
+    "name": "Plugin eval LLM grader agent-output prompt",
+    "desc": "Text-focus body of the plugin-eval LLM grader prompt: wraps the criterion header, the (elision-truncated) agent output for the focus, and the one-word PASS/FAIL response instruction."
+  },
+  "cb9526a35e07c0abd71d627dfe886bad8977686f": { "facing": "ui" },
+  "7f0450c49c824e0e03bdc992599415194a0c1c34": { "facing": "ui" },
+  "dd11f28d5554a0184ff8feec4d6190fa76c72597": { "facing": "ui" },
+  "7cbfe2faa03afa13841eb50058441334f29132f6": { "facing": "ui" },
+  "c5af63f487fe5116ad7036fc0d46d74c1af429a0": { "facing": "ui" },
+  "e0f450325d6b35f6c7d56f9426114c83ccbad6cf": { "facing": "ui" },
+  "d8b1f47ea55530b8c2681c85a4034008977e6921": { "facing": "ui" },
+  "b3cbd8ce60090125b43d646d10c845d83abc0b03": { "facing": "ui" },
+  "c362ea4764f66fe20814c719d809e631386485df": { "facing": "ui" },
+  "a7510c5d64d17a557ac21a382dfd32037b61e1a9": { "facing": "ui" },
+  "6eae65284f5efb5768e127ed712303375e6e1213": { "facing": "ui" },
+  "a478a2d0420d86f5dfd950f14c65994079faa88c": { "facing": "ui" },
+  "6e732cf166853a5b9ebfc83f3a332feec614ecbe": { "facing": "ui" },
+  "dc6f50ed9baba1a8fba4a9e618a3b34867792ad2": { "facing": "ui" },
+  "fa1f617806886bb63b9fb1a4197a9b6b472d05db": { "facing": "ui" },
+  "3b1afc3af0e617ba898dabe95dc6e0477bfdd9a3": { "facing": "ui" },
+  "a87b0e07d62e7e2c1c1dc45d2daf4d1cd9fdaca2": { "facing": "ui" },
+  "724a9b759ad07cc3acd9c0df4fb51fad4ed1ccfd": { "facing": "ui" },
+  "1227615c84be00a5edf5ec473d2677a9901e18c4": { "facing": "ui" },
+  "118bfa0a2fb0a42550f307ed418c10d3af2f27f6": { "facing": "ui" },
+  "c302599f7739c247bfac764b4d059cfd770b91f8": { "facing": "ui" },
+  "a68632dc4a93655f4cfd7243599d213b618decf8": { "facing": "ui" },
+  "5a603864866efff5939fe69ea7afb89bce318775": { "facing": "ui" },
+  "24853af500c7de1167398b95c12f8f2c935cf76f": { "facing": "ui" },
+  "cd43354b6e0b44bb5a14cfad1d5a2a8224a33aab": { "facing": "ui" },
+  "d0a71973fb92f0e739de91206d918e4e2fb213ce": { "facing": "ui" },
+  "688f5f145f2147989d21fdcf30bbdddeac8ab540": { "facing": "ui" },
+  "6fa352f1b69bea18252d3908dfa376584c8fc7b9": { "facing": "ui" },
+  "d85bc7a45050936a96ee6edecb1a052610ed6551": { "facing": "ui" },
+  "d6e14b6b77fa212ca30b66a2a1626847f114e46e": { "facing": "ui" },
+  "d9e514fa080878d9b38e8852d61bc1fdd77e804f": { "facing": "ui" },
+  "845f7cfbda3b1e207ce82532f8a23398cf36288b": { "facing": "ui" },
+  "8c1d3bc9ed72c342fd234860dbc847ea991f323e": { "facing": "ui" },
+  "86ab908d5f8d093c15ae714e08456b5a2c2a2193": { "facing": "ui" },
+  "26e3aecb47fda81b10cf22d85510bdf17c07bed4": {
+    "facing": "model",
+    "id": "data-artifact-attached-watch-stop-latched-note",
+    "name": "Artifact attached stop-latched watch note",
+    "desc": "Sentence appended to the artifact-attach meta message when the artifact's watch was stopped earlier in the session: no republish notice will come and Claude must not watch it again unless the user asks."
+  },
+  "0aab9890263d1ebd6f069f6d803695435bcfd9cc": { "facing": "ui" },
+  "afe48334e2313e8063b2f5e0241f47bbe9b103f5": { "facing": "internal" },
+  "a7d20f8319938046d078130c8cf4d8ca2dd919e8": { "facing": "internal" },
+  "47721d260de52e14656502a59fc38bf47810c1dd": { "facing": "ui" },
+  "4fabf0924eaaa53edd28a3d2da72f059f882e341": { "facing": "ui" },
+  "23bf2ed7d6da72c7e739b16469b9163a8dbbb52f": { "facing": "ui" },
+  "0add6e0c856547137f2d150154031a54edbcfad0": { "facing": "ui" },
+  "b3145168592d4d9577ab95ff846fc917a20050d0": { "facing": "ui" },
+  "bb0e05ac4a9ff7eb4066f2a53befab81384812df": { "facing": "ui" },
+  "da0d31689e5b14286cab2db6948e775f05609d87": { "facing": "ui" },
+  "e63f0a1a5cfcf6648f2cdd5f7ee48a9b02ab9183": { "facing": "internal" },
+  "7862ec6bf60c9a5afa93f556321952afbc15a564": { "facing": "ui" },
+  "72566d4756ccc9bf288c8b85e51f4dced75605f3": { "facing": "ui" },
+  "5341c19a1b2eb1a346db75d5fd49889a4a90ef19": {
+    "facing": "model",
+    "id": "data-artifact-mcp-contract-and-definitions-read-instruction",
+    "name": "Artifact mcp capability read-both-files instruction",
+    "desc": "Fragment of the artifact-capabilities skill prompt telling the model to Read both the capability-contract file and mcp.d.ts before writing any code that calls the mcp capability."
+  },
+  "dded7d1730a449b1bf887657fe33d17aca0cf488": {
+    "facing": "model",
+    "id": "data-artifact-mcp-call-contract-definitions-extracted",
+    "name": "Artifact mcp call-contract definitions block",
+    "desc": "Call-contract section of the artifact-capabilities skill prompt: names the runtime contract version, lists the extracted window.claude type-definition files, and declares them authoritative over any remembered API shape."
+  },
+  "6039ba452e386535b5d9fb6ff9265ae8432b7709": {
+    "facing": "model",
+    "id": "data-artifact-capability-contract-file-read-first-note",
+    "name": "Artifact capability contract-file read note",
+    "desc": "Clause of the artifact-capabilities skill prompt's Type definitions section pointing the model at the file that documents how a page reaches any capability on this contract."
+  },
+  "b8c5b2c224dfea637b995ae2ff123c22fb0a2368": {
+    "facing": "model",
+    "id": "data-artifact-capability-definition-files-read-note",
+    "name": "Artifact capability definition-files read note",
+    "desc": "Clause of the artifact-capabilities skill prompt's Type definitions section instructing the model to Read each capability's .d.ts before declaring that capability."
+  },
+  "d6ac7fb897c237df39d7adb4779c99e5ea56404c": {
+    "facing": "model",
+    "id": "skill-artifact-editor-template-runtime-capabilities-note",
+    "name": "Editor-template runtime capabilities note lead",
+    "desc": "Opening sentence of the runtime-capabilities note for the doc/sheet/slides editor skills, replacing the static-page wording used by the plain artifact templates."
+  },
+  "2ae2ccc4a7643d769225d255b949edddb7f5c6e0": {
+    "facing": "model",
+    "id": "skill-claude-api-language-undetected-read-readme",
+    "name": "claude-api skill undetected-language read instruction",
+    "desc": "claude-api skill prompt branch used when no project language was detected and skill files were extracted: ask the user which language, then Read the matching {lang}/claude-api/README.md from the base directory first."
+  },
+  "7f1dd2469c48464492279e7fbe002d9f6a9b50b5": {
+    "facing": "model",
+    "id": "skill-claude-api-language-undetected-ask-only",
+    "name": "claude-api skill undetected-language ask instruction",
+    "desc": "claude-api skill prompt branch used when no project language was detected and no skill files were extracted: ask the user which language they are using before writing code."
+  },
+  "702a657be7ef4764727fd02455972211ca2e6106": { "facing": "ui" },
+  "4443401108a32b5742abd77895ea522d9da4d2c5": { "facing": "ui" },
+  "789b618b3252b9eb74df1c0fe87cefa13135180b": { "facing": "ui" },
+  "b163fa44eab93111be5af4033529d9503bd89bfb": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-delete-not-found",
+    "name": "Artifact asset delete — nothing deleted",
+    "desc": "Artifact tool result for an asset_delete that matched no asset id in the artifact's asset store."
+  },
+  "b00889072a5900acde58cfe37e3290d127f861a6": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-out-dir-moved",
+    "name": "Artifact asset read — out_dir moved after approval",
+    "desc": "Artifact asset_read error telling the model the destination directory no longer resolves where it did at approval, so the fetched asset was not saved."
+  },
+  "4687d9b3748e2dde69e5eaad197617307eee9005": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-write-error",
+    "name": "Artifact asset read — save failed",
+    "desc": "Artifact asset_read error reporting that the asset was fetched but could not be written to disk, with the underlying errno."
+  },
+  "61bcc1060a1cdaba9f8615d6db65a35d5657d62e": {
+    "facing": "model",
+    "id": "tool-result-listagents-session-list-truncated",
+    "name": "ListAgents — session list truncated",
+    "desc": "Footnote appended to the agent/session listing when paging stopped early, warning that sessions past the first pages are missing."
+  },
+  "7a08328fbb432e5fe494ad0437f8b5fd60d5c699": { "facing": "internal" },
+  "6ac9c16266fe2e0a179aee822f5e214eb6edd305": { "facing": "internal" },
+  "2dc1e9d430f2696649d586fbd7aa1c2d69a027ad": { "facing": "ui" },
+  "edf8b6242e3af60ad1a6a1eb072a22fbdf3c11b0": { "facing": "internal" },
+  "c5f80d508bb0d1c69d0ef3b85f8053c4e157b32e": { "facing": "ui" },
+  "69e6b24cb59ccf38f6f2c7e61aa24ecd1b613619": { "facing": "ui" },
+  "619308514127aa8a0c80ab7f20ad87464294ab7f": { "facing": "ui" },
+  "d50610ec7ade57d8b1e2eeb2646274cccdf78c58": { "facing": "ui" },
+  "490ee7c01c6df60d359eceb9df7d8fd7cbb64bcc": { "facing": "ui" },
+  "fc2977bdfa10c137aa9334e93bc9c5ed2c2ce979": {
+    "facing": "model",
+    "id": "system-prompt-title-generator-predominant-language",
+    "name": "Session title generator — predominant language",
+    "desc": "Instruction in the session-title generation prompt telling the model to write the title in the session's predominant language when no explicit language is configured."
+  },
+  "135ec7af8f0fea8b60671bffaf041a64717624d3": { "facing": "ui" },
+  "bc1b52a8865fec144220b4d7f97088152e525dcb": { "facing": "ui" },
+  "2e768e0de3fa71e2eadb2dba2b0420b1c3b355bb": {
+    "facing": "model",
+    "id": "slash-command-update-refused-transcript-path-drift",
+    "name": "/update refused — transcript path drift",
+    "desc": "Refusal returned by /update when the session was resumed from a different project directory, telling the model to restart manually with --resume."
+  },
+  "7180534c77dda39197af816f768b983d6525234a": {
+    "facing": "model",
+    "id": "slash-command-update-refused-comment-monitor-suffix",
+    "name": "/update refusal — comment-monitor suffix",
+    "desc": "Parenthetical appended to the /update transcript-drift refusal when an artifact comment monitor is running and restarting would stop the auto-replies."
+  },
+  "7974f1829331f5130a180174a4804483ae38bce7": { "facing": "internal" },
+  "c0c4390dacd13eb5ee87395e507b54f231efc977": { "facing": "internal" },
+  "dc561096b2d15f71e02003420c1a9f6385953897": { "facing": "internal" },
+  "2557d534e4fa8fc7e5757bdcdd4acfa7d862ddad": { "facing": "internal" },
+  "70e219834da43a43d043755acd26ffdbe6cac8a0": { "facing": "internal" },
+  "7199da11ba9768d5541c7f67353891393f906d9d": { "facing": "internal" },
+  "b08582e51092805b65e331939183fa80800fda37": { "facing": "internal" },
+  "0b01e7dd5a9ea183368d28473c750eebd2d5a948": { "facing": "internal" },
+  "f2a497614e55f96c92ffe0c8536b7f8c2363c847": { "facing": "internal" },
+  "7a29c9205ac058ff5dfe201a0441378ec2564af3": { "facing": "internal" },
+  "5978296bc180e4f16efbfdaff558766581ae3e46": { "facing": "internal" },
+  "9be6a6f81cfd6ad61cff65564622de0d6c1cc39f": { "facing": "internal" },
+  "7cac24746010fcd47df625eb47dcd1d432dac7fe": { "facing": "internal" },
+  "bb3c145ad5efb3fd7903a9a3d84b47f91209ee09": { "facing": "internal" },
+  "89b5e508053ef351eadc3530f7b99a52573a9048": { "facing": "internal" },
+  "7a4ece067fb7f31014f68116521532590a079a5b": { "facing": "internal" },
+  "128f1359dbd4a82e676be73646009dd2f98298de": { "facing": "internal" },
+  "2a72bcb66447d6502a077ae0df0ce035531508d8": { "facing": "internal" },
+  "4097d9e241a9e7711c0c61d971893f4be4366631": { "facing": "internal" },
+  "738c27c65c8629a2526cba0813180729606949a3": { "facing": "internal" },
+  "4312c6e176fb30a9ef7edfae8b830e0b1f271025": { "facing": "internal" },
+  "7f67772dc5b7e17df32a380a831448fcc2ec06d3": { "facing": "internal" },
+  "3a41abb5eb33a7fe5bb16c7e4a66ae9d8d2c392d": { "facing": "ui" },
+  "1954314e28574d7faeaa23ef0f78fbd372bc7033": {
+    "facing": "model",
+    "id": "system-reminder-memory-update-loaded-copy-stale",
+    "name": "Memory update — loaded copy now stale",
+    "desc": "Line in the memory-update reminder telling the model its in-context copies of the named memory files no longer match disk and should be re-Read."
+  },
+  "a155e726a535f100fd29a7a7f83cf7949f5d86eb": {
+    "facing": "model",
+    "id": "system-reminder-edited-file-diff-omitted-snippet-budget",
+    "name": "Edited file — diff omitted, budget spent",
+    "desc": "Reminder variant for an externally edited file whose diff is omitted because other files this turn exhausted the snippet budget, pointing the model at the Read tool."
+  },
+  "0929d94c0f0b7d74ca60829c9cee34ea312d14d0": {
+    "facing": "model",
+    "id": "system-reminder-audio-transcription-failed",
+    "name": "Audio attachment — transcription failed",
+    "desc": "Attachment reminder telling the model that an @-mentioned audio file could not be transcribed."
+  },
+  "840158f594a85e2dcfb64b03670b3fce1002984e": {
+    "facing": "model",
+    "id": "system-reminder-lines-selected-in-diff-view",
+    "name": "Lines selected in the diff view",
+    "desc": "Attachment reminder carrying the lines the user highlighted in the diff view, with the caveat that they may be unrelated to the task."
+  },
+  "e257b0391dca2e034fd16c6037d3b5d3492d95b8": { "facing": "internal" },
+  "779cff081e66909881c1c4f3a8ca8c735b79d852": { "facing": "internal" },
+  "3087c450f56b0ea6834f09b838457531fb20e049": { "facing": "internal" },
+  "0d54511062e836eb069c4bd8b5deab3548abc22d": { "facing": "internal" },
+  "455c3855e2410a2513a13327d29a4886a92c16b2": { "facing": "ui" },
+  "edabf7178b1d90584e7df44f9f33dddcd70c8563": { "facing": "ui" },
+  "ac77ca754236c020df5e151a239e29dee8079295": { "facing": "ui" },
+  "5d6c8ca993da2c06ff582a15aa1d2654d9c6b8e8": { "facing": "internal" },
+  "f2eb6c1bd661e063354c5a9573bb47716f760e80": { "facing": "ui" },
+  "fcc1fbf5a1333b477d80fecc82b896afbee073aa": { "facing": "ui" },
+  "7cc287bb8d0eae9459e427d30066954cb303fe4d": { "facing": "ui" },
+  "e7ad0c95127ac6cf79b3a01e14c6355ce70692f3": { "facing": "ui" },
+  "37ec20860c6b28d7c10c46655aaf66a853494665": { "facing": "ui" },
+  "8f6b5b4ea6153a8ae479efffabacc2cf188b678e": { "facing": "ui" },
+  "203bdb8ccfeb6b611dc875a51b61bbd59a2f19ec": { "facing": "ui" },
+  "a3f64f22d67a9d1a3a14aff8f037461d651f79c2": { "facing": "ui" },
+  "6c014c21d2a5a042e853a6742e2ae9247ba90e2c": { "facing": "ui" }
 }

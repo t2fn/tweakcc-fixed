@@ -1679,10 +1679,17 @@ function repackELFSection(
       }
     }
 
+    // Set content first (this may update LIEF's internal size tracking)
+    bunSection.content = newSectionData;
+
+    // Then explicitly set the size to match our calculated value
+    // This ensures LIEF knows the exact size including the header
+    if (bunSection.size !== newContentSize) {
+      bunSection.size = newContentSize;
+    }
+
     bunSection.fileOffset = newFileOffset;
     bunSection.virtualAddress = newVaddr;
-    bunSection.content = newSectionData;
-    bunSection.size = newContentSize;
 
     const vaddrPatch = Buffer.alloc(8);
     vaddrPatch.writeBigUInt64LE(newVaddr);

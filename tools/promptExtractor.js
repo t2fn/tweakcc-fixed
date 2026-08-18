@@ -87,6 +87,29 @@ const WORKFLOW_SCRIPT_IDENTIFIER_MAP = {
 const CURATED_IDENTIFIER_MAPS = {
   'system-prompt-coordinator-mode': [
     {
+      // CC 2.1.234: Anthropic added the `<system-reminder>` opening-text slot
+      // (`aJs`) between LAUNCH_ANNOUNCE_NOTE and the worker-tools intro, which
+      // renumbers everything after slot 6 and makes the generated map name slot
+      // 0 (the `Every message you send is to the user.` conditional) after the
+      // Agent tool. Derived from PIb() in the pristine bundle: a, di, lm, F4, s,
+      // i, l, aJs, o in first-seen order.
+      identifiers: [
+        0, 1, 2, 3, 4, 5, 1, 2, 6, 1, 7, 1, 8, 2, 3, 1, 2, 1, 3, 2, 1, 1, 1, 2,
+        1, 2, 2, 2, 1, 1, 7, 2,
+      ],
+      identifierMap: {
+        0: 'EVERY_MESSAGE_TO_USER_NOTE',
+        1: 'AGENT_TOOL_NAME',
+        2: 'SENDMESSAGE_TOOL_NAME',
+        3: 'TASKSTOP_TOOL_NAME',
+        4: 'WORKFLOW_CONDITIONAL_TOOL_NOTE',
+        5: 'CROSS_SESSION_PEERS_NOTE',
+        6: 'LAUNCH_ANNOUNCE_NOTE',
+        7: 'SYSTEM_REMINDER_OPENING_TEXT',
+        8: 'WORKER_TOOLS_INTRO_TEXT',
+      },
+    },
+    {
       identifiers: [
         0, 1, 2, 3, 4, 5, 1, 2, 6, 1, 1, 7, 2, 3, 1, 2, 1, 3, 2, 1, 1, 1, 2, 1,
         2, 2, 2, 1, 1, 2,
@@ -743,6 +766,22 @@ const NEW_PROMPT_ASSIGNMENTS = [
     id: 'skill-claude-code-doctor',
     description:
       "Bundled /doctor skill — health-checks the user's Claude Code setup from local data only (installation and settings integrity, unused skills/MCP servers/plugins, CLAUDE.md dedup and trimming, slow hooks, context-heavy extensions, version currency, auto mode, frequently-denied read-only commands), then proposes fixes behind a confirm gate. Injected only when the skill is invoked.",
+  },
+  {
+    // CC 2.1.234 factored the two mcp_resource placeholder reminders
+    // (`(No content)` / `(No displayable content)`) into ONE template with the
+    // word as a parameter, so the two assembled strings that were catalogued at
+    // 2.1.233 — system-reminder-mcp-resource-no-content and
+    // …-no-displayable-content — no longer exist as literals and the wrapper
+    // itself is markup-only, which the prose gate rejects. Without this it drops
+    // out of the catalogue entirely: a model-facing `isMeta` reminder no
+    // override can reach. Anchored on the tag pair, which occurs once.
+    matcher: t =>
+      t.startsWith('<mcp-resource server="') && t.endsWith('</mcp-resource>'),
+    name: 'System Reminder: MCP resource placeholder wrapper',
+    id: 'system-reminder-mcp-resource-placeholder-wrapper',
+    description:
+      'Model-facing isMeta reminder emitted for an MCP resource that yielded nothing renderable: `<mcp-resource server=".." uri="..">(REASON)</mcp-resource>`, where REASON is "No content" or "No displayable content". Replaces the two per-reason ids catalogued through CC 2.1.233, which 2.1.234 collapsed into this single parameterized template.',
   },
   {
     matcher: t => t.includes('<local-command-stdout>'),
@@ -4496,15 +4535,35 @@ if (require.main === module) {
   const inputDir = path.dirname(path.resolve(filepath));
   const packageJsonPath = path.join(inputDir, 'package.json');
 
-  let version = null;
-  if (fs.existsSync(packageJsonPath)) {
-    try {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-      version = packageJson.version;
-      console.log(`Found package.json with version ${version}`);
-    } catch (err) {
-      console.warn(`Warning: Could not parse package.json: ${err.message}`);
+  // A null version silently stamps every changed prompt `version: null`, which
+  // permanently disables drift detection for its override, and disables the
+  // <<CCVERSION>> normalization the classification cache is keyed on. Both are
+  // invisible downstream, so refuse to run rather than emit a poisoned catalogue.
+  let version = process.env.TWEAKCC_CC_VERSION || null;
+  if (version) {
+    console.log(`Using TWEAKCC_CC_VERSION=${version}`);
+  } else {
+    if (!fs.existsSync(packageJsonPath)) {
+      throw new Error(
+        `promptExtractor: no package.json beside ${filepath}. Extract from the ` +
+          `directory form (/tmp/cc-X.Y.Z/cli.js with a sibling package.json), ` +
+          `or set TWEAKCC_CC_VERSION=X.Y.Z.`
+      );
     }
+    try {
+      version = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8')).version;
+    } catch (err) {
+      throw new Error(
+        `promptExtractor: could not parse ${packageJsonPath}: ${err.message}`
+      );
+    }
+    console.log(`Found package.json with version ${version}`);
+  }
+  if (!version || !/^\d+\.\d+\.\d+/.test(version)) {
+    throw new Error(
+      `promptExtractor: unusable CC version ${JSON.stringify(version)} ` +
+        `(from ${packageJsonPath} or TWEAKCC_CC_VERSION).`
+    );
   }
 
   // Helper functions to replace version strings with placeholder

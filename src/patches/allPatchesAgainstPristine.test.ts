@@ -18,6 +18,8 @@ import * as path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 import { getAllPatchDefinitions, PatchId } from './index';
+import { REMINDER_REGISTRY } from './systemReminderOverrides';
+import { substitutePlaceholders } from '../systemReminderSync';
 import { DEFAULT_SETTINGS } from '../defaultSettings';
 
 import { writeVerboseProperty } from './verboseProperty';
@@ -77,9 +79,7 @@ import { writeInputPatternHighlighters } from './inputPatternHighlighters';
 import { writeConversationTitle } from './conversationTitle';
 import { writeVoiceMode } from './voiceMode';
 import { writeChannelsMode } from './channelsMode';
-import { writeCtrlBackspace } from './ctrlBackspace';
-import { writeFileEditWhitespace } from './fileEditWhitespace';
-import { writeAdditionalDirs } from './additionalDirs';
+import { writeIgnoreWhitespaceEdit } from './ignoreWhitespaceEdit';
 import {
   writeSuppressDeferredTools,
   writeStripEmptySystemReminders,
@@ -265,6 +265,7 @@ const INVOCATIONS: Record<PatchId, (src: string) => string | null> = {
   'hide-ctrl-g-to-edit': c => writeHideCtrlGToEdit(c),
   'hide-startup-clawd': c => writeHideStartupClawd(c),
   'increase-file-read-limit': c => writeIncreaseFileReadLimit(c),
+  'ignore-whitespace-edit': c => writeIgnoreWhitespaceEdit(c),
   'suppress-line-numbers': c => writeSuppressLineNumbers(c),
   'suppress-rate-limit-options': c => writeSuppressRateLimitOptions(c),
   'token-count-rounding': c => writeTokenCountRounding(c, 100),
@@ -308,9 +309,6 @@ const INVOCATIONS: Record<PatchId, (src: string) => string | null> = {
   'suppress-deferred-tools': c => writeSuppressDeferredTools(c),
   'claudemd-context-once-per-conversation': c =>
     writeClaudemdContextOncePerConversation(c),
-  'ctrl-backspace': c => writeCtrlBackspace(c),
-  'file-edit-whitespace': c => writeFileEditWhitespace(c),
-  'additional-dirs': c => writeAdditionalDirs(c),
 };
 
 /**
@@ -458,3 +456,81 @@ describe.skipIf(skipReason !== null)('every patch vs. pristine cli.js', () => {
     600000
   );
 });
+
+// The 35-entry system-reminder registry is a SECOND patch surface that
+// `getAllPatchDefinitions()` does not enumerate, so the sweep above never
+// touched it. CC 2.1.234 routed every reminder filename through a new escaper
+// and reworded two bodies, breaking six of these at once — and the first report
+// came from a user (skrabe/lobotomized-claude-code#25), because `--apply` only
+// runs a reminder whose `.md` exists locally and nothing else exercised them.
+// Each entry is driven twice: with its own defaultBody (the vanilla path) and
+// suppressed (the empty-body path), against the real pristine bundle.
+describe.skipIf(skipReason !== null)(
+  'every system-reminder injection vs. pristine cli.js',
+  () => {
+    const results = new Map<
+      string,
+      { body: string | null; suppressed: string | null }
+    >();
+
+    beforeAll(() => {
+      const source = pristine!.source;
+      for (const entry of REMINDER_REGISTRY) {
+        const { result: body } = substitutePlaceholders(
+          entry.defaultBody,
+          entry.placeholders
+        );
+        let applied: string | null;
+        let suppressed: string | null;
+        try {
+          applied = entry.apply(source, body, false);
+        } catch (error) {
+          applied = null;
+          console.error(
+            `reminder ${entry.id} threw: ${(error as Error).message}`
+          );
+        }
+        try {
+          suppressed = entry.apply(source, body, true);
+        } catch (error) {
+          suppressed = null;
+          console.error(
+            `reminder ${entry.id} threw (suppressed): ${(error as Error).message}`
+          );
+        }
+        results.set(entry.id, { body: applied, suppressed });
+      }
+      const rows = REMINDER_REGISTRY.map(e => {
+        const r = results.get(e.id)!;
+        const label = (v: string | null) =>
+          v === null ? 'NULL' : v === pristine!.source ? 'no-op' : 'applied';
+        return `  ${e.id.padEnd(40)} default=${label(r.body).padEnd(8)} suppressed=${label(r.suppressed)}`;
+      }).join('\n');
+      console.log(
+        `reminder registry (${REMINDER_REGISTRY.length} entries) vs ${pristine!.path}:\n${rows}`
+      );
+    });
+
+    it.each(REMINDER_REGISTRY.map(e => e.id))(
+      '%s finds its anchor with its default body and when suppressed',
+      id => {
+        const r = results.get(id)!;
+        expect(
+          r.body,
+          `reminder ${id} returned null against the pristine bundle with its ` +
+            'own defaultBody: its anchor no longer matches this Claude Code ' +
+            'build. Re-derive the registry entry from cli.js — and prefer ' +
+            'anchoring on the registry KEY and code shape over the English ' +
+            'prose, which Anthropic rewords freely.'
+        ).not.toBeNull();
+        expect(
+          r.suppressed,
+          `reminder ${id} returned null on the SUPPRESS path (empty body) ` +
+            'while the default path matched — the two take different branches ' +
+            'and both must find the site.'
+        ).not.toBeNull();
+      },
+      600000
+    );
+  }
+);

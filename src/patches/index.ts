@@ -77,6 +77,7 @@ import { writeTableFormat } from './tableFormat';
 import { writeConversationTitle } from './conversationTitle';
 import { writeHideStartupBanner } from './hideStartupBanner';
 import { writeHideCtrlGToEdit } from './hideCtrlGToEdit';
+import { writeIgnoreWhitespaceEdit } from './ignoreWhitespaceEdit';
 import { writeHideStartupClawd } from './hideStartupClawd';
 import { writeIncreaseFileReadLimit } from './increaseFileReadLimit';
 import { writeSuppressLineNumbers } from './suppressLineNumbers';
@@ -105,9 +106,6 @@ import { writeComplexityRouter } from './complexityRouter';
 import { writeFablePlan } from './fablePlan';
 import { writeVoiceMode } from './voiceMode';
 import { writeChannelsMode } from './channelsMode';
-import { writeCtrlBackspace } from './ctrlBackspace';
-import { writeFileEditWhitespace } from './fileEditWhitespace';
-import { writeAdditionalDirs } from './additionalDirs';
 import { writeClearScreen } from './clearScreen';
 import { writeReadDefaultLines } from './readDefaultLines';
 import { writeSwapRipgrepForFff } from './swapRipgrepForFff';
@@ -581,32 +579,12 @@ const PATCH_DEFINITIONS = [
       'Enable /voice command for speech-to-text input (hold Space to record)',
   },
   {
-    id: 'channels-mode',
-    name: 'Channels mode',
+    id: 'ignore-whitespace-edit',
+    name: 'Ignore whitespace in edit tool',
     group: PatchGroup.FEATURES,
     description:
-      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
-  },
-  {
-    id: 'ctrl-backspace',
-    name: 'Ctrl+Backspace word/line delete',
-    group: PatchGroup.FEATURES,
-    description:
-      'Add Ctrl+Backspace (delete word backward) and Ctrl+Shift+Backspace (delete line backward) to the prompt editor input area.',
-  },
-  {
-    id: 'file-edit-whitespace',
-    name: 'File edit whitespace normalization',
-    group: PatchGroup.FEATURES,
-    description:
-      'Handle tabs↔spaces mismatches when editing files - automatically normalize indentation.',
-  },
-  {
-    id: 'additional-dirs',
-    name: 'Additional directories support',
-    group: PatchGroup.FEATURES,
-    description:
-      'Read CLAUDE_CODE_ADDITIONAL_DIRS env var and append paths to additionalDirectoriesForClaudeMd.',
+      'Add ignore_whitespace parameter to the edit tool for matching lines with different leading/trailing whitespace',
+    modelFacing: true,
   },
   {
     id: 'suppress-deferred-tools',
@@ -623,6 +601,13 @@ const PATCH_DEFINITIONS = [
     description:
       'Inject the claudeMd / userEmail / currentDate <system-reminder> only on the first API call per conversation (re-fires after /clear). Default: ON. Toggle OFF for vanilla CC per-turn injection.',
     modelFacing: true,
+  },
+  {
+    id: 'channels-mode',
+    name: 'Channels mode',
+    group: PatchGroup.FEATURES,
+    description:
+      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
   },
 ] as const;
 
@@ -1333,20 +1318,9 @@ export const applyCustomization = async (
       fn: c => writeChannelsMode(c),
       condition: !!config.settings.misc?.enableChannelsMode,
     },
-    'ctrl-backspace': {
-      fn: c => writeCtrlBackspace(c),
-      condition: !!config.settings.misc?.enableCtrlBackspace,
-    },
-    'file-edit-whitespace': {
-      fn: c => writeFileEditWhitespace(c),
-      condition:
-        !!config.settings.misc?.enableFileEditWhitespace &&
-        (!ccInstInfo.version ||
-          compareVersions(ccInstInfo.version, '2.1.230') >= 0),
-    },
-    'additional-dirs': {
-      fn: c => writeAdditionalDirs(c),
-      condition: !!config.settings.misc?.enableAdditionalDirs,
+    'ignore-whitespace-edit': {
+      fn: c => writeIgnoreWhitespaceEdit(c),
+      condition: true, // Always apply this patch
     },
     'suppress-deferred-tools': {
       fn: c => writeSuppressDeferredTools(c),

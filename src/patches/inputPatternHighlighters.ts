@@ -53,12 +53,30 @@ const writeCustomHighlighterImpl = (oldFile: string): string | null => {
   //     {children:SEG.text})},KEY)
   // The sibling shimmer branch is now gated on `highlight?.shimmerColor`
   // (which our pushed ranges never set), so no shimmer guard is needed here.
+  // The prop list is matched as a RUN of `name:SEG.highlight?.name,` pairs
+  // rather than as a fixed sequence: CC 2.1.234 inserted `underline:` between
+  // `inverse:` and `children:` and a sequence-pinned anchor stopped matching,
+  // which nothing surfaced because this patch is config-gated and `--apply`
+  // never runs it (skrabe/lobotomized-claude-code#25 is the same class on the
+  // reminder patches). The replacement emits its own complete prop list, so a
+  // prop Anthropic adds here is covered without a further change.
   const jsxRegex =
-    /return ([$\w]+)\.jsx\(([$\w]+),\{color:([$\w]+)\.highlight\?\.color,dimColor:\3\.highlight\?\.dimColor,inverse:\3\.highlight\?\.inverse,children:\1\.jsx\(([$\w]+),\{children:\3\.text\}\)\},([$\w]+)\)/;
+    /return ([$\w]+)\.jsx\(([$\w]+),\{((?:[$\w]+:([$\w]+)\.highlight\?\.[$\w]+,)+)children:\1\.jsx\(([$\w]+),\{children:\4\.text\}\)\},([$\w]+)\)/;
 
   const jsxMatch = oldFile.match(jsxRegex);
   if (jsxMatch && jsxMatch.index !== undefined) {
-    const [, jsxVar, textComp, segVar, innerComp, keyVar] = jsxMatch;
+    const [, jsxVar, textComp, props, segVar, innerComp, keyVar] = jsxMatch;
+    // Every pair must read off the SAME segment variable; a mixed run would mean
+    // the regex straddled two different renderers.
+    const propVars = [...props.matchAll(/[$\w]+:([$\w]+)\.highlight\?\./g)].map(
+      m => m[1]
+    );
+    if (propVars.some(v => v !== segVar)) {
+      console.error(
+        'patch: inputPatternHighlighters: highlight prop run mixes segment variables'
+      );
+      return null;
+    }
 
     // A highlight carries either a chalk `style` fn (what this patch pushes) or
     // — for legacy configs — a callable `color`. Either one renders the text

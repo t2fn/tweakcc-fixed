@@ -113,7 +113,16 @@ const split = file => {
 // doubles for the quote delimiters), so its stored body reads \` where pristine
 // reads ` — and a raw string compare between the two never matches. That alone
 // hid the one finding this gate was built for. Normalise both sides.
-const norm = s => s.replace(/\\`/g, '`').replace(/\\\\/g, '\\').replace(/[ \t]+/g, ' ');
+// An EMPTY interpolation carries no prose but shifts every window that spans it,
+// so a body reproducing the sentence verbatim minus the inert slot reads as a
+// re-injection. CC 2.1.234's `runs: int (default 3)${""}` is exactly that. Drop
+// them before tokenizing, on both sides.
+const norm = s =>
+  s
+    .replace(/\\`/g, '`')
+    .replace(/\\\\/g, '\\')
+    .replace(/\$\{\s*(?:""|'')\s*\}/g, '')
+    .replace(/[ \t]+/g, ' ');
 
 // Index every historical body's shingles ONCE per id. Scanning each window
 // against each past body with .includes() is quadratic and hangs on a 3,500-file
@@ -125,6 +134,32 @@ for (const [id, bodies] of past) {
   pastIdx.set(id, m);
 }
 
+// A shadowed id is never iterated by applySystemPrompts — the reminder registry
+// or another override already spliced that cli.js region — so its `.md` cannot
+// re-inject anything and flagging it is a false positive. Most shadows are
+// declared in the SHARED `system-reminders` folder's front-matter, not in the
+// per-model prompt sets, so both sources are scanned.
+const shadowed = new Set();
+try {
+  const src = fs.readFileSync(
+    path.join(REPO, 'src/patches/systemReminderOverrides.ts'),
+    'utf8'
+  );
+  for (const m of src.matchAll(/shadows:\s*\[([^\]]*)\]/g))
+    for (const q of m[1].matchAll(/'([^']+)'/g)) shadowed.add(q[1]);
+} catch {
+  /* patcher source not present; fall through */
+}
+for (const dir of [...sets, path.join(LCC, 'system-reminders')]) {
+  if (!fs.existsSync(dir)) continue;
+  for (const f of fs.readdirSync(dir)) {
+    if (!f.endsWith('.md')) continue;
+    const head = fs.readFileSync(path.join(dir, f), 'utf8').split('-->')[0];
+    const m = head.match(/^shadows:\s*\n((?:\s*-\s*\S+\n)+)/m);
+    if (m) for (const q of m[1].matchAll(/-\s*(\S+)/g)) shadowed.add(q[1]);
+  }
+}
+
 let findings = 0, allowed = 0;
 const rows = [];
 for (const dir of sets) {
@@ -132,7 +167,7 @@ for (const dir of sets) {
   for (const f of fs.readdirSync(dir)) {
     if (!f.endsWith('.md')) continue;
     const id = f.slice(0, -3);
-    if (!cur.has(id) || !past.has(id)) continue;
+    if (!cur.has(id) || !past.has(id) || shadowed.has(id)) continue;
     const body = norm(split(path.join(dir, f)).trim());
     if (!body) continue;
     const currentText = norm([...cur.get(id)].join('\n'));

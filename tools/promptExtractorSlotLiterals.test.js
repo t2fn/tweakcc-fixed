@@ -181,7 +181,22 @@ describe('the shipped allowlist stays load-bearing', () => {
   it('keeps every catalogue id present in the current prompts JSON', () => {
     // The entries are what NAME those prompts; if an id here is missing from
     // the catalogue, the next extraction leaves that capture anonymous.
-    const cur = require('../data/prompts/prompts-2.1.233.json');
+    // Resolve the NEWEST prompts JSON rather than naming one: a hardcoded
+    // version turns this into a gate that fails on every bump for a reason
+    // that has nothing to do with what it checks (it named 2.1.233 through
+    // the 2.1.234 bump). Segment-wise numeric compare so 2.1.100 > 2.1.99.
+    const dir = require('node:path').join(__dirname, '..', 'data', 'prompts');
+    const newest = require('node:fs')
+      .readdirSync(dir)
+      .filter(f => /^prompts-\d+\.\d+\.\d+\.json$/.test(f))
+      .sort((a, b) => {
+        const pa = a.match(/\d+/g).map(Number);
+        const pb = b.match(/\d+/g).map(Number);
+        for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
+        return 0;
+      })
+      .at(-1);
+    const cur = require(`${dir}/${newest}`);
     const ids = new Set(cur.prompts.map(p => p.id));
     const missing = [...new Set(cat.map(v => v.id))].filter(i => !ids.has(i));
     expect(missing).toEqual([]);
