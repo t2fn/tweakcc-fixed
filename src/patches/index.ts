@@ -991,14 +991,14 @@ export const applyCustomization = async (
     'read-default-lines': {
       fn: c => writeReadDefaultLines(c),
     },
-    'context-limit': {
-      fn: c => writeContextLimit(c),
-      condition: !!config.settings.misc?.enableContextLimitOverride,
-    },
     opusplan1m: {
       fn: c => writeOpusplan1m(c),
       condition:
         modelCustomizationsEnabled && !ccInstInfo.nativeInstallationPath,
+    },
+    'context-limit': {
+      fn: c => writeContextLimit(c),
+      condition: !!config.settings.misc?.enableContextLimitOverride,
     },
     'thinking-block-styling': {
       fn: c => writeThinkingBlockStyling(c),
