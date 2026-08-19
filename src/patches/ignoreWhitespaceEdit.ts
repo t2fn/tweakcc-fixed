@@ -5,14 +5,34 @@
 import { LocationResult, showDiff } from './index';
 
 /** Regex anchor — matches the run function signature regardless of variable names used. */
-const BODY_START_RE = /run:async\(\{file_path:[a-zA-Z_$]+,old_string:[a-zA-Z_$]+,new_string:[a-zA-Z_$]+,replace_all:[a-zA-Z_$]+\}\)=>\{if\(![a-zA-Z_$]+\)/;
+const BODY_START_RE =
+  /run:async\(\{file_path:([a-zA-Z_$]+),old_string:([a-zA-Z_$]+),new_string:([a-zA-Z_$]+),replace_all:([a-zA-Z_$]+)\}\)=>/;
 
 /** Regex anchor — matches the error message regardless of variable names used. */
-const MID_BODY_RE = /`edit: old_string appears \$\{[a-zA-Z_$]+\} times in \$\{[a-zA-Z_$]+\} \(must be unique\)`/;
+const MID_BODY_RE =
+  /`edit: old_string appears \$\{[a-zA-Z_$]+\} times in \$\{[a-zA-Z_$]+\} \(must be unique\)`/;
 
 // Exact-match anchors for steps where we know the stable variable names (t, r, n, o).
-// These are tried first for reliability; flexible regex fallbacks handle version drift.
-const SCHEMA_EXACT = 'replace_all:{type:"boolean"}},required:["file_path","old_string","new_string"]}';
+const SCHEMA_EXACT =
+  'replace_all:{type:"boolean"}},required:["file_path","old_string","new_string"]}';
+
+/** Captured identifiers from a single scan of the edit tool body. */
+interface VarNames {
+  // Original minified variable names (for matching existing code)
+  fp: string; // file_path param
+  os: string; // old_string param
+  ns: string; // new_string param
+  ra: string; // replace_all param
+  content: string; // local var holding file content (e.g. "s")
+  count: string; // local count variable (e.g. "a")
+  result: string; // local result variable (e.g. "l")
+  errClass: string; // error class constructor (e.g. "cS")
+
+  /** Safe single-letter variable for ignore_whitespace flag */
+  wsFlag: string;
+  /** Safe single-letter variable for arrow function params (avoids masking outer vars) */
+  lambdaParam: string;
+}
 
 // ============================================================================
 // Location helpers — find edit tool boundaries by stable structural anchors
@@ -20,37 +40,50 @@ const SCHEMA_EXACT = 'replace_all:{type:"boolean"}},required:["file_path","old_s
 
 export const getEditToolLocation = (oldFile: string): LocationResult | null => {
   // Find the start of the edit tool's run function body using flexible regex.
-  // This matches regardless of what single-letter variable names Anthropic uses.
   const bodyMatch = oldFile.match(BODY_START_RE);
   if (!bodyMatch || bodyMatch.index === undefined) return null;
 
   // Walk backward to find the `function <name>(e){` start of this tool.
   let searchFrom = Math.max(0, bodyMatch.index - 250);
-  const prevBoundary = oldFile.lastIndexOf('}})}function', bodyMatch.index - 10);
+  const prevBoundary = oldFile.lastIndexOf(
+    '}})}function',
+    bodyMatch.index - 10
+  );
   if (prevBoundary !== -1) {
     searchFrom = prevBoundary + '}})}function'.length;
   }
 
-  const funcDefMatch = oldFile.substring(searchFrom).match(/([a-zA-Z_$][\w$]*)\(e\)\{return\s+G9t/);
+  const funcDefMatch = oldFile
+    .substring(searchFrom)
+    .match(/([a-zA-Z_$][\w$]*)\(e\)\{return\s+[a-zA-Z_$][\w$]*/);
   if (!funcDefMatch) {
-    console.error('patch: ignoreWhitespaceEdit: failed to find edit tool function definition');
+    console.error(
+      'patch: ignoreWhitespaceEdit: failed to find edit tool function definition'
+    );
     return null;
   }
 
   const funcName = funcDefMatch[1];
-  const actualStart = searchFrom + funcDefMatch.index!;
+  const actualStart = searchFrom + (funcDefMatch.index || 0);
 
   // Find the end boundary: next }})}function after MID_BODY (next tool)
   const midMatch = oldFile.match(MID_BODY_RE);
   if (!midMatch || midMatch.index === undefined) {
-    console.error('patch: ignoreWhitespaceEdit: failed to find mid-body anchor');
+    console.error(
+      'patch: ignoreWhitespaceEdit: failed to find mid-body anchor'
+    );
     return null;
   }
 
-  let endSearchFrom = Math.max(midMatch.index + midMatch[0].length, bodyMatch.index + bodyMatch[0].length);
+  const endSearchFrom = Math.max(
+    midMatch.index + midMatch[0].length,
+    bodyMatch.index + bodyMatch[0].length
+  );
   const nextBoundary = oldFile.indexOf('}})}function', endSearchFrom);
   if (nextBoundary === -1) {
-    console.error('patch: ignoreWhitespaceEdit: failed to find edit tool end boundary');
+    console.error(
+      'patch: ignoreWhitespaceEdit: failed to find edit tool end boundary'
+    );
     return null;
   }
 
@@ -63,7 +96,7 @@ export const getEditToolLocation = (oldFile: string): LocationResult | null => {
 
 // ============================================================================
 // Core patching logic — step-by-step replacements within the edit tool body.
-// Each step tries an exact match first (reliable), then a flexible regex fallback.
+// First pass extracts variable names; subsequent passes reuse them.
 // ============================================================================
 
 export const writeIgnoreWhitespaceEdit = (oldFile: string): string | null => {
@@ -81,9 +114,70 @@ export const writeIgnoreWhitespaceEdit = (oldFile: string): string | null => {
     return null;
   }
 
-  const funcName = location.identifiers?.[0] ?? 'edit';
+  const _funcName = location.identifiers?.[0] ?? 'edit';
+  void _funcName; // suppress unused warning — used by showDiff caller
+
+  // -----------------------------------------------------------------------
+  // Extract variable names from the original code via single-pass regex.
+  // This captures whatever minifier chose — no hardcoded assumptions.
+  // -----------------------------------------------------------------------
+  const vars = captureVarNames(funcContent);
+  if (!vars) {
+    // Debug: show what's available in funcContent for matching
+    const debugDestructure = funcContent.match(BODY_START_RE);
+    if (debugDestructure) {
+      const os2 = debugDestructure[2];
+      // Try count regex as written in code
+      const testCountRe = new RegExp(
+        `let ([a-zA-Z_$]+)=([a-zA-Z_])\\.split\\(${os2}\\)\\.length-1`
+      );
+      console.log(
+        'patch: ignoreWhitespaceEdit: FUNC LENGTH=' +
+          funcContent.length +
+          ', destructure match: ' +
+          debugDestructure[1]
+      );
+      const testCM = funcContent.match(testCountRe);
+      if (testCM) {
+        console.log(
+          'patch: ignoreWhitespaceEdit: count pattern found:',
+          testCM[0].substring(0, 60)
+        );
+      } else {
+        // Show snippet around offset 850-950 (where count pattern should be)
+        const midSnippet = funcContent.substring(
+          Math.max(0, 800),
+          Math.min(funcContent.length, 1000)
+        );
+        console.log(
+          'patch: ignoreWhitespaceEdit: mid snippet:',
+          JSON.stringify(midSnippet)
+        );
+      }
+    }
+
+    console.error(
+      'patch: ignoreWhitespaceEdit: failed to extract variable names'
+    );
+    return null;
+  }
   console.log(
-    `patch: ignoreWhitespaceEdit: found ${funcName} function at index ${funcStart}, length ${funcContent.length}`
+    'patch: ignoreWhitespaceEdit: captured vars: fp=' +
+      vars.fp +
+      ' os=' +
+      vars.os +
+      ' ns=' +
+      vars.ns +
+      ' ra=' +
+      vars.ra +
+      ' content=' +
+      vars.content +
+      ' count=' +
+      vars.count +
+      ' result=' +
+      vars.result +
+      ' errClass=' +
+      vars.errClass
   );
 
   let patchedFunc = funcContent;
@@ -98,82 +192,97 @@ export const writeIgnoreWhitespaceEdit = (oldFile: string): string | null => {
   if (patchedFunc.includes(SCHEMA_EXACT)) {
     patchedFunc = patchedFunc.replace(SCHEMA_EXACT, step1Replacement);
   } else {
-    console.error('patch: ignoreWhitespaceEdit: Step 1 failed — schema anchor not found');
+    console.error('Step 1 failed: schema anchor not found');
     return null;
   }
 
   // -----------------------------------------------------------------------
   // Step 2: Add ignore_whitespace parameter to the run function signature.
-  // Exact match on known variable names (t, r, n, o), with regex fallback for version drift.
+  // Use the captured destructuring variable names (fp, os, ns, ra).
   // -----------------------------------------------------------------------
-  const step2Exact = 'run:async({file_path:t,old_string:r,new_string:n,replace_all:o})=>';
-  const step2Replacement = 'run:async({file_path:t,old_string:r,new_string:n,replace_all:o,ignore_whitespace:v=false})=>';
+  const step2Exact = `run:async({file_path:${vars.fp},old_string:${vars.os},new_string:${vars.ns},replace_all:${vars.ra}})=>`;
 
   if (patchedFunc.includes(step2Exact)) {
-    patchedFunc = patchedFunc.replace(step2Exact, step2Replacement);
+    patchedFunc = patchedFunc.replace(
+      step2Exact,
+      `run:async({file_path:${vars.fp},old_string:${vars.os},new_string:${vars.ns},replace_all:${vars.ra},ignore_whitespace:${vars.wsFlag}=false})=>`
+    );
   } else {
     // Flexible fallback: matches any variable names in the destructuring
-    const step2FlexRe = /run:async\(\{file_path:[a-zA-Z_$]+,old_string:[a-zA-Z_$]+,new_string:[a-zA-Z_$]+,replace_all:[a-zA-Z_$]+\}\)=>/;
+    const step2FlexRe =
+      /run:async\(\{file_path:[a-zA-Z_$]+,old_string:[a-zA-Z_$]+,new_string:[a-zA-Z_$]+,replace_all:[a-zA-Z_$]+\}\)=>/;
     if (step2FlexRe.test(patchedFunc)) {
       patchedFunc = patchedFunc.replace(
         step2FlexRe,
-        'run:async({file_path:t,old_string:r,new_string:n,replace_all:o,ignore_whitespace:v=false})=>'
+        `run:async({file_path:${vars.fp},old_string:${vars.os},new_string:${vars.ns},replace_all:${vars.ra},ignore_whitespace:${vars.wsFlag}=false})=>`
       );
     } else {
-      console.error('patch: ignoreWhitespaceEdit: Step 2 failed — parameter pattern not found');
+      console.error(
+        'patch: ignoreWhitespaceEdit: Step 2 failed — parameter pattern not found'
+      );
       return null;
     }
   }
 
   // -----------------------------------------------------------------------
   // Step 3: Modify the replacement-count logic to handle ignore_whitespace.
-  // The original uses cS as error class (not Nv) in CC >=~2.1.200+.
-  // Flexible regex handles any variable/error-class names.
+  // Original: `let a=s.split(r).length-1;if(a===0)throw new cS(\`edit...\`);`
+  // Where: a=count, r=os, s=file content, cS=errClass, t=fp (template string var), wsFlag=ignore_ws flag
   // -----------------------------------------------------------------------
-  const step3Exact = 'let a=s.split(r).length-1;if(a===0)throw new cS(`edit: old_string not found in ${t}`);';
+  const step3Exact = `let ${vars.count}=${vars.content}.split(${vars.os}).length-1;if(${vars.count}===0)throw new ${vars.errClass}(\`edit: old_string not found in \${${vars.fp}}\`);`;
 
   if (patchedFunc.includes(step3Exact)) {
-    const step3Replacement =
-      'let a=v?s.split(String.fromCharCode(10)).map((x)=>x.trim()).join(String.fromCharCode(10)).split(v?r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)):r).length-1:s.split(r).length-1;if(a===0)throw new cS(`edit: old_string not found in ${t}`);';
+    const lp = vars.lambdaParam;
+    const step3Replacement = `let ${vars.count}=${vars.wsFlag}?${vars.content}.split(String.fromCharCode(10)).map((${lp})=>${lp}.trim()).join(String.fromCharCode(10)).split(${vars.wsFlag}?${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)):${vars.os}).length-1:${vars.content}.split(${vars.os}).length-1;if(${vars.count}===0)throw new ${vars.errClass}(\`edit: old_string not found in \${${vars.fp}}\`);`;
     patchedFunc = patchedFunc.replace(step3Exact, step3Replacement);
   } else {
     // Flexible fallback: match any variable/error-class names
-    const step3FlexRe = /let a=[\w$]+\.split\([\w$]+\)\.length-1;if\(a===0\)throw new [\w$]+/;
+    const step3FlexRe = new RegExp(
+      `let ${vars.count}=[a-zA-Z_]\\.split\\([a-zA-Z_$]+\\)\\.length-1;if\\(${vars.count}===0\\)throw new [a-zA-Z_$]+`
+    );
     if (step3FlexRe.test(patchedFunc)) {
-      patchedFunc = patchedFunc.replace(
-        step3FlexRe,
-        'let a=v?s.split(String.fromCharCode(10)).map((x)=>x.trim()).join(String.fromCharCode(10)).split(v?r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)):r).length-1:s.split(r).length-1;if(a===0)throw new cS(`edit: old_string not found in ${t}`);'
-      );
+      const lp = vars.lambdaParam;
+      const step3Replacement = `let ${vars.count}=${vars.wsFlag}?${vars.content}.split(String.fromCharCode(10)).map((${lp})=>${lp}.trim()).join(String.fromCharCode(10)).split(${vars.wsFlag}?${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)):${vars.os}).length-1:${vars.content}.split(${vars.os}).length-1;if(${vars.count}===0)throw new ${vars.errClass}(\`edit: old_string not found in \${${vars.fp}}\`);`;
+      patchedFunc = patchedFunc.replace(step3FlexRe, step3Replacement);
     } else {
-      console.error('patch: ignoreWhitespaceEdit: Step 3 failed — count pattern not found');
+      console.error(
+        'patch: ignoreWhitespaceEdit: Step 3 failed — count pattern not found'
+      );
       return null;
     }
   }
 
   // -----------------------------------------------------------------------
   // Step 4: Modify the join/replace logic for replace_all and single-match cases.
-  // Exact match on known variable names, with flexible regex fallback.
+  // Original: `let l;if(o)l=s.split(r).join(n);else{if(a>1)throw new cS(...`
+  // Where: l=result, o=ra, s=os (content), r=os (pattern), n=ns (replacement)
   // -----------------------------------------------------------------------
-  const step4Exact = 'let l;if(o)l=s.split(r).join(n);else{if(a>1)throw new cS(`edit: old_string appears ${a} times in ${t} (must be unique)`);l=s.replace(r,()=>n)}';
+  const step4Exact = `let ${vars.result};if(${vars.ra})${vars.result}=${vars.content}.split(${vars.os}).join(${vars.ns});else{if(${vars.count}>1)throw new ${vars.errClass}(\`edit: old_string appears \${${vars.count}} times in \${${vars.fp}} (must be unique)\`);${vars.result}=${vars.content}.replace(${vars.os},()=>${vars.ns})}`;
 
   if (patchedFunc.includes(step4Exact)) {
-    const step4Replacement =
-      'let l;if(o){if(v)l=s.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)).split(r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10))).join(n.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)));else l=s.split(r).join(n);}else{if(a>1)throw new cS(`edit: old_string appears ${a} times in ${t} (must be unique)`);l=v?s.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)).replace(r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)),()=>n.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10))):s.replace(r,()=>n);}';
+    const lp = vars.lambdaParam;
+    const step4Replacement = `let ${vars.result};if(${vars.ra}){if(${vars.wsFlag})${vars.result}=${vars.content}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)).split(${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10))).join(${vars.ns});else ${vars.result}=${vars.content}.split(${vars.os}).join(${vars.ns});}else{if(${vars.count}>1)throw new ${vars.errClass}(\`edit: old_string appears \${${vars.count}} times in \${${vars.fp}} (must be unique)\`);${vars.result}=${vars.wsFlag}?${vars.content}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)).replace(${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)),()=>${vars.ns}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10))):${vars.content}.replace(${vars.os},()=>${vars.ns})}`;
     patchedFunc = patchedFunc.replace(step4Exact, step4Replacement);
   } else {
     // Flexible fallback: match any variable/error-class names
-    const step4FlexRe = /let l;if\(o\)l=[\w$]+\.split\([\w$]+\)\.join\([\w$]+\);else\{if\(a>1\)throw new [\w$]+/;
+    const step4FlexRe = new RegExp(
+      `let ${vars.result};if\\(${vars.ra}\\)${vars.result}=[a-zA-Z_]\\.split\\([a-zA-Z_$]+\\)\\.join\\([a-zA-Z_$]+\\);else{if\\(${vars.count}>1\\)throw new [a-zA-Z_$]+`
+    );
     if (step4FlexRe.test(patchedFunc)) {
-      const step4FbRepl = 'let l;if(o){if(v)l=s.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)).split(r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10))).join(n.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)));else l=s.split(r).join(n);}else{if(a>1)throw new cS(' + '`edit: old_string appears ${a} times in ${t} (must be unique)`' + ');l=v?s.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)).replace(r.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10)),()=>n.split(String.fromCharCode(10)).map(x=>x.trim()).join(String.fromCharCode(10))):s.replace(r,()=>n);}';
-      patchedFunc = patchedFunc.replace(step4FlexRe, step4FbRepl);
+      const lp = vars.lambdaParam;
+      const step4Replacement = `let ${vars.result};if(${vars.ra}){if(${vars.wsFlag})${vars.result}=${vars.content}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)).split(${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10))).join(${vars.ns});else ${vars.result}=${vars.content}.split(${vars.os}).join(${vars.ns});}else{if(${vars.count}>1)throw new ${vars.errClass}(\`edit: old_string appears \${${vars.count}} times in \${${vars.fp}} (must be unique)\`);${vars.result}=${vars.wsFlag}?${vars.content}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)).replace(${vars.os}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10)),()=>${vars.ns}.split(String.fromCharCode(10)).map(${lp}=>${lp}.trim()).join(String.fromCharCode(10))):${vars.content}.replace(${vars.os},()=>${vars.ns})}`;
+      patchedFunc = patchedFunc.replace(step4FlexRe, step4Replacement);
     } else {
-      console.error('patch: ignoreWhitespaceEdit: Step 4 failed — join pattern not found');
+      console.error(
+        'patch: ignoreWhitespaceEdit: Step 4 failed — join pattern not found'
+      );
       return null;
     }
   }
 
   // Reassemble the full file with only the edit tool replaced
-  const newFile = oldFile.slice(0, funcStart) + patchedFunc + oldFile.slice(funcEndIdx);
+  const newFile =
+    oldFile.slice(0, funcStart) + patchedFunc + oldFile.slice(funcEndIdx);
 
   showDiff(
     oldFile,
@@ -183,4 +292,168 @@ export const writeIgnoreWhitespaceEdit = (oldFile: string): string | null => {
     funcContent.length
   );
   return newFile;
+};
+
+// ============================================================================
+// Variable extraction — multi-pass scan of the edit tool body.
+// Pass 1: collect ALL local variable names to avoid collisions.
+// Pass 2: extract specific minified identifiers for structural patterns.
+// Pass 3: generate safe single-letter names for new injected code.
+// ============================================================================
+
+/** Extract all locally-scoped identifier names from the edit tool body */
+const collectUsedVars = (body: string): Set<string> => {
+  const used = new Set<string>();
+
+  // Destructure params (4 of them)
+  const deMatch = body.match(BODY_START_RE);
+  if (deMatch) {
+    for (let i = 1; i <= 4; i++) {
+      if (deMatch[i]) used.add(deMatch[i]);
+    }
+  }
+
+  // let declarations — both single-letter and multi-char names
+  const letMatches = [...body.matchAll(/let\s+([a-zA-Z_$][\w$]*)/g)];
+  for (const m of letMatches) {
+    used.add(m[1]);
+  }
+
+  // Catch declarations like `let i=await ITr(e,t),s;` — the comma-separated part
+  const multiLetMatch = [...body.matchAll(/let\s+(\w+)=\w+\([^)]+\),(\w+);/g)];
+  for (const m of multiLetMatch) {
+    if (m[2]) used.add(m[2]);
+  }
+
+  // Function references used as external calls (e.g., ITr, Fbn, Axs, F9, Stat)
+  // These are NOT local vars but we want to know them for collision checking
+  const funcRefMatch = [...body.matchAll(/\b([A-Z][a-zA-Z_$]+)\(/g)];
+  for (const m of funcRefMatch) {
+    used.add(m[1]); // Track external function names too
+  }
+
+  // Arrow function parameters — they shadow outer scope, but we track them to avoid naming collisions
+  // e.g., .map((x)=>x.trim()) or .replace(r,()=>n)
+  const arrowParamMatch = [
+    ...body.matchAll(/\(\s*([a-zA-Z_$][\w$]*)\s*\)\s*=>/g),
+  ];
+  for (const m of arrowParamMatch) {
+    used.add(m[1]);
+  }
+
+  // Single-param arrows — e.g., .map(x => x.trim()) or .replace(r, () => n)
+  const singleArrowParam = [...body.matchAll(/\(\s*([a-zA-Z_$])\s*\)=>/g)];
+  for (const m of singleArrowParam) {
+    used.add(m[1]);
+  }
+
+  return used;
+};
+
+/** Generate safe single-letter variable names not in the used set */
+const generateSafeNames = (used: Set<string>): string[] => {
+  const allLetters =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  return allLetters.filter(l => !used.has(l));
+};
+
+const captureVarNames = (body: string): VarNames | null => {
+  // ---- Pass 1: Collect ALL used variable names ----
+  const usedVars = collectUsedVars(body);
+
+  // Generate safe unused single-letter names
+  const safeLetters = generateSafeNames(usedVars);
+  if (safeLetters.length === 0) {
+    console.error('captureVarNames: no safe single-letter variables available');
+    return null;
+  }
+
+  // ---- Pass 2: Extract specific minified identifiers ----
+  const deMatch = body.match(BODY_START_RE);
+  if (!deMatch) {
+    console.error('captureVarNames: no destructure match');
+    return null;
+  }
+
+  const fp = deMatch[1]; // file_path param (e.g. "t")
+  const os = deMatch[2]; // old_string param (e.g. "r")
+  const ns = deMatch[3]; // new_string param (e.g. "n")
+  const ra = deMatch[4]; // replace_all param (e.g. "o")
+
+  // Count variable: `let <count>=<content>.split(<os>).length-1`
+  const countRe = new RegExp(
+    `let ([a-zA-Z_$]+)=([a-zA-Z_])\\.split\\(${os}\\)\\.length-1`
+  );
+  const countMatch = body.match(countRe);
+  if (!countMatch) {
+    console.error('captureVarNames: no count match');
+    return null;
+  }
+  const count = countMatch[1]; // e.g. "a"
+  const content = countMatch[2]; // e.g. "s" (file content var)
+
+  // Error class: first `throw new <Name>(` in the body
+  const errClassMatch = body.match(/throw new ([a-zA-Z_$]+)/);
+  if (!errClassMatch) return null;
+  const errClass = errClassMatch[1];
+
+  // Verify error class scope — must be used with ${fp} template var
+  const verifyErrClass = new RegExp(`throw new ${errClass}.*\\$\\{${fp}\\}`);
+  if (!verifyErrClass.test(body)) {
+    console.error('captureVarNames: errClass not verified');
+    return null;
+  }
+
+  // Result variable: `<name>=<content>.split(<os>).join(...)` or `<name>=<content>.replace(...)`
+  const resultRe = new RegExp(
+    `([a-zA-Z_$]+)=${content}\\.split\\(${os}\\)\\.join`
+  );
+  let result = resultRe.exec(body)?.[1];
+
+  if (!result) {
+    // Fallback: look for `<name>=<content>.replace(<os>,()=><ns>)` after else branch
+    const replaceRe = new RegExp(
+      `;([a-zA-Z_$]+)=${content}\\.replace\\(${os},\\(\\)=>${ns}\\)`
+    );
+    result = replaceRe.exec(body)?.[1];
+  }
+
+  if (!result) {
+    // Last resort: find any `<name>=<content>.split` near else branch
+    const beforeElse = body.indexOf('else{');
+    if (beforeElse >= 0) {
+      const snippet = body.substring(
+        Math.max(0, beforeElse - 200),
+        beforeElse + 5
+      );
+      const snippetMatch = snippet.match(/([a-zA-Z_$]+)=${content}\\.split/);
+      result = snippetMatch?.[1];
+    }
+  }
+
+  if (!result) {
+    console.error('captureVarNames: no result var found');
+    return null;
+  }
+
+  // ---- Pass 3: Assign safe names for injected code ----
+  // wsFlag is the first unused letter, used for `ignore_whitespace` parameter value check
+  const wsFlag = safeLetters[0];
+
+  // lambdaParam is the second unused letter (first after wsFlag), used in arrow function params
+  // e.g., .map(lambdaParam => lambdaParam.trim()) instead of hardcoded x
+  const lambdaParam = safeLetters.length > 1 ? safeLetters[1] : safeLetters[0];
+
+  return {
+    fp,
+    os,
+    ns,
+    ra,
+    content,
+    count,
+    result,
+    errClass,
+    wsFlag,
+    lambdaParam,
+  };
 };

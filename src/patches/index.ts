@@ -579,6 +579,13 @@ const PATCH_DEFINITIONS = [
       'Enable /voice command for speech-to-text input (hold Space to record)',
   },
   {
+    id: 'channels-mode',
+    name: 'Channels mode',
+    group: PatchGroup.FEATURES,
+    description:
+      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
+  },
+  {
     id: 'ignore-whitespace-edit',
     name: 'Ignore whitespace in edit tool',
     group: PatchGroup.FEATURES,
@@ -601,13 +608,6 @@ const PATCH_DEFINITIONS = [
     description:
       'Inject the claudeMd / userEmail / currentDate <system-reminder> only on the first API call per conversation (re-fires after /clear). Default: ON. Toggle OFF for vanilla CC per-turn injection.',
     modelFacing: true,
-  },
-  {
-    id: 'channels-mode',
-    name: 'Channels mode',
-    group: PatchGroup.FEATURES,
-    description:
-      'Enable MCP channel notifications (--channels without allowlist or dev flag)',
   },
 ] as const;
 
@@ -991,14 +991,14 @@ export const applyCustomization = async (
     'read-default-lines': {
       fn: c => writeReadDefaultLines(c),
     },
+    'context-limit': {
+      fn: c => writeContextLimit(c),
+      condition: !!config.settings.misc?.enableContextLimitOverride,
+    },
     opusplan1m: {
       fn: c => writeOpusplan1m(c),
       condition:
         modelCustomizationsEnabled && !ccInstInfo.nativeInstallationPath,
-    },
-    'context-limit': {
-      fn: c => writeContextLimit(c),
-      condition: !!config.settings.misc?.enableContextLimitOverride,
     },
     'thinking-block-styling': {
       fn: c => writeThinkingBlockStyling(c),
