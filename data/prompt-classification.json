@@ -16353,11 +16353,26 @@
   "e7d634577a5b09abdd54997bd30847091f37c18c": { "facing": "ui" },
   "856bdf24d49e74ebd2d99b52863ba22473b826f0": { "facing": "ui" },
   "a244d7be040221754d83cc474ff6eabbf260cb0b": { "facing": "internal" },
-  "ffe324c888a93a4fc30129510215eebf5a06ea7e": { "facing": "ui" },
-  "c9afdcd3cc2686c15ecab898d71399677d4751a9": { "facing": "ui" },
+  "ffe324c888a93a4fc30129510215eebf5a06ea7e": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-init-description",
+    "name": "Skill: claude-code-guide — `claude plugin init <name>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin init <name>`."
+  },
+  "c9afdcd3cc2686c15ecab898d71399677d4751a9": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-tag-description",
+    "name": "Skill: claude-code-guide — `claude plugin tag [path]` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin tag [path]`."
+  },
   "a3d73c01352309fd6bac3c3fb70d7d52b19a6228": { "facing": "ui" },
   "e8f82061b5f29ffb6843e2969d78523d12d90538": { "facing": "ui" },
-  "9a5b89c4930d59a2b1c16d8204feddf07ea21c2c": { "facing": "ui" },
+  "9a5b89c4930d59a2b1c16d8204feddf07ea21c2c": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-eval-description-target-forms",
+    "name": "Skill: claude-code-guide — `claude plugin eval` target forms",
+    "desc": "Second fragment of the `claude plugin eval` line in the claude-code-guide skill's Current Build subcommand list: which target forms resolve (path, plugin name, plugin@marketplace)."
+  },
   "bcbbc2633b1e7dd37dba726e56df3cc32531b59f": { "facing": "ui" },
   "80ea8fd6a94db687d32e5e8d6017df1653ffd411": { "facing": "ui" },
   "c66e6356e093d2158877e5b45f92934d80f59625": { "facing": "ui" },
@@ -16367,17 +16382,37 @@
   "47c060caef0f89ecbf85904f6ab4ae6b72f4feec": { "facing": "ui" },
   "f6ac0fda18dee54f8f086eb7a32c4b7ea978df28": { "facing": "ui" },
   "b977c957c02ccfca7cd076d77555e6e76536b6db": { "facing": "ui" },
-  "f709a00c4fcefa8ac35f0943148cfe6e34efd0ee": { "facing": "ui" },
+  "f709a00c4fcefa8ac35f0943148cfe6e34efd0ee": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-marketplace-add-description",
+    "name": "Skill: claude-code-guide — `claude plugin marketplace add <source>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin marketplace add <source>`."
+  },
   "e225e9ce9a687a5574830aa6fda5bb2c5e73829b": { "facing": "ui" },
   "3f8d4618c44460ccde1e6f173c5ab311df5ef48e": { "facing": "ui" },
   "5cf05f31fd9a0b1aa8287737aeae4b17a6a5a76b": { "facing": "ui" },
-  "b44c11355b7f3db4772bcd3be3696078e31cefc3": { "facing": "ui" },
-  "e4768eccf22c470e4293d391ba0a17bedfeaaab0": { "facing": "ui" },
+  "b44c11355b7f3db4772bcd3be3696078e31cefc3": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-marketplace-update-description",
+    "name": "Skill: claude-code-guide — `claude plugin marketplace update [name]` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin marketplace update [name]`."
+  },
+  "e4768eccf22c470e4293d391ba0a17bedfeaaab0": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-install-description",
+    "name": "Skill: claude-code-guide — `claude plugin install <plugin>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin install <plugin>`."
+  },
   "65551c5317828435f6fca2bec755a68a178be9e7": { "facing": "ui" },
   "43ff7116c5d891e0f34b82974486c2828798100c": { "facing": "ui" },
   "46f105f4d12b3e673948aa4dbdec7e4872003170": { "facing": "ui" },
   "21d83ebe465b0aa763647e599b31cb52d18b9cd8": { "facing": "ui" },
-  "4bbe1ec9e4e785c5605f10647a9add779a16305d": { "facing": "ui" },
+  "4bbe1ec9e4e785c5605f10647a9add779a16305d": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-update-description",
+    "name": "Skill: claude-code-guide — `claude plugin update <plugin>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin update <plugin>`."
+  },
   "c72ae785157f63b2f141887172c446e2932c6cc3": { "facing": "ui" },
   "6287c9d7b897e20c9164f7a9d655aa8cd8e4016a": { "facing": "ui" },
   "1cd2ffdbe596969590f14df54aeae269c48ebf2d": { "facing": "ui" },
@@ -31459,7 +31494,12 @@
     "name": "Slash Command: /terminal-setup — this terminal supports Shift+Enter natively",
     "desc": "Tells the model the named terminal (Ghostty/Kitty/Warp/WezTerm/Windows Terminal) needs no setup, so a follow-up install attempt would be pointless."
   },
-  "69309c255f9bf055be23e0046e9d28144b7aa871": { "facing": "ui" },
+  "69309c255f9bf055be23e0046e9d28144b7aa871": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-validate-description",
+    "name": "Skill: claude-code-guide — `claude plugin validate <path>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin validate <path>`."
+  },
   "dcf501311933d9fdb54c36264b8e7e17d8157d9e": { "facing": "ui" },
   "ad05fef71ef213103d52b5c9dcbeaeee4dabec81": { "facing": "ui" },
   "762bcb544b9e8dc439fad15826635bb4a689face": { "facing": "ui" },
@@ -34941,5 +34981,503 @@
   "8f6b5b4ea6153a8ae479efffabacc2cf188b678e": { "facing": "ui" },
   "203bdb8ccfeb6b611dc875a51b61bbd59a2f19ec": { "facing": "ui" },
   "a3f64f22d67a9d1a3a14aff8f037461d651f79c2": { "facing": "ui" },
-  "6c014c21d2a5a042e853a6742e2ae9247ba90e2c": { "facing": "ui" }
+  "6c014c21d2a5a042e853a6742e2ae9247ba90e2c": { "facing": "ui" },
+  "7a3f20f3bc29a54c2dd6ccf89dc4f9a7851f512e": {
+    "facing": "model",
+    "id": "data-task-notification-background-commands-completed",
+    "name": "Data: Background commands completed task-notification",
+    "desc": "task-notification body naming how many background shell commands completed; rendered into the <task-notification> user message CC injects into the conversation."
+  },
+  "c01d3b46d172be04e02a7b9051dad70b764af762": {
+    "facing": "model",
+    "id": "data-task-notification-remote-tasks-completed",
+    "name": "Data: Remote tasks completed task-notification",
+    "desc": "task-notification body naming how many remote tasks completed; sibling branch of the background-commands notification, new in CC 2.1.235."
+  },
+  "03796c724590176a14fd014a5f316b4904c80864": {
+    "facing": "model",
+    "id": "agent-prompt-eval-authoring-interview",
+    "name": "Agent Prompt: Eval-authoring interview",
+    "desc": "Guided interview prompt driving `claude plugin eval init` through sourcing inputs, writing case directories and graders, calibration and cost gates under the plugin's eval dir"
+  },
+  "a27163c37f347cece3a9444f1c165cbcf5bf68bc": {
+    "facing": "model",
+    "id": "data-task-notification-coalesced-completed-frame",
+    "name": "Data: Coalesced task-notification completed frame",
+    "desc": "XML frame wrapping a coalesced '<N> background commands completed' / '<N> remote tasks completed' summary as a task-notification user message"
+  },
+  "4498cc61c1f581f5ec727cf70317a82bd835fe2a": { "facing": "ui" },
+  "e483813c28b1a08cd7b43091ff20bd1e1d567991": { "facing": "ui" },
+  "a29f7828c2c2a9913ea482bda8ddaa75ab1ac107": { "facing": "ui" },
+  "30b45f248927f35d5b08d06460213dcbf5b0e3bf": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-fast-acknowledgement-selection",
+    "name": "System Prompt: Artifact comment fast acknowledgement selection",
+    "desc": "Instructs a no-tools helper to select exactly one numbered canned acknowledgement for the newest Artifact comment based on edit capability, trigger state, and whether the request needs an artifact edit or reply"
+  },
+  "0b65b2f5d01a9bb11fe29209ab212266c1d387f4": {
+    "facing": "model",
+    "id": "tool-result-agent-type-not-found",
+    "name": "Tool Result: Agent type not found",
+    "desc": "Error returned when the requested subagent_type does not match any available agent, listing the agent types that are available"
+  },
+  "045eca5e3d4ba9d44917c6b02d57309822fcd5d4": { "facing": "internal" },
+  "5fa28c28df72c62be531af5ad19187bf5a094394": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-arm-in-flight",
+    "name": "Tool Result: Resume replies refused — arm in flight",
+    "desc": "Tells the model resume_replies could not attach because a live-watch connection that started before the stop is still winding down, and to check action \"status\" then ask the user before retrying"
+  },
+  "36cda76ea874b776727c9415239fc9dddba792d4": { "facing": "internal" },
+  "32790c27c94d02d4e04f4ec3c5f2203024666f65": { "facing": "internal" },
+  "bccb21b104e1fe9740dd5301939acc96e492340b": { "facing": "internal" },
+  "3a438bd934525abcb25f623eeb2f1f6d811df230": {
+    "facing": "model",
+    "id": "system-prompt-background-subagent-delegation-examples",
+    "name": "System Prompt: Background subagent delegation examples",
+    "desc": "Worked <example> blocks showing when and how to delegate work to a background subagent with a self-contained, report-shaped prompt"
+  },
+  "9766231102973c81cbb87f35c764f2518e93130c": { "facing": "ui" },
+  "ce508c1c1bebf6e284a44595feb563ab406381a9": {
+    "facing": "model",
+    "id": "tool-result-agent-type-ambiguous-none-available",
+    "name": "Tool Result: Ambiguous agent type with no available match",
+    "desc": "Tail of the ambiguous-subagent_type error stating that none of the matching agent types are available, followed by the list of agents that are"
+  },
+  "1eca1688b6b2f8f30846032df77f0c7642d45dd5": {
+    "facing": "model",
+    "id": "system-reminder-bash-output-audience-note",
+    "name": "System Reminder: Bash output audience note",
+    "desc": "Tells the model that only it sees a command's full output and that anything the user needs must be repeated in the reply"
+  },
+  "7efeb9501765f7c0ee90255dfe521d1031acb387": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-eval-description",
+    "name": "Skill: claude-code-guide — `claude plugin eval [target]` description",
+    "desc": "First fragment of the `claude plugin eval` line in the claude-code-guide skill's Current Build subcommand list: what the command runs and where it looks for cases."
+  },
+  "e4d224dbcab5e7f800b0eca4ccdee42b13a65f0e": { "facing": "ui" },
+  "eb1cc8ea5c95f9fb206045ef822fe3d558c26ddb": { "facing": "internal" },
+  "e6c4fe51d88829af59f51b5a13ea14e905471d09": { "facing": "internal" },
+  "bfa453ed15d05fe0fc32a4c853298b4779a3a4fa": { "facing": "internal" },
+  "b70035700378f0a8be9478d3ca3b4053985df1fc": {
+    "facing": "model",
+    "id": "system-prompt-artifact-comment-fast-acknowledgement-selector",
+    "name": "System Prompt: Artifact comment fast acknowledgement selector",
+    "desc": "System prompt for the helper that picks one numbered canned acknowledgement for an artifact comment thread, marking thread content as untrusted and requiring a single digit as output"
+  },
+  "e804f36ca38e0ea940189b939920b26994f85717": { "facing": "ui" },
+  "d45c21bed02fe94ed8ce98e278dff6b39aa5fb76": { "facing": "ui" },
+  "a35844d9ec9e4adff7d3cce3ae08678ab52a280f": { "facing": "ui" },
+  "307e643f95c3d306b01f36dd3bf44711044e94b7": { "facing": "internal" },
+  "4ccf38bf2002375247b7d823a5caef58901c7402": { "facing": "internal" },
+  "de157d8d7643d3581b08dd4821e80468a7b85301": {
+    "facing": "model",
+    "id": "tool-result-send-message-too-large",
+    "name": "Tool Result: Cross-session message too large",
+    "desc": "Tells the sending agent that the serialized message exceeds the cross-session line cap and to shorten it, move bulk content into a file, or split it"
+  },
+  "d0809e8bbc53d9d378dbbf76e97dec24daa8ab8f": {
+    "facing": "model",
+    "id": "data-subagent-type-required-general-purpose-unavailable",
+    "name": "Data: subagent_type required, general-purpose unavailable",
+    "desc": "Shared clause stating subagent_type must be supplied because the general-purpose agent is not available in this session"
+  },
+  "71a68c8bae7fa399dedffef0b765af1900d8d456": { "facing": "internal" },
+  "25198a8ba644a2a231193630a2d55a23a05cb5f0": { "facing": "internal" },
+  "82f6f1e18f828c69df2317a27aed7431e85d2d08": { "facing": "internal" },
+  "5fbbf1b2bf2c86acea5871d2e0ee60efa81fe0bf": { "facing": "internal" },
+  "7af173c29e79b0c9c82d1e581ae42aa8bbbaf2ed": { "facing": "ui" },
+  "bebc4a88c61efdec861fdaa60333c9b5d67b138f": { "facing": "ui" },
+  "1506b5c13f6fc40c43c917ab2d67a04e7f810232": { "facing": "ui" },
+  "3c334b37285e8f4bc6251c892290576573413626": { "facing": "internal" },
+  "960259271c59fd1969c90565f4219e0bdfa3b7d1": { "facing": "internal" },
+  "541c0189bf431b70671be5fac7486209247bbe20": { "facing": "internal" },
+  "112b1a86d370e86425d92fb8d18c70b7bdfebbe0": { "facing": "internal" },
+  "b2c4a56e66c441d3c54423285e5dc6975d8921df": { "facing": "internal" },
+  "3f3ac9f463d6362f048139d17749c76246ad22e7": { "facing": "internal" },
+  "6b410331030581d74e8df3e1fe37f5bd9ea03f07": { "facing": "internal" },
+  "c0ab05cdfa1982df3d3e614f025d28ae9decdad6": { "facing": "internal" },
+  "224b3f790e3b6f8193981a176939dc430ced1030": { "facing": "ui" },
+  "e73047d7b9a11f2afdcd59efa558d4da85aefba5": { "facing": "ui" },
+  "59e6b5d1e5b5c4d8ea96c06dc56b34bf0e306a58": { "facing": "ui" },
+  "ac027836105942ffdba4c4d809582033586a2212": { "facing": "ui" },
+  "bb8275cc05b1f722128ad1e0510c96189082981d": { "facing": "ui" },
+  "7955ba47e8d91183fcf96e7487dd33f8205ab4d3": { "facing": "ui" },
+  "37bfd64292403cf0a1f7aa763dff81fd372cbb26": { "facing": "internal" },
+  "2a178d0cd327b0d04322cee5d4b378d675adc00c": {
+    "facing": "model",
+    "id": "tool-description-task-choose-listed-agent-type",
+    "name": "Tool Description: Choose a listed agent type",
+    "desc": "Task/Agent tool description clause telling the model to pick \"fork\" or one of the listed agent types because no general-purpose agent is available"
+  },
+  "73b959aa0ef7983f6c3e1ceac2932866f8949289": {
+    "facing": "model",
+    "id": "data-permission-value-withheld-marker",
+    "name": "Data: Permission value withheld marker",
+    "desc": "Placeholder substituted for a permission rule or command value that cannot be rendered in full, noting approval is one-time only"
+  },
+  "ed3799dfc37efdf1d1f511750497c0180de29989": { "facing": "ui" },
+  "e74d7ef6866befb1a0f14c21f6b70707d8bbb808": { "facing": "ui" },
+  "b08c08083553258fab5ea68f20e20a53f7e44a74": { "facing": "ui" },
+  "ec3f55cdf81d00e8601b0a4787e0001a4e302b3f": { "facing": "ui" },
+  "f1b8bf3f7021f391995df29369a4c08c719cf616": { "facing": "ui" },
+  "0668f1ef7d40dece6220e060e4efddbee49b442f": { "facing": "ui" },
+  "63333f4bab12f6ec1d1059dc59221ef7c522447f": { "facing": "ui" },
+  "2123e9bc662c5f078ca2ad0c9e2012f9bfd75d67": { "facing": "ui" },
+  "78e545124d137b0d2bad7e3db8a40c727d2d732b": { "facing": "ui" },
+  "6b9bfd5cf9befc4a9741b0277fa482a248074f1f": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-store-no-gateway-route",
+    "name": "Tool Result: Artifact asset store unreachable from this process",
+    "desc": "Detail for the asset-store 'relay_unavailable' failure: uploads, listing and deletes run only from a local session or an Anthropic-hosted cloud session with its gateway relay enabled, so retrying will not help."
+  },
+  "a3e58896d67628a5693313ad3c3ae79750e74197": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-no-gateway-route",
+    "name": "Tool Result: Artifact asset content unreachable from this process",
+    "desc": "Detail for the asset-read 'relay_unavailable' failure: asset reads run only from a local session or an Anthropic-hosted cloud session with its gateway relay enabled, so retrying will not help."
+  },
+  "ff79dcf8d8327c66eff880e341d0750e01047d4c": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-change-now",
+    "name": "Artifact Fast-Ack Option 1 — working on the change now",
+    "desc": "Option 1 of the numbered acknowledgement list the fast-ack selector model chooses from (marked [edit], for a specific self-contained change request); the chosen sentence is then posted into the artifact's comment thread."
+  },
+  "f459bc05288716cdac0a1fdbfaaf2023d48755c4": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-read-then-change",
+    "name": "Artifact Fast-Ack Option 2 — reading the artifact before the change",
+    "desc": "Option 2 of the fast-ack numbered list shown to the selector model (marked [edit], for a broad change needing a read of the Artifact to scope); posted into the comment thread when chosen."
+  },
+  "c21ab764928d40ea8cfb5acdfd703c019d7321f9": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-question-answer-shortly",
+    "name": "Artifact Fast-Ack Option 3 — question, answering shortly",
+    "desc": "Option 3 of the fast-ack numbered list shown to the selector model, for a question answerable in-thread with no change requested; posted into the comment thread when chosen."
+  },
+  "fc552dd4eb31d09178401f1d076c4e94e10d4eee": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-check-artifact-first",
+    "name": "Artifact Fast-Ack Option 4 — checking the artifact before answering",
+    "desc": "Option 4 of the fast-ack numbered list shown to the selector model, for a question whose answer requires checking the Artifact's contents first; posted into the comment thread when chosen."
+  },
+  "60d4a019a86690a6afecf3f2d309ecf1973cdfb4": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-follow-up-another-look",
+    "name": "Artifact Fast-Ack Option 5 — follow-up, taking another look",
+    "desc": "Option 5 of the fast-ack numbered list shown to the selector model, for a follow-up comment after an earlier reply that is not clearly an edit request; posted into the comment thread when chosen."
+  },
+  "a700ddd70aa54ef9ae6464a9a78d966be6885a6b": {
+    "facing": "model",
+    "id": "data-artifact-fast-ack-option-revising-after-earlier-reply",
+    "name": "Artifact Fast-Ack Option 6 — revising after an earlier reply",
+    "desc": "Option 6 of the fast-ack numbered list shown to the selector model (marked [edit], for a further or corrected change after an earlier reply in the thread); posted into the comment thread when chosen."
+  },
+  "120ca894a1080f429c7665bbb1d78ace12decccf": { "facing": "internal" },
+  "b45ed4dab4b6e4b67665302bac35fe513811c410": { "facing": "internal" },
+  "d22935b54e183a8a4e27718079f04e5d1495e80e": {
+    "facing": "model",
+    "id": "tool-parameter-artifact-action-read-write-db",
+    "name": "Tool Parameter: Artifact Action read_db / write_db",
+    "desc": "Segment of the Artifact tool's `action` enum description covering read_db and write_db, their db_op values, cursor paging, and the shared-state / untrusted-rows caveat with the 'data/users/' private-subtree exception."
+  },
+  "b3bcfbcb546bdbd7c0fbd2592d2163e3902dd03f": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-session-not-found",
+    "name": "Tool Result: Durable wake subscription — session not found",
+    "desc": "Watch-result note when the server has no active record of this remote session, so it cannot hold a wake subscription and retrying in this session will not help."
+  },
+  "ca0955893c9a9e0527d47d44a56b45099c839970": {
+    "facing": "model",
+    "id": "tool-result-artifact-watch-unavailable-in-deployment",
+    "name": "Tool Result: Durable wake subscriptions not provisioned",
+    "desc": "Watch-result note when wake subscriptions are not provisioned in this deployment, so retrying will not help."
+  },
+  "9d0c7cd94a5b5c8c90f6323b786000789c22b925": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-denied-watch-stop-latched",
+    "name": "Tool Result: resume_replies denied — the artifact's watch is stopped",
+    "desc": "Denial returned when resume_replies is called for an artifact whose watch was stopped earlier in the session: there is no separate auto-reply stop to resume, and the watch action must be used instead."
+  },
+  "c8ec46aa2dff575d33de1338d4b953d4b8e14d12": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-watch-stop-latched-deny-reason",
+    "name": "Tool Result: resume_replies watch-stop denial reason",
+    "desc": "decisionReason for the resume_replies denial when the artifact's watch stop holds the replies and only an approved re-watch clears it."
+  },
+  "5dec832fa9a4ec27b7b864a5d8fe9d93a70e5663": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-watch-relatch-reason-fragment",
+    "name": "Tool Result: resume_replies decision-reason fragment — re-arms the stopped watch",
+    "desc": "Clause spliced into the resume_replies decision reason when the same approval also re-arms a live watch that was stopped earlier in the session."
+  },
+  "0265b9fc4af0b55556646157688ee983bc9ba340": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-plan-mode-approval-reason",
+    "name": "Tool Result: resume_replies plan-mode approval reason",
+    "desc": "Decision reason for the resume_replies ask in plan mode: approval must come from the user, not the auto-permission classifier."
+  },
+  "ecd673260117b2f86d52d186b61e39cc84371717": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-cowork-approval-reason",
+    "name": "Tool Result: resume_replies Cowork approval reason",
+    "desc": "Decision reason for the resume_replies ask in a Cowork session: approval must come from the user, not the auto-permission classifier."
+  },
+  "00b98a00e7dbc5dde60d6c4935e5cd0551341e0b": {
+    "facing": "model",
+    "id": "tool-result-artifact-resume-replies-session-approval-reason",
+    "name": "Tool Result: resume_replies session-scoped approval reason",
+    "desc": "Default decision reason for the resume_replies ask, stating that approval re-arms unattended public replies for the rest of the session."
+  },
+  "d404e0e985aab40183fafc4f97cd6d6f2e1b3033": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-requires-asset-id-and-out-dir",
+    "name": "Asset read requires asset_id and out_dir",
+    "desc": "Deny message when read_asset lacks a valid 32-hex asset_id or its out_dir does not resolve to a local path."
+  },
+  "9a18c851b98411893ca9c70ca867b8f2e61728cd": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-invalid-input-reason",
+    "name": "Asset read invalid-input decision reason",
+    "desc": "decisionReason accompanying the read_asset denial when asset_id is missing or malformed or out_dir cannot be resolved."
+  },
+  "bda1a4dd8f3bd7e86354182a5d0d0db3ba12f5b8": {
+    "facing": "model",
+    "id": "tool-result-artifact-list-assets-plan-mode-user-approval-required",
+    "name": "Asset listing plan-mode approval reason",
+    "desc": "Decision reason when the first list_assets on an artifact happens in plan mode: it admits file names written by someone else into the conversation, so approval must come from the user rather than the auto-permission classifier."
+  },
+  "b004324aba68cc69d257137a954257b5bd372980": {
+    "facing": "model",
+    "id": "data-artifact-list-assets-auto-classifier-input",
+    "name": "List-assets auto-classifier input",
+    "desc": "One-line summary of a list_assets call handed to the auto-permission classifier model, noting the read-only scope and that a first approval also covers saving this artifact's assets locally for the conversation."
+  },
+  "0f2d645cc113b1d184f4001f3923527fed20f88f": {
+    "facing": "model",
+    "id": "data-artifact-resume-replies-auto-classifier-watch-relatch-fragment",
+    "name": "Resume-replies auto-classifier input — watch re-arm clause",
+    "desc": "Clause appended to the resume_replies auto-classifier summary when the same call also resumes a watch that was stopped earlier in the session."
+  },
+  "05bd05bc927576fee9bc4a6172a4b15fe3792133": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-write-kept-replaced",
+    "name": "Tool Result: Asset read — replaced copy removed, staged bytes kept",
+    "desc": "read_asset error when the earlier copy at the destination was removed but the fetched asset could not be moved into its place; the bytes remain at the .partial path for the user to move or delete."
+  },
+  "00333eab3d0e7f71c568ffe4b81ac9bc19c2e87f": {
+    "facing": "model",
+    "id": "tool-result-artifact-asset-read-write-kept",
+    "name": "Tool Result: Asset read — staged bytes kept after failed move",
+    "desc": "read_asset error when the fetched asset could not be moved to its destination; the bytes remain at the .partial path for the user to move or delete."
+  },
+  "d69f375f3c82d34e13ab5855c3f7c9d44f54f4aa": { "facing": "ui" },
+  "edfe687feb1c890d2d02e36302f786beb3de5d57": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-description-native-shift-enter",
+    "name": "Slash Command: /terminal-setup Description (terminal with native Shift+Enter)",
+    "desc": "Description of the /terminal-setup command shown to the model when the host terminal (Ghostty, Kitty, Warp, WezTerm, Windows Terminal) already supports Shift+Enter natively."
+  },
+  "60bf47c9c5653bc16d661d01cb5e6b6e78029295": { "facing": "internal" },
+  "7bb9106f646517023af4dc18837542042f067bac": { "facing": "internal" },
+  "585d8ca194efb749d7e80a28b0263cd791f3b193": {
+    "facing": "model",
+    "id": "slash-command-terminal-setup-terminal-native-shift-enter",
+    "name": "Slash Command: /terminal-setup — this terminal supports Shift+Enter natively",
+    "desc": "Output telling the model the named terminal (Ghostty/Kitty/Warp/WezTerm/Windows Terminal) supports Shift+Enter natively and needs no configuration."
+  },
+  "d7c3a4fd216071cdbf6a64988656603d1c6907f1": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-eval-init-description",
+    "name": "Skill: claude-code-guide — `claude plugin eval init [name]` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin eval init [name]`."
+  },
+  "5be76e34e550092cc1a40a923d6da6b39b11a0cc": { "facing": "internal" },
+  "5fcae0ea32888d4671b0b4a709ff31e3f35e7936": { "facing": "internal" },
+  "36a7b35f58acbde03daea548229bb6397eb24d38": { "facing": "internal" },
+  "d6c92847e4e2f5fd2668a5704b70a4882cd3f6d2": { "facing": "internal" },
+  "5bd65b68f9355f3022b4c6f223ec3df027443166": { "facing": "ui" },
+  "8df527d8045cf4d3a85fe095bb8e2d326c0f7a74": { "facing": "ui" },
+  "60f1eada29a26ca3ad6caee03c23d4853386a11b": { "facing": "ui" },
+  "5582d1a39000fc7a494adafe042a666dec640fd7": { "facing": "ui" },
+  "f56f99b0ae0b83293a3cb5a631a6f7b99f27d7df": { "facing": "ui" },
+  "caff81537bb8b93cbc96d827fd95c4e787a92b97": { "facing": "ui" },
+  "7d6e4c90ed85a82cfe7be8a995b6c44e801ef207": { "facing": "ui" },
+  "502a389988e8e96480dc5edac8d0997c754a4753": { "facing": "ui" },
+  "b848008933c2e97b318f31f20cc14f359faaf851": { "facing": "ui" },
+  "0ac35d751c63a9f4753e8fdb2e4fbdf1f2cc03bd": { "facing": "ui" },
+  "b2ffb726872c24b7786c45dd1610901dcf48366e": { "facing": "ui" },
+  "ab30cc23579aa09d0e4ab0d7073d10400dd494d2": { "facing": "ui" },
+  "dfc5e32b54929737aa67c8152ed12292743af2c3": { "facing": "ui" },
+  "a7962b6b90427771ec0126a09a9e96ddac0fb48c": { "facing": "ui" },
+  "b22a5b0917ce8a135ed9a8a3ebab8e79e634764d": { "facing": "ui" },
+  "27a336bc714feb9bcfd9aa25b2f946d33423c3d5": { "facing": "ui" },
+  "30e89586935bf8846c42805a6de11ae9fa9fc7b4": { "facing": "ui" },
+  "da989a6ad25f1794a5beee507419d6b69437d1d6": { "facing": "ui" },
+  "95b3de7e0d9c8cfda9d53a9c084ba585b997ccbe": { "facing": "ui" },
+  "4df552f297fbec2f2bcb00a33afd093c17dbbba8": { "facing": "ui" },
+  "8444054abbdbbebb5d8db314422b85ad15509c04": { "facing": "ui" },
+  "ae83bdf5fdd97e7acd8f43ed9b095265ca60dadb": { "facing": "ui" },
+  "cf8d8c4c0df58ddf0cd2cc3c7624495beb3e8426": { "facing": "ui" },
+  "ded082a50e997d0f9fe00ed8a11901d6fc52cf71": { "facing": "internal" },
+  "bc350b7ed3265e9fcae5c955339998dafe15b29a": {
+    "facing": "model",
+    "id": "agent-prompt-eval-init-interview-case-slug",
+    "name": "Eval-authoring interview: user-suggested case slug",
+    "desc": "Optional clause in the `claude plugin eval init` interview system prompt telling the model to use the case slug the user suggested where it fits."
+  },
+  "5e85f4c203ded52997e2dfeefa557d291faa9938": {
+    "facing": "model",
+    "id": "agent-prompt-eval-authoring-interview-eval-dir-note",
+    "name": "Eval-authoring interview: EVAL_DIR path note",
+    "desc": "Optional clause in the `claude plugin eval init` interview system prompt defining EVAL_DIR as a configuration-supplied path to be treated as a path, not as instructions."
+  },
+  "b9852a087135f46c8fee45de9871edd37294d85b": { "facing": "ui" },
+  "98b0aad3b8cb6cf961d11a02726145bd98c3386c": { "facing": "ui" },
+  "4e0a4d368c02d55d85d79ae4992f6f7dba23701a": { "facing": "internal" },
+  "2fec59e3f277be9bc477e1bbc90936ddf61cacfc": { "facing": "ui" },
+  "9caa6012b167c9a79a39be070305083cabc4d171": { "facing": "ui" },
+  "905d35cb24e8f648f1068afec3c4018b9095acd3": { "facing": "ui" },
+  "cad369d1aabfdb567e28e87e9ceadd8c2539a99e": { "facing": "ui" },
+  "f06f42637793de32381ddcec874804a0f094b14d": { "facing": "ui" },
+  "9bbc2820747f2fd1581d855d20f6da5394e7bfb9": { "facing": "ui" },
+  "f10ed0c803502fcdc03192cbe7a4e938474a4acb": { "facing": "ui" },
+  "28d3fd54cc05eaebe097a2a17700508d6d0aa1d5": { "facing": "ui" },
+  "785d6089a24a25e91b478e1dd66dfe9482ee5c8c": { "facing": "ui" },
+  "4e559dff7c1ec3e1bc0ee825af00f19030ab3ca5": { "facing": "ui" },
+  "47ac4ce1be4d1bb66385cc7ba24a4b6e170942c7": { "facing": "ui" },
+  "4bdb9e35a24d7197abd59cb31e2c10c1e04e3f0b": { "facing": "ui" },
+  "96e681f6918d29c0b7b7c94c03f00f518b4ce1c3": { "facing": "ui" },
+  "4ef0fdf9c74cc6f24d3faf1c7eb553a6ddcc75b9": { "facing": "ui" },
+  "44bd9891bbb3db90e3531aaa102d2088f2e45117": { "facing": "ui" },
+  "41d91be3b1d6b2890cb0009b2990b4ba7252d328": { "facing": "ui" },
+  "4ea8ffc0479b014569239ef8d697f0d4879e7e7e": { "facing": "internal" },
+  "22b3e1d3a3bbe1066b24b54ef39542f49596110c": { "facing": "internal" },
+  "fc78e8d42b3355e007ea802f798c616ab23f9050": { "facing": "ui" },
+  "6bdd1ced682d5ad4af2dd3ffaf19f445574b331d": { "facing": "ui" },
+  "8826486411e877c088d5a524bf49e7d3159437a0": { "facing": "ui" },
+  "a971cf67b7ef9e271be2ea66931a01754493b651": { "facing": "ui" },
+  "fc6fc76b6917386652d2d0d102d90b2fad01bc60": { "facing": "ui" },
+  "c585dbd427e7c1945236bd1574175429a8276475": { "facing": "ui" },
+  "243a4ddef9bcf416862befe6ea942a85a10af17a": { "facing": "ui" },
+  "313d5472ce9d5c667be3fbe22f9ec929489da2ed": { "facing": "ui" },
+  "8fcfe1e220b50f5e382c6f4738a532791f57dc42": { "facing": "ui" },
+  "389e242beed1beb5acfca46775c36c80a39551ef": { "facing": "ui" },
+  "5f6e5e2d611d655914d2d45f27a4b25ffbd24ebd": { "facing": "ui" },
+  "8d49a8f664563e3f7f685fe85d70ec358240518f": { "facing": "ui" },
+  "1b80825d0e802b17602bbd47f7afa9fa3a7f21ef": { "facing": "ui" },
+  "55ed07604894072f33746b40adb841744056b5c7": { "facing": "ui" },
+  "f21f0663be4b1d4a6e8607b54783df17d0422dc7": { "facing": "ui" },
+  "ba35bdf7d84ecf59946e0b11ab5ca4890d4fe0cf": { "facing": "ui" },
+  "7f743b94172b775ca5df2f3e89e905a2b57b48e5": { "facing": "ui" },
+  "ca9b3e2609f2d1ad48c66323d539d5bd31fc6b46": { "facing": "ui" },
+  "0f4d6979a464f6922452a5f4f64e69a396bc22ba": { "facing": "ui" },
+  "a0b498b80584320d5156231a14604da800551d44": { "facing": "ui" },
+  "e1e8331e9e7bd5de9d253edad4e2d873d8812f9d": { "facing": "ui" },
+  "920d3b1a94d213ac4f876737a5c0b7ee4207b740": { "facing": "internal" },
+  "956e35ba646bad08c24c7e042c09b2354434a7d2": { "facing": "ui" },
+  "a7ac9c60cc2debd86c381a5019b1ad4ef6352114": { "facing": "ui" },
+  "431c2a5833ee3b2412fe9d75a48f4c16a60fb95c": { "facing": "ui" },
+  "4b73f6fbc2558c357e7bd06c4ce5cd4e6a9e5d13": { "facing": "ui" },
+  "d83e8a785695c8bb183ab52d93cf51e9cbea21a9": { "facing": "ui" },
+  "9bef3f30f726af90cfab1cfcc9e36483fa8f9bc4": { "facing": "ui" },
+  "c456e2d84d0d4d28df6e8bfc5caac156dcd23ec2": { "facing": "ui" },
+  "614f540d69e76c97a74d5feb898036e110f90653": { "facing": "internal" },
+  "435c95f2c509c593ed7ffb8a24c6f795d96e4b38": { "facing": "internal" },
+  "1e5469eaedb704a4707f518e0f7d9967ad912a06": {
+    "facing": "model",
+    "id": "slash-command-context-remote-reply-undisplayable",
+    "name": "/context remote reply undisplayable",
+    "desc": "Message the /context slash command returns to the model when the remote connection replies with a context-usage payload this client version cannot render."
+  },
+  "c1957abaa934f7d730a3bef3d8b156cb43bfb48c": { "facing": "internal" },
+  "5f8eec030f9048a5b09ed0f368f3ab8ef6eeff6f": { "facing": "internal" },
+  "562b40e4de7232247be57d24f4dfa469bbe32da7": { "facing": "internal" },
+  "ba121936cb6683fff4a800c6e0a1241d2bf4f60d": { "facing": "internal" },
+  "539bcef218cdbb9151fbf468d38a46fd2be0ec35": { "facing": "internal" },
+  "9df114ebc2ecddc3d96883982a1f4093539bebee": { "facing": "internal" },
+  "f338f13f7ad721015087c7c23787a808ebfa5780": { "facing": "internal" },
+  "2d57720db801b2f01558c0d467bb8cfed145db37": { "facing": "internal" },
+  "0b521822f0dd4ff9b26c6f148f711c5e1885d39f": { "facing": "internal" },
+  "777bbb67315c7e500191ba624af04b706f7b9625": { "facing": "internal" },
+  "3fdbe2f539c1cab0bf36bba5c0ae9d9d8df33b80": { "facing": "internal" },
+  "04275d07403f18c5c957d13bd4eb37c83574f8dc": { "facing": "internal" },
+  "39c8fcbb01aa04a064947fb401a676a4d91706dd": { "facing": "internal" },
+  "bd57e930bb85efcc18b80b1661d027e4560f40f5": { "facing": "ui" },
+  "967ea82ef3b697a61fafb1e8ae8ea4615c4fbc58": { "facing": "ui" },
+  "ae4c1f505d7369295455b873a81e417c28c2183b": { "facing": "ui" },
+  "bf3b13ccf517d38dcb536b1e097b7d5f05fa92a1": { "facing": "ui" },
+  "bac57c1e2e055390444035bacc6c1491d768dcca": { "facing": "internal" },
+  "0a8f1abe0c72bd39f0d5a717142110d17e2b1ac0": { "facing": "ui" },
+  "84da65c159b2ee22e7d85d4e63c4c339398fc2ff": { "facing": "ui" },
+  "80c869176ce43e4a0b29669c3fdee54b5ab61133": { "facing": "ui" },
+  "c1918c99228ab670ff62845ddfc104b93c00b22c": { "facing": "ui" },
+  "00f8595e340e95be09ed192a9daeb07fc5bf0163": { "facing": "ui" },
+  "9e258f9c438cde6b377b28f08b9d0937c499505d": { "facing": "ui" },
+  "82de1606bbdcef1acfcdff5830a548a1ee332d41": { "facing": "ui" },
+  "953047a7227ad8e5aa2f7fe076bdb2dfd6363667": { "facing": "ui" },
+  "64a0f761f67a0646606aeffad4dbb10fb607cad6": { "facing": "ui" },
+  "54d1dde29ae80fd3beb68cab4bb836044cc307ae": { "facing": "ui" },
+  "b2b468bae7e0ab4200df5f920158a99895ea8b03": { "facing": "ui" },
+  "b832516dc46d6046ee164a2642a4683d14f37a88": { "facing": "ui" },
+  "34f991dffec2a5d019f56bea3e9b88703e2ec895": { "facing": "ui" },
+  "56269e36a74e5f8c90da71475f57446c3e56a477": { "facing": "ui" },
+  "bb8ef23bf010a4e6741ddf9bc395ab1fec39808f": { "facing": "ui" },
+  "4f34060bed352aa81f4cf30f81deb3db5de3afd2": { "facing": "internal" },
+  "f7c1c8fa144e6e11a4fd451e5d5fb46415ac67ec": { "facing": "internal" },
+  "3dd4af8d71a81dc3ad828f10b9ca63d3810164b9": { "facing": "internal" },
+  "d1954f736fc4e8d4f5e6a7c17b5ad1e0bc65aa04": { "facing": "internal" },
+  "cec1c51cfc798f5e4447af381bf4ced163f9eead": { "facing": "internal" },
+  "936ff3340b184e33469d3693826298494dd2fa50": { "facing": "internal" },
+  "d1bb08c4cb4f437f4e3886fb817a3dcd9cc20a8c": { "facing": "internal" },
+  "5a1cd809fe553e2c9831263983ecf6a2fb46643f": { "facing": "internal" },
+  "3399eb77005f1fe421818514131b08bae685caaf": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-list-description",
+    "name": "Skill: claude-code-guide — `claude plugin list` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin list`."
+  },
+  "9e8dda6b1a8ff42f0e726620785ef0c42eac25c2": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-details-description",
+    "name": "Skill: claude-code-guide — `claude plugin details <name>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin details <name>`."
+  },
+  "ad325247c2fd27d84c76ed44c08a73e114322aea": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-marketplace-list-description",
+    "name": "Skill: claude-code-guide — `claude plugin marketplace list` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin marketplace list`."
+  },
+  "01827afb50e97962decdab71f6701a454e3f21af": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-marketplace-remove-description",
+    "name": "Skill: claude-code-guide — `claude plugin marketplace remove <name>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin marketplace remove <name>`."
+  },
+  "824ecd8bc0074a3a5a2cd692868a77b1fcb299bd": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-uninstall-description",
+    "name": "Skill: claude-code-guide — `claude plugin uninstall <plugin>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin uninstall <plugin>`."
+  },
+  "ce0bdf5e5b64fbe48c3efce0eb3238aa1fe525ec": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-prune-description",
+    "name": "Skill: claude-code-guide — `claude plugin prune` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin prune`."
+  },
+  "bee8a4b42a754aa361f0c8358e8a49fe6208d340": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-enable-description",
+    "name": "Skill: claude-code-guide — `claude plugin enable <plugin>` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin enable <plugin>`."
+  },
+  "60a3d9057422e86f58750bed4ae01c7a34770436": {
+    "facing": "model",
+    "id": "skill-claude-code-help-plugin-disable-description",
+    "name": "Skill: claude-code-guide — `claude plugin disable [plugin]` description",
+    "desc": "One line of the `claude plugin` CLI subcommand list in the claude-code-guide skill's Current Build section: the description shown for `claude plugin disable [plugin]`."
+  }
 }

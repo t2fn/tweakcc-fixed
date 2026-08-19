@@ -244,9 +244,31 @@ describe('writePrintToolsFilter', () => {
     );
   });
 
+  it('still binds when the declaration is far above its use site', () => {
+    // CC 2.1.235 put 2,672 chars of MCP prewait code between `let Hm=ko(Hv),`
+    // and `tools:Hm,refreshTools:()=>ko(l())`, which broke a 2500-char window.
+    const filler = `if(a){${'/*x*/'.repeat(1200)}}`;
+    const out = writePrintToolsFilter(
+      'let $tv=$cf($sv);' + filler + body,
+      TS,
+      'all'
+    )!;
+    expect(out).toContain('let $tv=$cf($sv);const __tpts=');
+    expect(out).toContain('$tv=__tptf($tv,$sv);');
+    expect(out).toContain(
+      'refreshTools:()=>{let s=$gs();return __tptf($cf(s),s)}'
+    );
+  });
+
   it('returns null when the print tools init is absent', () => {
     const err = silenceErr();
     expect(writePrintToolsFilter('x=1', TS, 'all')).toBeNull();
+    err.mockRestore();
+  });
+
+  it('returns null when the use site is present but never declared', () => {
+    const err = silenceErr();
+    expect(writePrintToolsFilter(body, TS, 'all')).toBeNull();
     err.mockRestore();
   });
 });

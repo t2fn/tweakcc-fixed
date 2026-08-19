@@ -1,0 +1,1191 @@
+{
+  "tool-parameter-agent-isolation-mode": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-agent-simple-usage-notes",
+        "quote": "`isolation: \"worktree\"` gives the agent its own git worktree (auto-cleaned if unchanged)."
+      },
+      {
+        "carrierId": "tool-description-agent-remote-isolation",
+        "quote": "- `isolation: \"remote\"` runs the agent in a remote CCR sandbox (always background)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every claim \u2014 worktree = the agent's own isolated git worktree; remote = runs in a remote sandbox, always in the background \u2014 is already stated in two deployed fragments that ride in the same tool description, so the param text is a third copy at schema-serialization time."
+  },
+  "tool-parameter-artifact-capabilities": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifact-runtime-capabilities-guidance",
+        "quote": "Omitting the field on a redeploy keeps what the page already has; \\`{}\\` clears it."
+      },
+      {
+        "carrierId": "tool-description-artifact-runtime-capabilities-guidance",
+        "quote": "**Whenever the user asks for a page that needs any of that, you MUST load the \\`${ARTIFACT_CAPABILITIES_SKILL_NAME}\\` skill BEFORE writing the artifact, and always before passing \\`capabilities\\` or writing any \\`window.claude.*\\` runtime code**"
+      }
+    ],
+    "trimPlan": "Keep sentences 1-2 verbatim: 'Runtime capabilities this page declares, as {name: config}. The control plane is the authority on valid names and config shapes.' Delete sentence 3 ('An empty object clears \u2026 forward unchanged.') and sentence 4 ('Before declaring any capability, load the \\`${TOOL_PARAMETER_ARTIFACT_CAPABILITIES_VAR_0}\\` skill \u2026') whole \u2014 both are frozen, so deletion is the only legal operation. Dropping sentence 4 removes the file's sole ${TOOL_PARAMETER_ARTIFACT_CAPABILITIES_VAR_0} reference, so also drop that entry from the frontmatter variables: list; removing a reference cannot orphan a variable.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Half the prompt is a verbatim-in-substance second copy of a fragment that always ships beside it; the shape and control-plane-authority claims are the only ones needed at schema-read time and have no co-present carrier."
+  },
+  "tool-parameter-artifact-description": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifacttool",
+        "quote": "Pass a one-sentence `description` parameter \u2014 it becomes the gallery card's subtitle."
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('One-sentence subtitle shown on the gallery card.') whole \u2014 it is frozen (number, 'gallery card'), so deletion is the only legal operation, and the one-sentence bound survives in the carrier. Keep sentence 2 verbatim as the entire body: 'Say what the page is or does.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 1 is a third statement of a fact the base description already gives while naming the parameter; sentence 2 is the only guidance on the field's content."
+  },
+  "tool-parameter-artifact-favicon": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifact-update-and-list-guidance",
+        "quote": "**Favicon** (required): Pass one or two emoji as `favicon` (e.g. `\"\ud83d\udcca\"`, `\"\ud83d\udc1b\"`, `\"\u26a1\ud83d\udd25\"`). Emoji only, no SVG or markup. Keep it stable across redeploys; pick a new emoji only on a hard pivot in what the artifact is about."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every claim in the pristine, including the required-to-publish gate and the hard-pivot exception, is stated by a deployed fragment that ships in the same tool description; the param text is a strictly weaker duplicate."
+  },
+  "tool-parameter-artifact-interaction-schema": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-parameter-artifact-action-read-page-data",
+        "quote": "'read_page_data' reads the declared data island from the published artifact at \\`url\\`, validates it against the interaction schema named by \\`schema\\`"
+      }
+    ],
+    "trimPlan": "Delete sentence 1 (\"Which registered interaction schema to validate the page's data island against.\"). Retain verbatim: \"Required for read_page_data (e.g. \\\"${TOOL_PARAMETER_ARTIFACT_INTERACTION_SCHEMA_VAR_0[0]}\\\"); meaningless for every other action.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 1 is verbatim-equivalent to the co-delivered action-enum description; sentence 2 (requirement + example var + 'meaningless for every other action') is unique frozen mechanics and stays byte-identical."
+  },
+  "tool-parameter-artifact-list-scope": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifact-update-and-list-guidance",
+        "quote": "**Shared artifacts**: `action: \"list\"` accepts `scope` \u2014 `\"mine\"` (default, the only artifacts the update flow can target), `\"shared\"` (artifacts others shared with you), or `\"all\"`. Rows are labeled (mine)/(shared) whenever scope is not \"mine\"."
+      },
+      {
+        "carrierId": "tool-description-artifact-update-and-list-guidance",
+        "quote": "Shared artifacts can be read with WebFetch but never updated."
+      },
+      {
+        "carrierId": "tool-description-artifact-list-shared-dynamic",
+        "quote": "List artifacts other people shared with the user \u2014 ${TOOL_DESCRIPTION_ARTIFACT_LIST_SHARED_DYNAMIC_VAR_0} (read-only)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "All four claims are carried verbatim or verbatim-equivalent by a deployed sibling shipped in the same tool payload; nothing unique remains."
+  },
+  "tool-parameter-artifact-root": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifact-supporting-files-guidance",
+        "quote": "Pass \\`root\\` to resolve all relative sources against one base directory instead of retyping a long build prefix (\\`root: \"dist\"\\` + \\`{\"app.js\": \"app.js\"}\\`) \u2014 \\`root\\` never changes published paths, only where sources are read from."
+      }
+    ],
+    "trimPlan": "Delete sentences 1\u20132 (\"Base directory that relative SOURCE paths resolve against (like a bundler root) \u2014 saves retyping a long build prefix. Never changes published paths.\"). Retain verbatim: \"Absolute, or relative to the working directory; must lie within it. Requires `files`.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Two of four sentences are carried by a deployed sibling in the same tool description; the containment rule and the parameter dependency are unique frozen mechanics and stay verbatim."
+  },
+  "tool-parameter-artifact-supporting-files": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-artifact-supporting-files-guidance",
+        "quote": "pass \\`files\\` as a map of published path \u2192 source file: \\`{\"app.js\": \"dist/app.js\", \"data/points.json\": \"build/points.json\"}\\`"
+      },
+      {
+        "carrierId": "tool-description-artifact-supporting-files-guidance",
+        "quote": "the source (the value) is where the bytes come from on disk \u2014 a path string, or \\`{from, contentType}\\` when the type can't be inferred from the published extension"
+      },
+      {
+        "carrierId": "tool-description-artifact-supporting-files-guidance",
+        "quote": "A plain list of paths still works when each file should be published at its own on-disk spelling. Sources must lie under the working directory; list every file explicitly."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a deployed sibling shipped in the same tool description; no unique signal survives."
+  },
+  "tool-parameter-ask-user-question-option-description": {
+    "coveredBy": [],
+    "trimPlan": "Delete sentence 2 (\"Useful for providing context about trade-offs or implications.\"). Retain verbatim: \"Explanation of what this option means or what will happen if chosen.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "No corpus duplication, but the second sentence adds no information over the first; cut it as internal repetition and keep the contract sentence verbatim."
+  },
+  "tool-parameter-askuserquestion-multiselect": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-askuserquestion-options",
+        "quote": "Each option should be a distinct, mutually exclusive choice (unless multiSelect is enabled)."
+      },
+      {
+        "carrierId": "tool-description-askuserquestion-options-verbose",
+        "quote": "Each option should be a distinct choice; mutually exclusive unless multiSelect is enabled."
+      }
+    ],
+    "trimPlan": "Delete sentence 2 (\"Use when choices are not mutually exclusive.\"). Retain verbatim: \"Set to true to allow the user to select multiple options instead of just one.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "The trigger condition is carried by both live options branches; the boolean's effect is kept because its single carrier sits on a branch that may not be the live one."
+  },
+  "tool-parameter-askuserquestion-preview": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-askuserquestion-preview-field",
+        "quote": "Use the optional \\`preview\\` field on options when presenting concrete artifacts users need to compare visually \u2014 UI mockups, code snippets of different implementations, or diagrams."
+      },
+      {
+        "carrierId": "tool-description-askuserquestion-preview-field",
+        "quote": "Preview content must be a self-contained HTML fragment: no <html>/<body> wrapper, no <script> or <style> tags (use inline style attributes). Single-select questions only, not multiSelect."
+      }
+    ],
+    "trimPlan": "Delete sentences 2\u20133 (\"Use for mockups, code snippets, or visual comparisons that help users compare options. See the tool description for the expected content format.\"). Retain verbatim: \"Optional preview content rendered when this option is focused.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Two of three sentences are carried verbatim-equivalent by a deployed sibling in the same tool description; the focus-time rendering mechanic is unique and stays."
+  },
+  "tool-parameter-askuserquestion-source": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-parameter-askuserquestion-metadata",
+        "quote": "Optional metadata for tracking and analytics purposes. Not displayed to user."
+      }
+    ],
+    "trimPlan": "Delete sentence 2 (\"Used for analytics tracking.\"). Retain verbatim: \"Optional identifier for the source of this question (e.g., \\\"remember\\\" for /remember command).\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "The sentinel example is unique and stays verbatim; the trailing purpose sentence is carried by the parent object's deployed description in the same input_schema."
+  },
+  "tool-parameter-chrome-find-query": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-find",
+        "quote": "Find elements on the page using natural language, by purpose (\"search bar\", \"login button\") or text content (\"organic mango product\")."
+      }
+    ],
+    "trimPlan": "Delete the parenthetical example block, keeping the lead clause verbatim. Resulting body: 'Natural language description of what to find'. No rewriting or reordering of any retained text.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap: the field label is unique, the example block is fully covered by the parent tool description shipped in the same payload \u2014 trim, not wipe, so the schema slot keeps its own label."
+  },
+  "tool-parameter-claude-in-chrome-tab-id-execute-action": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-page-tabid",
+        "quote": "Tab ID to read from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      },
+      {
+        "carrierId": "tool-description-claude-in-chrome-find-tabid",
+        "quote": "Tab ID to search in. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      },
+      {
+        "carrierId": "system-prompt-claude-in-chrome-browser-automation",
+        "quote": "At the start of each browser automation session, call mcp__claude-in-chrome__tabs_context_mcp first to get information about the user's current browser tabs."
+      }
+    ],
+    "trimPlan": "Delete the trailing sentence ' Use tabs_context_mcp first if you don't have a valid tab ID.' Retain verbatim: 'Tab ID to execute the action on. Must be a tab in the current group.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap: the slot label and its validity constraint are unique, the acquisition procedure is duplicated 12x in the same payload \u2014 trim to match the existing execute-code precedent."
+  },
+  "tool-parameter-claude-in-chrome-tab-id-execute-shortcut": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-console-messages-tabid",
+        "quote": "Tab ID to read console messages from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      },
+      {
+        "carrierId": "tool-description-claude-in-chrome-find-tabid",
+        "quote": "Tab ID to search in. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      }
+    ],
+    "trimPlan": "Delete the trailing sentence ' Use tabs_context_mcp first if you don't have a valid tab ID.' Retain verbatim: 'Tab ID to execute the shortcut on. Must be a tab in the current group.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Unique slot label plus a 12x-duplicated procedural tail; keep the former, cut the latter."
+  },
+  "tool-parameter-claude-in-chrome-tab-id-extract-text": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-page-tabid",
+        "quote": "Tab ID to read from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      },
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-network-requests-tabid",
+        "quote": "Tab ID to read network requests from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      }
+    ],
+    "trimPlan": "Delete the trailing sentence ' Use tabs_context_mcp first if you don't have a valid tab ID.' Retain verbatim: 'Tab ID to extract text from. Must be a tab in the current group.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap only; the slot's own label survives, the repeated how-to-get-a-tab-ID instruction goes."
+  },
+  "tool-parameter-claude-in-chrome-tab-id-get-window": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-resize-window",
+        "quote": "Resize the current browser window to specified dimensions. If you don't have a valid tab ID, use tabs_context_mcp first to get available tabs."
+      },
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-page-tabid",
+        "quote": "Tab ID to read from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      }
+    ],
+    "trimPlan": "Delete the trailing sentence ' Use tabs_context_mcp first if you don't have a valid tab ID.' Retain verbatim: 'Tab ID to get the window for. Must be a tab in the current group.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Strongest coverage case in the group \u2014 the parent resize-window tool description repeats the procedure in the same tool definition. Keep the unique slot label only."
+  },
+  "tool-parameter-claude-in-chrome-tab-id-list-shortcuts": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claude-in-chrome-form-input-tabid",
+        "quote": "Tab ID to set form value in. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      },
+      {
+        "carrierId": "tool-description-claude-in-chrome-read-page-tabid",
+        "quote": "Tab ID to read from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID."
+      }
+    ],
+    "trimPlan": "Delete the trailing sentence ' Use tabs_context_mcp first if you don't have a valid tab ID.' Retain verbatim: 'Tab ID to list shortcuts from. Must be a tab in the current group.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Unique slot label retained, 12x-duplicated instruction cut; matches the already-trimmed execute-code sibling."
+  },
+  "tool-parameter-cron-body": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-remotetrigger-prompt",
+        "quote": "- create: POST /v1/code/triggers (requires body)"
+      },
+      {
+        "carrierId": "tool-description-remotetrigger-prompt",
+        "quote": "- update: POST /v1/code/triggers/{trigger_id} (requires body, partial update)"
+      },
+      {
+        "carrierId": "tool-description-remotetrigger-prompt",
+        "quote": "- run: POST /v1/code/triggers/{trigger_id}/run (optional body)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every claim is carried, more accurately, by the same tool's prompt that is always emitted alongside this schema."
+  },
+  "tool-parameter-cron-create-durable": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate-durability",
+        "quote": "By default (durable: false) the job lives only in this Claude session \u2014 nothing is written to disk, and it's gone when Claude exits. Pass durable: true to write to .claude/scheduled_tasks.json so the job survives restarts."
+      },
+      {
+        "carrierId": "tool-description-croncreate-durability",
+        "quote": "Use durable: true only when the user explicitly asks the task to persist"
+      },
+      {
+        "carrierId": "tool-description-croncreate-durability-durable",
+        "quote": "Durable jobs persist to .claude/scheduled_tasks.json and survive session restarts"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a guaranteed co-emitted sibling on the same tool; nothing unique remains."
+  },
+  "tool-parameter-cron-create-durable-no-persistence": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate-durability-session-only",
+        "quote": "Jobs live only in this Claude session \u2014 nothing is written to disk, and the job is gone when Claude exits."
+      }
+    ],
+    "trimPlan": "Keep sentence 1 verbatim: 'Has no effect \u2014 durable persistence is not available.' Delete sentence 2 in full ('All jobs are session-only (in-memory, gone when this Claude session ends).'). No rewording of the retained sentence.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap: kill the duplicated lifetime sentence, keep the unique no-op signal verbatim (the schema still exposes `durable`, so without it the model would set durable:true expecting persistence)."
+  },
+  "tool-parameter-cron-create-recurring": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "## Recurring jobs (recurring: true, the default)"
+      },
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "Recurring tasks auto-expire after ${CANCEL_TIMEFRAME_DAYS} days \u2014 they fire one final time, then are deleted."
+      },
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "For \"remind me at X\" or \"at <time>, do Y\" \u2014 fire once then auto-delete. Pin minute/hour/day-of-month/month:"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every claim, including the expiry threshold and the one-shot usage rule, is stated by the co-emitted tool prompt; nothing unique remains."
+  },
+  "tool-parameter-cron-prompt": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "Schedule a prompt to be enqueued at a future time. Use for both recurring schedules and one-shot reminders."
+      },
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "## Recurring jobs (recurring: true, the default)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The one claim \u2014 this field holds the prompt enqueued at each fire \u2014 is fully stated by the co-emitted tool prompt."
+  },
+  "tool-parameter-croncreate-cron": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "Uses standard 5-field cron in the user's local timezone: minute hour day-of-month month day-of-week. \"0 9 * * *\" means 9am local \u2014 no timezone conversion needed."
+      },
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "\"*/5 * * * *\" (every 5 min), \"0 * * * *\" (hourly), \"0 9 * * 1-5\" (weekdays at 9am local)"
+      },
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "\"remind me at 2:30pm today\" \u2192 \"30 14 <today_dom> <today_month> *\", recurring: false"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Format, timezone semantics and both examples are all carried by the tool prompt that is always emitted with this schema."
+  },
+  "tool-parameter-crondelete-job-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-croncreate",
+        "quote": "Returns a job ID you can pass to ${CRON_DELETE_TOOL_NAME}."
+      },
+      {
+        "carrierId": "tool-description-crondelete",
+        "quote": "Cancel a cron job previously scheduled with ${TOOL_DESCRIPTION_CRONDELETE_VAR_0}."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The provenance of the id is stated on both ends of the pair; nothing unique remains."
+  },
+  "tool-parameter-design-action-arguments": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claudedesign",
+        "quote": "is its input object (server-validated)"
+      }
+    ],
+    "trimPlan": "Delete sentence 1 in full ('Action input object (server-validated). '). Keep sentence 2 verbatim: 'Pass {} for operations that take no input.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap: the definitional sentence is duplicated by the co-emitted tool description, the {} convention is unique."
+  },
+  "tool-parameter-design-action-operation": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-claudedesign",
+        "quote": "for the live operation names and argument schemas"
+      },
+      {
+        "carrierId": "tool-description-claudedesign",
+        "quote": "field selects the action"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both claims \u2014 field role and discover-operations-first \u2014 are carried verbatim in substance by the co-emitted tool description, including the same operation name."
+  },
+  "tool-parameter-design-sync-plan-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "Write methods (require a finalized `planId`; every path must be in the plan):"
+      },
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "Returns a `planId`. Call after the user approves"
+      },
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "Writing, deleting, unregistering, or registering without a valid `planId`, or with off-plan paths, is rejected."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The method enumeration and the token provenance are both fully carried by the co-emitted tool description, which additionally states the enforcement rule this line omits."
+  },
+  "tool-parameter-designsync-create-project-name": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "- `create_project` \u2014 new design-system project owned by the user. Use when `list_projects` returns nothing or the user picks \"create new\" over an existing project. Pass `name`; returns a `projectId` to finalize_plan against."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Fully covered by the co-delivered DesignSync tool description; the frozen token (`create_project`) is verbatim-or-delete and delete is licensed by complete coverage."
+  },
+  "tool-parameter-enterworktree-name": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-enterworktree",
+        "quote": "- \\`name\\` (optional): name for a new worktree; random if neither \\`name\\` nor \\`path\\` is given."
+      },
+      {
+        "carrierId": "tool-description-enterworktree",
+        "quote": "Mutually exclusive with \\`name\\`."
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('Optional name for a new worktree.'), sentence 3 ('A random name is generated if not provided.') and sentence 4 ('Mutually exclusive with `path`.'). Keep sentence 2 byte-for-byte as the whole body: Each \"/\"-separated segment may contain only letters, digits, dots, underscores, and dashes; max 64 chars total.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Two duplicated claims and one duplicated mutual-exclusivity claim are cut; the validation gate (charset + length cap) is frozen and retained verbatim."
+  },
+  "tool-parameter-exit-worktree-discard-changes": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-exitworktree",
+        "quote": "- \\`discard_changes\\` (optional, default false): only meaningful with \\`action: \"remove\"\\`. If the worktree has uncommitted files or commits not on the original branch, removal is refused unless this is \\`true\\`. When the tool returns an error listing changes, confirm with the user before re-invoking with \\`discard_changes: true\\`."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full co-delivered coverage of both the gate and the refuse-and-list contract; nothing unique survives."
+  },
+  "tool-parameter-exitworktree-action": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-exitworktree",
+        "quote": "- \\`action\\` (required): \\`\"keep\"\\` leaves the worktree directory and branch intact (use to return later or preserve changes); \\`\"remove\"\\` deletes the worktree directory and its branch (use for a clean exit when work is done or abandoned)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both enum meanings are stated verbatim-equivalently by the co-delivered carrier; the pristine adds nothing."
+  },
+  "tool-parameter-gif-creator-tab-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-gif-creator",
+        "quote": "All operations are scoped to the tab's group."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The only claim beyond the parameter's own name \u2014 that operations are scoped to the tab's group \u2014 is stated by the co-delivered tool description. Weakest of the three wipes here: coverage rests on the carrier sentence plus the parameter name itself."
+  },
+  "tool-parameter-monitor-command": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-background-monitor-streaming-events",
+        "quote": "Each stdout line is an event that arrives as a chat notification while you keep working"
+      },
+      {
+        "carrierId": "tool-description-background-monitor-streaming-events",
+        "quote": "The script runs in the same shell environment as Bash. Exit ends the watch (exit code reported); timeout kills it."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both sentences are conveyed by a carrier proven to be emitted simultaneously with this schema field. Precedent inside the same tool: tool-description-monitor-persistent-param is already wiped and the live schema shows `persistent` with an empty description, semantics carried by the description."
+  },
+  "tool-parameter-monitor-description": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-background-monitor-streaming-events",
+        "quote": "it appears in every notification (\"errors in deploy.log\", not \"watching logs\")"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a co-emitted carrier that also demonstrates the good/bad form; keeping both is the restated-rule case."
+  },
+  "tool-parameter-notebook-edit-cell-type": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-parameter-notebook-edit-cell-type-detailed",
+        "quote": "The type of the cell (code or markdown)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Zero-information restatement of the parameter name, and the exact text is carried verbatim by the deployed sibling that is actually live here."
+  },
+  "tool-parameter-notebook-edit-cell-type-detailed": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-parameter-notebook-edit-cell-type",
+        "quote": "The type of the cell"
+      },
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "insert adds a cell after cell_id (or at the start if omitted, requires cell_type)"
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('The type of the cell (code or markdown).') only. Keep verbatim and unreordered: 'If not specified, it defaults to the current cell type. If using edit_mode=insert, this is required.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap: cut the enum restatement, keep the two frozen mechanics. Sentence 3 is a validation gate and is retained verbatim despite carrier coverage, because the compact description variant (tool-description-notebook-edit) does not carry it and branch-liveness is not provable."
+  },
+  "tool-parameter-notebook-edit-edit-mode": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "Replaces, inserts, or deletes a single cell in a Jupyter notebook (.ipynb)."
+      },
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "edit_mode defaults to replace"
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('The type of edit to make (replace, insert, delete).'). Keep 'Defaults to replace.' verbatim.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap only: the enum restatement is free information, the default is not."
+  },
+  "tool-parameter-notebookedit-cell-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "cell_id is the id attribute from the ${READ_TOOL_NAME} tool's `<cell id=\"...\">` output, required for replace and delete."
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('The ID of the cell to edit.'). Keep verbatim: 'When inserting a new cell, the new cell will be inserted after the cell with this ID, or at the beginning if not specified.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Cut the tautology, keep the ordering mechanic verbatim. Not a full wipe because the positioning rule would be lost entirely if the compact description branch is the live one."
+  },
+  "tool-parameter-notebookedit-new-source": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "Replaces, inserts, or deletes a single cell in a Jupyter notebook (.ipynb)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Pure parameter-name tautology with a co-emitted carrier for the surrounding semantics; the wipe loses no inferable-only information on any branch."
+  },
+  "tool-parameter-notebookedit-notebook-path": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-notebookedit",
+        "quote": "notebook_path must be absolute."
+      },
+      {
+        "carrierId": "tool-parameter-edit-file-path",
+        "quote": "The absolute path to the file to modify"
+      }
+    ],
+    "trimPlan": "Delete the trailing parenthetical. Result, otherwise verbatim: 'The absolute path to the Jupyter notebook file to edit'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial bloat. The parenthetical is a frozen fragment ('must', 'not relative') so it is deleted whole, never reworded; the retained clause still states absoluteness."
+  },
+  "tool-parameter-observerreport-report": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-observerreport",
+        "quote": "Send a report to your report target \u2014 the agent you observe, or the coordinating agent that spawned the worker you observe."
+      }
+    ],
+    "trimPlan": "Delete sentence 1 ('The report to deliver to your report target.'). Keep 'Be concise and specific.' verbatim.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap only. Cut the restatement, keep the conciseness directive, which the active set's card explicitly makes our job."
+  },
+  "tool-parameter-onboarding-guide-share-link-mode": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-share-onboarding-guide",
+        "quote": "When called with the default mode='check': if a local ONBOARDING.md is present, uploads it to the most-recently-updated org guide (or creates one if none exist) and returns a fresh link. If no local file is present, returns the existing link without uploading (status: has_existing)."
+      }
+    ],
+    "trimPlan": "Delete the entire 'check' clause (from \"'check' (default):\" through \"without uploading.\"). Keep the remainder verbatim and in order: \"'update': upload to a specific guide by short_code. 'create': always make a new link. 'delete': remove a guide.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Half the string is duplicated by the co-emitted description, half is the only definition of three enum values. Frozen clauses are deleted whole, never compressed."
+  },
+  "tool-parameter-powershell-command": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-powershell",
+        "quote": "Executes a given PowerShell command with optional timeout."
+      },
+      {
+        "carrierId": "tool-description-powershell",
+        "quote": "The command argument is required."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Parameter-name tautology with a co-emitted carrier. (Feature disuse \u2014 this host is macOS \u2014 is deliberately NOT the reason; the coverage is.)"
+  },
+  "tool-parameter-project-write-present-to-user": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-projects",
+        "quote": "Set `present_to_user: true` only when the doc is the file the user needs to see \u2014 the deliverable they asked for or must act on; leave it unset (default false) for routine saves, notes, and bulk writes."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by an always-co-emitted carrier (same tool's description); the three fragments together are the only content, so the chain goes to zero. Stage-2 must apply all three wipes together \u2014 wiping a subset leaves a half-sentence."
+  },
+  "tool-parameter-project-write-present-to-user-2": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-projects",
+        "quote": "Set `present_to_user: true` only when the doc is the file the user needs to see \u2014 the deliverable they asked for or must act on; leave it unset (default false) for routine saves, notes, and bulk writes."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Fully covered by the co-emitted Projects tool description; part of the coordinated three-id wipe of one duplicated rule."
+  },
+  "tool-parameter-project-write-primary": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-projects",
+        "quote": "leave it unset (default false) for routine saves, notes, and bulk writes."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage, including the default value and the enumeration, by the co-emitted tool description. Third of the coordinated chain wipe."
+  },
+  "tool-parameter-projects-design-system-group": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "group` (free-form section label \u226464 chars; reuse the source design system's own categorization, e.g. \"Type\", \"Colors\", \"Navigation\")"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both claims (free-form section label; max 64 chars) are carried verbatim-equivalent by the DesignSync tool description that always ships with this schema; nothing unique remains."
+  },
+  "tool-parameter-projects-doc-path": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-projects",
+        "quote": "Writing to a path that already exists replaces it in place."
+      }
+    ],
+    "trimPlan": "Delete the fully-covered clause 'an existing path is replaced in place; ' only. Result, all remaining text verbatim: 'project_read/project_write/project_delete: doc path. project_write: a new bare filename (no \"/\") is namespaced to \"claude/<name>\".' No rewording, no reordering.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial overlap only: the replace-in-place clause is fully carried by the co-emitted tool description; the no-slash criterion and the method routing are unique and stay verbatim."
+  },
+  "tool-parameter-projects-finalize-local-dir": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-designsync",
+        "quote": "lock the exact paths to write and delete plus the source directory uploads read from (`localDir`, defaults to cwd)"
+      }
+    ],
+    "trimPlan": "Delete exactly one sentence \u2014 'Defaults to the current working directory. ' \u2014 leaving the other three sentences verbatim and in order: 'finalize_plan: directory the bundle was built into. write_files with localPath may only read files inside this directory. Resolved to an absolute path and shown in the permission prompt.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Only the defaults sentence is fully covered by the co-emitted DesignSync description; the containment rule, the absolute-path resolution and the permission-prompt display stay verbatim per the security/mechanics rule."
+  },
+  "tool-parameter-pushnotification-message-body": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-pushnotification",
+        "quote": "Keep the message under 200 characters, one line, no markdown."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The only load-bearing content (the 200-character cap) is stated by the tool's own always-co-present description, which additionally adds 'one line, no markdown'. The residue is a field-name restatement plus a truncation rationale that changes no behavior. Frozen sentence (contains a number) \u2192 verbatim-or-delete; coverage makes delete correct."
+  },
+  "tool-parameter-read-file-path": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-read-concise",
+        "quote": "- \\`file_path\\` must be an absolute path."
+      },
+      {
+        "carrierId": "tool-description-readfile",
+        "quote": "- file_path must be an absolute path, not relative"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The absolute-path contract is the only claim and it is duplicated in both live branches of the Read tool's own description. 'to read' vs 'to modify' adds nothing beyond the tool identity already established by the schema."
+  },
+  "tool-parameter-read-limit": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-read-offset-limit",
+        "quote": "- You can optionally specify a line offset and limit (especially handy for long files), but it's recommended to read the whole file by not providing these parameters"
+      },
+      {
+        "carrierId": "tool-description-read-partial-read-large-files",
+        "quote": "- When you already know which part of the file you need, only read that part. This can be important for larger files."
+      },
+      {
+        "carrierId": "tool-description-read-max-size",
+        "quote": "use offset and limit for larger files"
+      }
+    ],
+    "trimPlan": "Delete the second sentence in full. Resulting body, sentence 1 verbatim: 'The number of lines to read.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 2 is duplicated guidance carried by the Read tool description; sentence 1 fixes the unit (lines, not bytes/chars), which the bare param name 'limit' does not. Sentence 2 is frozen (restrictive quantifier 'Only') so it is verbatim-or-delete \u2014 delete, since covered."
+  },
+  "tool-parameter-read-offset": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-read-offset-limit",
+        "quote": "- You can optionally specify a line offset and limit (especially handy for long files), but it's recommended to read the whole file by not providing these parameters"
+      },
+      {
+        "carrierId": "tool-description-read-partial-read-large-files",
+        "quote": "- When you already know which part of the file you need, only read that part. This can be important for larger files."
+      },
+      {
+        "carrierId": "tool-description-read-max-size",
+        "quote": "use offset and limit for larger files"
+      }
+    ],
+    "trimPlan": "Delete the second sentence in full. Resulting body, sentence 1 verbatim: 'The line number to start reading from'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 2 is the same triplicated large-file guidance; sentence 1 fixes what 'offset' counts in (line number, not byte offset), which no carrier states as a parameter contract. Sentence 2 is frozen ('Only') \u2192 verbatim-or-delete, and coverage makes delete correct."
+  },
+  "tool-parameter-read-pages": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-read-concise",
+        "quote": "Reads PDFs via the `pages` parameter (e.g. \"1-5\", max 20 pages/request; required for PDFs over 10 pages)."
+      },
+      {
+        "carrierId": "tool-description-readfile",
+        "quote": "For PDFs over 10 pages, provide the pages parameter to read specific ranges (e.g. pages: \"1-5\"); reading a large PDF without it will fail. Max 20 pages per request."
+      }
+    ],
+    "trimPlan": "Delete only the middle sentence 'Only applicable to PDF files.' Keep sentences 1 and 3 byte-identical, including the ${TOOL_PARAMETER_READ_PAGES_VAR_0} interpolation. Resulting body: 'Page range for PDF files (e.g., \"1-5\", \"3\", \"10-20\"). Maximum ${TOOL_PARAMETER_READ_PAGES_VAR_0} pages per request.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 2 is pure internal repetition plus carrier-covered scoping. Sentence 1 (frozen: e.g. + enumeration) and sentence 3 (frozen: number + ${VAR} contract, the only dynamic binding of the per-request cap) both stay verbatim."
+  },
+  "tool-parameter-readmcpresource-uri": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-read-mcp-resource",
+        "quote": "Required params: \\`server\\` (the MCP server name) and \\`uri\\` (the resource URI)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The single claim \u2014 uri is the resource URI \u2014 is stated verbatim by the tool's own always-co-present description, which also pairs it with the required 'server' param. Nothing unique remains."
+  },
+  "tool-parameter-readmcpresourcedir-uri": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-readmcpresourcedirtool",
+        "quote": "- uri: The URI of the directory resource"
+      },
+      {
+        "carrierId": "tool-description-readmcpresourcedirtool-prompt",
+        "quote": "- uri (required): The URI of the directory resource"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "The single claim \u2014 uri is the directory resource's URI \u2014 is restated by both deployed descriptions of the same tool, which are co-present in the schema. 'to list' adds nothing the tool name and description do not already establish."
+  },
+  "tool-parameter-repl-script-description": {
+    "coveredBy": [],
+    "trimPlan": "Delete the trailing example sentence 'E.g. \"Trace upgrade message to its GrowthBook flag\"'. Keep sentence 1 byte-identical, matching the shape the powershell sibling already ships. Resulting body: 'Clear, concise description of what this script does in active voice (5-10 words).'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 1 is a frozen output-shape contract (number range 5-10) and the only statement of the REPL description format \u2014 keep verbatim. Sentence 2 is a single redundant example of an obvious rule with an irrelevant domain referent; it is frozen (e.g.) so it is verbatim-or-delete, and delete is correct."
+  },
+  "tool-parameter-report-findings-findings": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-report-code-review-findings",
+        "quote": "call it once with the verified findings ranked most-severe first (empty array if nothing survived verification) and do not also print the findings as text"
+      },
+      {
+        "carrierId": "skill-code-review-output-report-findings",
+        "quote": "\\`findings\\` is at most ${SKILL_CODE_REVIEW_OUTPUT_REPORT_FINDINGS_VAR_1} entries ranked\\nmost-severe first"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every claim (verified findings / most-severe-first ordering / empty array when nothing survived) is carried verbatim in meaning by the tool's always-co-present description, which states them more completely ('call it once', 'do not also print the findings as text'). Nothing unique remains; the ordering contract survives intact in the carrier."
+  },
+  "tool-parameter-report-findings-outcome": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-report-code-review-findings",
+        "quote": "When re-reporting after applying fixes (only if the apply instructions ask for it), set `outcome` on each finding to what actually happened."
+      },
+      {
+        "carrierId": "skill-code-review-re-report-findings-with-outcome",
+        "quote": "each\\ncarrying an \\`outcome\\`: \\`fixed\\`, \\`no_change_needed\\` (the finding was wrong or\\nalready handled), or \\`skipped\\` (real but not applied)."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both the ONLY-gate (when to set it) and the semantics (what happened to the finding) are stated by the always-co-present tool description, in the stronger doubly-gated form 'only if the apply instructions ask for it'. Nothing unique remains, and removing the CAPS instance is a bonus rather than the justification."
+  },
+  "tool-parameter-schedulewakeup-delay-seconds": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-schedulewakeup-delay-and-reason-guidance",
+        "quote": "The runtime clamps to [60, 3600], so you don't need to clamp yourself."
+      }
+    ],
+    "trimPlan": "Delete the whole frozen sentence 'Clamped to [60, 3600] by the runtime.' (delete-only; no rewriting). Resulting body, both sentences verbatim: 'Seconds from now to wake up. Required unless `stop` is true.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "One of three sentences is fully covered by an always-co-emitted carrier; the other two are unique. Partial overlap \u2192 trim, not wipe."
+  },
+  "tool-parameter-schedulewakeup-stop-flag": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-schedulewakeup-loop-dynamic",
+        "quote": "call with `stop: true` to end the loop immediately"
+      }
+    ],
+    "trimPlan": "Delete the frozen sentence 'Set to true to end the dynamic loop immediately instead of scheduling another wakeup.' whole (no rewriting). Resulting body, verbatim: 'When true, all other fields are ignored and no further wakeups fire.'",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 1 fully duplicated by an always-co-emitted sibling; sentence 2 carries a unique input-handling contract. Partial overlap \u2192 trim."
+  },
+  "tool-parameter-sendfile-recipient": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-sendfile",
+        "quote": "\\`to\\` accepts a peer session name from ${LIST_AGENTS_TOOL_NAME}, or an explicit \\`uds:<socket>\\` / \\`bridge:<session id>\\` address."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Every address form and the listing-variable source are already stated verbatim in the co-shipped tool description; the param description adds nothing the model does not already have in the same block."
+  },
+  "tool-parameter-senduserfile-caption": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-senduserfile",
+        "quote": "\\`caption\\` (optional): a one-liner of context. Skip if the file speaks for itself."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Optionality, brevity and the file-caption role are all stated in the same tool block by the tool description, which also supersedes it with a when-to-skip rule."
+  },
+  "tool-parameter-senduserfile-display": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-senduserfile",
+        "quote": "\\`display\\` (optional): \\`render\\` to show it inline in the side panel (chart, rendered HTML, diagram, image); \\`attach\\` for files saved and opened elsewhere (source, spreadsheet, doc). Unset lets the client decide by type."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Both enum arms and the omit-behaviour are stated in the co-shipped tool description; what the pristine adds beyond that is example padding and a stale historical aside."
+  },
+  "tool-parameter-set_cwd-needs_trust-directory": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-parameter-set-cwd-rejection-reason",
+        "quote": "unsafe_path: the target's canonical path contains characters that do not render as visible, space-distinguishable glyphs \u2014 control (Cc), format (Cf), default-ignorable, line/paragraph-separator (Zl/Zp), non-ASCII-space Zs, or braille-blank code points; rejected fail-closed before the trust round-trip, and the offending path is never echoed back."
+      }
+    ],
+    "trimPlan": "Delete the final sentence in full, from 'Targets whose canonical path contains control (Cc)' through 'before this arm can carry them.' Retain the first three sentences byte-for-byte, ending the body at '...every character is a visible, space-distinguishable glyph.' No rewriting, compression or reordering of the retained text; the deletion removes one whole frozen sentence whose every element is verbatim-covered by tool-parameter-set-cwd-rejection-reason.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "The host protocol and the render-safety assurance are unique and load-bearing; only the trailing enum restatement is fully covered by the sibling that owns it, so this is a partial-overlap trim rather than a wipe."
+  },
+  "tool-parameter-skill-args": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-invoke-skill",
+        "quote": "- `args`: optional arguments to pass through."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Optionality and the pass-through role of `args` are stated in the same tool block by the tool description, which is strictly more informative than the four-word param line."
+  },
+  "tool-parameter-snooze-reason": {
+    "coveredBy": [],
+    "trimPlan": "Delete the sentence \"Be specific.\" and its preceding space. Resulting body, all other text verbatim: \"One short sentence explaining the chosen delay. Goes to telemetry and is shown to the user. Required unless `stop` is true.\"",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Partial bloat only: one filler sentence inside otherwise load-bearing parameter mechanics. \"Goes to telemetry and is shown to the user.\" is frozen (enumeration of two destinations) and \"Required unless `stop` is true.\" is frozen (restrictive requirement + parameter name `stop`), so both stay verbatim; only the exhortation is deleted."
+  },
+  "tool-parameter-stop-task-task-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-taskstop",
+        "quote": "- Stops a running background task by its ID"
+      },
+      {
+        "carrierId": "tool-description-taskstop",
+        "quote": "- To stop an agent-team teammate, pass its agent ID (\"name@team\") or bare teammate name as task_id"
+      },
+      {
+        "carrierId": "tool-description-taskstop",
+        "quote": "- To stop a background agent spawned with a name, pass that name as task_id"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate carrier that is strictly more specific (it gives the literal \"name@team\" shape the parameter string omits). Nothing unique remains, so the override goes to an empty body."
+  },
+  "tool-parameter-suggestplugininstall-plugins": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-suggestplugininstall",
+        "quote": "Call this after SearchPlugins returns relevant results \u2014 source pluginId, pluginName, description, and skills from those results."
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate carrier that names the exact fields to source. The parameter string adds nothing the tool description does not already say more completely."
+  },
+  "tool-parameter-task-get-task-id": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-get",
+        "quote": "Use this tool to retrieve a task by its ID from the task list."
+      },
+      {
+        "carrierId": "tool-description-task-list-id-field",
+        "quote": "- **id**: Task identifier (use with TaskGet, TaskUpdate)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by two same-gate deployed carriers; the parameter string restates the tool's own opening sentence against a field already named `taskId`. Nothing unique remains."
+  },
+  "tool-parameter-task-output-block": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-monitor-deprecated-note",
+        "quote": "- Use block=true (default) to wait for task completion"
+      },
+      {
+        "carrierId": "inline-tool-monitor-deprecated-note",
+        "quote": "- Use block=false for non-blocking check of current status"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate carrier that is strictly more informative (it gives block=true as the default and the block=false behaviour). Nothing unique remains."
+  },
+  "tool-parameter-task-output-task-id": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-monitor-deprecated-note",
+        "quote": "- Takes a task_id parameter identifying the task"
+      },
+      {
+        "carrierId": "inline-tool-monitor-deprecated-note",
+        "quote": "- Retrieves output from a running or completed task (background shell, agent, or remote session)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by the same-gate deployed tool description, which additionally tells the model where task IDs come from (/tasks) and which task types apply."
+  },
+  "tool-parameter-task-update-task-id": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "Use this tool to update a task in the task list."
+      },
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "{\"taskId\": \"1\", \"status\": \"in_progress\"}"
+      },
+      {
+        "carrierId": "tool-description-task-list-id-field",
+        "quote": "- **id**: Task identifier (use with TaskGet, TaskUpdate)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by same-gate deployed carriers, one of which shows the literal `taskId` key in worked examples. Nothing unique remains."
+  },
+  "tool-parameter-taskcreate-active-form": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "- **activeForm**: Present continuous form shown in spinner when in_progress (e.g., \"Running tests\")"
+      },
+      {
+        "carrierId": "tool-description-taskcreate",
+        "quote": "- **activeForm** (optional): present-continuous form shown in the spinner when in_progress (e.g. \"Fixing authentication bug\"); falls back to subject if omitted"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full, byte-identical coverage from a same-gate deployed carrier, with a second carrier that is strictly more complete (it adds \"falls back to subject if omitted\"). Nothing unique remains at either site."
+  },
+  "tool-parameter-taskcreate-metadata": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "- **metadata**: Merge metadata keys into the task (set a key to null to delete it)"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate deployed carrier that is more precise. The parameter string is a tautological restatement of the field name."
+  },
+  "tool-parameter-taskcreate-subject": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-taskcreate",
+        "quote": "- **subject**: brief actionable title in imperative form (e.g. \"Fix authentication bug in login flow\")"
+      },
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "- **subject**: Change the task title (imperative form, e.g., \"Run tests\")"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate deployed carrier that is strictly more informative. Nothing unique remains."
+  },
+  "tool-parameter-taskupdate-add-blocked-by": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "- **addBlockedBy**: Mark tasks that must complete before this one can start"
+      },
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "{\"taskId\": \"2\", \"addBlockedBy\": [\"1\"]}"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate deployed carrier which states the dependency direction explicitly (\"must complete before this one can start\") \u2014 the ordering contract is preserved there verbatim, so the wipe loses no mechanics."
+  },
+  "tool-parameter-taskupdate-add-blocks": {
+    "coveredBy": [
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "- **addBlocks**: Mark tasks that cannot start until this one completes"
+      },
+      {
+        "carrierId": "inline-tool-task-update",
+        "quote": "{\"taskId\": \"2\", \"addBlockedBy\": [\"1\"]}"
+      }
+    ],
+    "trimPlan": null,
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "Full coverage by a same-gate deployed carrier which preserves the ordering contract (\"cannot start until this one completes\") verbatim. Nothing unique remains."
+  },
+  "tool-parameter-toolsearch-query": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-toolsearch",
+        "quote": "- \"select:Read,Edit,Grep\" \u2014 fetch these exact tools by name"
+      },
+      {
+        "carrierId": "tool-description-toolsearch",
+        "quote": "- \"notebook jupyter\" \u2014 keyword search, up to max_results best matches"
+      }
+    ],
+    "trimPlan": "Delete the whole second sentence (frozen text: verbatim-or-delete, never reworded): drop `Use \"select:<tool_name>\" for direct selection, or keywords to search.` Deployed body becomes exactly `Query to find deferred tools.` Dependency: this trim cites tool-description-toolsearch's deployed body \u2014 if any packet wipes that file, revert this to pristine.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Second sentence is verbatim-covered by the co-present deployed ToolSearch description; the slot label itself is unique."
+  },
+  "tool-parameter-workflow-resume-from-run-id": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-workflow",
+        "quote": "To resume after a pause, kill, or script edit, relaunch with Workflow({scriptPath, resumeFromRunId}) \u2014 the longest unchanged prefix of agent() calls returns cached results instantly; the first edited/new call and everything after it runs live."
+      }
+    ],
+    "trimPlan": "Delete only the second sentence, whole (frozen: verbatim-or-delete): drop `Completed agent() calls with unchanged (prompt, opts) return their cached results instantly; only edited or new calls re-run.` Keep the remaining three sentences byte-identical, including the sole interpolation: `Run ID of a prior Workflow invocation to resume from. Same-session only. Stop the prior run first (${TOOL_PARAMETER_WORKFLOW_RESUME_FROM_RUN_ID_VAR_0}) before resuming.` The deleted span contains no placeholder, so the one named slot stays at index 0 and auditMisbinds stays clean.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Cache-semantics sentence is covered by the co-serialized Workflow description; the session-scope constraint and the stop-first ordering are unique mechanics."
+  },
+  "tool-parameter-workflow-script-path": {
+    "coveredBy": [
+      {
+        "carrierId": "tool-description-workflow",
+        "quote": "invocation automatically persists its script to a file under the session directory and returns the path in the tool result."
+      },
+      {
+        "carrierId": "tool-description-workflow",
+        "quote": "To iterate on a workflow, edit that file with Write/Edit and re-invoke Workflow with \\`{scriptPath: \"<path>\"}\\` instead of resending the full script."
+      }
+    ],
+    "trimPlan": "Delete sentences 2 and 3 whole (frozen: verbatim-or-delete, no rewording of what remains): drop `Every Workflow invocation persists its script under the session directory and returns the path in the tool result.` and `To iterate, edit that file with Write/Edit and re-invoke Workflow with the same \\`scriptPath\\` instead of re-sending the full script.` Deployed body becomes exactly `Path to a workflow script file on disk. Takes precedence over \\`script\\` and \\`name\\`.` Dependency: rationale cites tool-description-workflow's deployed body \u2014 revert if any packet wipes it.",
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Middle two sentences are verbatim-covered by the co-present Workflow description; the slot label and the precedence ordering are unique."
+  }
+}

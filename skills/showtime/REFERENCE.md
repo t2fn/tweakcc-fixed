@@ -98,6 +98,22 @@ dropping a feature (e.g. a patch gated to NPM-only installs does nothing on a na
 install). A vanished feature with a _clean_ apply is often a `condition` problem,
 not a regex problem.
 
+**A third cause with no shape change at all: a fixed DISTANCE between two shapes.**
+A regex of the form `A(?=[\s\S]{0,N}B)` stops matching the moment Anthropic lands
+unrelated code between `A` and `B`, even though both are byte-identical to the
+previous build. CC 2.1.235 broke `toolsets`/`writePrintToolsFilter` this way: it
+matched `let X=F(S)` and required `tools:X,refreshTools:()=>F(G())` inside a
+2,500-character lookahead, MCP-prewait code landed between them, and the gap became
+2,672. The fix is not a bigger window — it is to invert the anchor. Match on
+whichever side is genuinely **unique** (here the use site), then derive the other by
+search: once `X` and `F` are pinned, the nearest preceding `let X=F(S)` is correct at
+any distance and no constant needs maintaining. A fixed-size window between two
+shapes is a countdown, not a match.
+
+This one is also a reminder that `--apply` is not the witness for every patch: a
+config-gated patch never runs there. `pnpm test:pristine` — every registered write
+function against a real bundle, toggles ignored — is the only check that sees it.
+
 ---
 
 ## 3. Bug class: Could not find system prompt (override pristine/ccVersion drift)

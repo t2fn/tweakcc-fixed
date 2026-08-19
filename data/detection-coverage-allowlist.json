@@ -709,5 +709,11 @@
     "shape": "concat",
     "why": ".claude/settings.json schema key description for `additionalMarketplaces`, sitting between extraKnownMarketplaces and strictKnownMarketplaces in the same zod object at cli.js@1410691; a settings-schema description, never sent to a model.",
     "excerpt": "Alias for extraKnownMarketplaces: this key is read exactly as if it were spelled extraKnownMarketplaces."
+  },
+  "18e2eee6a0697342": {
+    "verdict": "ui",
+    "shape": "concat",
+    "excerpt": "ablation requested but no plugin resolved for this case: auto-detection found no plugin.json (or .claude-plugin/plugin.json) it may load bet",
+    "why": "claude plugin eval ablation validation error: pushed to the run's errors array and printed via onLine/onNotice, both of which are process.stderr.write. Terminal + CI results JSON only; never reaches a model."
   }
 }

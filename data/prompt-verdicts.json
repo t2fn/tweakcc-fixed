@@ -158,6 +158,11 @@
     "version": "2.1.221",
     "why": "Read in full: \"For times without dates, use today's date.\" \u2014 42 chars, zero slop. Binary check places it in the same 8-line utility-parser prompt as the id above. Corpus scan for \"today's date\" returns only this id plus unrelated schedule/date-changed prompts. Its mirror system-prompt-nl-datetime-parser-date-only-rule ('For dates without times, do not include a time component.') is deployed pristi"
   },
+  "agent-prompt-eval-authoring-interview-eval-dir-note": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Corpus-unique, load-bearing (variable contract + naming convention + per-value injection guard), zero slop; conditional single-site clause so disuse is not a wipe reason."
+  },
   "agent-prompt-eval-baseline-grader": {
     "injectionPath": "Opening user-prompt fragment in a plugin-eval baseline-grader model call.",
     "verdict": "pristine-keep",
@@ -704,6 +709,41 @@
     "version": "2.1.228",
     "why": "Proposed trim, reverted to pristine. refuted on q3: Five frozen mechanics are absent character-for-character from the proposed body, including the STATUS, DOC_META, and PURPOSE slot instructions. The document-body discipline and owner/date requirement are also removed."
   },
+  "data-artifact-fast-ack-option-change-now": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Positional contract: the selection prompt says 'pick 1 for a specific, self-contained change' and the options assemble into ${FAST_ACKNOWLEDGEMENT_OPTIONS_BLOCK}; wiping it leaves option 1 empty and posts nothing. Unique, no slop."
+  },
+  "data-artifact-fast-ack-option-check-artifact-first": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Option 4 ('4 when answering requires checking the Artifact\u2019s contents first'); corpus-unique, positionally load-bearing, no slop."
+  },
+  "data-artifact-fast-ack-option-follow-up-another-look": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Option 5 ('5 when you have already replied earlier in this thread (or trigger=redesignated) and the newest comment is a follow-up that is not clearly an edit request'); unique literal held in a numbered slot."
+  },
+  "data-artifact-fast-ack-option-question-answer-shortly": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Option 3 of the selector's numbered list ('Pick 3 when the newest comment is a question to be answered in the thread with no change requested'); unique literal, positional contract, zero slop."
+  },
+  "data-artifact-fast-ack-option-read-then-change": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Option 2 of the numbered list the selector chooses from ('2 when the change is broad or you would need to read the Artifact to scope it'); corpus-unique literal, wiping it breaks the numbering. No slop."
+  },
+  "data-artifact-fast-ack-option-revising-after-earlier-reply": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Option 6 ('6 when you have already replied earlier in this thread and the newest comment asks for a further or corrected change'); corpus-unique, positional contract, no slop."
+  },
+  "data-artifact-list-assets-auto-classifier-input": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of a permission-scope fact the auto-permission classifier reads; wiping it would strip that scope from the classifier's input and widen what auto-approval covers. Unique, load-bearing, zero slop."
+  },
   "data-artifact-live-subscription-monitor-label": {
     "injectionPath": "Background artifact-subscription monitor description, echoed as the Monitor event title in an injected task notification.",
     "verdict": "pristine-keep",
@@ -752,6 +792,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.227",
     "why": "This is the permission classifier\u2019s exact action summary: target thread, artifact identity or fallback address, reversible effect, and appended metadata. Those variables and semantics are runtime mechanics the classifier cannot infer from a generic resolve-tool description."
+  },
+  "data-artifact-resume-replies-auto-classifier-watch-relatch-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the re-arm disclosure in the resume_replies classifier's own input string; wiping it lets the classifier rule on a call whose watch side effect it cannot see. Corpus-unique, no slop."
   },
   "data-artifact-resume-watch-auto-classifier-input": {
     "verdict": "pristine-keep",
@@ -2050,6 +2095,11 @@
     "version": "2.1.226",
     "why": "Both claims are load-bearing: the permission-prompt tool returned a schema-invalid result, and the interpolated variable supplies the specific failure. data-canusetool-invalid-permission-deny reports the analogous failure for a different callback, so it does not cover this surface."
   },
+  "data-permission-value-withheld-marker": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Substituted in place of an unrenderable permission rule or command value; the 'one-time options only' clause is the approval-scope contract and has no carrier. Unique, load-bearing, zero slop."
+  },
   "data-platform-availability": {
     "injectionPath": "Conditional reference file consulted by the build-with-Claude/API skill for provider-platform availability questions.",
     "verdict": "pristine-keep",
@@ -2215,6 +2265,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.226",
     "why": "All three claims are unique mechanics: the field contains the tool's Output object rather than model-facing string content; its shape is keyed by tool name and must remain unknown for MCP/dynamic tools; Agent/Task completion excludes the model-directed trailer, adds totals, and should be rendered structurally. Corpus searches for \u201cStructured tool output\u201d and \u201cAgent/Task tool\u201d found no other deployed carrier. The density is appropriate for a schema description."
+  },
+  "data-subagent-type-required-general-purpose-unavailable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, load-bearing parameter-validation contract at its own injection site; zero slop and fully frozen, so neither trim nor wipe is available."
   },
   "data-task-notification-agent-stop-resume-note": {
     "injectionPath": "Conditional task-notification inserted into the orchestrator context when an agent stops with no live background children.",
@@ -2547,6 +2602,11 @@
     "version": "2.1.226",
     "why": "The dynamically counted completion status is the notification's payload, not behavioral scaffolding. No sibling reports the same concrete completion event, and removing the tagged text would erase state the model needs to react to."
   },
+  "data-task-notification-coalesced-completed-frame": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Structural frame with no removable content; deleting it would break the <\\task-notification> user message it wraps."
+  },
   "data-task-notification-directory-added-hook-failed": {
     "injectionPath": "Tool result/task-notification after an /add-dir DirectoryAdded hook failure.",
     "verdict": "pristine-keep",
@@ -2563,6 +2623,11 @@
     "verdict": "trim",
     "version": "2.1.231",
     "why": "Trim the duplicated instruction/security prose but retain the unique runtime notification wrapper and all slots; full wipe would remove the pending-state signal."
+  },
+  "data-task-notification-remote-tasks-completed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The only copy of the remote-task branch of the coalesced completion notification; a wipe would blank the notification body the model reads."
   },
   "data-task-notification-shell-interactive-prompt-stall": {
     "injectionPath": "Failure/task-notification after a background shell monitor detects an interactive-prompt stall.",
@@ -2864,10 +2929,100 @@
     "version": "2.1.233",
     "why": "Structural label with a runtime slot plus one non-inferable mechanic; other prompts reference it rather than repeat it."
   },
+  "skill-claude-code-help-plugin-details-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of `claude plugin details` anywhere in the corpus; it is one row of a CLI inventory, so a wipe leaves the subcommand listed with no meaning."
+  },
+  "skill-claude-code-help-plugin-disable-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy; already at the floor."
+  },
+  "skill-claude-code-help-plugin-enable-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy; already at the floor."
+  },
+  "skill-claude-code-help-plugin-eval-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen throughout and the only description at its own injection site; the docs-file overlap is a different, non-co-loaded surface, so it does not carry the claim at the moment this text is read."
+  },
+  "skill-claude-code-help-plugin-eval-description-target-forms": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen enumeration; the only in-list statement of which target forms resolve. The docs overlap is real but sits behind a separate load, and the reference pointer that would reach it is already wiped."
+  },
+  "skill-claude-code-help-plugin-eval-init-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen flag and path contract, and the only description of `claude plugin eval init` in the inline subcommand list."
+  },
   "skill-claude-code-help-plugin-eval-reference": {
     "verdict": "wipe-merge",
     "version": "2.1.233",
     "why": "Every claim \u2014 read the quickref then the matching section of references/plugin-eval.md, the /skill-doctor scope, 'offline floor', 'no public docs page yet' \u2014 is already in skill-claude-code-docs-config-guide, which is SKILL_PROMPT (Zlg) and is joined with this '# Current Build' line by z8w(), so the carrier is co-delivered in the same rendered prompt. Verified at the binary, and stage 3 confirmed all four quotes verbatim in the deployed carrier. Wiped in all four sets."
+  },
+  "skill-claude-code-help-plugin-init-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the scaffold path and the auto-load identifier; both are frozen strings the model cannot infer."
+  },
+  "skill-claude-code-help-plugin-install-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, load-bearing, zero slop. Frozen under the tripwire: contains a parameter/syntax token (plugin@marketplace) and a path-like enum. Conditionally loaded with the claude-code-guide skill, so it costs zero when the skill is not read, and it is the only copy of the marketplace-qualifier syntax anywhere in the corpus. Body already equals pristine \u2014 nothing to trim without losing the syntax fact."
+  },
+  "skill-claude-code-help-plugin-list-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Irreducible factual label for a distinct subcommand; both emission sites are identical so a single override binds cleanly. No corpus duplicate. Nothing to cut."
+  },
+  "skill-claude-code-help-plugin-marketplace-add-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen under the tripwire: a three-item enumeration of accepted source types (URL, path, GitHub repo). That enumeration is the only statement of what `claude plugin marketplace add` accepts anywhere in the corpus, so it is verbatim-or-delete and deleting loses the contract."
+  },
+  "skill-claude-code-help-plugin-marketplace-list-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, minimal label containing the restrictive quantifier 'all' (frozen). Nothing duplicated, nothing to trim."
+  },
+  "skill-claude-code-help-plugin-marketplace-remove-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Irreducible distinct-subcommand label with no corpus duplicate. Wiping it would blank one row of the rendered subcommand table."
+  },
+  "skill-claude-code-help-plugin-marketplace-update-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen: states the default-argument behaviour ('updates all if no name specified') with the restrictive quantifier 'all' and a conditional on the optional [name] parameter. That default is stated nowhere else in the corpus, so it is verbatim-or-delete and deletion loses a real contract."
+  },
+  "skill-claude-code-help-plugin-prune-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique statement of what prune removes \u2014 scoped to auto-installed dependencies that are no longer needed, i.e. the destructive-scope contract for the subcommand. Not inferable from the id, no duplicate, no bloat."
+  },
+  "skill-claude-code-help-plugin-tag-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The packet's 0.47 similarity lead to slash-command-plugin-tag-usage is real overlap in wording but not coverage: wiping this id blanks one row of the CLI subcommand list, and the usage text only appears after an invocation error. The line is also frozen under the tripwire \u2014 it carries the {name}--v{version} tag-name format, the filename plugin.json, the quantifier 'any', and a two-item agreement condition. Verbatim-or-delete, and delete is wrong."
+  },
+  "skill-claude-code-help-plugin-uninstall-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Irreducible distinct-subcommand label, no corpus duplicate, nothing to trim."
+  },
+  "skill-claude-code-help-plugin-update-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique row of the subcommand table, and the parenthetical '(restart required to apply)' is a mechanics fact \u2014 when the update takes effect \u2014 stated nowhere else for the CLI path. Frozen and load-bearing; nothing to cut."
+  },
+  "skill-claude-code-help-plugin-validate-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Conditionally-loaded skill content whose only near-match lives on a different, mutually exclusive emission surface. Wiping it would blank the description cell for `claude plugin validate <path>` in a table the model reads to answer plugin questions, converting a fact into an absence for zero token saving on a normal turn."
   },
   "skill-claude-guide-detected-language-readme": {
     "verdict": "pristine-keep",
@@ -3275,6 +3430,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.233",
     "why": "Reports that the remote control-channel request for context usage threw, so the model knows the figures are missing because of a transport failure rather than because usage is zero. One line carrying a single fact; nothing to trim and no other prompt supplies it."
+  },
+  "slash-command-context-remote-reply-undisplayable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique diagnostic distinguishing an unrenderable reply from a transport failure and from an unsupported session. The distinction changes what the model should do next (do not retry vs. retry), and no sibling states it."
   },
   "slash-command-context-remote-unavailable": {
     "verdict": "pristine-keep",
@@ -4218,6 +4378,16 @@
     "version": "2.1.232",
     "why": "It is the richer of the two same-call copies and the sole carrier of the 160-character cap, the change-request/question branch mapping, and the 'do not answer yet' gate."
   },
+  "system-prompt-artifact-comment-fast-acknowledgement-selection": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Every claim is a frozen mechanic \u2014 input enum contract, the six-way option mapping, the two 0-fallback branches \u2014 and none of it appears anywhere else in the corpus. The only stylistic blemish (CAPS 'ONE') is inside frozen text, so trim would violate the tripwire."
+  },
+  "system-prompt-artifact-comment-fast-acknowledgement-selector": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Stage 1 ruled wipe-merge and its coverage is real: the selection user message and the thread-framing block both ship in the same request and state all three claims, and the digit contract is separately enforced by maxOutputTokensOverride:5 and a /^\\s*([0-9])\\s*$/ parser. Downgraded on delivery risk rather than content \u2014 this is the sole system block of a helper query built as `systemPrompt: am([Mcv])` where `am` is the identity function, so an empty body would send one empty system entry on a path no local gate exercises. Its identical sibling -writer (am([Dcv])) is trimmed to 215 chars rather than wiped, and no override in any set empties a single-const helper system prompt."
+  },
   "system-prompt-artifact-comment-fast-acknowledgement-writer": {
     "verdict": "pristine-keep",
     "version": "2.1.232",
@@ -4673,6 +4843,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.228",
     "why": "Proposed trim, reverted to pristine. refuted on q3: Although the listed frozen sentences survive, the trim deletes the load-bearing no-human-input consent guard and changes another exact event-attribution gate. Those runtime safeguards do not survive verbatim."
+  },
+  "system-reminder-bash-output-audience-note": {
+    "verdict": "trim",
+    "version": "2.1.235",
+    "why": "Sentence 1 is a uninferable harness fact and stays verbatim; sentence 2 is a derived directive the model reaches on its own, and the Opus-5 digest records verbosity/over-detailed reporting as a regression (p.2, 'responses tend to be lengthier and more detailed than is desirable'), not a deficit needing a relay nudge. Cutting it loses no information at a per-Bash-call injection site."
   },
   "system-reminder-bound-conversation-activity-authority-warning": {
     "verdict": "pristine-keep",
@@ -5536,6 +5711,11 @@
     "version": "2.1.233",
     "why": "The example request the statusline-setup agent works from. It is the task statement, not decoration."
   },
+  "tool-description-task-choose-listed-agent-type": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The only place in the corpus that tells the model the `fork` literal is a valid subagent_type when general-purpose is unavailable. Pure frozen mechanics with a live conditional; nothing to trim."
+  },
   "tool-description-task-get": {
     "verdict": "pristine-keep",
     "version": "2.1.228",
@@ -5606,10 +5786,45 @@
     "version": "2.1.228",
     "why": "This concise schema description uniquely fixes encoding, path scope, and parent-directory creation behavior for the lightweight writer. All three properties affect tool use."
   },
+  "tool-parameter-agent-cwd": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The cwd/worktree mutual-exclusion is a validation contract that exists in exactly one place in the corpus; the absolute-path requirement is unstated elsewhere for this param. No slop to trim and no carrier to merge into."
+  },
+  "tool-parameter-agent-device-app": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "A param description can only be carried by text co-present in the same tool schema; the only textual twin lives in a different tool. Pure mechanics, zero slop."
+  },
+  "tool-parameter-agent-model-override": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The resolution order (call param > agent-definition frontmatter > parent) and the fork exception are unique mechanics with no carrier anywhere in the corpus."
+  },
   "tool-parameter-agent-run-in-background": {
     "verdict": "trim",
     "version": "2.1.227",
     "why": "The deployed Agent background-default sibling already says that subagents default to background execution and that completion produces a notification. The stricter foreground gate\u2014only when the very next action depends on the result and no other useful work can proceed\u2014remains unique and is useful restraint for Opus 5, so the frozen second sentence stays verbatim."
+  },
+  "tool-parameter-agent-task-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The 3-5 word bound is the only length contract for this field and its nearest textual match lives at an unrelated emission site."
+  },
+  "tool-parameter-agent-team-name-deprecated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole copy of the deprecation fact; without it the model can spend a field on something silently discarded. Feature disuse is not a wipe reason for a conditional schema string, and this one is nine words."
+  },
+  "tool-parameter-app-launch-reason": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both the surfacing fact and the writing rule are unique to this param; the similar-looking siblings are other tools' reason fields."
+  },
+  "tool-parameter-append-session-link": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The default value and the trailer/PR-body-link names exist nowhere else; the git-guidance sibling covers only when to honor the flag, not what it controls."
   },
   "tool-parameter-array-of-strings-no-prose": {
     "verdict": "pristine-keep",
@@ -5621,10 +5836,20 @@
     "version": "2.1.233",
     "why": "Both checks come back clean: unique, load-bearing, no removable slop. Every sentence is frozen under the tripwire (restrictive quantifiers, the 'sent to Claude' sentinel, the acknowledge_duplicate parameter name) or states the validation gate itself. The deployed opus-5 file is already verbatim pristine at ccVersion 2.1.233, so pristine-keep means no change to disk."
   },
+  "tool-parameter-artifact-action": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The publish-is-default enum binding and the argument-exclusivity restriction each survive both checks; a frozen sentence can only be kept verbatim or deleted, and deleting either loses a contract."
+  },
   "tool-parameter-artifact-action-assets": {
     "verdict": "pristine-keep",
     "version": "2.1.234",
     "why": "Stage 1 ruled wipe-merge on seven carriers in the same tool definition, and the duplication is real. Overruled in the main loop: this is the `action` enum's per-value description, the one place the model maps each action name to the parameters it requires, and Opus 5's measured regression is on ignoring explicit constraints (audit 1.68 vs 4.8's 1.65). Trading that for ~450 characters against a guidance paragraph the model may skim is the wrong side of the trade."
+  },
+  "tool-parameter-artifact-action-read-page-data": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The output restriction and the out-of-contract refusal exist only here, and the overlap with the `schema` param sits inside an unsplittable frozen sentence."
   },
   "tool-parameter-artifact-action-read-write-db": {
     "coveredBy": ["tool-description-artifact-database-guidance"],
@@ -5632,6 +5857,11 @@
     "verdict": "trim",
     "version": "2.1.224",
     "why": "The node the cycle turns on, and it survives: four hand-offs (guidance, db_op, db_doc_id, db_collection) converge here, so it owns store selection (`url`), both op matrices and the cursor-paging rule. Only its closing shared-state sentence is a true duplicate \u2014 guidance keeps a strict superset of it verbatim \u2014 so this is a one-sentence trim. Injection path re-verified: `Wzb` declared @12966544, single real use @12969088 inside `$o({action:xr(...).optional().describe((...)+(n?Wzb:\"\"))})` with `n=Pya()` (`sWp` @12967858), the same `n` that spreads db_op/collection/doc_id/data/query into the sche"
+  },
+  "tool-parameter-artifact-action-watch": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Every claim is either unique or locked inside a frozen sentence whose remainder is unique; the resume_replies gate has no co-present carrier at all."
   },
   "tool-parameter-artifact-action-watch-remote-unsupported": {
     "verdict": "pristine-keep",
@@ -5686,15 +5916,55 @@
     "version": "2.1.224",
     "why": "Body read in full: \"Options for db_op 'list' and 'query': `limit` and `cursor` (from a prior result's `next_cursor`) page through a collection; `where` clauses ([field, operator, value] triples) and `order_by` filter and order a 'query' only.\" Corpus scan found real partial overlap \u2014 deployed tool-parameter-artifact-action-read-write-db.md already covers paging ('with optional `query.limit`/`query.cursor`' and 'A result carrying `next_cursor` has more pages \u2014 pass it back as `query.cursor`'), and deployed tool-result-artifact-db-list-query-fields-rejected.md covers the query-only restriction a"
   },
+  "tool-parameter-artifact-file-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The .html/.md constraint and the third rung of the title fallback chain exist only here; the title-related siblings document the first two rungs."
+  },
   "tool-parameter-artifact-file-path-upload-asset": {
     "verdict": "pristine-keep",
     "version": "2.1.234",
     "why": "Sole parameter-level meaning for a multi-action shared parameter; the type enumeration is frozen, so no partial trim is available."
   },
+  "tool-parameter-artifact-files-list-content-type": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The concrete inferable-extension list appears nowhere else, and the sentence is frozen, so the overlapping half cannot be excised separately."
+  },
+  "tool-parameter-artifact-files-map-content-type": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Coverage of the inference rule is close but not total (the field's own definition is uncarried), and the frozen single sentence admits no partial trim."
+  },
+  "tool-parameter-artifact-files-map-source": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The absolute-path allowance and the `root` default are stated only here; the siblings describe `root` from the other direction."
+  },
+  "tool-parameter-artifact-files-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The served-next-to-the-page placement is the operative fact for writing the page's own references and has no carrier; the sentence is frozen, so no partial cut is legal."
+  },
+  "tool-parameter-artifact-limit": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The default value 25 is a number the model cannot infer and no deployed carrier states it; nothing to cut."
+  },
+  "tool-parameter-artifact-pr-review": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The only carriers are conditionally-loaded skill bodies of ambiguous branch-liveness, and one of the two live variants contradicts the composed-template claim; the payload-vs-invocation binding is a security/identity contract, so it stays verbatim rather than resting on an uncertain carrier."
+  },
   "tool-parameter-artifact-reply-text": {
     "verdict": "pristine-keep",
     "version": "2.1.228",
     "why": "This parameter contract uniquely fixes the reply action\u2019s content type and 4096-byte UTF-8 ceiling. The too-large error reports violations but does not replace the input schema."
+  },
+  "tool-parameter-artifact-runtime-version": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The three-way value semantics of the runtime-version input exist nowhere else in any deployed body; nothing duplicated, nothing to cut."
   },
   "tool-parameter-artifact-session-context": {
     "verdict": "pristine-keep",
@@ -5712,6 +5982,56 @@
     "version": "2.1.226",
     "why": "Carries four distinct schema mechanics: `reply` uses the id as its destination, `comments` uses it as a single-thread filter, the size cap may still elide a long thread, and ids come from comment results or notifications. The broader comments description covers replying but not the read-one-thread behavior, cap caveat, or both id sources."
   },
+  "tool-parameter-artifact-version": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The pristine-level overlap does not survive into the deployed carrier, so this fragment is the sole live copy of the intent-required rule; it is also the tail of a split template literal and cannot be shortened without breaking the sentence."
+  },
+  "tool-parameter-artifact-version-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The character cap and the picker surface are non-inferable and uncarried anywhere; the single example is the one representative instance the rules permit."
+  },
+  "tool-parameter-ask-user-question-header": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both the char cap and the register calibration are unique and non-inferable; deleting the frozen examples sentence would cost calibration for a ~15-token saving."
+  },
+  "tool-parameter-askuserquestion-annotations": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The keying contract is an output/input shape fact the model cannot infer and no deployed sibling carries."
+  },
+  "tool-parameter-askuserquestion-metadata": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The non-visibility fact is unique and load-bearing; nothing to trim from twelve words of mechanics."
+  },
+  "tool-parameter-askuserquestion-preview-html-validation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "An error-tag string on the validation path; altering or removing it changes what the model is told when a call is refused, and no sibling emits this message."
+  },
+  "tool-parameter-askuserquestion-uniqueness-validation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Two-level uniqueness contract emitted on refusal; the nearest deployed text covers only per-question label distinctness and never the question-text rule."
+  },
+  "tool-parameter-auto-mode-setup-environment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "This is the only field in the auto-mode-setup family that forbids the sentinel, and the `### ` separator is an output-shape fact stated nowhere else; inverting or dropping it would corrupt the proposal payload."
+  },
+  "tool-parameter-auto-mode-setup-remove-from-allow": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique per-slot output contract for a structured-output field; wiping it leaves the propose model's removal list undefined. No slop present."
+  },
+  "tool-parameter-bash-command": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Irreducible input-schema label for the Bash tool's only required parameter. Sole carrier."
+  },
   "tool-parameter-bash-persistent-command": {
     "verdict": "pristine-keep",
     "version": "2.1.228",
@@ -5727,6 +6047,221 @@
     "version": "2.1.228",
     "why": "REFUTED by main loop: this prompt ships in the SDK betaAgentToolset20260401 (EnvironmentWorker, cli.js @286067-291099), whose worker receives ONLY those six tool schemas. The cited carriers are Claude Code main-agent tool descriptions and are never delivered on this surface, so the coverage does not exist. Reverted to pristine."
   },
+  "tool-parameter-browser-batch-actions": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole concrete payload spec for the {name,input} batch array; the prose sibling states the shape but not the literal JSON or the per-item tabId. Frozen text cannot be compressed, and deleting the example would drop the only worked shape."
+  },
+  "tool-parameter-chrome-javascript-action-literal": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole statement of a required enum value; deleting it leaves the action field unconstrained."
+  },
+  "tool-parameter-chrome-read-page-filter": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the filter enum and its default; unavailable elsewhere in the corpus."
+  },
+  "tool-parameter-chrome-ref-file-input-upload": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Duplication here is definitional per-slot value typing, not repeated instruction; a wipe would leave the upload tool's ref slot undescribed. 93 chars, nothing to trim without deleting the slot's only spec."
+  },
+  "tool-parameter-chrome-ref-from-read-page": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Shortest possible per-slot type spec with a unique sourcing constraint; nothing to remove."
+  },
+  "tool-parameter-chrome-ref-scroll-to": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The unique mechanics dominate; removing the shared lead clause would leave 'Required for `scroll_to`' with no definition of the value in its own slot for ~30 chars of gain. Keep verbatim."
+  },
+  "tool-parameter-chrome-shortcuts-repeat": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of the chrome shortcuts_execute repeat param and its default; the similar-looking sibling belongs to another tool with different limits."
+  },
+  "tool-parameter-claude-in-chrome-coordinate": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Irreducible coordinate label carrying a live identifierMap interpolation; any edit risks the slot binding. Note for the maintainer: the fable-5 set has diverged to a prose rewrite ('Viewport coordinate pair [x, y]...') that DROPS the ${...VAR_0.x} interpolation \u2014 out of scope for this active-set verdict, but it is a real divergence."
+  },
+  "tool-parameter-claude-in-chrome-left-click-drag-start-coordinate": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the drag start-point default plus a live interpolation slot."
+  },
+  "tool-parameter-claude-in-chrome-zoom-region": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of a non-inferable coordinate-space contract."
+  },
+  "tool-parameter-computer-coordinate": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole enumeration of which computer actions consume this coordinate; unique and load-bearing."
+  },
+  "tool-parameter-computer-coordinate-end-point": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `coordinate:{...i,description:`(x, y) end point: ${n.x}`}` inside the mcp `left_click_drag` tool. The ${VAR.x} interpolation is a live variable contract against the coordinate-space description table; the sentence contains a parameter/coordinate-tuple name so it is frozen. It is the only description that param has."
+  },
+  "tool-parameter-computer-onboarding-step-actions": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `.describe` on `actions` in the teach-step builder C6S. Every sentence is frozen by the tripwire \u2014 'computer_batch.actions' is a tool/parameter name, 'Empty array is valid' is a validation gate, and 'sequentially'/'stop on first error' is an ordering-and-error contract. No sibling states the empty-array allowance or the abort-on-first-error semantics."
+  },
+  "tool-parameter-computer-repeat": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site in the compact batch action-item schema (`repeat:{type:'integer',minimum:1,maximum:100,description:'For key: repeat count.'}`). Contains a tool/action name ('key') so it is frozen. It is the only description this param has; the range is carried by the JSON schema, not the prose."
+  },
+  "tool-parameter-computer-scroll-amount": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `scroll_amount:{type:'integer',minimum:0,maximum:100,description:'Number of scroll ticks.'}` in the standalone mcp `scroll` tool. Wiping would leave that param undescribed while the only similar text lives in a different tool that states a different default and a different min/max."
+  },
+  "tool-parameter-computer-scroll-direction": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site. Three words of pure schema label with no slop; the sibling that contains the substring belongs to a different tool whose `scroll` action semantics differ, so it cannot stand in as coverage."
+  },
+  "tool-parameter-computer-start-coordinate": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site in the unified `computer` tool's schema, adjacent to the verbose scroll_direction/scroll_amount/region params. Contains a tool/action name (`left_click_drag`) so it is frozen. Sole description for that param in that variant."
+  },
+  "tool-parameter-computer-start-coordinate-drag": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site in the compact batch action-item schema. Frozen by the tripwire (restrictive 'only' plus an action name plus a default-on-omission rule). The omit-default is stated nowhere else in the corpus."
+  },
+  "tool-parameter-computer-text": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site in the compact batch action-item schema. The sentence is a two-or-more-item enumeration naming five action names, so it is frozen verbatim-or-delete; deleting loses the only mapping the model has for a polymorphic param."
+  },
+  "tool-parameter-computer-use-available-apps": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified live conditional fragment in Dar: `o = r&&r.length>0 ? ` Available applications on this machine: ${r.join(\", \")}.` : \"\"`, appended to the request_access `apps` param description. The leading space is load-bearing concatenation and ${VAR.join(\", \")} is a live variable contract. Emitting nothing would strip the machine's actual app list from the only place the model can read it."
+  },
+  "tool-parameter-computer-use-normalized-x": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified live: E6S.normalized_0_100.x, selected by `let n=E6S[t]` and emitted as `(x, y): ${n.x}` in every coordinate param of the mcp computer server. Frozen by the tripwire (number/threshold/range plus an enumeration of the two edge values). Sole carrier of the percentage coordinate contract."
+  },
+  "tool-parameter-computer-use-normalized-y": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified as E6S.normalized_0_100.y. Note a liveness finding: the only reader is `let n=E6S[t]` in Dar, which reads `n.x` exclusively \u2014 `n.y` is never emitted into any schema, so this string currently costs zero tokens. Per the campaign rule, disuse alone is not a wipe reason, and it is the sole description of the vertical axis if Anthropic wires `n.y` in. Frozen (range + edge enumeration)."
+  },
+  "tool-parameter-computer-use-pixels-x": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified as the live half of the pixel-space table \u2014 every coordinate param in the mcp computer server renders `(x, y): ${n.x}`. Frozen (contains 'all', a path-free but explicit origin, and the screenshot-recency contract). The no-rescaling guard is a correctness contract stated nowhere else."
+  },
+  "tool-parameter-computer-use-pixels-y": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified as E6S.pixels.y \u2014 currently a dead branch that costs zero tokens, which per the campaign rule is not a wipe reason. It is the only description of the vertical pixel axis, and its sentences are frozen (restrictive 'all', origin edge, screenshot-recency contract). I initially considered trimming the duplicated scaling sentence here, then refuted the trim on the co-presence evidence above."
+  },
+  "tool-parameter-computer-use-teach-explanation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: string-concatenated suffix on the teach-step `explanation` describe in C6S, emitted only when e.teachMode is on. Deleting it is the only alternative to keeping it verbatim, and deleting loses the unique fact that the model's prose reaches the user nowhere else in teach mode."
+  },
+  "tool-parameter-computer-wait-duration": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both of the two sites are binary-verified and identical: the standalone mcp `wait` tool's `duration` and the standalone `hold_key` tool's `duration`. One override serves both. The string is frozen (explicit 0\u2013100 range)."
+  },
+  "tool-parameter-cowork-expires-at": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `expires_at:N().optional().describe(...)` on the Cowork staged-call mcp inputSchema. Every sentence trips the tripwire (REQUIRED gate, error tag error_code=expired, ordering words 'after'/'past'/'Once', param names output_files/timeout_ms, fail-closed rule). Conditional on the Cowork MCP tool being present, so it costs zero when off."
+  },
+  "tool-parameter-cowork-if-match-etag": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `if_match:N().min(1).optional().describe(...)`. Frozen throughout (error tag, restrictive 'must still carry', the empty-string validation gate, an ordering/retry contract). The omitted-vs-empty-string distinction exists nowhere else in the corpus and is exactly the kind of silent-data-loss trap a wipe would reintroduce."
+  },
+  "tool-parameter-cowork-input-lane-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: `lane_path:N().describe(...)` inside the input_files entry schema. Frozen (a filesystem path, e.g., error_code=input_missing, and the staging.inputs_used field name). Sole carrier of where staged input paths live and how the actually-staged etag is reported back."
+  },
+  "tool-parameter-cowork-staged-input-output-files": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Binary-verified single live site: the `.describe()` on the input_files array in the Cowork staged-call inputSchema. Frozen (parameter names input_files/output_files, per-UID and random path constraints, a `staging` result field name, and an ordering contract fetch\u2192run\u2192write-back). The caller-never-computes-paths clause is a security contract with no other copy in the corpus."
+  },
+  "tool-parameter-cowork-staging-detail": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, load-bearing, slop-free. Sole copy of the rule that staging.detail may carry user-document content and must not be logged verbatim or sent to analytics."
+  },
+  "tool-parameter-cowork-staging-result-presence": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The one duplicated clause sits inside a frozen sentence that also carries the unique partial-effects and unconditional-PUT-retry facts; cutting inside it is prohibited and deleting the whole sentence would lose unique mechanics. Nothing else is cuttable, so the prompt stays verbatim."
+  },
+  "tool-parameter-cowork-staging-retryable": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique fail-closed contract for an optional field; without it 'absent' is ambiguous and the model would retry a deterministic failure."
+  },
+  "tool-parameter-cron-datetime-iso8601": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, frozen error string carrying a format contract; wiping it would only degrade the parse-failure message. Flagged separately: the id/description misattribute it to Cron and it is a config-validation string rather than a model-facing tool parameter."
+  },
+  "tool-parameter-design-preview-card-subtitle": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique and the sole description of the field; wiping leaves an undescribed free-text field."
+  },
+  "tool-parameter-design-sync-project-id": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique argument-gating contract the model cannot infer from the method list; without it projectId gets sent to list_projects/create_project or omitted where required."
+  },
+  "tool-parameter-design-sync-report-validate-counts": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique. Also a split-string fragment: the pristine piece ends mid-sentence and its continuation is a separate id (tool-description-report-validate-counts-only), so a solo wipe would emit a dangling 'counts only, no component names or paths.'"
+  },
+  "tool-parameter-design-sync-write-files": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Content is fully covered, but the pristine piece is the first half of a concatenated string literal that ends mid-clause ('\u2026 \u2014 split '); its continuation is the separate id tool-description-write-files-split-bundles. Wiping this id alone emits the dangling fragment 'larger bundles across multiple write_files calls under the same planId).' as the field description \u2014 a delivery defect worse than the duplication. Keeping it verbatim is the safe outcome for this packet. If the orchestrator wants the wipe, it must be paired with a wipe of tool-description-write-files-split-bundles in the same pass; that decision is outside this packet."
+  },
+  "tool-parameter-designsync-asset-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Coverage is partial only; the not-a-path contrast is the working signal given `name` and `path` sit side by side in the same object, and there is nothing left to trim at eight words."
+  },
+  "tool-parameter-designsync-card-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, load-bearing path contract at a schema slot no other text describes; zero slop to remove."
+  },
+  "tool-parameter-designsync-file-encoding-base64": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole statement of an enum value and when to set it; frozen (enum literal + parameter semantics) and unduplicated."
+  },
+  "tool-parameter-designsync-paths": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Complementary fragment carrying a two-method enumeration; frozen text and splitting-sensitive \u2014 editing it would desynchronise the adjacent fragment."
+  },
+  "tool-parameter-designsync-project-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen sentence (e.g. marker + literal path) and the sole description of the slot."
+  },
   "tool-parameter-device-bash-timeout-ms": {
     "verdict": "pristine-keep",
     "version": "2.1.227",
@@ -5737,6 +6272,31 @@
     "version": "2.1.227",
     "why": "The load-bearing claim is that the supplied string is executed specifically through `bash -c`. No deployed sibling states that mechanism; the closest device_bash description instead says the device shell may be bash or zsh, which is not equivalent."
   },
+  "tool-parameter-edit-file-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Wiping leaves Edit's file_path undescribed; surface-similar siblings bind to other tools and cover nothing here."
+  },
+  "tool-parameter-edit-new-string": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen mechanics (must + parameter name) guarding a validation gate, stated nowhere else."
+  },
+  "tool-parameter-edit-old-string": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal, unique, and the only text at that schema slot."
+  },
+  "tool-parameter-edit-replace-all": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Partial coverage only; the frozen sentence cannot be split to keep the default, so it stays verbatim."
+  },
+  "tool-parameter-explain-command-risk-level": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen enumeration of enum values with their thresholds; sole definition of the LOW/MEDIUM/HIGH contract."
+  },
   "tool-parameter-feedback-details": {
     "coveredBy": ["tool-description-sendfeedback-drafting-guidance"],
     "injectionPath": "cli.js g4b (~offset 12,555,740), the zod .describe() on the SendFeedback input schema's `details` field. Reaches the model as part of the tool's input_schema in every API request that carries the SendFeedback tool (gated",
@@ -5744,15 +6304,150 @@
     "version": "2.1.224",
     "why": "Read in full. Most of it is a pure output-shape contract and is on the keep list verbatim: the five labelled bullets in a fixed ORDER with their exact bold spellings (**What happened:**, **What the user said:**, **Repro:**, **Evidence:**, optional **Cause:**), the exact fallback string \"User didn't comment; observed by the model.\", the per-bullet field lists (\"request IDs, timestamps, paths, versions \u2014 omit if none\"), and the cap \"One to three lines per bullet.\" All frozen; all uninferable. \"optionally a final **Cause:** only if verified in-session\" is additionally an Opus-5 \u00a73 KEEP (assertion"
   },
+  "tool-parameter-form-input-value": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen enumeration mapping element kinds to value types; unique and load-bearing for correct argument construction."
+  },
+  "tool-parameter-gif-export-filename": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen (literal filename template, action enum name) and the sole source of the export default."
+  },
+  "tool-parameter-gifcreator-action": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen enumeration of enum literals; partial coverage at best and the distinguishing semantics exist only here."
+  },
+  "tool-parameter-glob-pattern": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal, unique text at a required schema slot."
+  },
   "tool-parameter-glob-search-directory": {
     "verdict": "pristine-keep",
     "version": "2.1.228",
     "why": "REFUTED by main loop: this prompt ships in the SDK betaAgentToolset20260401 (EnvironmentWorker, cli.js @286067-291099), whose worker receives ONLY those six tool schemas. The cited carriers are Claude Code main-agent tool descriptions and are never delivered on this surface, so the coverage does not exist. Reverted to pristine."
   },
+  "tool-parameter-grep-after-context": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen (flag name, enum value output_mode: \"content\", ordering word 'after'); the -A slot is described nowhere else."
+  },
+  "tool-parameter-grep-before-context": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole documentation of the -B parameter's semantics and its output_mode:\"content\" precondition at the call site. Unique, load-bearing, zero slop."
+  },
+  "tool-parameter-grep-case-insensitive": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the -i parameter's meaning; already minimal."
+  },
+  "tool-parameter-grep-context": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only documentation of -C and of the fact that -C spans both directions; unique per-slot mechanics."
+  },
+  "tool-parameter-grep-context-alias": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement that -C is an alias for context; wiping it would leave an undocumented schema key."
+  },
+  "tool-parameter-grep-glob": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen examples plus the exact rg flag mapping; partial overlap with the tool description is not full coverage and the frozen span forbids compression."
+  },
+  "tool-parameter-grep-head-limit": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Carries three facts available nowhere else \u2014 the 250 default, 0-for-unlimited, and which output modes head_limit applies to \u2014 all inside frozen spans."
+  },
+  "tool-parameter-grep-line-numbers": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only source of the -n default (true), which the model cannot infer and which differs from the -o default; unique mechanics."
+  },
+  "tool-parameter-grep-multiline": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Uniquely carries the dotall semantic, the exact rg flags, and the default; the tool description covers only the trigger, not the behavior."
+  },
+  "tool-parameter-grep-only-matching": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of the -o output shape and its default; the '(non-empty)' qualifier and one-match-per-line contract are unrecoverable elsewhere."
+  },
+  "tool-parameter-grep-output-mode": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only place stating which context/line-number/limit params each output mode honors \u2014 the gate every other grep param's 'Requires output_mode: \"content\"' clause points at."
+  },
+  "tool-parameter-grep-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement that path may be a file or a directory and that it defaults to cwd; both are call-correctness mechanics."
+  },
+  "tool-parameter-grep-pattern": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Required-parameter description; already at the floor."
+  },
+  "tool-parameter-grep-type": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique flag mapping and type list. Flagging for the maintainer, not acting on it here: the stale `include` reference is corrected in the fable-5 set only ('Prefer this over glob for standard file types.') \u2014 that is a rewrite the tripwire forbids, so opus-5 stays verbatim unless the user authorizes an upstream-drift correction."
+  },
+  "tool-parameter-list-keywords-filter": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement of the omit-means-all semantic for both List* tools; a wipe would make the filter's absence behavior undefined at two call sites."
+  },
   "tool-parameter-listagents-unavailable-in-build": {
     "verdict": "pristine-keep",
     "version": "2.1.224",
     "why": "Read in full despite being 41 characters, since size is not a triage signal: 'Not available in this build; leave unset.' No CAPS, no hedging, no politeness scaffolding \u2014 it is a dead-parameter marker plus the one action that follows from it. Check 2: corpus scan across the JSON, every override body and the shared system-reminders found nothing else stating that ListAgents' `channel` and `q` are inert \u2014 tool-description-listagents (deployed) documents the listing format and ref disambiguation but never mentions these params, and tool-description-listagents-reply-only-fragment is unrelated. So t"
+  },
+  "tool-parameter-listmcpresourcedir-server": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Required-parameter label for ListMcpResourceDir; already minimal."
+  },
+  "tool-parameter-listmcpresources-server": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only place marking this server param optional and stating what it filters."
+  },
+  "tool-parameter-loop-wakeup-stopped-output": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole binding between the model's `stop: true` input sentinel and the `stopped` field it reads back in the tool result; an output-schema contract."
+  },
+  "tool-parameter-lsp-go-to-definition-file-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement that relative paths are accepted here \u2014 a real divergence from the absolute-path-required convention of Read/Edit/Write, and load-bearing at ten call sites."
+  },
+  "tool-parameter-lsp-operation": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Required discriminator on the LSP tool; already at the floor."
+  },
+  "tool-parameter-lsp-query": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Zero slop and no proven co-emitted carrier. The empty-query behaviour is a runtime fact the model cannot infer from the field name; wiping the variant that turns out to be live would blank it. Conditional tool, so cost is zero when LSP is not configured."
+  },
+  "tool-parameter-mcp-oauth-callback-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen sentence (e.g., path/query-string literal, parameter name). The full-coverage claim fails the branch-liveness test, and a wipe would remove the only unconditional statement of the callback URL format for ~25 tokens on a rarely-loaded tool."
+  },
+  "tool-parameter-mcp-oauth-callback-url-remote": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique failure-mode mechanic plus a parameter-name contract; without it the model would treat the failed callback page as a dead end on remote sessions."
   },
   "tool-parameter-memory-list-cursor": {
     "ringResolved": true,
@@ -5819,6 +6514,71 @@
     "version": "2.1.224",
     "why": "Owns no claim. k3p's lead \u2014 `tool-description-memory-write-store`, kept as sentence 1 in this same resolution \u2014 already says the document is saved to 'a connected memory store (named by its store id)', and the discovery parenthetical is stated generically for all three tools by the always-on `system-prompt-memory-connected-stores-list-intro`. Repointed off `tool-description-memorywrite-prompt`, which is wiped AND does not render \u2014 so this wipe is safe only because the covers named here sit on rendering surfaces. Empty `.describe()` leaves `store` present with name and type; VAR_0's value (memo"
   },
+  "tool-parameter-message-for-user": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Markdown support is a rendering contract the model cannot infer from the field name, and nothing else in the corpus states it. The recipient clause is one word of context, not worth a trim."
+  },
+  "tool-parameter-monitor-timeout": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The max threshold and the persistent-overrides-timeout rule exist nowhere else; both are frozen mechanics."
+  },
+  "tool-parameter-onboarding-tooltip-anchor": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique positioning mechanic plus a live ${VAR.x} interpolation \u2014 editing the body risks the slot binding for zero token gain on a prompt that only loads inside the onboarding flow."
+  },
+  "tool-parameter-powershell-command-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Output-shape requirement, and its conciseness directive is exactly what the Opus-5 card says must come from us. No full carrier, and nothing left to trim from a single ten-word spec."
+  },
+  "tool-parameter-powershell-dangerously-disable-sandbox": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of a sandbox-bypass flag shared by two tools. The only available cut is the danger signal itself, which guards a destructive capability rather than being safety theater, and is worth ~4 tokens. Note fable-5 has this file wiped; the opus-5 digest explicitly reverses fable's anti-moralizing cuts, so the sets legitimately diverge here."
+  },
+  "tool-parameter-powershell-run-in-background": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique per-tool schema description of a boolean the model sets; nothing in the corpus states it for PowerShell, and there is no bloat to remove."
+  },
+  "tool-parameter-powershell-timeout": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Load-bearing cap plus a positional variable slot; the overlap is a prose restatement in a different serialization position, and the string is ~8 tokens with zero slop."
+  },
+  "tool-parameter-projects-finalize-deletes": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique syntax/limits contract for a destructive plan field; the cross-reference to the writes param is load-bearing and its target is being kept intact."
+  },
+  "tool-parameter-projects-finalize-writes": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique, fully frozen glob syntax and cap mechanics for a permission-gated write plan; nothing duplicated, nothing to cut."
+  },
+  "tool-parameter-projects-get-file-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal, unique argument label with zero bloat; wiping would leave a required param undescribed for no token saving."
+  },
+  "tool-parameter-projects-local-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Coverage is real but the fragment cannot be removed independently without producing an ungrammatical param description, and cross-packet coordination is not available here. Keeping it costs ~12 tokens; revisit only if the continuation id is wiped in the same pass."
+  },
+  "tool-parameter-projects-search-hits": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique numeric default (frozen under the tripwire) for the argument the model sets; nothing duplicated."
+  },
+  "tool-parameter-projects-search-query": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Removing a four-token argument label saves nothing and leaves a required param undescribed; the overlap is a method blurb, not an argument contract."
+  },
   "tool-parameter-propose-goal-ask-user": {
     "verdict": "pristine-keep",
     "version": "2.1.227",
@@ -5828,6 +6588,31 @@
     "verdict": "pristine-keep",
     "version": "2.1.227",
     "why": "The separate-evaluator contract, conversation-only verifiability, representative check, and character cap are all already in the deployed ProposeGoal description. The approval-dialog readability clause only explains the duplicated cap and adds no further behavior. [stage-3 refutation applied: The wipe drops the prompt's only bound identifier occurrence and the claimed deployed carrier omits the cap and evaluator constraints. Revert to pristine. \u2014 the cut was reverted to pristine in opus-5.]"
+  },
+  "tool-parameter-proposeskills-description": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique output-shape requirement for the field; nothing to cut."
+  },
+  "tool-parameter-proposeskills-evidence": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique value contract \u2014 the model cannot infer that this field wants memory file paths rather than prose."
+  },
+  "tool-parameter-proposeskills-name": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique format contract (kebab-case slug) the model cannot infer; zero bloat."
+  },
+  "tool-parameter-proposeskills-skill-md": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen output-shape enumeration (the three required body sections) that exists nowhere else; keep verbatim."
+  },
+  "tool-parameter-proposeskills-target": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique validation gate binding this field to the enum values 'improvement' and 'new' \u2014 frozen mechanics under the tripwire."
   },
   "tool-parameter-read-view-range": {
     "verdict": "pristine-keep",
@@ -5873,6 +6658,121 @@
     "verdict": "pristine-keep",
     "version": "2.1.227",
     "why": "The frozen enumeration defines exactly which actions require `trigger_id`. The deployed RemoteTrigger body covers endpoint paths for `get`, `update`, and `run` but omits `list_runs`, so deleting the sentence would lose a unique requirement."
+  },
+  "tool-parameter-repl-timeout": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole binding of the REPL default (30000 ms) and hard cap (600000 ms) anywhere in the corpus \u2014 a runtime limit the model cannot infer. Frozen (two numbers) and load-bearing."
+  },
+  "tool-parameter-report-findings-category": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The only full carrier is conditional and branch-dependent, so it cannot prove coverage at schema-serialization time; the slug vocabulary would be lost whenever that branch does not load. Frozen and load-bearing \u2192 keep verbatim."
+  },
+  "tool-parameter-report-findings-count": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of the count field. At four words there is no bloat to trim and no carrier to merge into."
+  },
+  "tool-parameter-report-findings-failure-scenario": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Output-shape requirement (inputs/state \u2192 failure, not a prose narrative) whose only carrier is a conditional, mutually-exclusive skill branch. Keep verbatim."
+  },
+  "tool-parameter-report-findings-file": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "'Repo-relative' is a real path contract distinguishing this from the absolute-path convention every other tool in the schema uses \u2014 non-inferable and stated nowhere else."
+  },
+  "tool-parameter-report-findings-level": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole statement that this field records the effort the review actually ran at (rather than a requested or target effort). Nothing to trim at six words."
+  },
+  "tool-parameter-report-findings-line": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "'1-indexed' is an off-by-one contract the model cannot infer and no carrier states. Frozen (number) and load-bearing."
+  },
+  "tool-parameter-report-findings-summary": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "'One-sentence' is an output-shape cap that keeps this field distinct from the sibling short_summary (\u226460 chars) and failure_scenario. Its only carrier is a conditional, mutually-exclusive branch."
+  },
+  "tool-parameter-report-findings-verdict": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The absence clause for inline-only reviews exists nowhere else in the corpus, and the only partial carrier is conditionally loaded. Frozen (ordering word 'when' plus a presence/absence contract) and load-bearing."
+  },
+  "tool-parameter-reportfindings-short-summary": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Partial (not full) corpus coverage plus a frozen single sentence: the tripwire forbids compressing inside it, so the only lawful trim would delete the uncovered low-effort-path mechanic. Keep verbatim."
+  },
+  "tool-parameter-requestaccess-apps": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique matching contract for its own site; the only overlapping string is a mutually-exclusive variant of the same parameter. Zero slop."
+  },
+  "tool-parameter-requestaccess-apps-bundle-example": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The bundle-id format example is unique and load-bearing, and the e.g. enumeration is frozen. Nothing to cut."
+  },
+  "tool-parameter-requestaccess-clipboard-read": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The 'separate checkbox in the dialog' fact is the unique, uninferable mechanic of this flag; no carrier states it."
+  },
+  "tool-parameter-requestaccess-clipboard-write": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique behavioral coupling (grant \u2192 clipboard fast path for multi-line type), frozen by the parameter/tool name reference."
+  },
+  "tool-parameter-requestaccess-system-key-combos": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the gating contract and its scope; nothing duplicated, nothing sloppy."
+  },
+  "tool-parameter-resolve-connectors-uuids": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The server_id alternative is unique; wiping would leave the array param undescribed while saving ~8 tokens."
+  },
+  "tool-parameter-sandbox-credential-inject-hosts": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of a validation gate; the id has 2 identical sites, both the same literal, so no per-site divergence to reconcile."
+  },
+  "tool-parameter-sandbox-env-vars-protect": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only definition of a two-value enum plus the mask-substitution/proxy-injection contract. Fully load-bearing."
+  },
+  "tool-parameter-schedulewakeup-cancelled-wakeups": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The cron carve-out is a unique, surprising contract the model cannot infer; keep verbatim."
+  },
+  "tool-parameter-schedulewakeup-loop-prompt": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of a two-way sentinel disambiguation; mis-stating it silently breaks autonomous /loop. Keep verbatim, placeholders intact."
+  },
+  "tool-parameter-search-keywords-intent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Distinct tool, distinct field, uniquely admits the named-product form; already at the floor length."
+  },
+  "tool-parameter-search-plugins-keywords": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only descriptor for its own field; wiping saves ~7 tokens and leaves the array unlabelled."
+  },
+  "tool-parameter-searchplugins-keywords-intent": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Per-tool schema field at minimum length; the overlap is coincidental phrasing across separate tool payloads, not coverage."
   },
   "tool-parameter-self-hosted-runner-log-path": {
     "ringResolved": true,
@@ -5937,6 +6837,11 @@
     "version": "2.1.224",
     "why": "Read in full: 'Default: ${TOOL_PARAMETER_SELFHOSTED_RUNNER_LOG_PATH_VAR_0}' \u2014 nine literal characters and a variable. Judged on both checks, not on length. Slop check: there is no prose to be slop; no CAPS, no hedging, no restatement. It is a variable contract, which the standard names load-bearing, and it is the ONLY place the default log path is communicated \u2014 wiping it leaves the parameter with an empty description and the model with no way to know or report where the runner writes its log. Corpus scan: 'Default: ' appears 27 times in cli.js, but the only sibling in this schema is tool-para"
   },
+  "tool-parameter-send-message-recipient": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal field label with no live carrier at its site."
+  },
   "tool-parameter-sendfeedback-area": {
     "verdict": "pristine-keep",
     "version": "2.1.228",
@@ -5952,11 +6857,206 @@
     "version": "2.1.224",
     "why": "Check 1: 'What kind of task the session was doing when the issue occurred \u2014 or `other` when it is a clear task that fits no listed value. Omit only if genuinely unclear.' No CAPS, no hedging, no restated rule; both clauses are FROZEN (enum value `other`, restrictive 'only'). Check 2: the pristine `tool-description-sendfeedback-drafting-guidance` carried the matching bullet ('Use `task_category` to name what kind of task the session was doing, or `other` when it is a clear task that fits no listed value. Omit only if genuinely unclear.'), but its DEPLOYED override body drops that bullet entirel"
   },
+  "tool-parameter-sendfeedback-title": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole output-shape constraint for this field; nothing duplicated."
+  },
+  "tool-parameter-sendfile-files": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The always-array input-shape contract is unique and is the kind of schema constraint a wipe would turn into a runtime error."
+  },
+  "tool-parameter-sendfile-message": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the `message` field's optionality and brevity contract in the SendFile inputSchema; nothing to cut from an 8-word non-slop line."
+  },
+  "tool-parameter-sendmessage-message-text": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal, non-slop field description with no sibling stating the same contract; wiping would blank the `message` param across all three emission sites for zero token gain."
+  },
   "tool-parameter-sendmessage-recipient-cross-session": {
     "ringResolved": true,
     "verdict": "pristine-keep",
     "version": "2.1.224",
     "why": "Owns C4 and is the ring's only member with a live injection site. Two corrections to stage 1. (1) Its 'dead branch' ground does not discriminate: `iw(){if(Wt()===\"windows\")return!1;return ot(\"tengu_harbor_kite\",!1)||Boolean(ee.CLAUDE_CODE_HARBOR_KITE)}` gates the *entire* cross-session family \u2014 this param, the rows fragment, and the cross-session-guidance block stage 1 leaned on as the merge target. If the off-flag justifies wiping, it wipes the merge target too, which is exactly the cycle. And the feature is not cut: it is a statsig that can roll on plus a local env override, so an override v"
+  },
+  "tool-parameter-sendmessage-summary-preview": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Frozen mechanics throughout \u2014 a numeric range, a threshold variable, a default rule and a failure-mode contract (truncate, not reject) that exist nowhere else in the corpus."
+  },
+  "tool-parameter-senduserfile-inline-data": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "A composite fragment spliced into the interior of a larger schema string \u2014 any wipe or trim would leave the enclosing sentence garbled, so verbatim retention is the only safe outcome. Flag for the parent: the fable-5 deployment of this id substitutes a full standalone sentence into that mid-string slot and will render as broken prose; opus-5 (the active set) matches pristine and is correct."
+  },
+  "tool-parameter-senduserfile-prebuilt-filestore-attachment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the pass-through contract (no local stat, no re-upload) for already-uploaded filestore attachments; the attach_file provenance and that mechanic are not inferable from the field name."
+  },
+  "tool-parameter-set-cwd-changed": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the `changed` output field's semantics, including the success-with-no-side-effects reading the model needs to avoid treating a no-op as a failure."
+  },
+  "tool-parameter-set-cwd-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the input-normalization contract; the tilde/realpath behaviour and the /cd equivalence are frozen mechanics the model cannot infer from the parameter name."
+  },
+  "tool-parameter-set-cwd-rejected-message": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the rejected-arm message's output-shape contract; nothing to cut from a four-word line."
+  },
+  "tool-parameter-set-cwd-rejection-reason": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Canonical carrier of the unsafe_path enum: the exhaustive Unicode-category list, the fail-closed-before-trust-round-trip ordering, and the never-echo-the-path guarantee are all frozen security mechanics that appear in full nowhere else."
+  },
+  "tool-parameter-set-cwd-transcript-relocated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of a double-failure edge contract and its downstream consequence (a cwd-derived resume lookup misses the session) \u2014 unrecoverable information if wiped."
+  },
+  "tool-parameter-set-cwd-trust-accepted": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the attestation precondition, the trust-latch write shared with /cd's own prompt, and the ordering (latch before relocate) \u2014 all frozen security mechanics."
+  },
+  "tool-parameter-set-cwd-trusted-directory": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the TOCTOU pinning contract and its failure behaviour (nothing latched, a fresh needs_trust carries the new canonical directory) \u2014 unique security and ordering mechanics."
+  },
+  "tool-parameter-set_cwd-ok-cwd": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the ok-arm output field's meaning and its realpath guarantee; nothing to cut from a nine-word line."
+  },
+  "tool-parameter-share-onboarding-guide-short-code": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the short_code field's provenance (returned by a previous call), the exhaustive list of modes that honor it, and the lookup-bypass behaviour \u2014 none of it present in either tool-description copy."
+  },
+  "tool-parameter-stop-task-shell-id-deprecated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass: zero slop and zero corpus coverage. The text names the parameter `task_id` and states a migration direction, so it is frozen mechanics (parameter name) and must remain verbatim if retained \u2014 which it must, being the only signal steering the model off the deprecated field."
+  },
+  "tool-parameter-suggest-plugin-install-context-label": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass \u2014 unique and load-bearing. It is the only instruction telling the model what string to compose for this field; wiping it would leave the field undefined."
+  },
+  "tool-parameter-task-mode-deprecated": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass. The inheritance rule and the frontmatter override are unique security/permission mechanics the model cannot infer, and the sentence is frozen (restrictive contract + the named override surface), so it stays verbatim. That the field itself is deprecated does not make the inheritance fact redundant \u2014 it is the only place that fact is stated."
+  },
+  "tool-parameter-task-output-timeout": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass. The millisecond unit is a parameter contract the model cannot infer (seconds is the equally plausible reading, and the sibling ScheduleWakeup delay is in seconds), so wiping would risk a 1000x-wrong value. Frozen as a unit/threshold spec \u2014 verbatim if retained."
+  },
+  "tool-parameter-task-prompt": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass. This is the only string distinguishing `prompt` (the full task) from `description` (a 3-5 word label) on the same tool; wiping it collapses that distinction and invites the model to put the task text in the wrong field."
+  },
+  "tool-parameter-task-subagent-type": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Slop check clean; duplication check yields only conditional partial coverage, which does not meet the full-coverage bar for a wipe. The two carriers that DID define the field (tool-description-agent-when-to-launch-subagents, tool-description-agent-usage-notes) are wiped in the active set, so coverage cannot be claimed from them."
+  },
+  "tool-parameter-teach-batch-steps": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Both checks pass. The sentence is frozen (ordering word 'Ordered', ordering word 'before', and the number 5) so it is verbatim-or-delete; deleting it would drop the only statement that a bad step fails the whole batch before any tooltip renders, which is unique error/ordering mechanics. Keep verbatim."
+  },
+  "tool-parameter-todo-write-todos": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole binding of the TodoWrite `todos` input_schema slot; minimal and unduplicated."
+  },
+  "tool-parameter-toolsearch-max-results": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Carries the only statement of the default result count (5); frozen numeric threshold with no carrier."
+  },
+  "tool-parameter-upload-filename": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement of the default filename for the upload slot; frozen default value."
+  },
+  "tool-parameter-waitformcpservers-server-names": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the omit-defaults-to-all-pending semantics for the `servers` slot."
+  },
+  "tool-parameter-web-fetch-url": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole description of the WebFetch `url` schema slot; the lead is a different emission site, not a carrier."
+  },
+  "tool-parameter-webfetch-prompt": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal, unique binding for the WebFetch `prompt` slot."
+  },
+  "tool-parameter-websearch-allowed-domains": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only text binding allowed_domains to include-semantics; wiping would leave the two domain filters indistinguishable."
+  },
+  "tool-parameter-websearch-blocked-domains": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only text binding blocked_domains to exclude-semantics; mechanics contract."
+  },
+  "tool-parameter-websearch-query": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal unique description of the WebSearch `query` slot."
+  },
+  "tool-parameter-workflow-args": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Claim is duplicated, but the fragment is not independently removable: the un-overridable middle literal makes any wipe or trim produce a truncated parameter description."
+  },
+  "tool-parameter-workflow-args-2": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Duplicated in content but structurally frozen; removing it truncates the assembled param description mid-token."
+  },
+  "tool-parameter-workflow-description-ignored": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement that this input is inert and where the real value belongs."
+  },
+  "tool-parameter-workflow-name": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the frozen path `.claude/workflows/` and the built-in-or-project resolution rule."
+  },
+  "tool-parameter-workflow-title-ignored": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only statement that this input is ignored and that the value belongs in the script's meta block."
+  },
+  "tool-parameter-write-content": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Minimal unique description of the Write `content` slot."
+  },
+  "tool-parameter-write-file-path": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole carrier of the absolute-path validation gate for Write's required path slot."
   },
   "tool-result-agent-mcp-required-missing": {
     "verdict": "pristine-keep",
@@ -6028,10 +7128,20 @@
     "version": "2.1.232",
     "why": "Sole carrier of a distinct failure cause. Deleting it leaves the agent-launch failure with no explanation, so the model would retry or misdiagnose it as an agent-type deny rule."
   },
+  "tool-result-agent-type-ambiguous-none-available": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Distinct branch of the ambiguity error that both closes off the near-miss names and re-lists the usable ones. No sibling co-emits it, and every token is frozen mechanics."
+  },
   "tool-result-agent-type-denied": {
     "verdict": "pristine-keep",
     "version": "2.1.233",
     "why": "Rule name, rule argument and \".source\" are enum/parameter mechanics the model needs to fix the permission \u2014 frozen and unique across all 3 emission sites."
+  },
+  "tool-result-agent-type-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "The recovery contract for the single most common Task-tool mistake \u2014 it echoes the bad value and lists the valid enum. Unique to its branch and entirely frozen text."
   },
   "tool-result-agent-worktree-isolation-guard": {
     "verdict": "pristine-keep",
@@ -6188,6 +7298,11 @@
     "version": "2.1.234",
     "why": "Unique single-site tool result for an asset-read egress block; names the blocked host var and the fix domain var. Deployed opus-5 body is byte-identical to pristine, so there is nothing to trim; a wipe would leave the model with no reason for the failure and no remediation."
   },
+  "tool-result-artifact-asset-read-invalid-input-reason": {
+    "verdict": "wipe-merge",
+    "version": "2.1.235",
+    "why": "A strictly weaker restatement of the message it ships beside in the same deny object. Zero facts are lost \u2014 the surviving carrier is the more specific of the two."
+  },
   "tool-result-artifact-asset-read-invalid-url": {
     "verdict": "pristine-keep",
     "version": "2.1.234",
@@ -6252,6 +7367,16 @@
     "verdict": "pristine-keep",
     "version": "2.1.234",
     "why": "Unique fetched-but-not-written error surfacing the underlying errno; the fallback string and the fetched-vs-saved distinction exist nowhere else."
+  },
+  "tool-result-artifact-asset-read-write-kept": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Distinct arm of a file-system error whose sole purpose is to hand the user the `.partial` recovery path; collapsing it into the -replaced sibling would assert a deletion that did not happen. Unique, frozen, load-bearing."
+  },
+  "tool-result-artifact-asset-read-write-kept-replaced": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Unique destructive-state fact ('the earlier copy at X was removed') plus the .partial sentinel path and the exact recovery instruction; no slop present and no carrier covers it."
   },
   "tool-result-artifact-asset-route-unrouted": {
     "verdict": "pristine-keep",
@@ -7093,6 +8218,11 @@
     "version": "2.1.234",
     "why": "Only copy of the cursor-format validation contract; entirely frozen tokens."
   },
+  "tool-result-artifact-list-assets-plan-mode-user-approval-required": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Distinct per-action decisionReason: the hazard clause (third-party-authored file names admitted to the conversation) exists nowhere else, and the trailing approval-routing contract is frozen mechanics."
+  },
   "tool-result-artifact-list-count-header": {
     "verdict": "pristine-keep",
     "version": "2.1.233",
@@ -7666,6 +8796,11 @@
     "version": "2.1.234",
     "why": "Unique runtime outcome: resume could not attach because a reconnect is mid-boot, plus the check-status-first ordering contract. Wiping leaves an empty tool result at this site."
   },
+  "tool-result-artifact-resume-replies-arm-in-flight": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the in-flight-connection failure mode, its self-clearing behaviour, and the \"status\" check; every sentence trips the frozen tripwire and nothing is duplicated."
+  },
   "tool-result-artifact-resume-replies-ask-killed": {
     "verdict": "pristine-keep",
     "version": "2.1.234",
@@ -7710,6 +8845,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.234",
     "why": "Deny-path message carrying the irreversibility, the recovery path (new session re-arms on publish), and the approval-suppression signal. No carrier renders in this situation with all three."
+  },
+  "tool-result-artifact-resume-replies-denied-watch-stop-latched": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole copy of the watch-stop denial's remediation path, its timing contract, and its approval-exemption; no slop and no full coverage anywhere."
   },
   "tool-result-artifact-resume-replies-generic-failure": {
     "verdict": "pristine-keep",
@@ -7785,6 +8925,16 @@
     "verdict": "pristine-keep",
     "version": "2.1.234",
     "why": "Interpolated fragment; deleting it would leave the approval reason without naming which stop is being reversed."
+  },
+  "tool-result-artifact-resume-replies-watch-relatch-reason-fragment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Slot-specific splice fragment with no rendering carrier; conditional cost is zero and the disclosure is a consent contract."
+  },
+  "tool-result-artifact-resume-replies-watch-stop-latched-deny-reason": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Sole statement of the clearing condition for the watch-stop hold, expressed as a frozen restrictive gate."
   },
   "tool-result-artifact-resume-replies-wrong-session-type": {
     "verdict": "pristine-keep",
@@ -7931,6 +9081,16 @@
     "verdict": "pristine-keep",
     "version": "2.1.231",
     "why": "Confirmation, session scope, remote wake behavior, and the no-content privacy contract are load-bearing mechanics. Removing the overlapping privacy/session clauses would delete security or permission semantics."
+  },
+  "tool-result-artifact-watch-session-not-found": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only copy of the server-lost-session cause plus its retry-suppression verdict; distinct from the originator-less and registration-failed siblings, which carry the opposite retry guidance."
+  },
+  "tool-result-artifact-watch-unavailable-in-deployment": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Distinct deployment-capability cause with its own retry-suppression verdict; nothing duplicated and nothing sloppy at twelve words."
   },
   "tool-result-artifact-write-db-invalid-url": {
     "verdict": "pristine-keep",
@@ -8889,6 +10049,11 @@
     "verdict": "pristine-keep",
     "version": "2.1.224",
     "why": "Read in full: 'Teammate \"${VAR_0}\" is running, but writing to its inbox failed \u2014 nothing was queued. Try again.' Slop check: 'Try again.' is the only candidate, and it is a transience signal rather than motivational filler \u2014 the sibling failure results in this family deliberately differ ('nothing was sent. Try again, or message the lead', 'needs your approval \u2014 nothing was sent' with no retry at all). 'nothing was queued' is the load-bearing half: it stops the model reporting a message as delivered, which is exactly the false-completion mode the Opus 5 card flags as having no gain to bank (1.2"
+  },
+  "tool-result-send-message-too-large": {
+    "verdict": "pristine-keep",
+    "version": "2.1.235",
+    "why": "Only place the cross-session message cap, the observed size, and the three concrete remedies are stated; both sentences trip the frozen tripwire on numbers and enumeration."
   },
   "tool-result-send-message-uds-exited-listing-hint": {
     "ringResolved": true,

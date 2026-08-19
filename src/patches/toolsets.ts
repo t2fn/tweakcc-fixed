@@ -751,23 +751,58 @@ export const writePrintToolsFilter = (
     ? JSON.stringify(defaultToolset)
     : 'undefined';
 
-  // CC >=2.1.219 folded the declaration into a multi-declarator `let`, so the
-  // statement can end on `,` instead of `;`: `let TOOLS=COMPUTE(STATE),NEXT=...`.
-  const toolsPattern =
-    /let ([$\w]+)=([$\w]+)\(([$\w]+)\)([;,])(?=[\s\S]{0,2500}tools:\1,refreshTools:\(\)=>\2\(([$\w]+)\(\)\))/;
-  const toolsMatch = oldFile.match(toolsPattern);
-  if (!toolsMatch || toolsMatch.index === undefined) {
+  // Anchor on the USE site, not the declaration. `tools:X,refreshTools:()=>F(G())`
+  // is a unique code shape; the declaration is not, so the old form matched
+  // `let X=F(S)` and demanded the use within 2500 chars. CC 2.1.235 pushed them
+  // 2,672 apart (MCP prewait code landed between) and the sub-patch silently
+  // stopped matching. A declaration dominates its use, so once X and F are
+  // pinned by the use site, the nearest preceding `let X=F(S)` is correct at any
+  // distance and no window needs maintaining.
+  const usePattern =
+    /tools:([$\w]+),refreshTools:\(\)=>([$\w]+)\(([$\w]+)\(\)\)/;
+  const useMatch = oldFile.match(usePattern);
+  if (!useMatch || useMatch.index === undefined) {
     console.error(
       'patch: toolsets: printToolsFilter: failed to find print tools initialization'
     );
     return null;
   }
 
-  const toolsVar = toolsMatch[1];
-  const computeFn = toolsMatch[2];
-  const stateVar = toolsMatch[3];
-  const terminator = toolsMatch[4];
-  const getterFn = toolsMatch[5];
+  const toolsVar = useMatch[1];
+  const computeFn = useMatch[2];
+  const getterFn = useMatch[3];
+
+  const escapeIdent = (name: string) => name.replace(/\$/g, '\\$');
+  // CC >=2.1.219 folded the declaration into a multi-declarator `let`, so the
+  // statement can end on `,` instead of `;`: `let TOOLS=COMPUTE(STATE),NEXT=...`.
+  const declPattern = new RegExp(
+    `let ${escapeIdent(toolsVar)}=${escapeIdent(computeFn)}\\(([$\\w]+)\\)([;,])`,
+    'g'
+  );
+  let declMatch: RegExpExecArray | null = null;
+  for (
+    let candidate = declPattern.exec(oldFile);
+    candidate !== null;
+    candidate = declPattern.exec(oldFile)
+  ) {
+    // Nearest declaration at or before the use; keep the first one after it only
+    // as a fallback for a hoisted/closured shape.
+    if (candidate.index < useMatch.index) declMatch = candidate;
+    else {
+      if (declMatch === null) declMatch = candidate;
+      break;
+    }
+  }
+  if (declMatch === null) {
+    console.error(
+      'patch: toolsets: printToolsFilter: failed to find print tools initialization'
+    );
+    return null;
+  }
+
+  const toolsMatch = declMatch;
+  const stateVar = toolsMatch[1];
+  const terminator = toolsMatch[2];
 
   // A `,` terminator means more declarators follow — reopen the `let` after the
   // injected statements so they keep their original binding form.
