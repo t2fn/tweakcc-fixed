@@ -542,7 +542,6 @@ const PATCH_DEFINITIONS = [
     group: PatchGroup.FEATURES,
     description:
       'Gracefully handle text blocks receiving thinking deltas — replaces throw with break to avoid stream crashes during LLM reasoning transitions',
-    modelFacing: true,
   },
   {
     id: 'ignore-whitespace-edit',
@@ -550,7 +549,6 @@ const PATCH_DEFINITIONS = [
     group: PatchGroup.FEATURES,
     description:
       'Adds ignore_whitespace parameter to FileEditTool — allows matching lines even when leading/trailing whitespace differs between requested edit and actual file content (recommended for C/Go/Rust/Shell; not Python/YAML)',
-    modelFacing: true,
   },
   {
     id: 'toolsets',
