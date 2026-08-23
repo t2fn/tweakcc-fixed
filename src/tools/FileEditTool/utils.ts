@@ -142,8 +142,9 @@ export function findActualString(
 
   const searchIndex = normalizedFile.indexOf(normalizedSearch)
   if (searchIndex !== -1) {
-    // Find the actual string in the file that matches
-    return fileContent.substring(searchIndex, searchIndex + searchString.length)
+    // Find the actual string in the file that matches — use normalized length
+    // because quote normalization changes string lengths (curly quotes are wider).
+    return fileContent.substring(searchIndex, searchIndex + normalizedSearch.length)
   }
 
   return null
@@ -332,9 +333,14 @@ function applyWhitespaceAgnosticEdit(
   // Detect the line ending style used in old_string so we can preserve it in the replacement
   const sourceLineEnding = detectLineEnding(oldString)
 
+  // Normalize quotes first (curly ↔ straight), then strip whitespace.
+  // This ensures matches work even when file uses curly quotes but model sent straight, or vice versa.
+  const quotedNormalizedOld = normalizeQuotes(oldString)
+  const quotedNormalizedOriginal = normalizeQuotes(originalContent)
+
   // Strip leading/trailing whitespace from each line for matching purposes
-  const strippedOld = stripLineWhitespace(oldString)
-  const strippedOriginal = stripLineWhitespace(originalContent)
+  const strippedOld = stripLineWhitespace(quotedNormalizedOld)
+  const strippedOriginal = stripLineWhitespace(quotedNormalizedOriginal)
 
   if (!strippedOriginal.includes(strippedOld)) {
     return null
@@ -348,12 +354,12 @@ function applyWhitespaceAgnosticEdit(
   const strippedMatchEnd = strippedMatchStart + strippedOld.length
 
   // Now map back from stripped positions to actual positions in originalContent.
-  // Strategy: walk through originalContent line-by-line, tracking the cumulative offset
+  // Strategy: walk through quotedNormalizedOriginal line-by-line, tracking the cumulative offset
   // in both the stripped and unstripped versions simultaneously. When we find a stripped
   // segment that overlaps with the match range, record its corresponding position in the
   // original content.
 
-  const origParts = splitPreservingLineEndings(originalContent)
+  const origParts = splitPreservingLineEndings(quotedNormalizedOriginal)
   const stripParts = splitPreservingLineEndings(strippedOriginal)
 
   let actualMatchStart = -1
@@ -377,17 +383,13 @@ function applyWhitespaceAgnosticEdit(
     const segEndInStripped = strippedOffset + part.length
 
     if (segEndInStripped > strippedMatchStart && segStartInStripped < strippedMatchEnd) {
-      // This segment is within the matched region — record its position in originalContent
-      const origIdx = originalContent.indexOf(part, actualMatchEnd >= 0 ? actualMatchEnd + 1 : 0)
-      if (origIdx !== -1) {
-        if (actualMatchStart === -1 || origIdx < actualMatchStart) {
-          actualMatchStart = origIdx
-        }
-        const endInOrig = origIdx + part.length
-        if (endInOrig > actualMatchEnd) {
-          actualMatchEnd = endInOrig
-        }
+      // This segment is within the matched region — record its position in quotedNormalizedOriginal.
+      // Since quote normalization preserves per-character offsets (straight/curly quotes are both 1 UTF-16 unit),
+      // these positions map directly to originalContent.
+      if (actualMatchStart === -1) {
+        actualMatchStart = i; // character offset in quotedNormalizedOriginal
       }
+      actualMatchEnd = i + part.length; // exclusive end
     }
 
     strippedOffset += part.length
@@ -398,8 +400,11 @@ function applyWhitespaceAgnosticEdit(
     return null
   }
 
-  // Extract the actual matched substring from originalContent
+  // Extract the actual matched substring from originalContent using the same offsets.
+  // Because quote normalization preserves character-level offsets, this gives us the
+  // correctly-quoted version of the match from the original file.
   const actualOldSubstr = originalContent.substring(actualMatchStart, actualMatchEnd)
+
 
   // Normalize newString's line endings to match oldString's style
   let normalizedNewString = normalizeLineEndings(newString, sourceLineEnding)
