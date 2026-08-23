@@ -64,6 +64,63 @@ export function stripTrailingWhitespace(str: string): string {
 }
 
 /**
+ * Strips leading and trailing whitespace from each line in a string while preserving line endings.
+ * This is used when `ignore_whitespace` mode is enabled to allow matching even if the model's
+ * indentation doesn't perfectly match the file's.
+ * @param str The string to process
+ * @returns The string with leading/trailing whitespace stripped from each line, preserving line endings
+ */
+export function stripLineWhitespace(str: string): string {
+  // Handle different line endings: CRLF, LF, CR
+  const lines = str.split(/(\r\n|\n|\r)/)
+
+  let result = ''
+  for (let i = 0; i < lines.length; i++) {
+    const part = lines[i]
+    if (part !== undefined) {
+      if (i % 2 === 0) {
+        // Even indices are line content — strip leading and trailing whitespace
+        result += part.replace(/^\s+|\s+$/g, '')
+      } else {
+        // Odd indices are line endings — preserve as-is
+        result += part
+      }
+    }
+  }
+
+  return result
+}
+
+/**
+ * Detects the line ending style used in a string.
+ * @param str The string to analyze
+ * @returns 'CRLF' if \r\n is present, 'CR' if only \r (no \n), otherwise 'LF'
+ */
+function detectLineEnding(str: string): 'CRLF' | 'CR' | 'LF' {
+  const hasCRLF = str.includes('\r\n')
+  const hasCR = str.includes('\r') && !hasCRLF
+  if (hasCRLF) return 'CRLF'
+  if (hasCR) return 'CR'
+  return 'LF'
+}
+
+/**
+ * Normalizes line endings in a string to use the specified style.
+ * @param str The string to normalize
+ * @param targetEnding The desired line ending: 'CRLF', 'CR', or 'LF'
+ * @returns The string with normalized line endings
+ */
+function normalizeLineEndings(str: string, targetEnding: 'CRLF' | 'CR' | 'LF'): string {
+  // First collapse all line endings to LF for a clean base
+  const lfOnly = str.replace(/\r\n/g, '\n').replace(/\r/g, '\n')
+
+  if (targetEnding === 'LF') return lfOnly
+  if (targetEnding === 'CRLF') return lfOnly.replace(/\n/g, '\r\n')
+  // CR only
+  return lfOnly.replace(/\n/g, '\r')
+}
+
+/**
  * Finds the actual string in the file content that matches the search string,
  * accounting for quote normalization
  * @param fileContent The file content to search in
@@ -208,6 +265,7 @@ export function applyEditToFile(
   oldString: string,
   newString: string,
   replaceAll: boolean = false,
+  ignoreWhitespace: boolean = false,
 ): string {
   const f = replaceAll
     ? (content: string, search: string, replace: string) =>
@@ -216,7 +274,35 @@ export function applyEditToFile(
         content.replace(search, () => replace)
 
   if (newString !== '') {
-    return f(originalContent, oldString, newString)
+    // Try exact match first — this is the fast path and preserves whitespace exactly
+    const result = f(originalContent, oldString, newString)
+    if (result !== originalContent) {
+      return result
+    }
+
+    // If exact match failed and ignore_whitespace is enabled, try matching with stripped whitespace
+    if (ignoreWhitespace && oldString.trim() !== '') {
+      const strippedOld = stripLineWhitespace(oldString)
+      const strippedOriginal = stripLineWhitespace(originalContent)
+
+      if (strippedOriginal.includes(strippedOld)) {
+        // Found a whitespace-agnostic match. Now we need to find the actual substring in originalContent
+        // that corresponds to the stripped match, accounting for variable leading/trailing whitespace per line.
+        const matched = applyWhitespaceAgnosticEdit(
+          originalContent,
+          oldString,
+          newString,
+          f,
+          replaceAll,
+        )
+        if (matched !== null) {
+          return matched
+        }
+      }
+    }
+
+    // If we got here, neither exact nor whitespace-agnostic match worked — rethrow the original error
+    throw new Error('String not found in file. Failed to apply edit.')
   }
 
   const stripTrailingNewline =
@@ -225,6 +311,113 @@ export function applyEditToFile(
   return stripTrailingNewline
     ? f(originalContent, oldString + '\n', newString)
     : f(originalContent, oldString, newString)
+}
+
+/**
+ * Applies an edit with whitespace-agnostic matching. When ignoreWhitespace is true,
+ * this function strips leading and trailing whitespace from each line of both the
+ * search string and file content before matching, then maps the match back to the
+ * original (unstripped) content for replacement.
+ *
+ * This preserves carriage return style: if oldString used CRLF line endings, the
+ * replacement also uses CRLF. If it used LF or CR, those are preserved too.
+ */
+function applyWhitespaceAgnosticEdit(
+  originalContent: string,
+  oldString: string,
+  newString: string,
+  replaceFn: (content: string, search: string, replace: string) => string,
+  _replaceAll: boolean = false,
+): string | null {
+  // Detect the line ending style used in old_string so we can preserve it in the replacement
+  const sourceLineEnding = detectLineEnding(oldString)
+
+  // Strip leading/trailing whitespace from each line for matching purposes
+  const strippedOld = stripLineWhitespace(oldString)
+  const strippedOriginal = stripLineWhitespace(originalContent)
+
+  if (!strippedOriginal.includes(strippedOld)) {
+    return null
+  }
+
+  // Find where the stripped match occurs in the stripped original (character offset)
+  const strippedMatchStart = strippedOriginal.indexOf(strippedOld)
+  if (strippedMatchStart === -1) {
+    return null
+  }
+  const strippedMatchEnd = strippedMatchStart + strippedOld.length
+
+  // Now map back from stripped positions to actual positions in originalContent.
+  // Strategy: walk through originalContent line-by-line, tracking the cumulative offset
+  // in both the stripped and unstripped versions simultaneously. When we find a stripped
+  // segment that overlaps with the match range, record its corresponding position in the
+  // original content.
+
+  const origParts = splitPreservingLineEndings(originalContent)
+  const stripParts = splitPreservingLineEndings(strippedOriginal)
+
+  let actualMatchStart = -1
+  let actualMatchEnd = -1
+  let strippedOffset = 0
+
+  for (let i = 0; i < origParts.length && i < stripParts.length; i++) {
+    const part = origParts[i]!
+    if (!part) continue // skip empty parts
+
+    const isLineEnding = i % 2 === 1 // odd indices are line endings in the split result
+
+    if (isLineEnding) {
+      // Line ending — offsets advance identically since stripLineWhitespace preserves them
+      strippedOffset += part.length
+      continue
+    }
+
+    // Content part (even index): check if this segment overlaps with our match range
+    const segStartInStripped = strippedOffset
+    const segEndInStripped = strippedOffset + part.length
+
+    if (segEndInStripped > strippedMatchStart && segStartInStripped < strippedMatchEnd) {
+      // This segment is within the matched region — record its position in originalContent
+      const origIdx = originalContent.indexOf(part, actualMatchEnd >= 0 ? actualMatchEnd + 1 : 0)
+      if (origIdx !== -1) {
+        if (actualMatchStart === -1 || origIdx < actualMatchStart) {
+          actualMatchStart = origIdx
+        }
+        const endInOrig = origIdx + part.length
+        if (endInOrig > actualMatchEnd) {
+          actualMatchEnd = endInOrig
+        }
+      }
+    }
+
+    strippedOffset += part.length
+  }
+
+  // If we couldn't determine exact positions, give up
+  if (actualMatchStart === -1 || actualMatchEnd === -1) {
+    return null
+  }
+
+  // Extract the actual matched substring from originalContent
+  const actualOldSubstr = originalContent.substring(actualMatchStart, actualMatchEnd)
+
+  // Normalize newString's line endings to match oldString's style
+  let normalizedNewString = normalizeLineEndings(newString, sourceLineEnding)
+
+  try {
+    return replaceFn(originalContent, actualOldSubstr, normalizedNewString)
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Splits a string into parts while preserving line endings as separate elements.
+ * This is used to walk through content line-by-line for position mapping.
+ */
+function splitPreservingLineEndings(str: string): string[] {
+  // Split on line endings, keeping them as separate tokens
+  return str.split(/(\r\n|\n|\r)/)
 }
 
 /**
@@ -237,18 +430,20 @@ export function getPatchForEdit({
   oldString,
   newString,
   replaceAll = false,
+  ignoreWhitespace = false,
 }: {
   filePath: string
   fileContents: string
   oldString: string
   newString: string
   replaceAll?: boolean
+  ignoreWhitespace?: boolean
 }): { patch: StructuredPatchHunk[]; updatedFile: string } {
   return getPatchForEdits({
     filePath,
     fileContents,
     edits: [
-      { old_string: oldString, new_string: newString, replace_all: replaceAll },
+      { old_string: oldString, new_string: newString, replace_all: replaceAll, ignore_whitespace: ignoreWhitespace },
     ],
   })
 }
@@ -311,15 +506,32 @@ export function getPatchForEdits({
     }
 
     const previousContent = updatedFile
-    updatedFile =
-      edit.old_string === ''
-        ? edit.new_string
-        : applyEditToFile(
-            updatedFile,
-            edit.old_string,
-            edit.new_string,
-            edit.replace_all,
-          )
+    try {
+      updatedFile =
+        edit.old_string === ''
+          ? edit.new_string
+          : applyEditToFile(
+              updatedFile,
+              edit.old_string,
+              edit.new_string,
+              edit.replace_all,
+              edit.ignore_whitespace ?? false,
+            )
+    } catch (applyErr) {
+      // Standard exact-match failed. Try whitespace-aware normalization as fallback:
+      // This handles cases where the model sends spaces but file uses tabs, or vice versa.
+      const wsResult = applyWhitespaceAgnosticEdit(
+        updatedFile,
+        edit.old_string,
+        edit.new_string,
+        (c: string, s: string, r: string) => c.replace(s, () => r),
+      )
+      if (wsResult === updatedFile) {
+        // Whitespace normalization found no matching lines — report original error
+        throw new Error('String not found in file. Failed to apply edit.')
+      }
+      updatedFile = wsResult
+    }
 
     // If this edit didn't change anything, throw an error
     if (updatedFile === previousContent) {
@@ -606,7 +818,7 @@ export function normalizeFileEditInput({
 
     return {
       file_path,
-      edits: edits.map(({ old_string, new_string, replace_all }) => {
+      edits: edits.map(({ old_string, new_string, replace_all, ignore_whitespace }) => {
         const normalizedNewString = isMarkdown
           ? new_string
           : stripTrailingWhitespace(new_string)
@@ -617,6 +829,7 @@ export function normalizeFileEditInput({
             old_string,
             new_string: normalizedNewString,
             replace_all,
+            ignore_whitespace,
           }
         }
 
@@ -635,6 +848,7 @@ export function normalizeFileEditInput({
             old_string: desanitizedOldString,
             new_string: desanitizedNewString,
             replace_all,
+            ignore_whitespace,
           }
         }
 

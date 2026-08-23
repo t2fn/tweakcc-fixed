@@ -2,7 +2,7 @@ import { z } from 'zod/v4'
 import { lazySchema } from '../../utils/lazySchema.js'
 import { semanticBoolean } from '../../utils/semanticBoolean.js'
 
-// The input schema with optional replace_all
+// The input schema with optional replace_all and ignore_whitespace
 const inputSchema = lazySchema(() =>
   z.strictObject({
     file_path: z.string().describe('The absolute path to the file to modify'),
@@ -15,6 +15,11 @@ const inputSchema = lazySchema(() =>
     replace_all: semanticBoolean(
       z.boolean().default(false).optional(),
     ).describe('Replace all occurrences of old_string (default false)'),
+    ignore_whitespace: semanticBoolean(
+      z.boolean().default(false).optional(),
+    ).describe(
+      'Ignore leading and trailing whitespace on each line when matching old_string against the file. Default off.',
+    ),
   }),
 )
 type InputSchema = ReturnType<typeof inputSchema>
@@ -31,6 +36,7 @@ export type FileEdit = {
   old_string: string
   new_string: string
   replace_all: boolean
+  ignore_whitespace?: boolean
 }
 
 export const hunkSchema = lazySchema(() =>

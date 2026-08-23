@@ -9,7 +9,7 @@
 # ============================================================================
 FROM rockylinux/rockylinux:10 AS builder
 
-ARG CLAUDE_VERSION=latest \
+ARG CLAUDE_VERSION=2.1.233 \
     TWEAKCC_SHA=HEAD \
     LOBOTOMIZED_SHA=HEAD \
     CLAUDE_TOOLS_SHA=HEAD \
@@ -31,13 +31,16 @@ RUN dnf install -y epel-release && \
     dnf -y install dnf-plugins-core && \
     dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
     dnf makecache --refresh && \
-    dnf install -y --skip-broken \
-        coreutils diffutils rsync gzip jq yq gh bc vim-common grep gawk sed \
-        gpg socat tar findutils zip binutils strace lsof curl git zstd p7zip \
-        file wget bzip2 xz unzip bsdiff bspatch binwalk yara fmutils \
-        python3 python3-pip dialog which procps-ng docker-ce-cli sshpass expect tmux nodejs && \
+    dnf install -y --skip-broken nodejs git && \
+    npm install -g --force pnpm 
+
+RUN curl -fsSL https://rpm.nodesource.com/setup_24.x | bash - && \
+    npm install -g --force pnpm antigravity-awesome-skills && \
+    npm update -g npm && \
     npm install -g --force pnpm && \
-    dnf clean all && rm -rf /var/cache/dnf/*
+    pnpm add -D acorn@8.15.0
+
+RUN mkdir -pm 777 /etc/claude-code/.claude/{skills/,rules/,templates/}
 
 # Create claudeuser for running the patcher
 RUN useradd -ms /bin/bash claudeuser && chown -R claudeuser: /home/claudeuser
@@ -49,12 +52,12 @@ WORKDIR /home/claudeuser
 COPY install.sh config.json start_claude.sh /tmp/
 RUN /bin/bash /tmp/install.sh
 
+USER root
 # Move the patched native binary to /usr/bin/claude for the deploy stage
-RUN cp /home/claudeuser/.local/share/claude/versions/$CLAUDE_VERSION /usr/bin/claude 2>/dev/null || true
-RUN chmod +x /usr/bin/claude && chown claudeuser:claudeuser /usr/bin/claude
+RUN ls -latrh /home/claudeuser/.local/share/claude/versions && cp /home/claudeuser/.local/share/claude/versions/$CLAUDE_VERSION /usr/bin/claude && \
+  chmod +x /usr/bin/claude && chown claudeuser:claudeuser /usr/bin/claude
 
 # Copy start_claude.sh to a system path for the deploy stage
-COPY --chmod=+x start_claude.sh /usr/bin/start_claude.sh
 
 # ============================================================================
 # STAGE 2: DEPLOY — minimal runtime image
@@ -87,8 +90,8 @@ RUN dnf install -y epel-release && \
     dnf makecache --refresh && \
     dnf install -y --skip-broken \
         coreutils diffutils rsync gzip jq yq gh bc grep gawk sed \
-        socat tar findutils zip file wget bzip2 xz unzip bsdiff bspatch binwalk yara fmutils \
-        python3 procps-ng docker-ce-cli sshpass expect tmux nodejs && \
+        tar fzip file wget bzip2 xz unzip bsdiff binwalk \
+        python3 docker-ce-cli tmux && \
     dnf clean all && rm -rf /var/cache/dnf/*
 
 # Create claudeuser and set up directories
@@ -109,20 +112,22 @@ COPY --from=builder /home/claudeuser/.tweakcc/system-reminders /home/claudeuser/
 RUN chown -R claudeuser:claudeuser /home/claudeuser/.tweakcc
 
 # Copy bin scripts (slash commands) from builder
-COPY --from=builder /home/claudeuser/bin/* /home/claudeuser/bin/ 2>/dev/null || true
-RUN chown -R claudeuser:claudeuser /home/claudeuser/bin && chmod +x /home/claudeuser/bin/*
+#COPY --from=builder /home/claudeuser/bin/ /home/claudeuser/bin/ 2>/dev/null
+#RUN chown -R claudeuser:claudeuser /home/claudeuser/bin && chmod +x /home/claudeuser/bin/*
 
 # Copy rules, skills, templates from builder (already at system paths)
-COPY --from=builder /etc/claude-code/.claude/rules /etc/claude-code/.claude/rules
-COPY --from=builder /etc/claude-code/.claude/skills /etc/claude-code/.claude/skills
-COPY --from=builder /etc/claude-code/.claude/templates /etc/claude-code/.claude/templates
+COPY --from=builder /etc/claude-code/.claude/ /etc/claude-code/.claude/
+#COPY --from=builder /etc/claude-code/.claude/rules /etc/claude-code/.claude/rules
+#COPY --from=builder /etc/claude-code/.claude/skills /etc/claude-code/.claude/skills
+#COPY --from=builder /etc/claude-code/.claude/templates /etc/claude-code/.claude/templates
 
 # Copy start_claude.sh entrypoint from builder
-COPY --from=builder /usr/bin/start_claude.sh /usr/bin/start_claude.sh
+COPY --chmod=+x start_claude.sh /usr/bin/start_claude.sh
+#COPY --from=builder /usr/bin/start_claude.sh /usr/bin/start_claude.sh
 RUN chown claudeuser:claudeuser /usr/bin/start_claude.sh && chmod +x /usr/bin/start_claude.sh
 
 # Copy container-cron if available
-COPY --from=builder /usr/bin/container-cron /usr/bin/container-cron 2>/dev/null || true
+#COPY --from=builder /usr/bin/container-cron /usr/bin/container-cron 2>/dev/null || true
 
 USER claudeuser
 WORKDIR /home/claudeuser

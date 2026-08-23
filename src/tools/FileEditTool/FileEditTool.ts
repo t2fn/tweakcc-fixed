@@ -135,7 +135,7 @@ export const FileEditTool = buildTool({
   renderToolUseRejectedMessage,
   renderToolUseErrorMessage,
   async validateInput(input: FileEditInput, toolUseContext: ToolUseContext) {
-    const { file_path, old_string, new_string, replace_all = false } = input
+    const { file_path, old_string, new_string, replace_all = false, ignore_whitespace = false } = input
     // Use expandPath for consistent path normalization (especially on Windows
     // where "/" vs "\" can cause readFileState lookup mismatches)
     const fullFilePath = expandPath(file_path)
@@ -369,6 +369,7 @@ export const FileEditTool = buildTool({
             old_string: input1.old_string,
             new_string: input1.new_string,
             replace_all: input1.replace_all ?? false,
+            ignore_whitespace: input1.ignore_whitespace ?? false,
           },
         ],
       },
@@ -379,6 +380,7 @@ export const FileEditTool = buildTool({
             old_string: input2.old_string,
             new_string: input2.new_string,
             replace_all: input2.replace_all ?? false,
+            ignore_whitespace: input2.ignore_whitespace ?? false,
           },
         ],
       },
@@ -395,7 +397,7 @@ export const FileEditTool = buildTool({
     _,
     parentMessage,
   ) {
-    const { file_path, old_string, new_string, replace_all = false } = input
+    const { file_path, old_string, new_string, replace_all = false, ignore_whitespace = false } = input
 
     // 1. Get current state
     const fs = getFsImplementation()
@@ -485,6 +487,7 @@ export const FileEditTool = buildTool({
       oldString: actualOldString,
       newString: actualNewString,
       replaceAll: replace_all,
+      ignoreWhitespace: ignore_whitespace,
     })
 
     // 5. Write to disk
