@@ -47,41 +47,79 @@ export const getEditToolLocation = (oldFile: string): LocationResult | null => {
   const bodyMatch = oldFile.match(BODY_START_RE);
   if (!bodyMatch || bodyMatch.index === undefined) return null;
 
-  // Walk backward to find the `function <name>(e){` start of this tool.
-  let searchFrom = Math.max(0, bodyMatch.index - 250);
-  const prevBoundary = oldFile.lastIndexOf(
-    '}})}function',
-    bodyMatch.index - 10
-  );
-  if (prevBoundary !== -1) {
-    searchFrom = prevBoundary + '}})}function'.length;
+  // Walk backward to find the boundary before this tool. Search further back (1000 chars)
+  // than before because minified code can have multiple preceding tools with large bodies.
+  let searchFrom = Math.max(0, bodyMatch.index - 1000);
+
+  // Try strict `}})}function` pattern first (3 closing braces + paren).
+  const boundaryPat = '}})}function';
+  // Limit must reach at least to bodyMatch's position so we find the boundary before EditTool.
+  const limitEnd = Math.max(searchFrom + boundaryPat.length, bodyMatch.index + boundaryPat.length);
+  const prevBoundaryStrict = oldFile.lastIndexOf(boundaryPat, limitEnd);
+  if (prevBoundaryStrict !== -1) {
+    searchFrom = prevBoundaryStrict;
+  } else {
+    // Flexible fallback: any sequence of closing braces/parens before a function keyword.
+    // This handles variations like `})}function` (2 braces) or `))function` in different builds.
+    const flexRe = /\}\)\s*function/g;
+    let m;
+    while ((m = flexRe.exec(oldFile)) !== null) {
+      if (m.index >= bodyMatch.index + 10) break; // past the tool we want
+      searchFrom = m.index;
+    }
   }
 
-  const funcDefMatch = oldFile
-    .substring(searchFrom)
-    .match(/([a-zA-Z_$][\w$]*)\(e\)\{return\s+[a-zA-Z_$][\w$]*/);
-  if (!funcDefMatch) {
+  const funcDefSearchStr = oldFile.substring(searchFrom);
+
+  // Find EditTool specifically by its name rather than generic `(e){return` pattern.
+  // This avoids matching a preceding tool if there are multiple tools before EditTool.
+  let editFnIdx = funcDefSearchStr.indexOf('EditTool');
+  if (editFnIdx === -1) {
     console.error(
-      'patch: ignoreWhitespaceEdit: failed to find edit tool function definition'
+      'patch: ignoreWhitespaceEdit: failed to find EditTool in snippet from searchFrom'
     );
     return null;
   }
 
-  const funcName = funcDefMatch[1];
-  const actualStart = searchFrom + (funcDefMatch.index || 0);
+  // Verify there's no other "function" keyword between searchFrom and EditTool,
+  // which would indicate we've landed inside a preceding tool.
+  const beforeEdit = oldFile.substring(searchFrom, searchFrom + editFnIdx);
+  if (/\bfunction\b/.test(beforeEdit)) {
+    // There's another function before EditTool — use the last one found as actualStart
+    const funcMatches = [...beforeEdit.matchAll(/function\s/g)];
+    if (funcMatches.length > 0) {
+      searchFrom += funcMatches[funcMatches.length - 1].index + 'function'.length;
+      editFnIdx = funcDefSearchStr.indexOf('EditTool', searchFrom - oldFile.substring(0, searchFrom).length);
+      // recalculate
+    } else {
+      return null;
+    }
+  }
+
+  const actualStart = searchFrom + editFnIdx;
+
+  // Find the function name right before EditTool for identifier tracking.
+  // We know there's a "function" keyword just before editFnIdx in funcDefSearchStr,
+  // so extract whatever minified name follows it.
+  const fnPattern = /function\s+([\w$]+)/;
+  const fnMatch = funcDefSearchStr.substring(0, editFnIdx + 'EditTool'.length).match(fnPattern);
+  const funcName = fnMatch ? fnMatch[1] : 'EditTool';
 
   // Find the end boundary: next }})}function after MID_BODY (next tool)
-  const midMatch = oldFile.match(MID_BODY_RE);
+  // Search within funcContent for MID_BODY_RE to get correct positioning.
+  const funcContent = oldFile.slice(actualStart);
+  const midMatch = funcContent.match(MID_BODY_RE);
   if (!midMatch || midMatch.index === undefined) {
     console.error(
-      'patch: ignoreWhitespaceEdit: failed to find mid-body anchor'
+      'patch: ignoreWhitespaceEdit: failed to find mid-body anchor in funcContent'
     );
     return null;
   }
 
+  // endSearchFrom is relative to actualStart (start of funcContent)
   const endSearchFrom = Math.max(
     midMatch.index + midMatch[0].length,
-    bodyMatch.index + bodyMatch[0].length
+    bodyMatch.index - actualStart + bodyMatch[0].length
   );
   const nextBoundary = oldFile.indexOf('}})}function', endSearchFrom);
   if (nextBoundary === -1) {

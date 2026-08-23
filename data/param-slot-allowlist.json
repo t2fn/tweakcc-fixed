@@ -34,6 +34,13 @@
     "text": "the question of decided item \"${}\"",
     "verdict": "catalogue"
   },
+  "b298a0a8ab610ffb": {
+    "builder": "wRl",
+    "note": "Remedy instruction supplied as the third argument of the wRl() stale-version builder and interpolated into \"Re-read it (\u2026), ${remedy} \u2014 do not resend your previous content unchanged.\" Its sibling call site supplies \"merge your edits on top, then publish again\" into the same slot and is already catalogued as tool-result-artifact-conflict-merge-remedy-phrase. Catalogued via a classification-cache model verdict (this gate has no extractor hook of its own); see data/prompt-classification.json.",
+    "param": "r",
+    "text": "reapply your edits, then publish",
+    "verdict": "catalogue"
+  },
   "c697b476cb780899": {
     "builder": "x3e",
     "note": "Reason/subject clause rendering into a catalogued model-facing template through a parameter slot. Catalogued via a classification-cache model verdict (this gate has no extractor hook of its own); see data/prompt-classification.json.",

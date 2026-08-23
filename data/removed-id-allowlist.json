@@ -1,0 +1,257 @@
+{
+  "data-artifact-spreadsheet-html-template": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "data-artifact-watch-auto-classifier-input": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "data-task-notification-artifact-auto-reply-interrupt-stop-disclosure": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "skill-artifact-editor-template-capabilities-with-commenting": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "skill-artifact-editor-template-capabilities-without-commenting": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "skill-artifact-editor-template-runtime-capabilities-note": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Renamed to skill-artifact-template-runtime-capabilities-note-live-doc in CC 2.1.239 (the two commenting ternary arms collapsed into one G30() .replace()). The orphan trim only changed \"an editor\" to \"a live editor\"; the new pristine already reads \"an editor whose editing and saving are already wired\", so nothing was carried."
+  },
+  "skill-artifact-slides-html-template": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "skill-sheet": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "skill-slides": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "system-prompt-artifact-attached-republish-notify-note": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "system-prompt-interactive-intro-conditional": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Renamed to system-prompt-harness-instructions-2 in CC 2.1.239 (the shared intro prefix moved inside both ternary arms and a third arm was added). Its real trim \u2014 cutting Anthropic's \"IMPORTANT: You must NEVER generate or guess URLs\" paragraph \u2014 was carried to the successor as a rephrase into the positive house form, which is stronger than the outright cut."
+  },
+  "tool-description-artifact-comments-remote-no-watch": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-description-artifact-live-room": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-description-artifacttool": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Renamed to tool-description-artifact in CC 2.1.239. The orphan carried a 37% trim against superseded pristine; the successor was re-trimmed this run against current pristine with a full corpus check (23%), which is authoritative per the re-trim-never-keep-stale rule."
+  },
+  "tool-parameter-artifact-action-watch-remote-unsupported": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-parameter-artifact-force": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Renamed to tool-parameter-artifact-force-overwrite-guidance in CC 2.1.239, which rewrote the parameter substantially (491 to 710 chars, adding the save-from-page case). The orphan's light de-shouting trim was against the old text; the successor was audited this run and ruled pristine-keep on corpus evidence."
+  },
+  "tool-result-artifact-asset-list-action-description": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-asset-read-action-description": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-asset-read-conversation-approval-scope": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-asset-read-invalid-url": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-asset-read-plan-mode-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-asset-upload-cowork-no-consent-surface": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-asset-upload-cowork-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-comment-reply-cowork-no-consent-surface": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-comment-reply-cowork-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-comment-resolve-cowork-no-consent-surface": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-comment-resolve-cowork-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-db-write-cowork-no-consent-surface": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-db-write-cowork-per-write-approval-scope": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-db-write-cowork-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-decisions-island-absent": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-durable-wake-flag-off": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-files-path-empty": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-files-path-reserved-thumbnail": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-list-assets-plan-mode-user-approval-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-live-subscription-comment-wake-clause-unarmed": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-publish-conflict-force-note": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-publish-conflict-lead": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-republished-by-another-session": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-resume-replies-cowork-approval-reason": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-resume-replies-cowork-deny-reason": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-resume-replies-cowork-no-consent-surface": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-unsupported-file-type-add-extension": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-unsupported-file-write-as-html-or-md": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-unsupported-text-save-as-md": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-upload-412": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-upload-intercepted": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  },
+  "tool-result-artifact-watch-permission-required": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-watches-list-remote-unsupported": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Absent from prompts-2.1.239.json; the override body matched superseded pristine, so nothing unique was lost. Archived to ~/.tweakcc/orphans-removed-for-2.1.239/."
+  },
+  "tool-result-artifact-workshop-decisions-are-data": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239. The override was an empty-body suppression, which is moot once the id no longer exists."
+  },
+  "tool-result-artifact-workshop-decisions-header": {
+    "verdict": "archived",
+    "version": "2.1.239",
+    "why": "Removed from the catalogue in CC 2.1.239; no literal run survives in the bundle. Overrides archived to ~/.tweakcc/orphans-removed-for-2.1.239/ and recoverable from git history."
+  }
+}

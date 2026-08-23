@@ -109,6 +109,27 @@ const propSlot = (placeholder: string, prop: string): ReminderSlot => ({
   resolve: (template, param) => slotExpr(template, param, prop),
 });
 
+// A tool name interpolated from module scope rather than from the handler's
+// parameter. Anthropic writes this two ways and moves between them without
+// touching anything else: `${oO.name}` reads it off the tool object, `${Cs}`
+// is a bare binding holding the name directly. CC 2.1.239 switched
+// compact_file_reference from the first form to the second, which resolved to
+// null and returned the whole patch null — a break that `--apply` cannot show,
+// because the reminder only runs when its `.md` exists locally.
+// Accept either, newest shape first, and identify the bare form the way the
+// pdf_reference entry already does: it is the only `${…}` that does not
+// reference the handler parameter.
+const toolNameSlot = (placeholder: string): ReminderSlot => ({
+  placeholder,
+  resolve: (template, param) =>
+    template.match(/\$\{([$\w]+\.name)\}/)?.[1] ??
+    template
+      .match(/\$\{([$\w]+)\}/g)
+      ?.map(x => x.slice(2, -1))
+      .find(x => x !== param) ??
+    null,
+});
+
 const applySimpleEntry = (
   content: string,
   key: string,
@@ -869,11 +890,7 @@ const COMPACT_FILE_REF_INJECTION: ReminderInjection = {
         propSlot('${H.filename}', 'filename'),
         // The Read tool's name comes from a module-level binding, not from the
         // handler's parameter, so it needs its own matcher.
-        {
-          placeholder: '${oO.name}',
-          resolve: template =>
-            template.match(/\$\{([$\w]+\.name)\}/)?.[1] ?? null,
-        },
+        toolNameSlot('${oO.name}'),
       ],
       body,
       isSuppressed
@@ -905,14 +922,7 @@ const PDF_REF_INJECTION: ReminderInjection = {
         // The Read tool name is a bare module-level identifier here (`${Qs}`),
         // distinguished from the two byte-size/page slots by not referencing
         // the handler parameter at all.
-        {
-          placeholder: '${uq}',
-          resolve: (template, param) =>
-            template
-              .match(/\$\{([$\w]+)\}/g)
-              ?.map(x => x.slice(2, -1))
-              .find(x => x !== param) ?? null,
-        },
+        toolNameSlot('${uq}'),
       ],
       body,
       isSuppressed

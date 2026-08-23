@@ -16,9 +16,8 @@ import {
 // and a slash-command list `X=Y(()=>[...])` sitting near name/description metadata.
 // This fixture mirrors that shape with realistic '$'-bearing minified names.
 const MODULE_BLOCK =
-  'var $m0={};AO($m0,{performSetColor:()=>qSet,call:()=>qCall});' +
-  'async function $setColorCall(rv,ctx,args){' +
-  'return rv(await qFmt(args,ctx),{display:"system"}),null}';
+  'var $m0={};AO($m0,{performsetColor:()=>qSet,call:()=>qCall});' +
+  'async function qCall(rv,ctx,args){return AO(await qFmt(ctx,rv),{display:"system"}),null}';
 const AFTER_MODULE = 'var $nextThing=1;';
 const COMMAND_LIST =
   'xK=L8(()=>[{type:"local",name:"clear",description:"Clear conversation history"},' +

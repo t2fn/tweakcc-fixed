@@ -110,6 +110,41 @@ const CURATED_IDENTIFIER_MAPS = {
   ],
   'system-prompt-coordinator-mode': [
     {
+      // CC 2.1.239 inserted the comms-mode gate's SECOND use — the launch-announce
+      // ternary `${e?FjS:"briefly tell the user what you launched"}` — which adds
+      // two positions and one distinct slot, taking the array from 33/10 to 35/11.
+      // The 2.1.238 entry below then stops matching and the GENERATED map takes
+      // over, and it is wrong at every slot for the usual reason: slot 0 is the
+      // comms-mode CONDITION (`e`), not a tool, so every carried label slides.
+      // Rendered, `${SENDMESSAGE_TOOL_NAME}` bound to `NjS` — which is not a tool
+      // name at all but the whole comms-mode note — and the tool list read
+      // `- **Your bare assistant text does NOT reach the user...** - Continue an
+      // existing worker`. Wrong content, no crash: the apply is clean and only the
+      // apply-safety harness sees it, and then only once the override actually
+      // applies (it had been skipped entirely on an unbound label, so it never did).
+      // Derived from the builder at `You are Claude Code, an AI assistant that
+      // orchestrates software engineering tasks`, distinct vars in first-seen
+      // order: e, NjS, Oi, Xm, nz, a, i, s, FjS, _xa, o — each named for what its
+      // own pristine context shows it to be, not for the position it used to hold.
+      identifiers: [
+        0, 1, 2, 3, 4, 5, 6, 7, 2, 3, 0, 8, 2, 9, 2, 10, 3, 4, 2, 3, 2, 4, 3, 2,
+        2, 2, 3, 2, 3, 3, 3, 2, 2, 9, 3,
+      ],
+      identifierMap: {
+        0: 'COMMS_MODE_FLAG',
+        1: 'EVERY_MESSAGE_TO_USER_NOTE',
+        2: 'AGENT_TOOL_NAME',
+        3: 'SENDMESSAGE_TOOL_NAME',
+        4: 'TASKSTOP_TOOL_NAME',
+        5: 'WORKFLOW_CONDITIONAL_TOOL_NOTE',
+        6: 'SKILL_TOOL_CONDITIONAL_NOTE',
+        7: 'CROSS_SESSION_PEERS_NOTE',
+        8: 'LAUNCH_ANNOUNCE_NOTE',
+        9: 'SYSTEM_REMINDER_OPENING_TEXT',
+        10: 'WORKER_TOOLS_INTRO_TEXT',
+      },
+    },
+    {
       // CC 2.1.238 inserted a conditional Skill-tool bullet (`i`) between the
       // workflow note and the cross-session peers note, taking the prompt from
       // 9 distinct slots to 10 and from 32 positions to 33. That is a new

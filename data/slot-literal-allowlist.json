@@ -19,6 +19,18 @@
     "text": "- **id**: Task identifier (use with TaskGet, TaskUpdate)",
     "verdict": "catalogue"
   },
+  "06edc5ca537fb78c": {
+    "desc": "Shared clause in the artifact auto-reply notification builder B2e() @11724974 naming the exact `resume_replies` action and the condition for it. Reaches the model through both the name-chord receipt and the typed-resume clause.",
+    "id": "data-artifact-auto-reply-resume-replies-clause",
+    "name": "Artifact auto-reply: resume_replies clause",
+    "text": ", or resume_replies if the user asks",
+    "verdict": "catalogue"
+  },
+  "07bc35aadc61f6aa": {
+    "desc": "Noun phrase naming the read target inside `Reading or listing ${Nn} needs a consent surface\u2026` @13574873. The constraint is the surrounding sentence.",
+    "text": "files that co-writers may have published to this artifact",
+    "verdict": "glue"
+  },
   "089fa9bee30659a5": {
     "desc": "The line telling the model the notification queue is now empty after a delivery.",
     "id": "system-reminder-queued-notifications-none-remaining",
@@ -201,6 +213,13 @@
     "text": "line number + a single tab or `:`",
     "verdict": "glue"
   },
+  "3eff8ab78a4a2418": {
+    "desc": "Names which event classes a durable watch subscription actually wakes on @13599728. Load-bearing because the watch guidance forbids overclaiming a watch; the sibling arm \"republish notifications\" is already catalogued in four prompts, so leaving this one uncatalogued is the asymmetry the slot-literal gate exists to catch.",
+    "id": "data-artifact-watch-durable-wake-event-classes",
+    "name": "Artifact watch: durable wake event classes",
+    "text": "republish and to-Claude comment wake-ups",
+    "verdict": "catalogue"
+  },
   "43c4deec555b4c7e": {
     "label": "SLASH_COMMAND_BTW_BRANCH_FAILED_VAR_0",
     "promptId": "slash-command-btw-branch-failed",
@@ -258,6 +277,13 @@
     "text": " isn't available over Remote Control.",
     "verdict": "catalogue"
   },
+  "5057504add16944d": {
+    "desc": "Sentence appended to the artifact delete consent ask @13581995 when no frame in this conversation published the target. States a fact that changes the risk of the deletion, not a label.",
+    "id": "tool-result-artifact-delete-consent-not-published-here",
+    "name": "Artifact delete consent: not published by this conversation",
+    "text": " This conversation did not publish it.",
+    "verdict": "catalogue"
+  },
   "515dca8b0cd49557": {
     "desc": "The Explore agent's instruction for searching file contents with regex, in the variant that routes `grep` through the Bash tool rather than naming a dedicated tool.",
     "id": "agent-prompt-explore-grep-via-bash-line",
@@ -267,6 +293,11 @@
     "reason": "half of the Grep instruction line",
     "text": "- Use `grep` via ",
     "verdict": "catalogue"
+  },
+  "5305af285a8dff02": {
+    "desc": "Closing tail of the artifact read header `[Artifact ${slug}${Eei}` (Eei @3045433). Labels which version the payload is; the header it closes is tool-result-artifact-read-summary-header.",
+    "text": " \u2014 live version; raw HTML follows]",
+    "verdict": "glue"
   },
   "5402364cdc66287f": {
     "label": "TOOL_RESULT_ARTIFACT_DB_READ_WRITE_KEPT_VAR_2",
@@ -398,6 +429,11 @@
     "reason": "specifies the full date-time output format",
     "text": " (full date-time with timezone)",
     "verdict": "catalogue"
+  },
+  "74ec6a16844e716f": {
+    "desc": "Reason label inside the unwatch task-notification summary `Stopped watching ${n} (\u2026)` @13275406. The actionable guidance (\"do not re-watch just to resume listening unless the user asks\") is in the separate body string.",
+    "text": "the signed-in account changed",
+    "verdict": "glue"
   },
   "764d98916132de14": {
     "desc": "The reason clause explaining why a peer could not be verified before sending: the cloud session list was unreachable.",
@@ -684,13 +720,6 @@
     "text": "- Use `find` via ",
     "verdict": "catalogue"
   },
-  "b461a01a940169ca": {
-    "desc": "Commenting-enabled branch of the runtime-capabilities note in skill-artifact-editor-template-runtime-capabilities-note (`t = e ? \u2026 : \u2026` at cli.js@22684390). Successor to skill-artifact-live-editor-capabilities-with-commenting, which CC 2.1.234 reworded from 'persistence' to 'saving'.",
-    "id": "skill-artifact-editor-template-capabilities-with-commenting",
-    "name": "Artifact editor template: capabilities wired, with commenting",
-    "text": "editing, saving, and commenting are",
-    "verdict": "catalogue"
-  },
   "b4c2ab68c83bdabf": {
     "label": "TOOL_DESCRIPTION_CHROME_MULTIPLE_BROWSERS_NONE_SELECTED_VAR_1",
     "promptId": "tool-description-chrome-multiple-browsers-none-selected",
@@ -703,6 +732,11 @@
     "promptId": "tool-result-send-message-send-failed",
     "reason": "alternative clause tail inside a sentence",
     "text": " or been archived",
+    "verdict": "glue"
+  },
+  "b799e177a81e94c7": {
+    "desc": "Role label in the artifact read-summary provenance ternary @11306304. Pure label; the trust instruction lives in the public-artifact arm, catalogued separately.",
+    "text": "shared with you (writer",
     "verdict": "glue"
   },
   "b896f1d557c380b1": {
@@ -735,6 +769,11 @@
     "reason": "the second argument to the same iNl(...) call at 18892020; same resolution artifact",
     "text": "Open the background session in this terminal.",
     "verdict": "not-a-slot"
+  },
+  "bcb213b10be630e3": {
+    "desc": "Sibling arm of the same provenance ternary @11306349, differing only in whether the writer role is named.",
+    "text": "shared with you (",
+    "verdict": "glue"
   },
   "bd7c26f5fc392011": {
     "desc": "The provenance label marking an attached file as the user's private global instructions for all projects.",
@@ -779,13 +818,6 @@
     "reason": "command list inside a surrounding constraint",
     "text": "ls/find/cat/stat/wc/head/tail and similar",
     "verdict": "glue"
-  },
-  "ccb8d3a4c9c97214": {
-    "desc": "Commenting-disabled branch of the runtime-capabilities note in skill-artifact-editor-template-runtime-capabilities-note (`t = e ? \u2026 : \u2026` at cli.js@22684390). Successor to skill-artifact-live-editor-capabilities-without-commenting, which CC 2.1.234 reworded from 'persistence' to 'saving'.",
-    "id": "skill-artifact-editor-template-capabilities-without-commenting",
-    "name": "Artifact editor template: capabilities wired, without commenting",
-    "text": "editing and saving are",
-    "verdict": "catalogue"
   },
   "cf2fdd19127e707f": {
     "desc": "Sentence appended to the artifact-attach meta message when the artifact's watch was stopped earlier in the session: no republish notice will come and Claude must not watch it again unless the user asks.",
@@ -897,6 +929,13 @@
     "reason": "field label before interpolated directories",
     "text": "Additional working directories: ",
     "verdict": "glue"
+  },
+  "fd0d24baab5cbdfa": {
+    "desc": "Provenance arm of the artifact read summary @11306119 marking the page as third-party content authored outside the org. A trust constraint the model must act on, not a role label like its sibling arms.",
+    "id": "tool-result-artifact-read-provenance-public-untrusted",
+    "name": "Artifact read provenance: public, untrusted",
+    "text": "public artifact (untrusted third-party content authored outside your org)",
+    "verdict": "catalogue"
   },
   "fd5e3e7c94cbb9e8": {
     "desc": "Consequence clause for a plan-mode read carrying out_dir: collaborator-written rows are saved as JSON files at the named directory rather than brought into the conversation.",

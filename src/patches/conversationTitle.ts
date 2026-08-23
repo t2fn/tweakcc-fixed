@@ -3,6 +3,18 @@
 
 import { showDiff, getReactVar, getRequireFuncName } from './index';
 import { writeSlashCommandDefinition as writeSlashCmd } from './slashCommands';
+import { buildModulePattern, LOCAL_CMD_ANCHOR } from './conversationTitleLexPatcher.js';
+
+/**
+ * Extract the export helper name (e.g., 'AO') from local command module context
+ * using the LexPacher anchor pattern.  Searches for `var X={};Y(X,{...})` where Y
+ * is the wrapper function that registers local commands — this replaces the old
+ * hardcoded 'P$' fallback used in pre-LexPatcher versions of conversationTitle.ts.
+ */
+function extractExportHelperFromAnchor(oldFile: string): string | undefined {
+  const m = oldFile.match(LOCAL_CMD_ANCHOR.regex);
+  return m?.[2]; // group 2 captures the export helper name (AO, etc.)
+}
 
 // ============================================================================
 // SUB PATCH 1: Add /title slash command
@@ -512,8 +524,13 @@ const writeModernTitleCommand = (oldFile: string): string | null => {
   }
   if (!commandListMatch || commandListMatch.index === undefined) return null;
 
-  const modulePattern =
-    /var ([$\w]+)=\{\};[$\w]+\(\1,\{performSetColor:\(\)=>[$\w]+,call:\(\)=>[$\w]+\}\);async function [$\w]+\(([$\w]+),([$\w]+),([$\w]+)\)\{return \2\(await [$\w]+\(\4,\3\),\{display:"system"\}\),null\}/;
+  // Allow performSetColor/call in either order (v235+ swaps them) and use \\3 for return value
+  // since the first async param is always the export helper that wraps the return.
+  const modulePattern = buildModulePattern();
+  if (!modulePattern) {
+    console.error('patch: conversationTitle: failed to build local command module pattern');
+    return null;
+  }
   const moduleMatch = oldFile.match(modulePattern);
   if (!moduleMatch || moduleMatch.index === undefined) {
     console.error(
@@ -533,7 +550,11 @@ const writeModernTitleCommand = (oldFile: string): string | null => {
     return null;
   }
 
-  const exportFn = moduleMatch[0].match(/;([$\w]+)\(/)?.[1] ?? 'P$';
+  // Extract export helper name dynamically via LexPatcher config instead of
+  // hardcoded 'P$'.  Group 2 from modulePattern gives us AO directly, but we
+  // also try the anchor matcher as a fallback — this proves the variable can
+  // be discovered independently of the full monolithic regex.
+  const exportFn = moduleMatch[2] ?? extractExportHelperFromAnchor(oldFile);
   const insertion = `var tweakccTitleModule={};${exportFn}(tweakccTitleModule,{call:()=>tweakccTitleCall});async function tweakccTitleCall(args,context){let title=args?.trim?.()??"";if(!title)return{type:"text",value:"Please specify a conversation title."};context.setAppState?.((state)=>({...state,customTitle:title}));process.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE="1";if(process.platform==="win32")process.title="Claude: "+title;else process.stdout.write("\\x1B]0;Claude: "+title+"\\x07");let message="Conversation title set to "+title;if(context.options?.isNonInteractiveSession){process.stdout.write(message+"\\n");return{type:"skip"}}return{type:"text",value:message}}`;
   const commandDef = `tweakccTitleCommand={type:"local",name:"title",description:"Set the conversation title",argumentHint:"<title>",supportsNonInteractive:!0,userFacingName(){return"title"},load:()=>Promise.resolve(tweakccTitleModule)},`;
 
