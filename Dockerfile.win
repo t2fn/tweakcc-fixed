@@ -1,0 +1,203 @@
+# Dockerfile.win — Claude Code native binary extraction testing environment
+#
+# Purpose: Test tweakcc-fixed against Claude Code's native Windows binaries (ELF/PE/Mach-O)
+#          by providing a Linux-based Node.js environment with debugging utilities.
+#
+# Inspiration: Follows the docker_captvty pattern of using Wine on Ubuntu, but adapted
+#              for native Node.js execution instead of Windows executables via Wine.
+#
+# Build:
+#   docker build -f Dockerfile.win --build-arg CLAUDE_VERSION=2.1.229 -t tweakcc-win .
+#
+# Run (interactive shell):
+#   docker run -it --rm \
+#     -v /workspace:/home/claudeuser/workspace \
+#     -v ~/.local/share/claude/versions:/home/claudeuser/.local/share/claude/versions:ro \
+#     tweakcc-win bash
+#
+# Test extraction against a specific version:
+#   docker run --rm tweakcc-win node dist/index.mjs unpack /tmp/test.js /path/to/binary
+
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+# =============================================================================
+# Stage 1: Base system setup (as root) — install Node.js and debugging tools
+# =============================================================================
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      curl \
+      wget \
+      ca-certificates \
+      gnupg \
+      git \
+      nodejs \
+      npm \
+      pnpm \
+      build-essential \
+      python3 \
+      strace \
+      file \
+      jq \
+      ltrace \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && npm install -g pnpm@latest \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# =============================================================================
+# Stage 2: Create non-root user and set up directories for testing
+# =============================================================================
+RUN useradd -m -s /bin/bash claudeuser && \
+    mkdir -p /home/claudeuser/workspace /home/claudeuser/.tweakcc /home/claudeuser/.local/share/claude
+
+USER claudeuser
+WORKDIR /home/claudeuser
+
+# =============================================================================
+# Stage 3: Install Claude Code CLI (configurable via CLAUDE_VERSION arg)
+# =============================================================================
+ARG CLAUDE_VERSION=latest
+ENV CLAUDE_VERSION=${CLAUDE_VERSION}
+
+RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_VERSION} && \
+    claude --version || echo "Claude Code version ${CLAUDE_VERSION} not yet published"
+
+# =============================================================================
+# Stage 4: Clone and build tweakcc-fixed (pinned to specific commit)
+# =============================================================================
+ARG TWEAKCC_SHA=HEAD
+ENV TWEAKCC_SHA=${TWEAKCC_SHA}
+
+RUN git clone --depth 1 https://github.com/t2fn/tweakcc-fixed.git /home/claudeuser/dev/tweakcc-fixed && \
+    cd /home/claudeuser/dev/tweakcc-fixed && \
+    (git fetch origin "${TWEAKCC_SHA}" 2>/dev/null || true) && \
+    git checkout -q "${TWEAKCC_SHA}" 2>/dev/null || true && \
+    pnpm install --frozen-lockfile && \
+    pnpm build
+
+# =============================================================================
+# Stage 5: Create helper scripts for testing native binary extraction
+# =============================================================================
+RUN mkdir -p /home/claudeuser/bin << 'HELPER_SCRIPT'
+#!/bin/bash
+# analyze_modules.sh — Extract and display all Bun module names from a native binary
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <native-binary-path> [cc-version]"
+    exit 1
+fi
+
+BINARY_PATH="$1"
+CC_VERSION="${2:-unknown}"
+
+echo "Analyzing modules in: ${BINARY_PATH}"
+echo "CC Version: ${CC_VERSION}"
+echo "---"
+
+# Use Node.js with node-lief to extract module names
+node -e "
+import('node-lief').then(LIEF => {
+  const l = LIEF.default;
+  l.logging.disable();
+  try {
+    const binary = l.parse('${BINARY_PATH}');
+    if (!binary) throw new Error('Failed to parse binary');
+
+    console.log(\`Binary format: \${binary.format}\`);
+    console.log(\`File size: \${(await import('fs')).statSync('${BINARY_PATH}').size / (1024*1024)} MB\`);
+
+    // Extract Bun data from ELF section or overlay
+    let bunData = null;
+    if (binary.format === 'ELF') {
+      const elfBinary = binary;
+      const bunSection = elfBinary.getSection('.bun');
+      if (bunSection && bunSection.content.length >= 4) {
+        // Parse section header to extract Bun data blob
+        const u32Size = bunSection.content.readUInt32LE(0);
+        const u64Size = bunSection.content.length >= 8 ? Number(bunSection.content.readBigUInt64LE(0)) : null;
+
+        if (u64Size !== null && (8 + u64Size) <= bunSection.content.length) {
+          bunData = bunSection.content.subarray(8, 8 + u64Size);
+          console.log('Detected: u64 header format');
+        } else if (u32Size > 0 && u32Size < bunSection.content.length - 100) {
+          bunData = bunSection.content.subarray(4, 4 + u32Size);
+          console.log('Detected: u32 header format');
+        }
+      }
+    }
+
+    if (!bunData || bunData.length < 1000) {
+      console.error('Could not extract Bun data from binary');
+      process.exit(1);
+    }
+
+    // Parse offsets structure (32 bytes before trailer)
+    const BUN_TRAILER = Buffer.from('\\n---- Bun! ----\\n');
+    if (!bunData.subarray(bunData.length - BUN_TRAILER.length).equals(BUN_TRAILER)) {
+      console.error('Invalid Bun trailer bytes');
+      process.exit(1);
+    }
+
+    const offsetsStart = bunData.length - 32 - BUN_TRAILER.length;
+    let pos = offsetsStart;
+    const byteCount = Number(bunData.readBigUInt64LE(pos)); pos += 8;
+    const modulesPtrOffset = bunData.readUInt32LE(pos); pos += 4;
+    const modulesPtrLength = bunData.readUInt32LE(pos + 4); pos += 8;
+    const entryPointId = bunData.readUInt32LE(pos); pos += 4;
+
+    console.log(\`Modules list: offset=\${modulesPtrOffset}, length=\${modulesPtrLength}\`);
+    console.log(\`Entry point ID: \${entryPointId}\`);
+
+    // Extract module names using StringPointer format
+    const modulesListBytes = bunData.subarray(modulesPtrOffset, modulesPtrOffset + modulesPtrLength);
+    const modulesListCount = Math.floor(modulesListBytes.length / 52); // New struct size
+
+    console.log(\`\nFound \${modulesListCount} modules:\`);
+    for (let i = 0; i < Math.min(modulesListCount, 100); i++) {
+      const offset = i * 52;
+      const nameOffset = modulesListBytes.readUInt32LE(offset);
+      const nameLength = modulesListBytes.readUInt32LE(offset + 4);
+
+      if (nameLength > 0 && nameOffset < bunData.length) {
+        const name = bunData.subarray(nameOffset, nameOffset + nameLength).toString('utf8');
+        console.log(\`  [\${i}] \${name}\`);
+      }
+    }
+
+    if (modulesListCount > 100) {
+      console.log(\`  ... and \${modulesListCount - 100} more\`);
+    }
+  } catch(e) {
+    console.error('Error:', e.message);
+    process.exit(1);
+  }
+}).catch(e => {
+  console.error('Import error:', e.message);
+  process.exit(1);
+});
+"
+HELPER_SCRIPT
+
+RUN chmod +x /home/claudeuser/bin/*
+
+# =============================================================================
+# Stage 6: Cleanup and optimization
+# =============================================================================
+RUN rm -rf /home/claudeuser/.npm/_cacache /home/claudeuser/.cache/pnpm && \
+    find /home/claudeuser -name "*.log" -delete 2>/dev/null || true
+
+# =============================================================================
+# Volume mounts for persistent data (documented, not hardcoded)
+# =============================================================================
+# VOLUME ["/home/claudeuser/workspace", "/home/claudeuser/.tweakcc"]
+# Mount CC binaries read-only: /home/claudeuser/.local/share/claude/versions:/host-claude-versions:ro
+
+# =============================================================================
+# Entry point: Interactive shell by default for testing
+# =============================================================================
+ENTRYPOINT ["bash"]
+CMD ["--login", "-i"]

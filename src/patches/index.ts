@@ -84,10 +84,10 @@ import { writeSuppressRateLimitOptions } from './suppressRateLimitOptions';
 import { writeSessionMemory } from './sessionMemory';
 import { writeDreamMode } from './dreamMode';
 import { writeLeanMemoryTypes } from './leanMemoryTypes';
-import { applyThinkingTextTransition } from './thinkingTextTransition';
 import { writeIgnoreWhitespaceEdit } from './ignoreWhitespaceEdit';
 import { writeRememberSkill } from './rememberSkill';
 import { writeThinkingBlockStyling } from './thinkingBlockStyling';
+import { applyThinkingTextTransition } from './thinkingTextTransition';
 import { writeMcpNonBlocking, writeMcpBatchSize } from './mcpStartup';
 import { writeStatuslineUpdateThrottle } from './statuslineUpdateThrottle';
 import { writeTokenCountRounding } from './tokenCountRounding';
@@ -549,8 +549,7 @@ const PATCH_DEFINITIONS = [
     group: PatchGroup.FEATURES,
     description:
       'Adds ignore_whitespace parameter to FileEditTool — allows matching lines even when leading/trailing whitespace differs between requested edit and actual file content (recommended for C/Go/Rust/Shell; not Python/YAML)',
-  },
-  {
+  },  {
     id: 'toolsets',
     name: 'Toolsets',
     group: PatchGroup.FEATURES,
