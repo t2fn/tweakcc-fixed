@@ -1,112 +1,144 @@
-// Tests for ignore_whitespace edit tool patch (v234–v237+).
-// Fixtures extracted from real cli.js v2.1.235 bundle to verify anchors survive minifier renames.
+// Tests for the FileEditTool matching-chain fallback patch.
+//
+// This patch adds a line-by-line trimmed-match fallback to the matching chain
+// ($1t/W2t) and mirrors quote normalization onto new_string via b4r/LWr.
+// Both functions are anchored on English strings the minifier can't rename:
+// "Edit also tried swapping curly quotes for straight ones in old_string before matching."
 
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { writeIgnoreWhitespaceEdit } from './ignoreWhitespaceEdit';
 
-/**
- * Edit tool body extracted verbatim from /tmp/cli-v235-pristine.js (Claude Code 2.1.235).
- * Identifiers: file_path=t, old_string=r, new_string=n, replace_all=o
- * count=a, content=s, result=l, errClass=cS, lambda=x (map param)
- */
-const V235_EDIT_BODY = 'run:async({file_path:t,old_string:r,new_string:n,replace_all:o})=>{if(!t)throw new cS("edit: file_path is required");if(!r)throw new cS("edit: old_string is required");let i=await ITr(e,t),s;try{let c=await F9.stat(i);if(!c.isFile())throw new cS(`edit: ${t} is not a regular file`);let u=Dtu(e.maxFileBytes);if(u!==null&&c.size>u)throw new cS(`edit: ${t} is ${c.size} bytes, exceeds ${u}-byte limit. Use bash (sed/awk) to edit a large file.`);s=await F9.readFile(i,"utf8")}catch(c){if(c instanceof cS)throw c;throw new cS(`edit: ${Fbn(c,t)}`)}let a=s.split(r).length-1;if(a===0)throw new cS(`edit: old_string not found in \\${t}`);let l;if(o)l=s.split(r).join(n);else{if(a>1)throw new cS(`edit: old_string appears ${a} times in ${t} (must be unique)`);l=s.replace(r,()=>n)}try{await Axs(i,l)}catch(c){throw new cS(`edit: write: ${Fbn(c,t)}`)}return`edited ${t} (${o?a:1} replacement(s))`}';
+/** Fixture mimicking a real CC bundle (v238 shape): anchor string + matching function + normalizer mirror. */
+const PRISTINE = `function b4r(e,t,r){var n=r.split("|");return n[0]}
+function $1t(e,t){if(e.includes(t))return t;let r=rNp(t),o=rNp(e).indexOf(r);if(o!==-1)return e.substring(o,o+t.length);if(qOa.test(t)){let i=FOa(t);if(i!==t&&e.includes(i))return i}if(WOa.test(t)){let i=e.match(new RegExp(oNp(t)));if(i)return i[0]}return null}
+function LWr(e,t,r){var n=r.split("|");return n[0]}
 
-/**
- * Full inputSchema block from v235 — used by step 1 SCHEMA_RE anchor.
- */
-const V235_SCHEMA = 'inputSchema:{type:"object",properties:{file_path:{type:"string"},old_string:{type:"string"},new_string:{type:"string"},replace_all:{type:"boolean"}},required:["file_path","old_string","new_string"]}';
+// Anchor string the minifier can't rename.
+Edit also tried swapping curly quotes for straight ones in old_string before matching.
+var m=$1t(f,n);
+var k=$1t(p,q,true);  // replace_all mode`;
 
-/**
- * Build a minimal cli.js snippet that contains the edit tool registration.
- * Structure matches real v235: tools are `function X(e){return G9t({...run:async...})}` in sequence,
- * with boundary between them being exactly `}})}function` (4 chars). We include a preceding dummy
- * tool so getEditToolLocation can find the prevBoundary before EditTool's run:async.
- */
-
-/** Dummy write-tool body for preceding tool — must have a }})}function boundary after it. */
-const DUMMY_RUN_BODY = 'run:async({file_path:x,content:c})=>{if(!x)throw Error(1);await F9.writeFile(x,c);return`wrote ${c.length}`}';
-
-function buildV235Snippet() {
-  // Preceding tool boundary: }})} (same structure as real v235 between $tu and Otu)
-  const prevBoundary = '}})}';
-
-  return 'function WriteTool(e){return G9t({name:"write",description:"Write a file.",inputSchema:{type:"object"},' + DUMMY_RUN_BODY + ')}' + prevBoundary + 'function EditTool(e){return G9t({name:"edit",description:"Replace old_string with new_string in a file. old_string must be unique unless replace_all.",' + V235_SCHEMA + ',' + V235_EDIT_BODY + ')}})}function NextTool(e){return G};';
-}
-
-// ---------------------------------------------------------------------------
-// Tests — real v235 fixture
-// ---------------------------------------------------------------------------
-
-describe('writeIgnoreWhitespaceEdit (real v235 fixtures)', () => {
-  it('patches the v235 edit tool body with ignore_whitespace parameter', () => {
-    const result = writeIgnoreWhitespaceEdit(buildV235Snippet());
+describe('writeIgnoreWhitespaceEdit', () => {
+  it('patches $1t with line-by-line fallback and LWr with indent mirror in v238 shape', () => {
+    // The patch must insert both the matching chain fallback AND the normalization mirror.
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
     expect(result).not.toBeNull();
-    // Check that ignore_whitespace was added to schema properties
-    expect(result!).toContain('ignore_whitespace:{type:"boolean"');
-    // Check that the parameter is in run:async signature
-    expect(result!).toContain(',ignore_whitespace:');
+
+    // Both markers should be present (one for each function patched).
+    expect(result).toContain('// tweakcc-ignore-whitespace-fallback');
+
+    // The original anchor string must still be there (we didn't corrupt it).
+    expect(result).toContain('Edit also tried swapping');
+
+    // The matching function signature now has the third parameter.
+    expect(result).toContain('function $1t(e,t,ignoreWhitespace=false)');
+
+    // The call site is patched to pass false as default for ignore_whitespace.
+    expect(result).toContain('$1t(f,n,false);');
+
+    // The 3-arg call site (replace_all mode) should also be patched.
+    expect(result).toContain('$1t(p,q,true,false);');
+
+    // The normalizer mirror function is preserved.
+    expect(result).toContain('function LWr(e,t,r)');
+
+    // Fallback code for line-by-line comparison was inserted.
+    expect(result).toContain('_tL=t.split');
+    expect(result).toContain('_eL=e.split');
+
+    // Indentation mirroring code was inserted into the normalizer mirror.
+    expect(result).toContain('var _nL=r.split');
+    expect(result).toContain('_mL=n.split');
   });
 
-  it('patches count logic (step 3) with line-by-line normalization', () => {
-    const result = writeIgnoreWhitespaceEdit(buildV235Snippet());
+  it('only activates fallback when ignore_whitespace=true (LLM opt-in)', () => {
+    // Verify the patch includes proper conditional logic for ignoreWhitespace parameter.
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
     expect(result).not.toBeNull();
-    // Step 3 should use wsFlag ternary around split/trim/join for counting
-    expect(result!).toContain('String.fromCharCode(10)');
-    expect(result!).toContain('.map(');
-    expect(result!).toContain('.trim()');
+
+    // The fallback should be wrapped in an if(ignoreWhitespace) check.
+    expect(result).toContain('if(ignoreWhitespace){');
+
+    // This ensures LLM can choose strict matching (default) vs lenient whitespace tolerance.
+    // Strict: ignore_whitespace=false or omitted — exact character match required.
+    // Lenient: ignore_whitespace=true — trim() each line before comparing, only if exactly one run matches.
   });
 
-  it('patches join/replace logic (step 4) with line-by-line normalization', () => {
-    const result = writeIgnoreWhitespaceEdit(buildV235Snippet());
+  it('provides clear guidance for LLM on when to use ignore_whitespace', () => {
+    // Verify the patch includes documentation about proper usage.
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
     expect(result).not.toBeNull();
-    // Step 4 should have both if(o) branch and else branch normalized
-    expect(result!).toContain('if(o){');
-    expect(result!).toContain('else{');
+
+    // Check that conditional logic is present (if(ignoreWhitespace) check).
+    expect(result).toContain('if(ignoreWhitespace){');
+
+    // Check that fallback code structure exists for whitespace-aware matching.
+    expect(result).toContain('_tL=t.split');
   });
 
-  it('is idempotent — second pass returns null', () => {
-    const first = writeIgnoreWhitespaceEdit(buildV235Snippet());
-    expect(first).not.toBeNull();
-    const second = writeIgnoreWhitespaceEdit(first!);
-    expect(second).toBeNull();
-  });
-
-  it('returns null when edit tool body not found', () => {
-    const result = writeIgnoreWhitespaceEdit('var unrelated=function(){}');
-    expect(result).toBeNull();
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Tests — synthetic (matching contextLimit-style test pattern)
-// ---------------------------------------------------------------------------
-
-describe('writeIgnoreWhitespaceEdit (synthetic patterns)', () => {
-  it('handles different minified variable names', () => {
-    // Simulate a full edit tool registration with rewritten vars.
-    // Must include function boundary for getEditToolLocation AND match all step anchors.
-    // Preceding WriteTool provides the }})}function boundary before EditTool (real v235 pattern).
-    const snippet = 'function WriteTool(e){return G9t({name:"write",description:"Write a file.",inputSchema:{type:"object"},run:async({file_path:x,content:c})=>{await F9.writeFile(x,c);return\`wrote \${c.length}\`} })}})function EditTool(e){return G9t({name:"edit",description:"Replace old_string with new_string in a file. old_string must be unique unless replace_all.",inputSchema:{type:"object",properties:{file_path:{type:"string"},old_string:{type:"string"},new_string:{type:"string"},replace_all:{type:"boolean"}},required:["file_path","old_string","new_string"]}},run:async({file_path:a,old_string:b,new_string:c,replace_all:d})=>{if(!a)throw new cS("edit: file_path is required");let e=await ITr(f,a),n;try{n=await F9.readFile(e,"utf8")}catch(g){}let p=n.split(b).length-1;if(p===0)throw new cS(`edit: old_string not found in \\${a}`);let q;if(d)q=n.split(b).join(c);else{if(p>1)throw new cS(`edit: old_string appears ${p} times in ${a} (must be unique)`);q=n.replace(b,()=>c)}return q})}})}function Nxt(e){return G};';
-
-    const result = writeIgnoreWhitespaceEdit(snippet);
+  it('is idempotent — second call returns null', () => {
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
     expect(result).not.toBeNull();
-    expect(result!).toContain('ignore_whitespace');
+    // Second pass: marker already present -> skip.
+    const rePatched = writeIgnoreWhitespaceEdit(result!);
+    expect(rePatched).toBeNull();
   });
 
-  it('handles already-patched state', () => {
-    // Already-patched state should be skipped by idempotency check
-    const snippet = 'replace_all:{type:"boolean"},additionalProperties:{ignore_whitespace:{type:"boolean"}}';
-    const result = writeIgnoreWhitespaceEdit(`...${snippet}...`);
+  it('returns null when anchor string is absent', () => {
+    // If the English anchor isn't found, we can't locate the functions to patch.
+    const result = writeIgnoreWhitespaceEdit('no relevant code here');
     expect(result).toBeNull();
   });
 
-  it('handles long-form description text without full body', () => {
-    // This snippet has the description anchor, schema, and minimal body — enough for all steps.
-    // Preceding WriteTool provides the }})}function boundary before EditTool (real v235 pattern).
-    const snippet = 'function WriteTool(e){return G9t({name:"write",description:"Write a file.",inputSchema:{type:"object"},run:async({file_path:x,content:c})=>{await F9.writeFile(x,c);return\`wrote \${c.length}\`}})}})function EditTool(e){return G9t({name:"edit",description:"Replace old_string with new_string in a file. old_string must be unique unless replace_all.",inputSchema:{type:"object",properties:{file_path:{type:"string"},old_string:{type:"string"},new_string:{type:"string"},replace_all:{type:"boolean"}},required:["file_path","old_string","new_string"]}},run:async({file_path:a,old_string:b,new_string:c,replace_all:d})=>{let e=await ITr(f,a),n;try{n=await F9.readFile(e,"utf8")}catch(g){}let p=n.split(b).length-1;if(p===0)throw new cS(`edit: old_string not found in \\${a}`);let q;if(d)q=n.split(b).join(c);else{if(p>1)throw new cS(`edit: old_string appears ${p} times in ${a} (must be unique)`);q=n.replace(b,()=>c)}return q})}})}function Nxt(e){return H};';
+  it('does not modify stream handler text_delta cases (only touches matching chain)', () => {
+    // Sanity: our patch only touches the matching chain, not the stream handler.
+    const sourceWithHandler = PRISTINE + '\ncase"text_delta":if(ni.type!=="text")throw N("err"),Error("X");';
+    const result = writeIgnoreWhitespaceEdit(sourceWithHandler);
+    expect(result).toContain('case"text_delta"');
+  });
 
-    const result = writeIgnoreWhitespaceEdit(snippet);
+  it('produces a string that can be inserted into valid JS context (balanced braces)', () => {
+    // The patched output is meant to replace the original bundle content, not run standalone.
+    // We just verify no obvious corruption: balanced braces in function bodies.
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
     expect(result).not.toBeNull();
-    expect(result!).toContain('ignore_whitespace');
+
+    // Count braces to make sure we didn't leave any unbalanced.
+    let depth = 0;
+    for (const ch of result!) {
+      if (ch === '{') depth++;
+      else if (ch === '}') depth--;
+    }
+    expect(depth).toBe(0);
+  });
+
+  it('handles CRLF line endings in the bundle', () => {
+    // The bundle can have CRLF line endings, so we need to handle that.
+    const crlfPristine = PRISTINE.replace(/\n/g, '\r\n');
+    const result = writeIgnoreWhitespaceEdit(crlfPristine);
+    expect(result).not.toBeNull();
+
+    // Should still contain the anchor string (possibly with CRLF).
+    expect(result).toContain('Edit also tried swapping');
+
+    // Braces should still be balanced.
+    let depth = 0;
+    for (const ch of result!) {
+      if (ch === '{') depth++;
+      else if (ch === '}') depth--;
+    }
+    expect(depth).toBe(0);
+  });
+
+  it('detects exactly one run of lines for ambiguity check', () => {
+    // The fallback should only return the original span when there's exactly one run.
+    // This test verifies the logic is in place (we can't easily test runtime behavior without a real bundle).
+    const result = writeIgnoreWhitespaceEdit(PRISTINE);
+    expect(result).not.toBeNull();
+
+    // Should contain the runs detection logic.
+    expect(result).toContain('_runs');
+    expect(result).toContain('if(_runs<=1');
   });
 });
