@@ -256,11 +256,19 @@ export interface CustomModel {
   maxTokens?: number;
   /**
    * Auto-compact trigger as a percentage (1-100) of contextWindow — e.g. 90
-   * compacts at floor(0.9 * window). Takes priority over the global
-   * CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env var; unset keeps CC's stock buffer.
+   * compacts at floor(0.9 * window). Priority: compactThresholdTokens >
+   * compactThresholdPct > CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env > 80% default
+   * (custom models never use CC's stock window-13000 buffer).
    * Requires the model-context-window-sync patch.
    */
   compactThresholdPct?: number;
+  /**
+   * Auto-compact trigger as a FIXED token count — e.g. 450000 compacts at
+   * 450k tokens regardless of percentage math (still capped by CC's
+   * window-13000 safety). Wins over compactThresholdPct when both are set.
+   * Requires the model-context-window-sync patch.
+   */
+  compactThresholdTokens?: number;
   /**
    * Role models to use WHILE this model is the selected main model — e.g. a
    * smaller/cheaper model for CC's background (haiku-role) tasks:

@@ -13,11 +13,19 @@
 //
 // The model-customizations patch injects a startup reader that loads this into
 // globalThis.__tweakccCustomModels; THIS patch makes CC's window resolution
-// consult that global, per model, at resolve time. compactThresholdPct (1-100,
-// optional) sets the per-model auto-compact trigger as a percentage of the
-// window — it takes priority over the global CLAUDE_AUTOCOMPACT_PCT_OVERRIDE
-// env var, so "compact at 90%" stays 90% OF THE REAL WINDOW (450k of 500k),
-// in /context's display and in the enforcement math alike.
+// consult that global, per model, at resolve time.
+//
+// The compact trigger is configurable per model, as a percentage OR a fixed
+// token count:
+//
+//   "compactThresholdPct": 90          → compact at 90% of the window
+//   "compactThresholdTokens": 450000   → compact at 450k tokens (fixed wins)
+//
+// Priority: fixed tokens > percent > CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env >
+// 80%-of-window default. A declared custom model NEVER falls back to CC's
+// stock window-13000 buffer (dangerously late on big windows) or to anything
+// derived from the 200k unrecognized assumption; 80% of the REAL window is
+// the floor behavior, in /context's display and the enforcement math alike.
 //
 // -- The architecture (CC 2.1.267 → 2.1.271 verified; minified names churn
 //    EVERY release, so every anchor CAPTURES them at apply time) --
@@ -65,14 +73,16 @@
 //      `testPctOverride` (stock: the CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env) is
 //      the percent-of-window trigger consumed by the threshold math
 //      (`min(floor(window*pct/100), window-13000)`). We replace the slot with
-//      a per-model lookup (customModels[].compactThresholdPct) that falls
-//      back to the env expression, so the priority is: per-model config >
-//      global env > stock buffer. FPT always sits ~2.4KB after the session
-//      resolver TW in the same module (verified 2.1.267-2.1.271), so the
-//      id extractor JE resolves there; the lookup is try/catch-wrapped so a
-//      future scope split degrades to the env path instead of breaking
-//      auto-compact. Applied independently of 1+2 so earlier-patched binaries
-//      upgrade to it on re-apply.
+//      a per-model lookup: fixed compactThresholdTokens (converted to a
+//      percentage of the live window via a TW resolver call — w$e's
+//      `min(…, window-13000)` cap still guards overshoot), then
+//      compactThresholdPct, then the env expression, then an 80% default for
+//      any model with a customModels entry. FPT always sits ~2.4KB after the
+//      session resolver TW in the same module (verified 2.1.267-2.1.272), so
+//      JE/TW resolve there; the lookup is try/catch-wrapped so a future scope
+//      split degrades to the stock env path instead of breaking auto-compact.
+//      Applied independently of 1+2 so earlier-patched binaries upgrade to it
+//      on re-apply.
 //
 // Adding the model to the recognized-models Set instead would be WRONG: the
 // Set branch fires before the table lookup and returns `min(d,VF)` with
@@ -132,10 +142,15 @@ const PCT_MARK = '__tcpL=globalThis.__tweakccCustomModels';
 const patternThreshold =
   /function ([\w$]+)\(([\w$]+),[\w$]+,[\w$]+\)\{let ([\w$]+)=process\.env\.CLAUDE_AUTOCOMPACT_PCT_OVERRIDE,([\w$]+)=process\.env\.CLAUDE_CODE_BLOCKING_LIMIT_OVERRIDE;return\{enabled:[\w$]+\(\),precomputeBufferFraction:[\w$]+\(\2,[\w$]+,[\w$]+\),testPctOverride:\3\?parseFloat\(\3\):void 0,testBlockingOverride:\4\?[\w$]+\(\4\):void 0\}\}/;
 
-// Recover the id-extractor name from an already-injected resolver lookup
-// (upgrade path: the pristine resolver anchor no longer matches once the
-// core injections are in). Matches the VP-site form `…value===JE(e)`.
-const patternInjectedJe = /__tcwM\.value===([\w$]+)\(/;
+// Session-window resolver (TW) head — supplies BOTH the JE id-extractor and
+// the TW name for the threshold injection, and unlike the resolver anchor it
+// survives this patch's own core injections (it anchors on the untouched TW
+// head), so fresh and upgrade paths share one capture. Recorder-tolerant:
+// customSubModels splices `globalThis.__tcwSel=JE(e);` right after the body
+// opener when that patch runs first. Verified unique per build (2.1.267-272).
+// Captures: 1=TW 2=e-param 3=s-local 4=JE 5=VP 6=GNn
+const patternTw =
+  /function ([\w$]+)\(([\w$]+),[\w$]+,[\w$]+=[\w$]+\(\)\)\{(?:globalThis\.__tcwSel=[\w$]+\([\w$]+\);)?let ([\w$]+)=([\w$]+)\(\2\),[\w$]+=([\w$]+)\(\2,[\w$]+\),[\w$]+=([\w$]+)\(\2,\3\),[\w$]+=[\w$]+\?\.declared/;
 
 // Stale injection from the superseded "extend the recognized-models Set"
 // approach (spliced after `var SET=new Set([...])`). Harmless to detect, fatal
@@ -156,18 +171,27 @@ const patternStaleTableInjection =
 const buildLookup = (idExpr: string): string =>
   `var __tcwL=globalThis.__tweakccCustomModels;if(__tcwL)for(var __tcwI=0;__tcwI<__tcwL.length;__tcwI++){var __tcwM=__tcwL[__tcwI];if(__tcwM&&__tcwM.value===${idExpr}){var __tcwW=+__tcwM.contextWindow;if(__tcwW>0)return __tcwW}}`;
 
-// Replacement for fpt's `testPctOverride:ENV?parseFloat(ENV):void 0` slot:
-// per-model compactThresholdPct (1-100) wins over the global env override,
-// which wins over CC's stock window-13000 buffer. The lookup is wrapped in
-// try/catch: JE is captured at the resolver site, and if a future build ever
-// put fpt in a scope where that binding does not resolve, the ReferenceError
-// degrades to the stock env path instead of breaking auto-compact.
+// Replacement for fpt's `testPctOverride:ENV?parseFloat(ENV):void 0` slot.
+// Priority for a model that HAS a customModels entry:
+//   compactThresholdTokens (fixed, converted to pct of the live window)
+//   > compactThresholdPct > CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env
+//   > DEFAULT_CUSTOM_COMPACT_PCT (80% — a declared custom model never falls
+//     back to CC's window-13000 stock buffer, which compacts dangerously late
+//     on big windows, nor to anything derived from the 200k assumption).
+// Non-custom models keep the exact stock chain (env → buffer). The lookup is
+// wrapped in try/catch: JE/TW are captured at the TW anchor (same module as
+// fpt in every build checked, 2.1.267-272), but if a future split ever made
+// them unresolvable here, the ReferenceError degrades to the stock env path
+// instead of breaking auto-compact.
+const DEFAULT_CUSTOM_COMPACT_PCT = 80;
+
 const buildThresholdOverride = (
   je: string,
+  tw: string,
   modelParam: string,
   pctLocal: string
 ): string =>
-  `(function(){try{var __tcpL=globalThis.__tweakccCustomModels;if(__tcpL){var __tcpId=${je}(${modelParam});for(var __tcpI=0;__tcpI<__tcpL.length;__tcpI++){var __tcpM=__tcpL[__tcpI];if(__tcpM&&__tcpM.value===__tcpId){var __tcpP=+__tcpM.compactThresholdPct;if(__tcpP>0&&__tcpP<=100)return __tcpP}}}}catch(__tcpX){}return ${pctLocal}?parseFloat(${pctLocal}):void 0})()`;
+  `(function(){try{var __tcpL=globalThis.__tweakccCustomModels;if(__tcpL){var __tcpId=${je}(${modelParam});for(var __tcpI=0;__tcpI<__tcpL.length;__tcpI++){var __tcpM=__tcpL[__tcpI];if(__tcpM&&__tcpM.value===__tcpId){var __tcpT=+__tcpM.compactThresholdTokens;if(__tcpT>0){var __tcpW=${tw}(${modelParam},void 0).window;if(__tcpW>0){var __tcpR=__tcpT/__tcpW*100;if(__tcpR>0&&__tcpR<=100)return __tcpR}}var __tcpP=+__tcpM.compactThresholdPct;if(__tcpP>0&&__tcpP<=100)return __tcpP;if(${pctLocal})return parseFloat(${pctLocal});return ${DEFAULT_CUSTOM_COMPACT_PCT}}}}}catch(__tcpX){}return ${pctLocal}?parseFloat(${pctLocal}):void 0})()`;
 
 /**
  * Splice `injection` into `file` right after `prefix`, where prefix must be an
@@ -205,7 +229,6 @@ export const writeModelContextWindowSync = (oldFile: string): string | null => {
   }
 
   let patched = file;
-  let jeName: string | null = null;
   const coreDone = patched.includes(INJECT_MARK);
   const pctDone = patched.includes(PCT_MARK);
 
@@ -230,7 +253,7 @@ export const writeModelContextWindowSync = (oldFile: string): string | null => {
       const tableName = tableMatch[1];
       // Match-array destructuring: slot 0 is the full match, groups start at 1.
       const [, vpName, eParam, nParam, rLocal, ezName] = resolverMatch;
-      jeName = resolverMatch[9];
+      const jeName = resolverMatch[9];
 
       // Injection 1 — resolver VP: per-model max window (d). Splice after the
       // env-override early return so CLAUDE_CODE_* env vars keep precedence.
@@ -304,16 +327,14 @@ export const writeModelContextWindowSync = (oldFile: string): string | null => {
       // Those predate the fpt/threshold machinery too, so nothing else applies.
       return writeLegacyHfSync(patched);
     }
-  } else {
-    // Upgrade path: core injections already present (anchors no longer match).
-    // Recover the id-extractor name from the injected resolver lookup.
-    const jeMatch = patched.match(patternInjectedJe);
-    jeName = jeMatch ? jeMatch[1] : null;
   }
 
   // ── Injection 3 — per-model compact threshold (additive) ───────────────
-  // customModels[].compactThresholdPct (1-100) takes priority over the global
-  // CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env, which keeps its stock fallback role.
+  // Priority for custom models: compactThresholdTokens (fixed) >
+  // compactThresholdPct > CLAUDE_AUTOCOMPACT_PCT_OVERRIDE env > 80% default.
+  // The TW anchor supplies both the JE id-extractor and the TW resolver name
+  // (for the fixed-tokens→pct conversion); it survives this patch's own core
+  // injections and customSubModels' recorder, so fresh and upgrade paths match.
   if (!pctDone) {
     if (patched.includes('CLAUDE_AUTOCOMPACT_PCT_OVERRIDE')) {
       const fptMatch = patched.match(patternThreshold);
@@ -323,9 +344,10 @@ export const writeModelContextWindowSync = (oldFile: string): string | null => {
         );
         return null;
       }
-      if (!jeName) {
+      const twMatch = patched.match(patternTw);
+      if (!twMatch) {
         console.error(
-          'patch: modelContextWindowSync: could not recover the model-id extractor for the threshold injection'
+          'patch: modelContextWindowSync: session resolver head (TW shape) needed for the threshold injection not found — needs re-anchoring'
         );
         return null;
       }
@@ -340,10 +362,10 @@ export const writeModelContextWindowSync = (oldFile: string): string | null => {
       const abs = fptMatch.index + slotAt;
       patched =
         patched.slice(0, abs) +
-        `testPctOverride:${buildThresholdOverride(jeName, fptMatch[2], fptMatch[3])}` +
+        `testPctOverride:${buildThresholdOverride(twMatch[4], twMatch[1], fptMatch[2], fptMatch[3])}` +
         patched.slice(abs + pctSlot.length);
       debug(
-        `patch: modelContextWindowSync: injected per-model compact threshold (fpt=${fptMatch[1]}, id=${jeName})`
+        `patch: modelContextWindowSync: injected per-model compact threshold (fpt=${fptMatch[1]}, tw=${twMatch[1]}, id=${twMatch[4]})`
       );
     } else {
       debug(

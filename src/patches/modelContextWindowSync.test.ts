@@ -349,7 +349,7 @@ describe('writeModelContextWindowSync (executable resolver semantics)', () => {
     expect(autoThreshold('qwen36-500k:35b')).toBe(400000);
   });
 
-  it('patched: an out-of-range compactThresholdPct is ignored (falls back to stock)', () => {
+  it('patched: an out-of-range compactThresholdPct falls to the 80% custom default', () => {
     const models = [
       {
         value: 'qwen36-500k:35b',
@@ -359,8 +359,76 @@ describe('writeModelContextWindowSync (executable resolver semantics)', () => {
     ];
     const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
     const { autoThreshold } = runChain(patched, models);
-    // stock w$e fallback: window - 13000
+    // declared custom models never use the stock window-13000 buffer
+    expect(autoThreshold('qwen36-500k:35b')).toBe(400000);
+  });
+
+  it('patched: a declared custom model with no pct/tokens/env defaults to 80% of its window', () => {
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, customModels);
+    expect(autoThreshold('qwen36-500k:35b')).toBe(400000);
+  });
+
+  it('patched: compactThresholdTokens sets a fixed trigger (450k of a 500k window)', () => {
+    const models = [
+      {
+        value: 'qwen36-500k:35b',
+        contextWindow: 500000,
+        compactThresholdTokens: 450000,
+      },
+    ];
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, models);
+    expect(autoThreshold('qwen36-500k:35b')).toBe(450000);
+  });
+
+  it('patched: fixed tokens win over pct when both are set', () => {
+    const models = [
+      {
+        value: 'qwen36-500k:35b',
+        contextWindow: 500000,
+        compactThresholdPct: 50,
+        compactThresholdTokens: 450000,
+      },
+    ];
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, models);
+    // 450k (tokens), not 250k (50% pct)
+    expect(autoThreshold('qwen36-500k:35b')).toBe(450000);
+  });
+
+  it("patched: tokens above CC's window-13000 safety cap get capped", () => {
+    const models = [
+      {
+        value: 'qwen36-500k:35b',
+        contextWindow: 500000,
+        compactThresholdTokens: 495000,
+      },
+    ];
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, models);
     expect(autoThreshold('qwen36-500k:35b')).toBe(487000);
+  });
+
+  it('patched: tokens larger than the window fall through to the 80% default', () => {
+    const models = [
+      {
+        value: 'qwen36-500k:35b',
+        contextWindow: 500000,
+        compactThresholdTokens: 600000,
+      },
+    ];
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, models);
+    expect(autoThreshold('qwen36-500k:35b')).toBe(400000);
+  });
+
+  it('patched: env override still beats the 80% default (explicit global wins)', () => {
+    const patched = writeModelContextWindowSync(EXECUTABLE_FIXTURE)!;
+    const { autoThreshold } = runChain(patched, customModels, {
+      CLAUDE_AUTOCOMPACT_PCT_OVERRIDE: '70',
+    });
+    expect(autoThreshold('qwen36-500k:35b')).toBe(350000);
   });
 
   it('patched: built-in models never see the per-model pct path', () => {
@@ -470,7 +538,7 @@ describe('writeModelContextWindowSync (legacy hF builds)', () => {
 // binaries are ~200MB each: TWEAKCC_MCWS_BINARIES=/tmp/cc-dl (a dir with
 // x267/package/claude … x271/package/claude).
 const binRoot = process.env.TWEAKCC_MCWS_BINARIES;
-const versions = ['267', '268', '269', '270', '271'];
+const versions = ['267', '268', '269', '270', '271', '272'];
 
 describe.skipIf(!binRoot)('real CC binaries (TWEAKCC_MCWS_BINARIES)', () => {
   it.each(versions)(
