@@ -86,6 +86,8 @@ export function MiscView({ onSubmit }: MiscViewProps) {
     allowCustomAgentModels: false,
     enableContextLimitOverride: false,
     enableModelCustomizations: true,
+    enableModelContextWindowSync: false, // Per-model context window enforcement via resolver lookups (opt-in)
+    enableCustomSubModels: false, // Per-main-model role overrides (opt-in)
     enableVoiceMode: false,
     enableVoiceConciseOutput: true,
     enableChannelsMode: false,
@@ -272,6 +274,34 @@ export function MiscView({ onSubmit }: MiscViewProps) {
             ensureMisc();
             settings.misc!.enableModelCustomizations =
               !settings.misc!.enableModelCustomizations;
+          });
+        },
+      },
+      {
+        id: 'enableModelContextWindowSync',
+        title: 'Per-model context window sync (auto-compact)',
+        description:
+          'Dynamically update auto-compact window when switching models via /model. Reads customModels from $CLAUDE_CONFIG_DIR or ~/.claude/settings.json at startup and enforces per-model limits in CC’s auto-compact resolver. Disable to always use the CLAUDE_CODE_CONTEXT_LIMIT fallback or fixed 200k.',
+        getValue: () => settings.misc?.enableModelContextWindowSync ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.enableModelContextWindowSync =
+              !settings.misc!.enableModelContextWindowSync;
+          });
+        },
+      },
+      {
+        id: 'enableCustomSubModels',
+        title: 'Per-model sub-models (haiku role)',
+        description:
+          'While a custom model is selected, route CC’s background (haiku-role) tasks to its customModels[].subModels.haiku model — e.g. main gemma4-31b with haiku gemma3:12b. Per-model beats the global ANTHROPIC_SMALL_FAST_MODEL / ANTHROPIC_DEFAULT_HAIKU_MODEL env vars; without a subModels entry, stock behavior is untouched.',
+        getValue: () => settings.misc?.enableCustomSubModels ?? false,
+        toggle: () => {
+          updateSettings(settings => {
+            ensureMisc();
+            settings.misc!.enableCustomSubModels =
+              !settings.misc!.enableCustomSubModels;
           });
         },
       },

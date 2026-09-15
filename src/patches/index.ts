@@ -59,6 +59,8 @@ import { writeUserMessageDisplay } from './userMessageDisplay';
 import { writeInputPatternHighlighters } from './inputPatternHighlighters';
 import { writeVerboseProperty } from './verboseProperty';
 import { writeModelCustomizations } from './modelSelector';
+import { writeModelContextWindowSync } from './modelContextWindowSync';
+import { writeCustomSubModels } from './customSubModels';
 import { writeOpusplan1m } from './opusplan1m';
 import { writeThinkingVisibility } from './thinkingVisibility';
 import { writeSubagentModels } from './subagentModels';
@@ -121,6 +123,8 @@ import {
 import { compareVersions } from '../systemPromptSync';
 
 export { showDiff, showPositionalDiff, globalReplace } from './patchDiffing';
+export { writeModelContextWindowSync } from './modelContextWindowSync'; // Prevent tree-shaking
+export { writeCustomSubModels } from './customSubModels'; // Prevent tree-shaking
 export {
   findChalkVar,
   findChalkVarInModule,
@@ -268,6 +272,22 @@ const PATCH_DEFINITIONS = [
     group: PatchGroup.MISC_CONFIGURABLE,
     description:
       'Override the 200K context limit via CLAUDE_CODE_CONTEXT_LIMIT env var (set before launching CC)',
+  },
+  {
+    id: 'model-context-window-sync',
+    name: 'Model context window sync',
+    group: PatchGroup.MISC_CONFIGURABLE,
+    description:
+      'Per-model context windows for custom models: /context and auto-compact use the contextWindow declared in ~/.claude/settings.json (customModels) instead of the 200k unrecognized-model default',
+    modelFacing: true,
+  },
+  {
+    id: 'custom-sub-models',
+    name: 'Per-model sub-models (haiku role)',
+    group: PatchGroup.MISC_CONFIGURABLE,
+    description:
+      'While a custom model is selected, route CC’s background (haiku-role) tasks to its customModels[].subModels.haiku model; beats the global ANTHROPIC_SMALL_FAST_MODEL env var, stock behavior when unset',
+    modelFacing: true,
   },
   {
     id: 'patches-applied-indication',
@@ -1033,6 +1053,14 @@ export const applyCustomization = async (
     'model-customizations': {
       fn: c => writeModelCustomizations(c),
       condition: modelCustomizationsEnabled,
+    },
+    'model-context-window-sync': {
+      fn: c => writeModelContextWindowSync(c),
+      condition: config.settings.misc?.enableModelContextWindowSync === true,
+    },
+    'custom-sub-models': {
+      fn: c => writeCustomSubModels(c),
+      condition: config.settings.misc?.enableCustomSubModels === true,
     },
     'show-more-items-in-select-menus': {
       fn: c => writeShowMoreItemsInSelectMenus(c, 25),
