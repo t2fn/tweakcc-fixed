@@ -55,7 +55,7 @@ describe('writeModelContextWindowSync (2.1.267+ resolver architecture)', () => {
     );
     // The lookup-side compares the bare param (already a short id).
     expect(out).toContain(
-      '__tcwM.value===e){var __tcwW=+__tcwM.contextWindow;if(__tcwW>0)return __tcwW}'
+      '__tcwM.value===e){var __tcwW=+__tcwM.contextWindow;if(__tcwW>0){'
     );
     expect(out).toContain(
       'if(!Object.hasOwn(KBn,e))return;return ZBn(KBn[e])}'
@@ -198,7 +198,7 @@ const EXECUTABLE_FIXTURE = [
 ].join('');
 
 const runResolver = (code: string, customModels: unknown, model: string) => {
-  const sandbox: Record<string, unknown> = {};
+  const sandbox: Record<string, unknown> = { process: { env: {} } };
   const ctx = vm.createContext(sandbox);
   // The fixture assigns __resolve onto globalThis; inside a vm context the
   // realm's globalThis is the sandbox itself.
@@ -557,8 +557,8 @@ describe.skipIf(!binRoot)('real CC binaries (TWEAKCC_MCWS_BINARIES)', () => {
       ).toBe(1);
       // Nothing else changed: size delta is exactly the three injections.
       const injectionLen = out!.length - raw.length;
-      expect(injectionLen).toBeGreaterThan(600);
-      expect(injectionLen).toBeLessThan(1400);
+      expect(injectionLen).toBeGreaterThan(900);
+      expect(injectionLen).toBeLessThan(2200);
       // Idempotent.
       expect(writeModelContextWindowSync(out!)).toBe(out);
     },

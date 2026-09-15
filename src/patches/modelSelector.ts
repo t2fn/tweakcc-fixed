@@ -1,6 +1,6 @@
 // Please see the note about writing patches in ./index
 
-import { escapeIdent, showDiff } from './index';
+import { escapeIdent, getRequireFuncName, showDiff } from './index';
 import type { CustomModel } from '../types';
 
 /** Re-export CustomModel for use by other modules */
@@ -94,71 +94,127 @@ const findCustomModelListInsertionPoint = (
 };
 
 /**
- * Inject a runtime settings reader at CC startup that loads per-model context windows
- * from ~/.claude/settings.json. Uses two formats for maximum compatibility:
+ * Inject a runtime settings reader at CC startup that loads per-model context
+ * windows from settings.json ($CLAUDE_CONFIG_DIR, then ~/.claude). Formats:
  *
  * 1. Primary (recommended): "customModels" array — clean JSON objects
  *    { "customModels": [{ "value": "qwen36-500k:35b", "contextWindow": 500000 }] }
  *
- * 2. Fallback: modelOverrides strings with key=value format (works with CC's native modelOverrides)
- *    { "modelOverrides": { "my-model": ["contextWindow=500000"] } }
+ * 2. Fallback: modelOverrides strings with key=value entries
+ *    { "modelOverrides": { "my-model": ["contextWindow=500000", "haiku=small-model"] } }
+ *
+ * PLACEMENT IS EVERYTHING: on native (sentinel) bundles the reader goes at the
+ * TOP OF THE ENTRY MODULE — the only module guaranteed to evaluate at boot.
+ * An earlier revision injected at "end of extracted content", which on a
+ * 1700-module virtual bundle lands inside the LAST chunk — a lazy module that
+ * never evaluates, so globalThis.__tweakccCustomModels stayed undefined and
+ * every downstream lookup silently no-op'd (binary looked patched, behaved
+ * stock). Any previously misplaced reader is stripped and re-placed here, so
+ * re-applying over an affected binary self-heals.
  *
  * This is dynamic — no re-patching needed when users add/remove models.
  */
-const injectSettingsReader = (fileContents: string): string | null => {
-  // Find injection point — try patterns first, fallback to end of extracted content.
-  let injectionIndex = -1;
 
+// The injected reader def+call pair, wherever a previous apply left it.
+// The trailing \n? matters: the injector appends a newline after the call, and
+// a strip that leaves it behind grows the file by one byte per re-apply.
+const patternStaleReader =
+  /(?:import\{readFileSync as __tcwReadFileSync\}from"node:fs";\n?)?globalThis\.__tweakccReadSettings=function\(\)\{[\s\S]*?globalThis\.__tweakccCustomModels=m\};\s*globalThis\.__tweakccReadSettings\(\);\n?/;
+
+// Entry-module sentinel in the native virtual bundle (see nativeInstallation.ts
+// isClaudeModule for the name set).
+const patternEntrySentinel =
+  /\n\/\*@@TWEAKCC_MODULE:\d+:(?:\/\$bunfs\/root\/cli|B:\/~Bun\/root\/cli|claude|claude\.exe|src\/entrypoints\/cli\.js)@@\*\/\n/;
+
+// fs accessor for the native entry module (see injection site for why).
+const NATIVE_FS_SHIM =
+  '(function(){try{return require("fs")}catch(e){}try{if(typeof Bun!=="undefined"&&Bun.spawnSync)return{readFileSync:function(p){var r=Bun.spawnSync(["cat",String(p)]);if(!r||r.exitCode!==0||!r.stdout)throw new Error("cat "+p+" exit "+(r?r.exitCode:"?"));return new TextDecoder().decode(r.stdout)}}}catch(e2){}return null})()';
+
+// Build the reader source. `fsAccess` is the expression yielding an fs-like
+// object: a direct ESM named import in the native entry module (bare require
+// does NOT exist there — proven at runtime), the createRequire-derived
+// variable in esbuild cli.js bundles.
+const buildSettingsReader = (fsAccess: string): string =>
+  `globalThis.__tweakccReadSettings=function(){var m=globalThis.__tweakccCustomModels;if(!m)m=[];try{var f=${fsAccess};var cs=[];var sep="/";if(process.env.CLAUDE_CONFIG_DIR)cs.push(process.env.CLAUDE_CONFIG_DIR.replace(/[\\/]+$/,"")+sep+"settings.json");var hd=process.env.HOME||process.env.USERPROFILE;if(hd)cs.push(hd.replace(/[\\/]+$/,"")+sep+".claude"+sep+"settings.json");for(var pi=0;pi<cs.length;pi++){try{var d=JSON.parse(f.readFileSync(cs[pi],"utf8"));if(d.customModels)for(var x of d.customModels){var already=m.some(function(e){return e.value===x.value});if(!already)m.push({value:x.value,label:x.label||x.value,description:"",contextWindow:+x.contextWindow>0?+x.contextWindow:void 0,maxTokens:x.maxTokens||16384,subModels:x.subModels&&x.subModels.haiku?{haiku:String(x.subModels.haiku)}:void 0,compactThresholdPct:+x.compactThresholdPct>0&&+x.compactThresholdPct<=100?+x.compactThresholdPct:void 0,compactThresholdTokens:+x.compactThresholdTokens>0?+x.compactThresholdTokens:void 0})}var v=d&&d.modelOverrides;for(var k in v){var vals=v[k];if(Array.isArray(vals)){var ex=null;for(var q=0;q<m.length;q++){if(m[q].value===k){ex=m[q];break}}var nw=null;for(var j=0;j<vals.length;j++){var parts=String(vals[j]).split("=");if(parts[0]==="contextWindow"||parts[0]==="haiku"||parts[0]==="compactThresholdPct"||parts[0]==="compactThresholdTokens"){if(!ex&&!nw)nw={value:k,label:k,description:"",maxTokens:16384};var tgt=ex||nw;if(parts[0]==="contextWindow"){var cw=Number(parts[1]);if(cw>0)tgt.contextWindow=cw}else if(parts[0]==="compactThresholdPct"){var pn=Number(parts[1]);if(pn>0&&pn<=100)tgt.compactThresholdPct=pn}else if(parts[0]==="compactThresholdTokens"){var tn=Number(parts[1]);if(tn>0)tgt.compactThresholdTokens=tn}else if(parts[1]&&!(tgt.subModels&&tgt.subModels.haiku)){tgt.subModels={haiku:parts[1]}}}}if(nw)m.push(nw)}}}catch(u){if(process.env.TWEAKCC_DEBUG)console.error("tweakcc reader: "+cs[pi]+": "+(u&&u.message))}}}catch(t){if(process.env.TWEAKCC_DEBUG)console.error("tweakcc reader: "+(t&&t.message))}if(process.env.TWEAKCC_DEBUG)console.error("tweakcc reader: loaded "+m.length+" custom model(s)");globalThis.__tweakccCustomModels=m};
+globalThis.__tweakccReadSettings();`;
+
+const injectSettingsReader = (fileContents: string): string | null => {
+  // Strip any previously injected reader copies first — including ones a
+  // former apply parked in a lazy chunk — so re-applies relocate it.
+  let file = fileContents;
+  while (patternStaleReader.test(file)) {
+    file = file.replace(patternStaleReader, '');
+  }
+  if (
+    file.includes('__tweakccReadSettings=function') ||
+    file.includes('__tcwReadFileSync')
+  ) {
+    // A reader shape the strip pattern does not recognize — injecting now would
+    // duplicate it. Fail loud so the pattern gets updated.
+    console.error(
+      'patch: modelCustomizations: could not strip a previously injected settings reader — refusing to duplicate it'
+    );
+    return null;
+  }
+
+  if (file.includes('/*@@TWEAKCC_MODULE:')) {
+    // Native virtual bundle: top of the ENTRY module. Bun native modules always
+    // provide bare `require`; deliberately NOT getRequireFuncName() here — its
+    // createRequire scan can latch onto an unrelated chunk's import in the
+    // concatenation, a binding the entry module's scope does not have.
+    const m = patternEntrySentinel.exec(file);
+    if (!m || m.index === undefined) {
+      console.error(
+        'patch: modelCustomizations: entry-module sentinel not found — refusing to place the settings reader where it would never run'
+      );
+      return null;
+    }
+    const at = m.index + m[0].length;
+    // The compiled ENTRY module has no require binding and added static
+    // `import` statements do not bind (both probed at runtime on 2.1.272).
+    // What it DOES have is the Bun global: read settings.json synchronously
+    // via `Bun.spawnSync(["cat",…])` (~2ms once at boot). The shim tries bare
+    // require first so it keeps working if a future Bun provides it.
+    return (
+      file.slice(0, at) +
+      buildSettingsReader(NATIVE_FS_SHIM) +
+      '\n' +
+      file.slice(at)
+    );
+  }
+
+  // Legacy single-module cli.js: the whole file evaluates top-to-bottom, but
+  // the esbuild prelude defines the require var first — keep the historical
+  // server-init / end-of-file anchor so the reader sits after it.
+  let injectionIndex = -1;
   const serverPatterns = [
     /server\s*=\s*globalThis\./,
     /server\s*=\s*serve[({]/,
   ];
-
   for (const pattern of serverPatterns) {
-    const m = pattern.exec(fileContents);
+    const m = pattern.exec(file);
     if (m && m.index !== undefined) {
       injectionIndex = m.index;
       break;
     }
   }
-
-  // Fallback: inject at the very end of extracted content (after last module's closing brace)
-  if (injectionIndex === -1 || injectionIndex >= fileContents.length - 200) {
-    // Find last "};\n" or "}" pattern to ensure clean insertion before bundle close
-    const closeBrace = /\}\s*;\s*$/.exec(fileContents);
-    injectionIndex = closeBrace ? closeBrace.index : fileContents.length;
+  if (injectionIndex === -1 || injectionIndex >= file.length - 200) {
+    const closeBrace = /\}\s*;\s*$/.exec(file);
+    injectionIndex = closeBrace ? closeBrace.index : file.length;
   }
-
-  if (injectionIndex <= 0 || injectionIndex >= fileContents.length) {
+  if (injectionIndex <= 0 || injectionIndex >= file.length) {
     console.error(
-      'patch: modelCustomizations: failed to find server initialization point for settings reader'
+      'patch: modelCustomizations: failed to find an injection point for the settings reader'
     );
     return null;
   }
 
-  // Build the startup reader that loads custom-model context windows at CC boot.
-  // Reads $CLAUDE_CONFIG_DIR/settings.json (when set — CC's own config-dir
-  // override) AND $HOME/.claude/settings.json, merging both. Populates
-  // globalThis.__tweakccCustomModels from the customModels array (primary) and
-  // modelOverrides strings with contextWindow=... / haiku=... entries (fallback).
-  // NOTE: home is resolved from HOME/USERPROFILE env vars, NOT path.homedir() —
-  // some bundled/shimmed runtimes ship a path module without homedir, and the
-  // reader's try/catch would swallow the TypeError into a silent empty list.
-  // The per-model context-window enforcement lives in modelContextWindowSync
-  // and the role-model routing in customSubModels; both read this global
-  // lazily at resolve time (no startup-order coupling, no version-specific
-  // table/set names here).
-  const readerFunc = `globalThis.__tweakccReadSettings=function(){var m=globalThis.__tweakccCustomModels;if(!m)m=[];try{var f=require("fs");var cs=[];var sep="/";if(process.env.CLAUDE_CONFIG_DIR)cs.push(process.env.CLAUDE_CONFIG_DIR.replace(/[\\/]+$/,"")+sep+"settings.json");var hd=process.env.HOME||process.env.USERPROFILE;if(hd)cs.push(hd.replace(/[\\/]+$/,"")+sep+".claude"+sep+"settings.json");for(var pi=0;pi<cs.length;pi++){try{var d=JSON.parse(f.readFileSync(cs[pi],"utf8"));if(d.customModels)for(var x of d.customModels){var already=m.some(function(e){return e.value===x.value});if(!already)m.push({value:x.value,label:x.label||x.value,description:"",contextWindow:+x.contextWindow>0?+x.contextWindow:void 0,maxTokens:x.maxTokens||16384,subModels:x.subModels&&x.subModels.haiku?{haiku:String(x.subModels.haiku)}:void 0,compactThresholdPct:+x.compactThresholdPct>0&&+x.compactThresholdPct<=100?+x.compactThresholdPct:void 0,compactThresholdTokens:+x.compactThresholdTokens>0?+x.compactThresholdTokens:void 0})}var v=d&&d.modelOverrides;for(var k in v){var vals=v[k];if(Array.isArray(vals)){var ex=null;for(var q=0;q<m.length;q++){if(m[q].value===k){ex=m[q];break}}var nw=null;for(var j=0;j<vals.length;j++){var parts=String(vals[j]).split("=");if(parts[0]==="contextWindow"||parts[0]==="haiku"||parts[0]==="compactThresholdPct"||parts[0]==="compactThresholdTokens"){if(!ex&&!nw)nw={value:k,label:k,description:"",maxTokens:16384};var tgt=ex||nw;if(parts[0]==="contextWindow"){var cw=Number(parts[1]);if(cw>0)tgt.contextWindow=cw}else if(parts[0]==="compactThresholdPct"){var pn=Number(parts[1]);if(pn>0&&pn<=100)tgt.compactThresholdPct=pn}else if(parts[0]==="compactThresholdTokens"){var tn=Number(parts[1]);if(tn>0)tgt.compactThresholdTokens=tn}else if(parts[1]&&!(tgt.subModels&&tgt.subModels.haiku)){tgt.subModels={haiku:parts[1]}}}}if(nw)m.push(nw)}}}catch(u){if(process.env.TWEAKCC_DEBUG)console.error("tweakcc reader: "+cs[pi]+": "+(u&&u.message))}}}catch(t){if(process.env.TWEAKCC_DEBUG)console.error("tweakcc reader: "+(t&&t.message))}globalThis.__tweakccCustomModels=m};
-  globalThis.__tweakccReadSettings();`;
-
-  const newFile =
-    fileContents.slice(0, injectionIndex) +
-    readerFunc +
-    fileContents.slice(injectionIndex);
-
-  return newFile;
+  return (
+    file.slice(0, injectionIndex) +
+    buildSettingsReader(`${getRequireFuncName(file)}("fs")`) +
+    file.slice(injectionIndex)
+  );
 };
-
 export const writeModelCustomizations = (oldFile: string): string | null => {
   // Skip if custom models are already injected (e.g. from a previous
   // tweakcc run baked into the backup, or future native support).
@@ -170,11 +226,6 @@ export const writeModelCustomizations = (oldFile: string): string | null => {
     console.log(
       'patch: modelCustomizations: custom models already present — skipping push'
     );
-    // Still need to inject the startup reader if not present
-    const hasReaderInjection = oldFile.includes('__tweakccReadSettings');
-    if (hasReaderInjection) {
-      return oldFile; // Fully patched, nothing to do
-    }
     patchedFile = oldFile;
   } else {
     const found = findCustomModelListInsertionPoint(oldFile);
@@ -194,17 +245,20 @@ export const writeModelCustomizations = (oldFile: string): string | null => {
       oldFile.slice(0, insertionIndex) + inject + oldFile.slice(insertionIndex);
   }
 
-  // Also inject the runtime settings reader at server initialization point.
-  // This reads ~/.claude/settings.json modelOverrides at CC boot so users can add/remove
-  // Ollama/custom models by editing settings.json — no re-patch needed.
+  // Inject (or relocate) the runtime settings reader. Self-healing: strips any
+  // previously injected copy — including ones a former apply parked in a lazy
+  // chunk where it never ran — and re-injects at the entry-module top, so
+  // re-applying over an affected binary fixes it. Idempotent when already
+  // correctly placed (strip + re-inject yields the identical file).
   const readerResult = injectSettingsReader(patchedFile);
   if (readerResult) {
+    const at = readerResult.indexOf('globalThis.__tweakccReadSettings');
     showDiff(
       patchedFile,
       readerResult,
       '\n  /* __tweakccReadSettings injected */',
-      readerResult.indexOf('server'),
-      readerResult.indexOf('server') + 100
+      Math.max(0, at),
+      Math.max(0, at) + 100
     );
     patchedFile = readerResult;
   }

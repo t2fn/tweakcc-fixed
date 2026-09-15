@@ -168,8 +168,10 @@ const patternStaleTableInjection =
 // Per-model lookup spliced into a function body. `idExpr` is the expression
 // yielding the short model id at that site (JE(e) in VP, the bare param in
 // KOS). Returns a positive contextWindow or falls through to stock behavior.
+// First successful hit logs once under TWEAKCC_DEBUG=1 — this chain failed
+// silently for too long (misplaced reader, unbound require); keep it observable.
 const buildLookup = (idExpr: string): string =>
-  `var __tcwL=globalThis.__tweakccCustomModels;if(__tcwL)for(var __tcwI=0;__tcwI<__tcwL.length;__tcwI++){var __tcwM=__tcwL[__tcwI];if(__tcwM&&__tcwM.value===${idExpr}){var __tcwW=+__tcwM.contextWindow;if(__tcwW>0)return __tcwW}}`;
+  `var __tcwL=globalThis.__tweakccCustomModels;if(__tcwL)for(var __tcwI=0;__tcwI<__tcwL.length;__tcwI++){var __tcwM=__tcwL[__tcwI];if(__tcwM&&__tcwM.value===${idExpr}){var __tcwW=+__tcwM.contextWindow;if(__tcwW>0){if(typeof process!=="undefined"&&process.env.TWEAKCC_DEBUG&&!globalThis.__tcwHitLogged){globalThis.__tcwHitLogged=1;try{console.error("tweakcc window-sync: "+__tcwM.value+" -> "+__tcwW+" tokens")}catch(__tcwE){}}return __tcwW}}}`;
 
 // Replacement for fpt's `testPctOverride:ENV?parseFloat(ENV):void 0` slot.
 // Priority for a model that HAS a customModels entry:
