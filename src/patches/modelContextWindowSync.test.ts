@@ -538,7 +538,7 @@ describe('writeModelContextWindowSync (legacy hF builds)', () => {
 // binaries are ~200MB each: TWEAKCC_MCWS_BINARIES=/tmp/cc-dl (a dir with
 // x267/package/claude … x271/package/claude).
 const binRoot = process.env.TWEAKCC_MCWS_BINARIES;
-const versions = ['267', '268', '269', '270', '271', '272'];
+const versions = ['267', '268', '269', '270', '271', '272', '273'];
 
 describe.skipIf(!binRoot)('real CC binaries (TWEAKCC_MCWS_BINARIES)', () => {
   it.each(versions)(

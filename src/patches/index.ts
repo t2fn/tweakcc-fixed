@@ -1056,11 +1056,11 @@ export const applyCustomization = async (
     },
     'model-context-window-sync': {
       fn: c => writeModelContextWindowSync(c),
-      condition: config.settings.misc?.enableModelContextWindowSync === true,
+      condition: config.settings.misc?.enableModelContextWindowSync !== false,
     },
     'custom-sub-models': {
       fn: c => writeCustomSubModels(c),
-      condition: config.settings.misc?.enableCustomSubModels === true,
+      condition: config.settings.misc?.enableCustomSubModels !== false,
     },
     'show-more-items-in-select-menus': {
       fn: c => writeShowMoreItemsInSelectMenus(c, 25),

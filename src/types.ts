@@ -143,9 +143,18 @@ export interface MiscConfig {
   allowCustomAgentModels: boolean;
   enableContextLimitOverride: boolean;
   enableModelCustomizations: boolean;
-  /** Independent toggle for per-model context window enforcement (auto-compact resolver lookups). Defaults to true. */
+  /**
+   * Per-model context window enforcement (auto-compact resolver lookups).
+   * Opt-out toggle: the baked-in hooks are INERT unless settings.json declares
+   * customModels — runtime behavior is driven entirely by settings.json
+   * ($CLAUDE_CONFIG_DIR or ~/.claude). Defaults to true.
+   */
   enableModelContextWindowSync: boolean;
-  /** Per-main-model role overrides (customModels[].subModels — e.g. haiku-role background model). Defaults to true. */
+  /**
+   * Per-main-model role overrides (customModels[].subModels — e.g. haiku-role
+   * background model). Same settings.json-driven semantics as
+   * enableModelContextWindowSync. Defaults to true.
+   */
   enableCustomSubModels: boolean;
   enableVoiceMode: boolean;
   enableVoiceConciseOutput: boolean;

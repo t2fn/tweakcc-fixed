@@ -741,8 +741,8 @@ export const DEFAULT_SETTINGS: Settings = {
     allowCustomAgentModels: false,
     enableContextLimitOverride: false,
     enableModelCustomizations: true,
-    enableModelContextWindowSync: false, // Per-model context window enforcement via resolver lookups (opt-in)
-    enableCustomSubModels: false, // Per-main-model role overrides (opt-in)
+    enableModelContextWindowSync: true, // Per-model context window enforcement via resolver lookups (settings.json-driven; inert without customModels)
+    enableCustomSubModels: true, // Per-main-model role overrides (settings.json-driven; inert without subModels)
     enableVoiceMode: false,
     enableVoiceConciseOutput: true,
     enableChannelsMode: false,
